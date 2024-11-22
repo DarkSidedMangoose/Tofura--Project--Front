@@ -1,6 +1,6 @@
 .MainLogo {
   width: 330px;
-  height: 350px;
+  height: 390px;
   opacity: 0.6;
 }
 .MainMovedLogo {
@@ -12,7 +12,7 @@
 .MainLogoDiv {
   z-index: 1;
   width: 330px;
-  height: 350px;
+  height: 390px;
   display: flex;
   justify-content: center;
   align-items: center;
