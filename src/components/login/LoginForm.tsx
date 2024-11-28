@@ -30,6 +30,11 @@ const LoginForm: React.FC = () => {
   return (
     <form onSubmit={SubmitHandler} className="z-10 opacity-95">
       <div className=" flex flex-col w-400px h-400px justify-center items-center bg-login   gap-2 relative shadow-lg shadow-black stroke-black rounded-lg  ">
+        <div className="absolute top-0 w-full h-20% flex justify-center items-center">
+          <h1 className="text-loginBackground text-lg border-b-2 border-loginBackground shadow-lg">
+            ავტორიზაცია
+          </h1>
+        </div>
         <div
           className={`w-4/5 opacity-80 hover:opacity-60 z-30  flex flex-row items-center j h-15% relative bg-transparent  shadow-lg shadow-black stroke-black  loginInputIcon`}
         >

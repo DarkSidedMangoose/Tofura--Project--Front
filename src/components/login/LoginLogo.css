@@ -1,6 +1,6 @@
 .MainLogo {
-  width: 100%;
-  height: 100%;
+  width: 400px;
+  height: 450px;
 }
 .MainMovedLogo {
   margin-bottom: 19px;
@@ -10,16 +10,15 @@
 }
 .MainLogoDiv {
   z-index: 0;
-  width: 40%;
-  height: 85%;
+  width: 350px;
+  height: 450px;
   opacity: 0.5;
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  right: 0;
+  top: 0;
 }
 .MainLogoDiv img {
   position: absolute;
