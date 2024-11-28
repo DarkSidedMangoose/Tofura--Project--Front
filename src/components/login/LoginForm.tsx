@@ -1,66 +1,73 @@
-import React, { useState } from "react";
-import User from "../../assets/images/user.png";
-import Password from "../../assets/images/password.png";
-import Enter from "../../assets/images/login.png";
-import { useNavigate } from "react-router-dom";
-import LoginLogo from "../../components/login/LoginLogo";
+import React, { useState } from 'react'
+import User from '../../assets/images/login/user.png'
+import Password from '../../assets/images/login/password.png'
+import Enter from '../../assets/images/login/login.png'
+import { useNavigate } from 'react-router-dom'
+import LoginLogo from '../../components/login/LoginLogo'
 
-import "./LoginForm.css";
+import './LoginForm.css'
+
+interface UserPass {
+  username: string
+  password: string
+}
 
 const LoginForm: React.FC = () => {
-  const Navigate = useNavigate();
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
+  const Navigate = useNavigate()
+  const [userPass, setUserPass] = useState<UserPass>({
+    username: '',
+    password: '',
+  })
+  const ChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setUserPass((prev) => ({ ...prev, [name]: value }))
+  }
   const SubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log([username, password]);
-    Navigate("/main");
-  };
+    e.preventDefault()
+    console.log([userPass.username, userPass.password])
+    Navigate('/main')
+  }
   return (
-    <form onSubmit={SubmitHandler} className="z-10">
-      <div className=" flex flex-col w-600px h-600px justify-center items-center bg-login   gap-5px relative  rounded-lg  ">
-        <LoginLogo />
+    <form onSubmit={SubmitHandler} className="z-10 opacity-95">
+      <div className=" flex flex-col w-400px h-400px justify-center items-center bg-login   gap-2 relative shadow-lg shadow-black stroke-black rounded-lg  ">
         <div
-          className={`w-3/5 flex flex-row items-center j h-10% relative bg-transparent shadow shadow-stone-600 loginInputIcon`}
+          className={`w-4/5 opacity-80 hover:opacity-60 z-30  flex flex-row items-center j h-15% relative bg-transparent  shadow-lg shadow-black stroke-black  loginInputIcon`}
         >
           <input
             className="text-black-900 w-full h-100%  outline-none z-10  loginInputBorders  "
-            placeholder="Username"
+            name="username"
+            placeholder="საიდენტიფიკაციო კოდი..."
             type="text"
-            value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
+            value={userPass.username}
+            onChange={ChangeHandler}
           />
           <div className="w-1/5  z-10 h-full flex justify-center items-center  loginImgBorders">
             <img src={User} className=" z-20  w-30px h-30px "></img>
           </div>
         </div>
-        <div className="w-3/5 flex flex-row items-center j h-10% relative bg-transparent shadow shadow-stone-600 loginInputIcon ">
+        <div className="w-4/5 opacity-80 hover:opacity-60 z-30 flex flex-row items-center j h-15% relative bg-transparent  shadow-lg shadow-black stroke-black loginInputIcon ">
           <input
             className="text-black-900 w-full h-100%  outline-none z-10  loginInputBorders"
             type="password"
+            name="password"
             id="password"
-            placeholder="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
+            placeholder="პაროლი..."
+            value={userPass.password}
+            onChange={ChangeHandler}
           />
           <div className="w-1/5  z-10 h-full flex justify-center items-center loginImgBorders">
             <img src={Password} className={`z-20  w-30px h-30px`}></img>
           </div>
         </div>
 
-        <div className="w-3/5 flex justify-end h-10% relative  loginButtonHover ">
+        <div className="w-4/5 flex justify-end h-15% relative opacity-80 hover:opacity-45  loginButtonHover ">
           <button
             type="submit"
-            className=" w-2/5 bg-white h-100% z-10   text-gray-700 text-sm  active:bg-slate-200 rounded-lg border border-loginBut border-2 border-opacity-75 shadow shadow-stone-600 loginInputIcon "
+            className=" w-2/5 bg-white h-100% z-10    text-gray-700 text-sm  active:bg-slate-200 rounded-lg  border-loginBut border-2 border-opacity-75 shadow shadow-lg shadow-black loginInputIcon opacity-85 "
           >
             შესვლა
           </button>
-          <div className="h-full flex justify-center items-center z-20 opacity-70 ">
+          <div className="h-full flex justify-center items-center z-20  ">
             <img
               src={Enter}
               className="absolute  right-1 w-30px h-30px  "
@@ -69,7 +76,7 @@ const LoginForm: React.FC = () => {
         </div>
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm

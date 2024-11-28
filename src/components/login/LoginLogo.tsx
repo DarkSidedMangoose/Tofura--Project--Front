@@ -1,6 +1,6 @@
 import React from 'react'
-import MainLogo from '../../assets/images/mainLogo.png'
-import MainLogoCenter from '../../assets/images/mainLogoCenter.png'
+import MainLogo from '../../assets/images/login/mainLogo.png'
+import MainLogoCenter from '../../assets/images/login/mainLogoCenter.png'
 import './LoginLogo.css'
 const LoginLogo = () => {
   //* check
