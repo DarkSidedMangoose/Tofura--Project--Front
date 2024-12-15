@@ -1,6 +1,5 @@
 .MainLogo {
-  width: 400px;
-  height: 450px;
+
 }
 .MainMovedLogo {
   margin-bottom: 40px;
@@ -9,10 +8,7 @@
   /* animation: movedLogo 9s linear infinite; */
 }
 .MainLogoDiv {
-  z-index: 0;
-  width: 350px;
-  height: 450px;
-  opacity: 0.5;
+
   display: flex;
   justify-content: center;
   align-items: center;
