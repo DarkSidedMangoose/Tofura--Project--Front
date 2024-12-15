@@ -15,7 +15,7 @@ const CommonBaseClickers: React.FC = () => {
             placeholder="მიუთითეთ საძიებო სიტყვა..."
           ></input>
           <div className="h-8 w-8 border-gray-800 bg-white rounded border-2 cursor-pointer flex justify-center items-center">
-            <img src={Search} className="h-4   "></img>
+            <img src={Search} className="h-4"></img>
           </div>
           <div className="h-8 w-8 border-gray-800 bg-white  rounded border-2 flex justify-center items-center cursor-pointer">
             <img src={Filter} className="h-4   "></img>

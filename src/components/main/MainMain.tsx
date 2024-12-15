@@ -1,6 +1,6 @@
 import React from 'react'
 import './MainMain.css'
-import CommonBaseClickers from './baseClickers/commonBaseClickers'
+import CommonBaseClickers from './bases/commonBaseClickers'
 export {}
 
 const MainMain: React.FC = () => {
