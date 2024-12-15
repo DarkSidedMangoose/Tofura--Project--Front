@@ -1,9 +1,9 @@
-import React from 'react'
-import Search from '../../../assets/images/main/search.png'
-import Filter from '../../../assets/images/main/filter.png'
-import Sync from '../../../assets/images/main/sync.png'
-import Add from '../../../assets/images/main/add.png'
-import Info from '../../../assets/images/main/info.png'
+import React from "react";
+import Search from "../../../assets/images/main/search.png";
+import Filter from "../../../assets/images/main/filter.png";
+import Sync from "../../../assets/images/main/sync.png";
+import Add from "../../../assets/images/main/add.png";
+import Info from "../../../assets/images/main/info.png";
 
 const CommonBaseClickers: React.FC = () => {
   return (
@@ -28,14 +28,14 @@ const CommonBaseClickers: React.FC = () => {
           <div className="h-8 w-8 border-gray-800 bg-white  rounded border-2 flex justify-center items-center cursor-pointer">
             <img src={Add} className="h-4   "></img>
           </div>
-          <div className="h-8 w-36 mr-2 border-gray-800 bg-white  rounded border-2 flex justify-evenly items-center cursor-pointer">
-            <p className="text-sm text-gray-800 ">სრულად ნახვა</p>
+          <div className="h-8 w-40 mr-2 border-gray-800 bg-white  rounded border-2 flex justify-evenly items-center cursor-pointer">
+            <p className="text-sm text-sideBar font-bold ">სრულად ნახვა</p>
             <img src={Info} className="h-4"></img>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CommonBaseClickers
+export default CommonBaseClickers;
