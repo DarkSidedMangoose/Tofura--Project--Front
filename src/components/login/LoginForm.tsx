@@ -3,7 +3,7 @@ import User from '../../assets/images/login/user.png'
 import Password from '../../assets/images/login/password.png'
 import Enter from '../../assets/images/login/login.png'
 import { useNavigate } from 'react-router-dom'
-import LoginLogo from '../../components/login/LoginLogo'
+import MainLogoCenter from '../../assets/images/login/mainLogoCenter.png'
 
 import './LoginForm.css'
 
@@ -29,11 +29,13 @@ const LoginForm: React.FC = () => {
   }
   return (
     <form onSubmit={SubmitHandler} className="z-10 opacity-95">
-      <div className=" flex flex-col w-400px h-400px justify-center items-center bg-login   gap-2 relative shadow-lg shadow-black stroke-black rounded-lg  ">
+      <div className=" flex flex-col w-400px h-400px justify-center items-center bg-gray-800   gap-2 relative shadow-lg shadow-black stroke-black rounded-lg  ">
         <div className="absolute top-0 w-full h-20% flex justify-center items-center">
-          <h1 className="text-loginBackground text-lg border-b-2 border-loginBackground shadow-lg">
-            ავტორიზაცია
-          </h1>
+          <img
+            src={MainLogoCenter}
+            alt="movedLogo"
+            className="w-80px h-80px mt-5 movedLogo"
+          />
         </div>
         <div
           className={`w-4/5 opacity-80 hover:opacity-60 z-30  flex flex-row items-center j h-15% relative bg-transparent  shadow-lg shadow-black stroke-black  loginInputIcon`}
@@ -65,10 +67,10 @@ const LoginForm: React.FC = () => {
           </div>
         </div>
 
-        <div className="w-4/5 flex justify-end h-15% relative opacity-80 hover:opacity-45  loginButtonHover ">
+        <div className="w-4/5 flex justify-end h-15% relative opacity-80   loginButtonHover ">
           <button
             type="submit"
-            className=" w-2/5 bg-white h-100% z-10    text-gray-700 text-sm  active:bg-slate-200 rounded-lg  border-loginBut border-2 border-opacity-75 shadow shadow-lg shadow-black loginInputIcon opacity-85 "
+            className=" w-2/5 bg-white h-100% z-10    text-gray-700 text-sm  hover:opacity-45 active:bg-slate-200 rounded-lg  border-loginBut border-2 border-opacity-75  shadow-lg shadow-black loginInputIcon opacity-85 "
           >
             შესვლა
           </button>
