@@ -1,31 +1,31 @@
-import React, { useState } from 'react'
-import base from '../../assets/images/main/base.png'
-import dashboard from '../../assets/images/main/dashboard2.png'
-import dashboard2 from '../../assets/images/main/dashboard3.png'
-import tasks from '../../assets/images/main/tasks.png'
-import profile from '../../assets/images/main/profile2.png'
-import email from '../../assets/images/main/mail2.png'
-import dataBars from '../../assets/images/main/data-bars.png'
-import './MainSidebar.css'
+import React, { useState } from "react";
+import base from "../../assets/images/main/base.png";
+import dashboard from "../../assets/images/main/dashboard2.png";
+import dashboard2 from "../../assets/images/main/dashboard3.png";
+import tasks from "../../assets/images/main/tasks.png";
+import profile from "../../assets/images/main/profile2.png";
+import email from "../../assets/images/main/mail2.png";
+import dataBars from "../../assets/images/main/data-bars.png";
+import "./MainSidebar.css";
 
 interface bools {
-  bases: boolean
+  bases: boolean;
 }
 const MainSidebar: React.FC = () => {
   const [dropdownStates, setDropdownStates] = useState<bools>({
     bases: false,
-  })
+  });
   const HandleChange = (e: React.MouseEvent<HTMLDivElement>) => {
-    const name = e.currentTarget.getAttribute('data-name')
-    if (name === 'bases') {
+    const name = e.currentTarget.getAttribute("data-name");
+    if (name === "bases") {
       setDropdownStates((prev) => ({
         ...prev,
         [name]: !prev[name],
-      }))
+      }));
     }
-  }
+  };
   return (
-    <aside className="w-80px h-300px mt-4 bg-zinc-300 shadow-lg stroke-black flex flex-col opacity-100  items-center  ">
+    <aside className="w-80px h-300px mt-4 bg-zinc-300  stroke-black flex flex-col opacity-100  items-center shadow-lg shadow-black  ">
       <div
         className="flex relative w-full h-1/5 justify-center items-center"
         onMouseEnter={HandleChange}
@@ -83,17 +83,17 @@ const MainSidebar: React.FC = () => {
         />
       </div>
     </aside>
-  )
-}
+  );
+};
 
 export const SecondarySidebar: React.FC = () => {
-  const [isActive, setIsActive] = useState(true)
+  const [isActive, setIsActive] = useState(true);
 
   return (
     <div>
       <aside
         className={`w-200px h-300px mt-10 bg-sideBar slideAdd opacity-80 flex flex-col  ${
-          isActive ? 'active' : ''
+          isActive ? "active" : ""
         }`}
       >
         <div className="w-full h-1/5 border-2  flex gap-2">
@@ -118,6 +118,6 @@ export const SecondarySidebar: React.FC = () => {
         </div>
       </aside>
     </div>
-  )
-}
-export default MainSidebar
+  );
+};
+export default MainSidebar;
