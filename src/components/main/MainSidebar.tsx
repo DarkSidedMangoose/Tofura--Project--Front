@@ -25,7 +25,7 @@ const MainSidebar: React.FC = () => {
     }
   };
   return (
-    <aside className="w-4% h-40% mt-4 bg-zinc-300  stroke-black flex flex-col opacity-100  items-center shadow-lg shadow-black  ">
+    <aside className="w-4% min-w-[80px] h-40% min-h-[300px] mt-4 bg-zinc-300  stroke-black flex flex-col opacity-100  items-center shadow-lg shadow-black  ">
       <div
         className="flex relative w-full h-1/5 justify-center items-center"
         onMouseEnter={HandleChange}
@@ -34,20 +34,20 @@ const MainSidebar: React.FC = () => {
         data-name="bases"
       >
         <img
-          className="w-65% h-80%  hover:opacity-80 cursor-pointer "
+          className="w-60% h-70%  hover:opacity-80 cursor-pointer "
           src={base}
           alt=""
         />
         {dropdownStates.bases ? (
           <div className="absolute z-20  top-0 -right-[500%] bg-zinc-300 w-[500%] h-[150%] borderSet ">
             <ul className="h-full">
-              <li className="w-full flex h-1/3 justify-center items-center text-sm  cursor-pointer text-login hover:opacity-50 ">
+              <li className="w-full flex h-1/3 justify-center items-center text-[0.7vw]   cursor-pointer text-login hover:opacity-50 ">
                 საერთო ობიექტების რეესტრი
               </li>
-              <li className="w-full flex h-1/3 justify-center items-center text-sm  cursor-pointer text-login hover:opacity-50">
+              <li className="w-full flex h-1/3 justify-center items-center text-[0.7vw]  cursor-pointer text-login hover:opacity-50">
                 შესამოწმებელი ობიექტების რეესტრი
               </li>
-              <li className="w-full flex h-1/3 justify-center items-center text-sm  cursor-pointer text-login hover:opacity-50">
+              <li className="w-full flex h-1/3 justify-center items-center text-[0.7vw] cursor-pointer text-login hover:opacity-50">
                 შემოწმებული ობიექტების რეესტრი
               </li>
             </ul>
@@ -56,28 +56,28 @@ const MainSidebar: React.FC = () => {
       </div>
       <div className="flex relative w-full h-1/5 justify-center items-center">
         <img
-          className="w-65% h-80% hover:opacity-80 cursor-pointer"
+          className="w-60% h-70% hover:opacity-80 cursor-pointer"
           src={dashboard}
           alt=""
         />
       </div>
       <div className="flex relative w-full h-1/5 justify-center items-center">
         <img
-          className="w-65% h-80% hover:opacity-80 cursor-pointer"
+          className="w-60% h-70% hover:opacity-80 cursor-pointer"
           src={tasks}
           alt=""
         />
       </div>
       <div className="flex relative w-full h-1/5 justify-center items-center">
         <img
-          className="w-65% h-80% hover:opacity-80 cursor-pointer"
+          className="w-60% h-70% hover:opacity-80 cursor-pointer"
           src={profile}
           alt=""
         />
       </div>
       <div className="flex relative w-full h-1/5 justify-center items-center">
         <img
-          className="w-65% h-80% hover:opacity-80 cursor-pointer"
+          className="w-60% h-70% hover:opacity-80 cursor-pointer"
           src={email}
           alt=""
         />
