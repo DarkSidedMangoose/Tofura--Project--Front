@@ -72,7 +72,7 @@ const CommonAfterClickers: React.FC = () => {
         {obj === null
           ? null
           : obj.map((e, i) => (
-              <div className="border-b-4 border-gray-500 flex justify-center">
+              <div className="border-b-2 border-gray-500 flex justify-center">
                 <div className="w-98% h-59px grid grid-cols-7 ">
                   <div className="flex justify-start items-center w-95% overflow-x-auto text-ellipsis whitespace-nowrap ">
                     <p>{e.identifier}</p>
