@@ -39,7 +39,7 @@ const MainSidebar: React.FC = () => {
           alt=""
         />
         {dropdownStates.bases ? (
-          <div className="absolute z-20  top-0 -right-300px bg-zinc-300 w-300px h-100px borderSet ">
+          <div className="absolute z-20  top-0 -right-[500%] bg-zinc-300 w-[500%] h-[150%] borderSet ">
             <ul className="h-full">
               <li className="w-full flex h-1/3 justify-center items-center text-sm  cursor-pointer text-login hover:opacity-50 ">
                 საერთო ობიექტების რეესტრი
