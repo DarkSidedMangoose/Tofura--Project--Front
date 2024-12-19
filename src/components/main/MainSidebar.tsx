@@ -25,7 +25,7 @@ const MainSidebar: React.FC = () => {
     }
   };
   return (
-    <aside className="w-80px h-300px mt-4 bg-zinc-300  stroke-black flex flex-col opacity-100  items-center shadow-lg shadow-black  ">
+    <aside className="w-4% h-40% mt-4 bg-zinc-300  stroke-black flex flex-col opacity-100  items-center shadow-lg shadow-black  ">
       <div
         className="flex relative w-full h-1/5 justify-center items-center"
         onMouseEnter={HandleChange}
@@ -34,7 +34,7 @@ const MainSidebar: React.FC = () => {
         data-name="bases"
       >
         <img
-          className="w-40px h-40px  hover:opacity-80 cursor-pointer "
+          className="w-65% h-80%  hover:opacity-80 cursor-pointer "
           src={base}
           alt=""
         />
@@ -56,28 +56,28 @@ const MainSidebar: React.FC = () => {
       </div>
       <div className="flex relative w-full h-1/5 justify-center items-center">
         <img
-          className="w-40px h-40px hover:opacity-80 cursor-pointer"
+          className="w-65% h-80% hover:opacity-80 cursor-pointer"
           src={dashboard}
           alt=""
         />
       </div>
       <div className="flex relative w-full h-1/5 justify-center items-center">
         <img
-          className="w-40px h-40px hover:opacity-80 cursor-pointer"
+          className="w-65% h-80% hover:opacity-80 cursor-pointer"
           src={tasks}
           alt=""
         />
       </div>
       <div className="flex relative w-full h-1/5 justify-center items-center">
         <img
-          className="w-40px h-40px hover:opacity-80 cursor-pointer"
+          className="w-65% h-80% hover:opacity-80 cursor-pointer"
           src={profile}
           alt=""
         />
       </div>
       <div className="flex relative w-full h-1/5 justify-center items-center">
         <img
-          className="w-40px h-40px hover:opacity-80 cursor-pointer"
+          className="w-65% h-80% hover:opacity-80 cursor-pointer"
           src={email}
           alt=""
         />
