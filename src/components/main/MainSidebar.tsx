@@ -4,7 +4,6 @@ import dashboard from "../../assets/images/main/dashboard2.png";
 import tasks from "../../assets/images/main/tasks.png";
 import profile from "../../assets/images/main/profile2.png";
 import email from "../../assets/images/main/mail2.png";
-import "./mainSidebar.css";
 
 interface DropdownStates {
   bases: boolean;
@@ -38,7 +37,7 @@ const MainSidebar: React.FC = () => {
           alt=""
         />
         {dropdownStates.bases ? (
-          <div className="absolute z-20  top-0 -right-[500%] bg-zinc-300 w-[500%] h-[150%] borderSet ">
+          <div className="absolute z-20  top-0 -right-[500%] bg-zinc-300 w-[500%] h-[150%] border-l-[1px] border-solid border-white ">
             <ul className="h-full">
               <li className="w-full flex h-1/3 justify-center items-center text-[0.7vw]   cursor-pointer text-login hover:opacity-50 ">
                 საერთო ობიექტების რეესტრი
@@ -85,38 +84,4 @@ const MainSidebar: React.FC = () => {
   );
 };
 
-// export const SecondarySidebar: React.FC = () => {
-//   const [isActive, setIsActive] = useState(true);
-
-//   return (
-//     <div>
-//       <aside
-//         className={`w-200px h-300px mt-10 bg-sideBar slideAdd opacity-80 flex flex-col  ${
-//           isActive ? "active" : ""
-//         }`}
-//       >
-//         <div className="w-full h-1/5 border-2  flex gap-2">
-//           <img src={dataBars} alt="base-logo" className="w-49px h-49px" />
-//           <p className="text-gray-50">ობიექტების რეესტრი</p>
-//         </div>
-//         <div className="w-full h-1/5 border-2 flex gap-2 ">
-//           <img src={dashboard2} alt="base-logo" className="w-49px h-49px " />
-//           <p>ინფორმაციული დაფა</p>
-//         </div>
-//         <div className="w-full h-1/5 border-2 ">
-//           <img src={dashboard2} alt="base-logo" className="w-49px h-49px" />
-//           <p></p>
-//         </div>
-//         <div className="w-full h-1/5 border-2 ">
-//           <img src={dataBars} alt="base-logo" className="w-49px w-49px" />
-//           <p></p>
-//         </div>
-//         <div className="w-full h-1/5 border-2 ">
-//           <img src={dataBars} alt="base-logo" className="w-49px w-49px" />
-//           <p></p>
-//         </div>
-//       </aside>
-//     </div>
-//   );
-// };
 export default MainSidebar;
