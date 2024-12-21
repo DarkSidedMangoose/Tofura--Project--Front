@@ -1,32 +1,32 @@
-import React, { useState } from 'react'
-import User from '../../assets/images/login/user.png'
-import Password from '../../assets/images/login/password.png'
-import Enter from '../../assets/images/login/login.png'
-import { useNavigate } from 'react-router-dom'
-import MainLogoCenter from '../../assets/images/login/mainLogoCenter.png'
+import React, { useState } from "react";
+import User from "../../assets/images/login/user.png";
+import Password from "../../assets/images/login/password.png";
+import Enter from "../../assets/images/login/login.png";
+import { useNavigate } from "react-router-dom";
+import MainLogoCenter from "../../assets/images/login/mainLogoCenter.png";
 
-import './LoginForm.css'
+import "./loginForm.css";
 
 interface UserPass {
-  username: string
-  password: string
+  username: string;
+  password: string;
 }
 
 const LoginForm: React.FC = () => {
-  const Navigate = useNavigate()
+  const Navigate = useNavigate();
   const [userPass, setUserPass] = useState<UserPass>({
-    username: '',
-    password: '',
-  })
+    username: "",
+    password: "",
+  });
   const ChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setUserPass((prev) => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setUserPass((prev) => ({ ...prev, [name]: value }));
+  };
   const SubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    console.log([userPass.username, userPass.password])
-    Navigate('/main')
-  }
+    e.preventDefault();
+    console.log([userPass.username, userPass.password]);
+    Navigate("/main");
+  };
   return (
     <form onSubmit={SubmitHandler} className="z-10 opacity-95">
       <div className=" flex flex-col w-400px h-400px justify-center items-center bg-gray-800   gap-2 relative shadow-lg shadow-black stroke-black rounded-lg  ">
@@ -83,7 +83,7 @@ const LoginForm: React.FC = () => {
         </div>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

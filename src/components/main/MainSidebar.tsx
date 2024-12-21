@@ -6,30 +6,31 @@ import tasks from "../../assets/images/main/tasks.png";
 import profile from "../../assets/images/main/profile2.png";
 import email from "../../assets/images/main/mail2.png";
 import dataBars from "../../assets/images/main/data-bars.png";
-import "./MainSidebar.css";
+import "./mainSidebar.css";
 
-interface bools {
+interface DropdownStates {
   bases: boolean;
 }
 const MainSidebar: React.FC = () => {
-  const [dropdownStates, setDropdownStates] = useState<bools>({
+  const [dropdownStates, setDropdownStates] = useState<DropdownStates>({
     bases: false,
   });
-  const HandleChange = (e: React.MouseEvent<HTMLDivElement>) => {
-    const name = e.currentTarget.getAttribute("data-name");
-    if (name === "bases") {
-      setDropdownStates((prev) => ({
-        ...prev,
-        [name]: !prev[name],
-      }));
-    }
+  const handleMouseToggle = (e: React.MouseEvent<HTMLDivElement>) => {
+    const name = e.currentTarget.getAttribute(
+      "data-name"
+    ) as keyof DropdownStates;
+    setDropdownStates((prev) => ({
+      ...prev,
+      [name]: !prev[name],
+    }));
   };
+
   return (
     <aside className="w-4% min-w-[80px] h-40% min-h-[300px] mt-4 bg-zinc-300  stroke-black flex flex-col opacity-100  items-center shadow-lg shadow-black  ">
       <div
         className="flex relative w-full h-1/5 justify-center items-center"
-        onMouseEnter={HandleChange}
-        onMouseLeave={HandleChange}
+        onMouseEnter={handleMouseToggle}
+        onMouseLeave={handleMouseToggle}
         tabIndex={0}
         data-name="bases"
       >

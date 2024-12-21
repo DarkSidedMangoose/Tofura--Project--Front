@@ -1,5 +1,5 @@
 import React from "react";
-import "./MainHeader.css";
+import "./mainHeader.css";
 
 const MainHeader: React.FC = () => {
   return (

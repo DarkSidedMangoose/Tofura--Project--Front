@@ -1,5 +1,5 @@
-import LoginForm from '../../components/login/LoginForm'
-import LoginLogo from '../../components/login/LoginLogo'
+import LoginForm from "../../components/login/loginForm";
+import LoginLogo from "../../components/login/loginLogo";
 const Login = () => {
   return (
     <div className="flex justify-center items-center w-screen h-screen bg-loginBackground">
@@ -7,7 +7,7 @@ const Login = () => {
 
       <LoginForm />
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

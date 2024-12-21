@@ -1,7 +1,7 @@
-import React from 'react'
-import MainLogo from '../../assets/images/login/mainLogo.png'
-import MainLogoCenter from '../../assets/images/login/mainLogoCenter.png'
-import './LoginLogo.css'
+import React from "react";
+import MainLogo from "../../assets/images/login/mainLogo.png";
+import MainLogoCenter from "../../assets/images/login/mainLogoCenter.png";
+import "./loginLogo.css";
 const LoginLogo: React.FC = () => {
   //* check
   return (
@@ -9,7 +9,7 @@ const LoginLogo: React.FC = () => {
       <img className="MainLogo" src={MainLogo} alt="Logo"></img>
       <img className="MainMovedLogo" src={MainLogoCenter} alt="Logo"></img>
     </div>
-  )
-}
+  );
+};
 
-export default LoginLogo
+export default LoginLogo;

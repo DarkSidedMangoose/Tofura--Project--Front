@@ -1,5 +1,5 @@
 import React from "react";
-import "./MainMain.css";
+import "./mainMain.css";
 import BaseMain from "./bases/baseMain";
 
 const MainMain: React.FC = () => {
