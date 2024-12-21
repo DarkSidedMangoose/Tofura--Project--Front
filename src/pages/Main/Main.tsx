@@ -2,7 +2,6 @@ import React from "react";
 import MainSidebar from "../../components/main/mainSidebar";
 import MainHeader from "../../components/main/mainHeader";
 import MainLogos from "../../components/main/mainLogo";
-import { SecondarySidebar } from "../../components/main/mainSidebar";
 import MainMain from "../../components/main/mainMain";
 
 const Main: React.FC = () => {

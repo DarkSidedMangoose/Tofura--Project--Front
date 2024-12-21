@@ -4,7 +4,6 @@ import Password from "../../assets/images/login/password.png";
 import Enter from "../../assets/images/login/login.png";
 import { useNavigate } from "react-router-dom";
 import MainLogoCenter from "../../assets/images/login/mainLogoCenter.png";
-
 import "./loginForm.css";
 
 interface UserPass {
@@ -49,7 +48,11 @@ const LoginForm: React.FC = () => {
             onChange={ChangeHandler}
           />
           <div className="w-1/5  z-10 h-full flex justify-center items-center  loginImgBorders">
-            <img src={User} className=" z-20  w-30px h-30px "></img>
+            <img
+              src={User}
+              alt="userLogo"
+              className=" z-20  w-30px h-30px "
+            ></img>
           </div>
         </div>
         <div className="w-4/5 opacity-80 hover:opacity-60 z-30 flex flex-row items-center j h-15% relative bg-transparent  shadow-lg shadow-black stroke-black loginInputIcon ">
@@ -63,7 +66,11 @@ const LoginForm: React.FC = () => {
             onChange={ChangeHandler}
           />
           <div className="w-1/5  z-10 h-full flex justify-center items-center loginImgBorders">
-            <img src={Password} className={`z-20  w-30px h-30px`}></img>
+            <img
+              src={Password}
+              alt="passLogo"
+              className={`z-20  w-30px h-30px`}
+            ></img>
           </div>
         </div>
 
@@ -77,6 +84,7 @@ const LoginForm: React.FC = () => {
           <div className="h-full flex justify-center items-center z-20  ">
             <img
               src={Enter}
+              alt="enterLogo"
               className="absolute  right-1 w-30px h-30px  "
             ></img>
           </div>
