@@ -7,7 +7,6 @@ import MainMain from "../../components/main/mainMain";
 const Main: React.FC = () => {
   return (
     <div className="w-screen h-screen bg-loginBackground">
-      <MainLogos />
       <MainHeader />
       <div className="flex  gap-4 h-80%  ">
         <MainSidebar />

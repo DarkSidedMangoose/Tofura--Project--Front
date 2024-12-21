@@ -1,13 +1,14 @@
 import React from "react";
-import MainLogo from "../../assets/images/login/mainLogo.png";
-import MainLogoCenter from "../../assets/images/login/mainLogoCenter.png";
-import "./mainLogo.css";
+import MainLogo from "../../assets/images/main/fullLogo.png";
 const MainLogos: React.FC = () => {
   //* check
   return (
-    <div className="MainLogoDivMain">
-      <img className="MainLogoMain" src={MainLogo} alt="Logo"></img>
-      <img className="MainMovedLogoMain" src={MainLogoCenter} alt="Logo"></img>
+    <div className="absolute  w-[5%] min-w-[90px] h-[11%] min-h-[90px] left-0 opacity-90  mt-4 z-0">
+      <img
+        className=" w-100% h-[100%]  absolute"
+        src={MainLogo}
+        alt="Logo"
+      ></img>
     </div>
   );
 };
