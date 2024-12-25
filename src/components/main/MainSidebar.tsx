@@ -4,11 +4,15 @@ import dashboard from "../../assets/images/main/dashboard2.png";
 import tasks from "../../assets/images/main/tasks.png";
 import profile from "../../assets/images/main/profile2.png";
 import email from "../../assets/images/main/mail2.png";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/store";
+import { setString } from "../../redux/reducers/sidebarReducer";
 
 interface DropdownStates {
   bases: boolean;
 }
 const MainSidebar: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const [dropdownStates, setDropdownStates] = useState<DropdownStates>({
     bases: false,
   });
@@ -37,15 +41,28 @@ const MainSidebar: React.FC = () => {
           alt=""
         />
         {dropdownStates.bases ? (
-          <div className="absolute z-20  top-0 -right-[500%] bg-zinc-300 w-[500%] h-[150%] border-l-[1px] border-solid border-white ">
+          <div className="absolute z-20  top-0 -right-[400%] bg-zinc-300 w-[400%] h-[150%] border-l-[1px] border-solid border-white ">
             <ul className="h-full">
-              <li className="w-full flex h-1/3 justify-center items-center text-[0.7vw]   cursor-pointer text-login hover:opacity-50 ">
+              <li
+                className="w-full flex h-1/3 justify-center items-center text-[0.7vw]   cursor-pointer text-login hover:opacity-50 "
+                onClick={() => dispatch(setString("საერთო ობიექტების რეესტრი"))}
+              >
                 საერთო ობიექტების რეესტრი
               </li>
-              <li className="w-full flex h-1/3 justify-center items-center text-[0.7vw]  cursor-pointer text-login hover:opacity-50">
+              <li
+                className="w-full flex h-1/3 justify-center items-center text-[0.7vw]  cursor-pointer text-login hover:opacity-50"
+                onClick={() =>
+                  dispatch(setString("შესამოწმებელი ობიექტების რეესტრი"))
+                }
+              >
                 შესამოწმებელი ობიექტების რეესტრი
               </li>
-              <li className="w-full flex h-1/3 justify-center items-center text-[0.7vw] cursor-pointer text-login hover:opacity-50">
+              <li
+                className="w-full flex h-1/3 justify-center items-center text-[0.7vw] cursor-pointer text-login hover:opacity-50"
+                onClick={() =>
+                  dispatch(setString("შემოწმებული ობიექტების რეესტრი"))
+                }
+              >
                 შემოწმებული ობიექტების რეესტრი
               </li>
             </ul>
