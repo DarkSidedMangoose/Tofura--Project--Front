@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
 const MainHeader: React.FC = () => {
-  const store = useSelector((state: RootState) => state.sidebar.data);
+  const store = useSelector((state: RootState) => state.sidebarBase.data);
   return (
     <header className="h-15% min-h-[100px]">
       <MainLogos />

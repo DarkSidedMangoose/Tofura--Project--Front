@@ -11,9 +11,6 @@ type objStateType = {
 };
 
 const CommonAfterClickers: React.FC = () => {
-  const [choosed, setChoosed] = useState<number>(-1); //index of which i choose
-  const [infoShown, setInfoShown] = useState<boolean>(false);
-
   const [obj, setObj] = useState<objStateType[] | null>([
     {
       identifier: 24,
@@ -36,11 +33,6 @@ const CommonAfterClickers: React.FC = () => {
     },
   ]);
 
-  useEffect(() => {
-    if (infoShown === true && obj != null) {
-      console.log(obj[choosed].workType);
-    }
-  }, [infoShown]);
   return (
     <div className="w-98% h-95% bg-white shadow-lg shadow-black flex justify-center items-center">
       <div className="w-98% h-95%  ">

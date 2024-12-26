@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import sidebarReducer from "./reducers/sidebarReducer"; // Ensure this path is correct
+import sidebarBaseReducer from "./reducers/sidebarBasesReducer"; // Ensure this path is correct
+import sidebarChooseReducer from "./reducers/sidebarChooseReducer";
 
 export const store = configureStore({
   reducer: {
-    sidebar: sidebarReducer,
+    sidebarBase: sidebarBaseReducer,
+    sidebarChoose: sidebarChooseReducer,
   },
 });
 

@@ -1,25 +1,25 @@
 // for sidebar - for state which has been choosed
 
 import { createSlice } from "@reduxjs/toolkit";
-interface SidebarState {
+interface SidebarBaseState {
   data: string;
 }
 
-const initialState: SidebarState = {
+const initialState: SidebarBaseState = {
   data: "საერთო ობიექტების რეესტრი",
 };
 
 // Explicitly typing the action as SidebarActionTypes
-const sidebarSlice = createSlice({
+const sidebarBaseSlice = createSlice({
   name: "counter",
   initialState,
   reducers: {
-    setString: (state, action): SidebarState => ({
+    setBase: (state, action): SidebarBaseState => ({
       ...state,
       data: action.payload,
     }),
   },
 });
 
-export const { setString } = sidebarSlice.actions;
-export default sidebarSlice.reducer;
+export const { setBase } = sidebarBaseSlice.actions;
+export default sidebarBaseSlice.reducer;
