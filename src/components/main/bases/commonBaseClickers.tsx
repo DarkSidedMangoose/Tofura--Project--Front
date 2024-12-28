@@ -1,9 +1,8 @@
 import React from "react";
 import Search from "../../../assets/images/main/search.png";
 import Filter from "../../../assets/images/main/filter.png";
-import Sync from "../../../assets/images/main/sync.png";
-import Add from "../../../assets/images/main/add.png";
-import Info from "../../../assets/images/main/info.png";
+
+import CommonBaseClickersChild from "./clickersDifferentCases";
 
 const CommonBaseClickers: React.FC = () => {
   return (
@@ -14,25 +13,14 @@ const CommonBaseClickers: React.FC = () => {
             className="h-8 border-gray-800  rounded border-2 outline-none w-64  text-sm shadow-lg shadow-black"
             placeholder="მიუთითეთ საძიებო სიტყვა..."
           ></input>
-          <div className="h-8 w-8 border-gray-800 bg-white rounded border-2 cursor-pointer flex justify-center items-center shadow-lg shadow-black hover:opacity-85 ">
-            <img src={Search} className="h-4"></img>
+          <div className="h-8 w-8 border-gray-800 bg-white rounded border-2 cursor-pointer flex justify-center items-center shadow-lg shadow-black hover:opacity-90 hover:bg-white ">
+            <img src={Search} alt="Search" className="h-4"></img>
           </div>
-          <div className="h-8 w-8 border-gray-800 bg-white  rounded border-2 flex justify-center items-center cursor-pointer shadow-lg shadow-black hover:opacity-85">
-            <img src={Filter} className="h-4   "></img>
-          </div>
-        </div>
-        <div className=" h-16 flex items-center mt-2 gap-2 ">
-          <div className="h-8 w-8 border-gray-800 bg-white  rounded border-2 flex justify-center items-center cursor-pointer shadow-lg shadow-black hover:opacity-85">
-            <img src={Sync} className="h-4   "></img>
-          </div>
-          <div className="h-8 w-8 border-gray-800 bg-white  rounded border-2 flex justify-center items-center cursor-pointer shadow-lg shadow-black hover:opacity-85">
-            <img src={Add} className="h-4   "></img>
-          </div>
-          <div className="h-8 w-40  border-gray-800 bg-white  rounded border-2 flex justify-evenly items-center cursor-pointer shadow-lg shadow-black hover:opacity-85">
-            <p className="text-sm text-sideBar font-bold ">სრულად ნახვა</p>
-            <img src={Info} className="h-4"></img>
+          <div className="h-8 w-8 border-gray-800 bg-white  rounded border-2 flex justify-center items-center cursor-pointer shadow-lg shadow-black hover:opacity-90 hover:bg-white">
+            <img src={Filter} alt="Filter" className="h-4"></img>
           </div>
         </div>
+        <CommonBaseClickersChild />
       </div>
     </div>
   );

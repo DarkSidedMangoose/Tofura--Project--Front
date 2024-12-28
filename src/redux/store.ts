@@ -4,8 +4,8 @@ import sidebarChooseReducer from "./reducers/sidebarChooseReducer";
 
 export const store = configureStore({
   reducer: {
-    sidebarBase: sidebarBaseReducer,
-    sidebarChoose: sidebarChooseReducer,
+    sidebarBase: sidebarBaseReducer, // it's first sidebar dropright reducer there we define in bases which base option are we located;
+    sidebarChoose: sidebarChooseReducer, // it's sidebar choose reducer from there we define where we are located
   },
 });
 
