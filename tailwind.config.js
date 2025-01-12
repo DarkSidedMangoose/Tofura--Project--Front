@@ -21,11 +21,8 @@ module.exports = {
         "300px": "300px",
       },
       colors: {
-        login: "#051e4bf2",
         loginBackground: "#f3eeeee5",
-        loginBut: "#808080",
-        sideBar: "#051e4bf2",
-        header: "#D9D9D9",
+        sidebarChoose: "#030352",
       },
       width: {
         "3%": "3%",

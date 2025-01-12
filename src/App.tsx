@@ -8,14 +8,16 @@ import { store } from "./redux/store";
 
 const App: React.FC = () => {
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/main" element={<Main />} />
-        </Routes>
-      </BrowserRouter>
-    </Provider>
+    <div className="w-full h-full bg-loginBackground">
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/main" element={<Main />} />
+          </Routes>
+        </BrowserRouter>
+      </Provider>
+    </div>
   );
 };
 

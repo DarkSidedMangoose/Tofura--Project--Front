@@ -5,7 +5,7 @@ interface sidebarChoose {
 }
 
 const initialState: sidebarChoose = {
-  data: "",
+  data: "base",
 };
 
 const sidebarChooseSlice = createSlice({
