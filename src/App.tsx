@@ -8,7 +8,7 @@ import { store } from "./redux/store";
 
 const App: React.FC = () => {
   return (
-    <div className="w-full h-full bg-loginBackground">
+    <div className="w-full h-full bg-loginBackground ">
       <Provider store={store}>
         <BrowserRouter>
           <Routes>
