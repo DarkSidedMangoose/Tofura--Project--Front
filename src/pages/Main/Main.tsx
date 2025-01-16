@@ -1,15 +1,14 @@
 import React from "react";
 import MainSidebar from "../../components/main/mainSidebar";
+import MainFooter from "../../components/main/mainFooter";
 
 const Main: React.FC = () => {
   return (
     <div className="w-full h-screen ">
-      <div className="w-full h-[95%]">
+      <div className="w-full h-[90%]">
         <MainSidebar />
       </div>
-      <div className="fixed bottom-0  w-full h-[5%] min-h-[50px] z-10 bg-white   ">
-        ss
-      </div>
+      <MainFooter />
     </div>
   );
 };

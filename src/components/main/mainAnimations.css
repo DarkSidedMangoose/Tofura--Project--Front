@@ -1,0 +1,34 @@
+.sidebarFolderInfoShown-div {
+  animation: slideInSidebar 0.5s forwards;
+}
+
+@keyframes slideInSidebar {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.sidebarFolderInfoClose-div {
+  animation: slideOutSidebar 0.5s forwards;
+}
+@keyframes slideOutSidebar {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+.footerAnimated-div {
+  animation: slideInFooter 0.5s forwards;
+}
+@keyframes slideInFooter {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
