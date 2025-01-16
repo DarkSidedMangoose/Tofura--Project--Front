@@ -52,7 +52,7 @@ const MainSidebar: React.FC = () => {
             folderInfoAnimToBack === false
               ? "sidebarFolderInfoShown-div"
               : "sidebarFolderInfoClose-div"
-          } w-[77%] h-full bg-white shadow-bottom-right`}
+          } w-[77%] h-full bg-white shadow-bottom-right rounded-br-2xl `}
         ></div>
       )}
     </div>
