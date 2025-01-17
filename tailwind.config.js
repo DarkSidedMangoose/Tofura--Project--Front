@@ -31,6 +31,7 @@ module.exports = {
       colors: {
         loginBackground: "#f3eeeee5",
         sidebarChoose: "#030352",
+        footerText: "#10024a",
       },
       width: {
         "3%": "3%",
