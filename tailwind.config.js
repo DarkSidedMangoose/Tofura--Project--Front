@@ -11,6 +11,8 @@ module.exports = {
         bottom: "0 10px 15px rgba(0, 0, 0, 0.3)",
       },
       screens: {
+        short: { raw: "(max-height: 600px)" },
+        narrow: { raw: "(max-width: 1700px)" },
         xs: "480px",
         sm: "640px",
         md: "768px",
