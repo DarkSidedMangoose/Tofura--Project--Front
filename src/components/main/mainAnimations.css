@@ -1,5 +1,15 @@
+/* sidebar */
 .sidebarFolderInfoShown-div {
   animation: slideInSidebar 0.5s forwards;
+}
+.sidebarFolderInfoClose-div {
+  animation: slideOutSidebar 0.5s forwards;
+}
+.sidebarAdditionalInfoChoose {
+  animation: toRight 0.5s forwards;
+}
+.sidebarAdditionalInfoChooseOff {
+  animation: toLeft 0.5s forwards;
 }
 
 @keyframes slideInSidebar {
@@ -10,9 +20,6 @@
     transform: translateX(0);
   }
 }
-.sidebarFolderInfoClose-div {
-  animation: slideOutSidebar 0.5s forwards;
-}
 @keyframes slideOutSidebar {
   from {
     transform: translateX(0);
@@ -21,6 +28,23 @@
     transform: translateX(-100%);
   }
 }
+@keyframes toRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(5%);
+  }
+}
+@keyframes toLeft {
+  from {
+    transform: translateX(5%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+/* footers */
 .footerAnimated-div {
   animation: slideInFooter 0.5s forwards;
 }
