@@ -7,6 +7,7 @@ import "./mainAnimations.css";
 import { NavItem } from "./subComponents/mainSidebarComp/sidebarSubComponents";
 import { AdditionalInfoOfBase } from "./subComponents/mainSidebarComp/sidebarSubComponents";
 import { sideState } from "./subComponents/mainSidebarComp/sidebarInterfaces";
+import { handleSidebarClick } from "./subComponents/mainSidebarComp/sidebarFunctions";
 
 //main component
 const MainSidebar: React.FC = () => {
@@ -14,20 +15,6 @@ const MainSidebar: React.FC = () => {
     identifier: "base",
     state: true,
   });
-
-  const handleSidebarClick = (sidebar: string) => {
-    if (sidebar === "base") {
-      setSidebarStates({ identifier: sidebar, state: true });
-    } else if (sidebar !== "base" && sidebarStates.identifier === "base") {
-      setSidebarStates({ ...sidebarStates, state: false });
-
-      setTimeout(() => {
-        setSidebarStates({ ...sidebarStates, identifier: sidebar });
-      }, 500);
-    } else {
-      setSidebarStates({ ...sidebarStates, identifier: sidebar });
-    }
-  };
 
   return (
     <div
@@ -48,19 +35,25 @@ const MainSidebar: React.FC = () => {
             icon={Base}
             alt="Base"
             isActive={sidebarStates.identifier === "base"}
-            onClick={() => handleSidebarClick("base")}
+            onClick={() =>
+              handleSidebarClick("base", sidebarStates, setSidebarStates)
+            }
           />
           <NavItem
             icon={Dashboard}
             alt="dashboard"
             isActive={sidebarStates.identifier === "dashboard"}
-            onClick={() => handleSidebarClick("dashboard")}
+            onClick={() =>
+              handleSidebarClick("dashboard", sidebarStates, setSidebarStates)
+            }
           />
           <NavItem
             icon={MyProfile}
             alt="profile"
             isActive={sidebarStates.identifier === "profile"}
-            onClick={() => handleSidebarClick("profile")}
+            onClick={() =>
+              handleSidebarClick("profile", sidebarStates, setSidebarStates)
+            }
           />
         </nav>
       </aside>
