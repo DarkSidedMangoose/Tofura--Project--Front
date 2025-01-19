@@ -1,8 +1,8 @@
 /* sidebar */
-.sidebarFolderInfoShown-div {
+.sidebarBaseInfoShown-div {
   animation: slideInSidebar 0.5s forwards;
 }
-.sidebarFolderInfoClose-div {
+.sidebarBaseInfoClose-div {
   animation: slideOutSidebar 0.5s forwards;
 }
 .sidebarAdditionalInfoChoose {
