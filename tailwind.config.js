@@ -36,6 +36,7 @@ module.exports = {
         loginButBackground: "#E6E4E3",
         sidebarChoose: "#030352",
         footerText: "#10024a",
+        mainButBorders: "#00004D",
       },
       width: {
         "3%": "3%",
