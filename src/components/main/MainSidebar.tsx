@@ -4,10 +4,10 @@ import Base from "../../assets/images/main/base.png";
 import Dashboard from "../../assets/images/main/dashboard.png";
 import MyProfile from "../../assets/images/main/myProfile.png";
 import "./mainAnimations.css";
-import { NavItem } from "./subComponents/sidebarSubComponents";
-import { AdditionalInfoOfBase } from "./subComponents/sidebarSubComponents";
-import { sideState } from "./subComponents/sidebarInterfaces";
-import { handleSidebarClick } from "./subComponents/sidebarFunctions";
+import { NavItem } from "./subComponents/sidebar/sidebarSubComponents";
+import { AdditionalInfoOfBase } from "./subComponents/sidebar/sidebarSubComponents";
+import { sideState } from "./subComponents/sidebar/sidebarInterfaces";
+import { handleSidebarClick } from "./subComponents/sidebar/sidebarFunctions";
 
 //main component
 const MainSidebar: React.FC = () => {
