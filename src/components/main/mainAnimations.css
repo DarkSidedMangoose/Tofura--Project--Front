@@ -11,6 +11,9 @@
 .sidebarAdditionalInfoChooseOff {
   animation: toLeft 0.5s forwards;
 }
+.transition-width {
+  transition: width 0.5s ease-in-out;
+}
 
 @keyframes slideInSidebar {
   from {
