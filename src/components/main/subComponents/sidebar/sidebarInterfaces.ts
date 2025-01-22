@@ -4,6 +4,7 @@ export interface NavItemProps {
   alt: string;
   isActive: boolean;
   onClick: () => void;
+  onMouseEnter: () => void;
 }
 //end of props interface for NavItem component
 

@@ -15,22 +15,30 @@
   transition: width 0.5s ease-in-out;
 }
 
+.nones {
+  display: none;
+}
 @keyframes slideInSidebar {
   from {
-    transform: translateX(-100%);
+    display: none;
+    width: 0%;
   }
   to {
-    transform: translateX(0);
+    display: flex;
+    width: 16%;
   }
 }
 @keyframes slideOutSidebar {
   from {
-    transform: translateX(0);
+    display: flex;
+    width: 16%;
   }
   to {
-    transform: translateX(-100%);
+    display: none;
+    width: 0%;
   }
 }
+
 @keyframes toRight {
   from {
     transform: translateX(0);

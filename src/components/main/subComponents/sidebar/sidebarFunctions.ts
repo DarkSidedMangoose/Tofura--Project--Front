@@ -8,13 +8,7 @@ export const handleSidebarClick = (
 ) => {
   if (sidebar === "base") {
     setSidebarStates({ identifier: sidebar, state: true });
-  } else if (sidebar !== "base" && sidebarStates.identifier === "base") {
-    setSidebarStates({ ...sidebarStates, state: false });
-
-    setTimeout(() => {
-      setSidebarStates({ ...sidebarStates, identifier: sidebar });
-    }, 500);
   } else {
-    setSidebarStates({ ...sidebarStates, identifier: sidebar });
+    setSidebarStates({ ...sidebarStates, identifier: sidebar, state: false });
   }
 };

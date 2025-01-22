@@ -1,18 +1,20 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import {
   NavItemProps,
   AdditionalInfoOfBaseProps,
   AdditionalInfoOfBaseStates,
 } from "./sidebarInterfaces";
+import "../../mainAnimations.css";
 // subComponentOfSidebarIcons
 export const NavItem: React.FC<NavItemProps> = memo(
-  ({ icon, alt, isActive, onClick }) => {
+  ({ icon, alt, isActive, onClick, onMouseEnter }) => {
     return (
       <div
         onClick={onClick}
         className={`w-full h-1/5 flex justify-center items-center rounded-[100%] hover:opacity-70 cursor-pointer ${
           isActive ? "bg-blue-900" : ""
         }`}
+        onMouseEnter={onMouseEnter}
       >
         <div className="w-[40%] aspect-w-1 aspect-h-1">
           <img className="object-contain" src={icon} alt={alt} />
@@ -27,6 +29,29 @@ export const NavItem: React.FC<NavItemProps> = memo(
 export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
   isActive,
 }) => {
+  const [windowDimensions, setWindowDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  const [shown, setShown] = useState(isActive);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  useEffect(() => {
+    setShown(isActive);
+  }, [isActive]);
+
   const [baseState, setBaseState] = useState<AdditionalInfoOfBaseStates>({
     baseInfoP: [
       "ობიექტების რეესტრი",
@@ -43,10 +68,17 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
   return (
     <div
       className={`z-0 ${
-        isActive ? "sidebarBaseInfoShown-div" : "sidebarBaseInfoClose-div"
-      } w-[77%] h-full bg-white shadow-bottom-right rounded-br-2xl flex justify-center items-center  `}
+        shown && windowDimensions.width > 1600
+          ? "sidebarBaseInfoShown-div "
+          : "sidebarBaseInfoClose-div "
+      }  h-90% min-h-[600px] bg-white shadow-bottom-right  rounded-br-2xl  justify-center items-center fixed ml-[5%]   `}
+      onMouseLeave={() => setShown(false)}
     >
-      <div className=" w-90% h-[90%] flex flex-col space-y-8   ">
+      <div
+        className={`${
+          !shown ? "nones" : "flex"
+        } w-90% h-[90%]  flex-col space-y-8   `}
+      >
         <div className="space-y-24">
           <section className="flex flex-col space-y-4  ">
             <h1 className="flex justify-center text-blue-950 font-bold">
@@ -62,7 +94,10 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
                 key={index}
                 onClick={
                   () =>
-                    setBaseState((prev) => ({ ...prev, baseInfoChoose: info })) // to identify which has choose
+                    setBaseState((prev) => ({
+                      ...prev,
+                      baseInfoChoose: info,
+                    })) // to identify which has choose
                 }
               >
                 {info}
@@ -83,7 +118,10 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
                 key={index}
                 onClick={
                   () =>
-                    setBaseState((prev) => ({ ...prev, baseInfoChoose: info })) // to identify which has choose
+                    setBaseState((prev) => ({
+                      ...prev,
+                      baseInfoChoose: info,
+                    })) // to identify which has choose
                 }
               >
                 {info}
