@@ -1,11 +1,13 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import {
   NavItemProps,
   AdditionalInfoOfBaseProps,
   AdditionalInfoOfBaseStates,
 } from "./sidebarInterfaces";
+import { debounce } from "./sidebarFunctions";
 import "../../mainAnimations.css";
-// subComponentOfSidebarIcons
+
+// subComponents of sidebar they will be used as an icons and multiple times because i used there memo hook to avoid re-rendering and optimization overload
 export const NavItem: React.FC<NavItemProps> = memo(
   ({ icon, alt, isActive, onClick, onMouseEnter }) => {
     return (
@@ -23,35 +25,19 @@ export const NavItem: React.FC<NavItemProps> = memo(
     );
   }
 );
-// end of subComponentOfSidebarIcons
 
 // subComponentOfSidebarAdditionalInfo
 export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
   isActive,
 }) => {
+  // sidebar handling to show and hide via css and handling classname changes
+  const [shown, setShown] = useState(isActive);
+  // for fix sidebar animation i need screen width and height because if will be width under 1600px  i need different width for animation and i used for it
   const [windowDimensions, setWindowDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
-
-  const [shown, setShown] = useState(isActive);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-  useEffect(() => {
-    setShown(isActive);
-  }, [isActive]);
-
+  //it's for make code more cleaner and i map them to make code more less and cleaner
   const [baseState, setBaseState] = useState<AdditionalInfoOfBaseStates>({
     baseInfoP: [
       "ობიექტების რეესტრი",
@@ -65,6 +51,26 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
       "წაშლილი ობიექტები",
     ],
   });
+
+  //improving performance with debouncing
+  const handleResize = useCallback(() => {
+    setWindowDimensions({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  }, []);
+  useEffect(() => {
+    const debounceResize = debounce(handleResize, 100);
+    window.addEventListener("resize", debounceResize);
+    return () => {
+      window.removeEventListener("resize", debounceResize);
+    };
+  }, [handleResize]);
+  // for handle base sidebar additional info shown and hide
+  useEffect(() => {
+    setShown(isActive);
+  }, [isActive]);
+
   return (
     <div
       className={`z-0 ${
@@ -76,12 +82,12 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
           ? "sidebarBaseInfoCloseDown1600pxRight-div"
           : "sidebarBaseInfoCloseDown1600pxLeft-div"
       }  h-90% min-h-[600px] bg-white shadow-bottom-right  rounded-br-2xl  justify-center items-center fixed ml-[5%]   `}
-      onMouseLeave={() => setShown(false)}
+      onMouseLeave={() => setShown(false)} // for handle sidebar close while mouse leave that div
     >
       <div
         className={`${
           !shown ? "nones" : "flex"
-        } w-90% h-[90%]  flex-col space-y-8   `}
+        } w-90% h-[90%]  flex-col space-y-8   `} //nones is in css and means display:none and it handle for when animation is closing, this text what is in that div is show and when sidebar closing doesn't have good look of  animation because of it that div need to set as a none display
       >
         <div className="space-y-24">
           <section className="flex flex-col space-y-4  ">
@@ -91,17 +97,16 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
             {baseState.baseInfoP.map((info, index) => (
               <p
                 className={`${
-                  baseState.baseInfoChoose === info
+                  baseState.baseInfoChoose === info //if there is choose one of base it look more boldly and make have mini animation and this classnames are for that
                     ? "font-bold sidebarAdditionalInfoChoose "
                     : " sidebarAdditionalInfoChooseOff"
                 } text-[0.9rem] cursor-pointer text-blue-950 `}
                 key={index}
-                onClick={
-                  () =>
-                    setBaseState((prev) => ({
-                      ...prev,
-                      baseInfoChoose: info,
-                    })) // to identify which has choose
+                onClick={() =>
+                  setBaseState((prev) => ({
+                    ...prev,
+                    baseInfoChoose: info,
+                  }))
                 }
               >
                 {info}
@@ -115,7 +120,7 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
             {baseState.baseInfoNdP.map((info, index) => (
               <p
                 className={`${
-                  baseState.baseInfoChoose === info
+                  baseState.baseInfoChoose === info //same purpose what is in top but there is different bases
                     ? "font-bold sidebarAdditionalInfoChoose "
                     : " sidebarAdditionalInfoChooseOff"
                 } text-[0.9rem] cursor-pointer text-blue-950 `}
@@ -125,7 +130,7 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
                     setBaseState((prev) => ({
                       ...prev,
                       baseInfoChoose: info,
-                    })) // to identify which has choose
+                    })) // it's for identify if in additional bases option has choose, and  when choose option it make more bolder and animate it a little bit
                 }
               >
                 {info}

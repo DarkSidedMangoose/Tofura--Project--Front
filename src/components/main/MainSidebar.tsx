@@ -5,12 +5,11 @@ import Dashboard from "../../assets/images/main/dashboard.png";
 import MyProfile from "../../assets/images/main/myProfile.png";
 import "./mainAnimations.css";
 import { NavItem } from "./subComponents/sidebar/sidebarSubComponents";
-import { sideState } from "./subComponents/sidebar/sidebarInterfaces";
+import {
+  mainSidebarProps,
+  sideState,
+} from "./subComponents/sidebar/sidebarInterfaces";
 import { handleSidebarClick } from "./subComponents/sidebar/sidebarFunctions";
-
-interface mainSidebarProps {
-  setIsActive: (isActive: boolean) => void;
-}
 
 //main component
 const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive }) => {

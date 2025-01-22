@@ -1,3 +1,5 @@
+/* props interfaces */
+
 //props interface  for NavItem component
 export interface NavItemProps {
   icon: string;
@@ -6,9 +8,11 @@ export interface NavItemProps {
   onClick: () => void;
   onMouseEnter: () => void;
 }
-//end of props interface for NavItem component
-
-//props interface for AdditionalInfoOfBase component
+//MainSidebar.tsx props interface
+export interface mainSidebarProps {
+  setIsActive: (isActive: boolean) => void;
+}
+//props interface for AdditionalInfoOfBase.tsx
 export interface AdditionalInfoOfBaseProps {
   isActive: boolean;
 }
@@ -17,9 +21,9 @@ export interface AdditionalInfoOfBaseStates {
   baseInfoChoose: string;
   baseInfoNdP: string[];
 }
-//end of props interface for AdditionalInfoOfBase component
+/* object interfaces */
 
-//main component interface
+//mainSidebar sidebarStates object interface
 export interface sideState {
   identifier: string;
   state: boolean;

@@ -16,7 +16,7 @@ const Main: React.FC = () => {
           }}
         />
         <AdditionalInfoOfBase isActive={isActive} />
-        <MainMain isActive={isActive} />
+        <MainMain />
       </div>
       <MainFooter />
     </div>
