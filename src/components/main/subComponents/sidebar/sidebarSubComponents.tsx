@@ -69,8 +69,12 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
     <div
       className={`z-0 ${
         shown && windowDimensions.width > 1600
-          ? "sidebarBaseInfoShown-div "
-          : "sidebarBaseInfoClose-div "
+          ? "sidebarBaseInfoShownUp1600pxRight-div "
+          : !shown && windowDimensions.width > 1600
+          ? "sidebarBaseInfoCloseUp1600pxLeft-div "
+          : shown && windowDimensions.width < 1600
+          ? "sidebarBaseInfoCloseDown1600pxRight-div"
+          : "sidebarBaseInfoCloseDown1600pxLeft-div"
       }  h-90% min-h-[600px] bg-white shadow-bottom-right  rounded-br-2xl  justify-center items-center fixed ml-[5%]   `}
       onMouseLeave={() => setShown(false)}
     >

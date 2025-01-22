@@ -1,9 +1,15 @@
 /* sidebar */
-.sidebarBaseInfoShown-div {
-  animation: slideInSidebar 0.5s forwards;
+.sidebarBaseInfoShownUp1600pxRight-div {
+  animation: slideInSidebarUp1600px 0.5s forwards;
 }
-.sidebarBaseInfoClose-div {
-  animation: slideOutSidebar 0.5s forwards;
+.sidebarBaseInfoCloseDown1600pxRight-div {
+  animation: slideInSidebarDown1600px 0.5s forwards;
+}
+.sidebarBaseInfoCloseUp1600pxLeft-div {
+  animation: slideOutSidebarUp1600px 0.5s forwards;
+}
+.sidebarBaseInfoCloseDown1600pxLeft-div {
+  animation: slideOutSidebarDown1600px 0.5s forwards;
 }
 .sidebarAdditionalInfoChoose {
   animation: toRight 0.5s forwards;
@@ -18,24 +24,45 @@
 .nones {
   display: none;
 }
-@keyframes slideInSidebar {
+@keyframes slideInSidebarUp1600px {
   from {
     display: none;
     width: 0%;
   }
   to {
     display: flex;
-    width: 16%;
+    width: 18%;
   }
 }
-@keyframes slideOutSidebar {
+@keyframes slideInSidebarDown1600px {
+  from {
+    display: none;
+    width: 0px;
+  }
+  to {
+    margin-left: calc(81px);
+    display: flex;
+    width: 300px;
+  }
+}
+@keyframes slideOutSidebarUp1600px {
   from {
     display: flex;
-    width: 16%;
+    width: 18%;
   }
   to {
     display: none;
     width: 0%;
+  }
+}
+@keyframes slideOutSidebarDown1600px {
+  from {
+    display: flex;
+    width: 350px;
+  }
+  to {
+    display: none;
+    width: 0px;
   }
 }
 
