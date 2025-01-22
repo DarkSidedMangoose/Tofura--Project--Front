@@ -1,16 +1,19 @@
-import { sideState } from "./sidebarInterfaces";
+import { SetIsActive, sideState } from "./sidebarInterfaces";
 //main component functions
 
 // i used it MainSidebar.tsx to handle state changes while click on any <NavItem/> they are icons and when i click one of them that function is change state of choose (identify purpose) it's for cleaner and for to use less code.
 export const handleSidebarClick = (
   sidebar: string,
   sidebarStates: sideState,
-  setSidebarStates: React.Dispatch<React.SetStateAction<sideState>>
+  setSidebarStates: React.Dispatch<React.SetStateAction<sideState>>,
+  setIsActive: SetIsActive
 ) => {
   if (sidebar === "base") {
     setSidebarStates({ identifier: sidebar, state: true });
+    setIsActive(true);
   } else {
     setSidebarStates({ ...sidebarStates, identifier: sidebar, state: false });
+    setIsActive(false);
   }
 };
 

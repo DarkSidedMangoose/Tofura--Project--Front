@@ -19,12 +19,12 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive }) => {
   });
 
   const toggleSidebar = (identifier: string) => {
-    if (identifier === "base") {
-      setIsActive(true);
-    } else {
-      setIsActive(false);
-    }
-    handleSidebarClick(identifier, sidebarStates, setSidebarStates);
+    handleSidebarClick(
+      identifier,
+      sidebarStates,
+      setSidebarStates,
+      setIsActive
+    );
   };
 
   return (
@@ -45,7 +45,7 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive }) => {
                   setIsActive(false);
                   setTimeout(() => {
                     setIsActive(true);
-                  }, 100); // to stay in folder page and when i enter mouse to this icon to slide right additional info i need setTimeout for handle freezeing on setIsActive(true) and avoid more props drilling
+                  }, 20); // to stay in folder page and when i enter mouse to this icon to slide right additional info i need setTimeout for handle freezeing on setIsActive(true) and avoid more props drilling
                 }
               }}
             />

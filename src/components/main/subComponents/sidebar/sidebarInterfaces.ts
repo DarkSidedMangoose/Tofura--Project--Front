@@ -21,11 +21,17 @@ export interface AdditionalInfoOfBaseStates {
   baseInfoChoose: string;
   baseInfoNdP: string[];
 }
+
 /* object interfaces */
 
 //mainSidebar sidebarStates object interface
 export interface sideState {
   identifier: string;
   state: boolean;
+}
+
+//functions props interfaces
+export interface SetIsActive {
+  (isActive: boolean): void;
 }
 //end of interfaces
