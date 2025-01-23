@@ -61,7 +61,7 @@ export const MainMainHeaderSection: React.FC = () => {
                 alt="plus"
               />
             </button>
-            <button className="bg-white flex gap-[5%] items-center w-[17.5%] min-w-[170px] h-full rounded-[8px] border-[1.5px] border-solid border-mainButBorders font-bold text-blue-950 text-[14px] ">
+            <button className="bg-white flex gap-[2%] items-center w-[17.5%] min-w-[170px] h-full rounded-[8px] border-[1.5px] border-solid border-mainButBorders font-bold text-blue-950 text-[14px] ">
               <img className=" h-70% object-contain" src={Pen} alt="plus" />
               დათვალიერება
             </button>
