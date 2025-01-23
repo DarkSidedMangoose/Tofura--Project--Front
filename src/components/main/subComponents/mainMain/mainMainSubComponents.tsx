@@ -19,11 +19,11 @@ export const MainMainHeaderSection: React.FC = () => {
         <nav className="h-[25%] w-full flex items-center justify-between ">
           <section className="h-full w-70% min-h-[30px] flex items-center gap-[0.5%]">
             <input
-              className="w-[25%] min-w-[200px] h-full rounded-[8px] border-[1.5px] border-solid border-mainButBorders focus:outline-none"
+              className="w-[25%] min-w-[200px] h-full rounded-[8px] border-[1.5px] border-solid border-mainButBorders focus:outline-none shadow-bottom"
               type="text"
               placeholder="ძიება..."
             />
-            <button className="bg-white h-full rounded-[8px] w-[4.5%] min-w-[30px]   border-[1.5px] border-solid border-mainButBorders flex justify-center items-center">
+            <button className="bg-white h-full rounded-[8px] w-[4.5%] min-w-[30px]   border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
               <img
                 className="w-60% h-60% object-contain"
                 src={Search}
