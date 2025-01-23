@@ -5,6 +5,7 @@ import Sync from "../../../../assets/images/main/sync.png";
 import ScrollArrow from "../../../../assets/images/main/scrollArrows.png";
 import Plus from "../../../../assets/images/main/plus.png";
 import Pen from "../../../../assets/images/main/pen.png";
+import "./mainMainSubCompenents.css";
 
 export const MainMainHeaderSection: React.FC = () => {
   return (
@@ -73,5 +74,7 @@ export const MainMainHeaderSection: React.FC = () => {
 };
 
 export const MainMainMainSection: React.FC = () => {
-  return <div className="w-98% h-[85%] bg-white"></div>;
+  return (
+    <div className="w-98% h-[85%] bg-white rounded-[0.5%] shadow-boxShadow"></div>
+  );
 };
