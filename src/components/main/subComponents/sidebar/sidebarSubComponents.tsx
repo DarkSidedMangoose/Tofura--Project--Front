@@ -72,7 +72,6 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
   useEffect(() => {
     setShown(isActive);
   }, [isActive]);
-  useEffect(() => {});
   useEffect(() => {
     isShown(shown);
   }, [shown]);

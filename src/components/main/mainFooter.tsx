@@ -1,10 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 import "./mainAnimations.css";
 import iconNavigation from "../../assets/images/main/click.png";
 import phone from "../../assets/images/main/phone.png";
 import email from "../../assets/images/main/email.png";
 
-const MainFooter: React.FC = () => {
+const MainFooter: React.FC = memo(() => {
   return (
     <footer className="fixed bottom-0 w-full  h-12 z-30 flex justify-center footerAnimated-div">
       <div className="bg-white border-2 flex items-center justify-between w-11/12 shadow-top h-full rounded-lg">
@@ -35,6 +35,6 @@ const MainFooter: React.FC = () => {
       </div>
     </footer>
   );
-};
+});
 
 export default MainFooter;

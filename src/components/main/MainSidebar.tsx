@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect, memo } from "react";
 import MainLogo from "../../assets/images/main/fullLogo.png";
 import Base from "../../assets/images/main/base.png";
 import Dashboard from "../../assets/images/main/dashboard.png";
@@ -11,21 +11,38 @@ import {
 } from "./subComponents/sidebar/sidebarInterfaces";
 import { handleSidebarClick } from "./subComponents/sidebar/sidebarFunctions";
 
-//main component
+// main component
 const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isShown }) => {
   const [sidebarStates, setSidebarStates] = useState<sideState>({
     identifier: "base",
     state: true,
   });
 
-  const toggleSidebar = (identifier: string) => {
-    handleSidebarClick(
-      identifier,
-      sidebarStates,
-      setSidebarStates,
-      setIsActive
-    );
-  };
+  const toggleSidebar = useCallback(
+    (identifier: string) => {
+      handleSidebarClick(
+        identifier,
+        sidebarStates,
+        setSidebarStates,
+        setIsActive
+      );
+    },
+    [sidebarStates, setSidebarStates, setIsActive]
+  );
+
+  const handleMouseEnter = useCallback(
+    (identifier: string) => {
+      if (identifier === "base") {
+        if (!isShown) {
+          setIsActive(false);
+          setTimeout(() => {
+            setIsActive(true);
+          }, 20);
+        }
+      }
+    },
+    [isShown, setIsActive]
+  );
 
   return (
     <div className="w-[5.6%] min-w-[83px]">
@@ -40,30 +57,21 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isShown }) => {
               alt="Base"
               isActive={sidebarStates.identifier === "base"}
               onClick={() => toggleSidebar("base")}
-              onMouseEnter={() => {
-                if (sidebarStates.identifier === "base") {
-                  if (!isShown) {
-                    setIsActive(false);
-                    setTimeout(() => {
-                      setIsActive(true);
-                    }, 20); // to stay in folder page and when i enter mouse to this icon to slide right additional info i need setTimeout for handle freezeing on setIsActive(true) and avoid more props drilling
-                  }
-                }
-              }}
+              onMouseEnter={() => handleMouseEnter("base")}
             />
             <NavItem
               icon={Dashboard}
               alt="dashboard"
               isActive={sidebarStates.identifier === "dashboard"}
               onClick={() => toggleSidebar("dashboard")}
-              onMouseEnter={() => null}
+              onMouseEnter={() => handleMouseEnter("dashboard")}
             />
             <NavItem
               icon={MyProfile}
               alt="profile"
               isActive={sidebarStates.identifier === "profile"}
               onClick={() => toggleSidebar("profile")}
-              onMouseEnter={() => null}
+              onMouseEnter={() => handleMouseEnter("profile")}
             />
           </nav>
         </aside>

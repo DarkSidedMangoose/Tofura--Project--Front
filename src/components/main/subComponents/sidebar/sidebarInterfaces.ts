@@ -1,6 +1,6 @@
 /* props interfaces */
 
-//props interface  for NavItem component
+//props interface  for NavItem component props
 export interface NavItemProps {
   icon: string;
   alt: string;
@@ -13,7 +13,7 @@ export interface mainSidebarProps {
   setIsActive: (isActive: boolean) => void;
   isShown: boolean;
 }
-//props interface for AdditionalInfoOfBase.tsx
+//AdditionalInfoOfBase.tsx props interface
 export interface AdditionalInfoOfBaseProps {
   isActive: boolean;
   isShown: (e: boolean) => void;
