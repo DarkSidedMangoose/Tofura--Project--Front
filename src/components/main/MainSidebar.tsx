@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, memo } from "react";
+import React, { useState, useCallback } from "react";
 import MainLogo from "../../assets/images/main/fullLogo.png";
 import Base from "../../assets/images/main/base.png";
 import Dashboard from "../../assets/images/main/dashboard.png";
@@ -30,19 +30,14 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isShown }) => {
     [sidebarStates, setSidebarStates, setIsActive]
   );
 
-  const handleMouseEnter = useCallback(
-    (identifier: string) => {
-      if (identifier === "base") {
-        if (!isShown) {
-          setIsActive(false);
-          setTimeout(() => {
-            setIsActive(true);
-          }, 20);
-        }
-      }
-    },
-    [isShown, setIsActive]
-  );
+  const handleMouseEnter = useCallback(() => {
+    if (sidebarStates.identifier === "base" && isShown === false) {
+      setIsActive(false);
+      setTimeout(() => {
+        setIsActive(true);
+      }, 20);
+    }
+  }, [isShown, setIsActive, sidebarStates]);
 
   return (
     <div className="w-[5.6%] min-w-[83px]">
@@ -57,21 +52,21 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isShown }) => {
               alt="Base"
               isActive={sidebarStates.identifier === "base"}
               onClick={() => toggleSidebar("base")}
-              onMouseEnter={() => handleMouseEnter("base")}
+              onMouseEnter={() => handleMouseEnter()}
             />
             <NavItem
               icon={Dashboard}
               alt="dashboard"
               isActive={sidebarStates.identifier === "dashboard"}
               onClick={() => toggleSidebar("dashboard")}
-              onMouseEnter={() => handleMouseEnter("dashboard")}
+              onMouseEnter={() => null}
             />
             <NavItem
               icon={MyProfile}
               alt="profile"
               isActive={sidebarStates.identifier === "profile"}
               onClick={() => toggleSidebar("profile")}
-              onMouseEnter={() => handleMouseEnter("profile")}
+              onMouseEnter={() => null}
             />
           </nav>
         </aside>
