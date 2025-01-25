@@ -11,10 +11,12 @@ export interface NavItemProps {
 //MainSidebar.tsx props interface
 export interface mainSidebarProps {
   setIsActive: (isActive: boolean) => void;
+  isShown: boolean;
 }
 //props interface for AdditionalInfoOfBase.tsx
 export interface AdditionalInfoOfBaseProps {
   isActive: boolean;
+  isShown: (e: boolean) => void;
 }
 export interface AdditionalInfoOfBaseStates {
   baseInfoP: string[];

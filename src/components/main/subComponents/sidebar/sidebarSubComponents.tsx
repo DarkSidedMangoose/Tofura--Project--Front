@@ -29,6 +29,7 @@ export const NavItem: React.FC<NavItemProps> = memo(
 // subComponentOfSidebarAdditionalInfo
 export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
   isActive,
+  isShown,
 }) => {
   // sidebar handling to show and hide via css and handling classname changes
   const [shown, setShown] = useState(isActive);
@@ -37,6 +38,7 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
     width: window.innerWidth,
     height: window.innerHeight,
   });
+
   //it's for make code more cleaner and i map them to make code more less and cleaner
   const [baseState, setBaseState] = useState<AdditionalInfoOfBaseStates>({
     baseInfoP: [
@@ -44,7 +46,7 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
       "ინსპექტირების ობიექტები",
       "შემოწმებული ობიექტების რეესტრი",
     ],
-    baseInfoChoose: "",
+    baseInfoChoose: "ობიექტების რეესტრი",
     baseInfoNdP: [
       "ახალი ობიექტები",
       "შემოწმებული ობიექტები",
@@ -70,7 +72,10 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
   useEffect(() => {
     setShown(isActive);
   }, [isActive]);
-
+  useEffect(() => {});
+  useEffect(() => {
+    isShown(shown);
+  }, [shown]);
   return (
     <div
       className={`z-0 ${

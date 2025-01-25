@@ -6,6 +6,7 @@ import { AdditionalInfoOfBase } from "../../components/main/subComponents/sideba
 
 const Main: React.FC = () => {
   const [isActive, setIsActive] = useState<boolean>(true);
+  const [isShown, setIsShown] = useState<boolean>(false);
 
   return (
     <div className="w-screen h-screen ">
@@ -14,8 +15,14 @@ const Main: React.FC = () => {
           setIsActive={(e) => {
             setIsActive(e);
           }}
+          isShown={isShown}
         />
-        <AdditionalInfoOfBase isActive={isActive} />
+        <AdditionalInfoOfBase
+          isActive={isActive}
+          isShown={(e) => {
+            setIsShown(e);
+          }}
+        />
         <MainMain />
       </div>
       <MainFooter />

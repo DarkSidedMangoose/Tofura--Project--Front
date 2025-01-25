@@ -12,7 +12,7 @@ import {
 import { handleSidebarClick } from "./subComponents/sidebar/sidebarFunctions";
 
 //main component
-const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive }) => {
+const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isShown }) => {
   const [sidebarStates, setSidebarStates] = useState<sideState>({
     identifier: "base",
     state: true,
@@ -42,10 +42,12 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive }) => {
               onClick={() => toggleSidebar("base")}
               onMouseEnter={() => {
                 if (sidebarStates.identifier === "base") {
-                  setIsActive(false);
-                  setTimeout(() => {
-                    setIsActive(true);
-                  }, 20); // to stay in folder page and when i enter mouse to this icon to slide right additional info i need setTimeout for handle freezeing on setIsActive(true) and avoid more props drilling
+                  if (!isShown) {
+                    setIsActive(false);
+                    setTimeout(() => {
+                      setIsActive(true);
+                    }, 20); // to stay in folder page and when i enter mouse to this icon to slide right additional info i need setTimeout for handle freezeing on setIsActive(true) and avoid more props drilling
+                  }
                 }
               }}
             />
