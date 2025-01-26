@@ -55,7 +55,7 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
       window.removeEventListener("resize", debounceResize);
     };
   }, [handleResize]);
-  // for handle base sidebar additional info shown and hide
+  // for fix base sidebar additional info shown and hide animation
 
   useEffect(() => {
     if (isActive && windowDimensions.width > 1600) {

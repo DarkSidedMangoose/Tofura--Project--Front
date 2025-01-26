@@ -4,10 +4,14 @@ import Password from "../../assets/images/login/password.png";
 import Enter from "../../assets/images/login/login.png";
 import { useNavigate } from "react-router-dom";
 import MainLogoCenter from "../../assets/images/login/mainLogoCenter.png";
-import { UserPass } from "./loginSubComponents/loginInterface";
 import { handleChange } from "./loginSubComponents/loginFunctions";
 import { handleSubmit } from "./loginSubComponents/loginFunctions";
 import "./loginAnimations.css";
+
+export interface UserPass {
+  username: string;
+  password: string;
+}
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
