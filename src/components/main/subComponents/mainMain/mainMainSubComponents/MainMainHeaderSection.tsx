@@ -1,10 +1,10 @@
 import React from "react";
-import Search from "../../../../assets/images/main/search.png";
-import Filter from "../../../../assets/images/main/filter.png";
-import Sync from "../../../../assets/images/main/sync.png";
-import ScrollArrow from "../../../../assets/images/main/scrollArrows.png";
-import Plus from "../../../../assets/images/main/plus.png";
-import Pen from "../../../../assets/images/main/pen.png";
+import Search from "../../../../../assets/images/main/search.png";
+import Filter from "../../../../../assets/images/main/filter.png";
+import Sync from "../../../../../assets/images/main/sync.png";
+import ScrollArrow from "../../../../../assets/images/main/scrollArrows.png";
+import Plus from "../../../../../assets/images/main/plus.png";
+import Pen from "../../../../../assets/images/main/pen.png";
 
 export const MainMainHeaderSection: React.FC = () => {
   return (
@@ -69,11 +69,5 @@ export const MainMainHeaderSection: React.FC = () => {
         </nav>
       </section>
     </div>
-  );
-};
-
-export const MainMainMainSection: React.FC = () => {
-  return (
-    <div className="w-98% h-[85%] bg-white rounded-[0.5%] shadow-boxShadow"></div>
   );
 };

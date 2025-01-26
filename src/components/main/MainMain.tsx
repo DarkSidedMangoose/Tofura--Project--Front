@@ -1,9 +1,7 @@
 import React from "react";
-import {
-  MainMainHeaderSection,
-  MainMainMainSection,
-} from "./subComponents/mainMain/mainMainSubComponents";
-import "./mainAnimations.css";
+import { MainMainHeaderSection } from "./subComponents/mainMain/mainMainSubComponents/MainMainHeaderSection";
+import { MainMainMainSection } from "./subComponents/mainMain/mainMainSubComponents/MainMainMainSection";
+import "./MainAnimations.css";
 
 const MainMain: React.FC = () => {
   return (

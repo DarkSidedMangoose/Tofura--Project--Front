@@ -3,8 +3,8 @@ import MainLogo from "../../assets/images/main/fullLogo.png";
 import Base from "../../assets/images/main/base.png";
 import Dashboard from "../../assets/images/main/dashboard.png";
 import MyProfile from "../../assets/images/main/myProfile.png";
-import "./mainAnimations.css";
-import { NavItem } from "./subComponents/sidebar/sidebarComponents/sidebarNavItem";
+import "./MainAnimations.css";
+import { NavItem } from "./subComponents/sidebar/sidebarComponents/SidebarNavItem";
 import { handleSidebarClick } from "./subComponents/sidebar/sidebarFunctions";
 
 // main component

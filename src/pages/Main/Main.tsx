@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import MainSidebar from "../../components/main/MainSidebar";
-import MainFooter from "../../components/main/mainFooter";
-import MainMain from "../../components/main/mainMain";
+import MainFooter from "../../components/main/MainFooter";
+import MainMain from "../../components/main/MainMain";
 import { AdditionalInfoOfBase } from "../../components/main/subComponents/sidebar/sidebarComponents/AdditionalInfoOfBase";
 
 const Main: React.FC = () => {

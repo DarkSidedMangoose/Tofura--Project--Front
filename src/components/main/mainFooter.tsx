@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import "./mainAnimations.css";
+import "./MainAnimations.css";
 import iconNavigation from "../../assets/images/main/click.png";
 import phone from "../../assets/images/main/phone.png";
 import email from "../../assets/images/main/email.png";
