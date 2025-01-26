@@ -6,7 +6,7 @@ import "./MainAnimations.css";
 const MainMain: React.FC = () => {
   return (
     <main
-      className={` w-full h-full  min-h-[700px]  flex flex-col justify-center items-center  transition-width`}
+      className={` w-full h-full  min-h-[700px] min-w-[1000px]  flex flex-col justify-center items-center  transition-width`}
     >
       <MainMainHeaderSection />
       <MainMainMainSection />
