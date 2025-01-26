@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import MainSidebar from "../../components/main/MainSidebar";
 import MainFooter from "../../components/main/mainFooter";
 import MainMain from "../../components/main/mainMain";
-import { AdditionalInfoOfBase } from "../../components/main/subComponents/sidebar/sidebarSubComponents";
+import { AdditionalInfoOfBase } from "../../components/main/subComponents/sidebar/sidebarComponents/AdditionalInfoOfBase";
 
 const Main: React.FC = () => {
   const [isActive, setIsActive] = useState<boolean>(true);

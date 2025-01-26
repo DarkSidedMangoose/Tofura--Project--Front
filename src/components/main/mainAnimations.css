@@ -1,14 +1,40 @@
 /* sidebar */
+
+.sidebarBaseInfoShownUp1600pxRight-div-fixed {
+  transition: width 0.5s ease-in-out;
+  display: flex;
+  width: 18%;
+}
 .sidebarBaseInfoShownUp1600pxRight-div {
+  transition: width 0.5s ease-in-out;
   animation: slideInSidebarUp1600px 0.5s forwards;
 }
+.sidebarBaseInfoCloseDown1600pxRight-div-fixed {
+  transition: width 0.5s ease-in-out;
+  margin-left: 81px;
+  display: flex;
+  width: 300px;
+}
 .sidebarBaseInfoCloseDown1600pxRight-div {
+  transition: width 0.5s ease-in-out;
   animation: slideInSidebarDown1600px 0.5s forwards;
 }
+.sidebarBaseInfoCloseUp1600pxLeft-div-fixed {
+  transition: width 0.5s ease-in-out;
+  display: none;
+  width: 0%;
+}
 .sidebarBaseInfoCloseUp1600pxLeft-div {
+  transition: width 0.5s ease-in-out;
   animation: slideOutSidebarUp1600px 0.5s forwards;
 }
+.sidebarBaseInfoCloseDown1600pxLeft-div-fixed {
+  transition: width 0.5s ease-in-out;
+  display: none;
+  width: 0px;
+}
 .sidebarBaseInfoCloseDown1600pxLeft-div {
+  transition: width 0.5s ease-in-out;
   animation: slideOutSidebarDown1600px 0.5s forwards;
 }
 .sidebarAdditionalInfoChoose {
@@ -34,17 +60,19 @@
     width: 18%;
   }
 }
+
 @keyframes slideInSidebarDown1600px {
   from {
     display: none;
     width: 0px;
   }
   to {
-    margin-left: calc(81px);
+    margin-left: 81px;
     display: flex;
     width: 300px;
   }
 }
+
 @keyframes slideOutSidebarUp1600px {
   from {
     display: flex;
@@ -55,6 +83,7 @@
     width: 0%;
   }
 }
+
 @keyframes slideOutSidebarDown1600px {
   from {
     display: flex;
