@@ -48,7 +48,7 @@
 }
 
 .nones {
-  display: none;
+  animation: setToNone 0.2s forwards;
 }
 @keyframes slideInSidebarUp1600px {
   from {
@@ -60,7 +60,6 @@
     width: 18%;
   }
 }
-
 @keyframes slideInSidebarDown1600px {
   from {
     display: none;
@@ -121,5 +120,13 @@
   }
   to {
     transform: translateY(0);
+  }
+}
+@keyframes setToNone {
+  from {
+    display: flex;
+  }
+  to {
+    display: none;
   }
 }
