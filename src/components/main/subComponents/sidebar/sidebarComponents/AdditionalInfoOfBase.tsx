@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
-import { debounce } from "../sidebarFunctions";
+import { debounce } from "../SidebarFunctions";
 import "../../../MainAnimations.css";
 interface AdditionalInfoOfBaseProps {
   isActive: boolean;

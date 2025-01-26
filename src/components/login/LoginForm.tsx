@@ -4,9 +4,9 @@ import Password from "../../assets/images/login/password.png";
 import Enter from "../../assets/images/login/login.png";
 import { useNavigate } from "react-router-dom";
 import MainLogoCenter from "../../assets/images/login/mainLogoCenter.png";
-import { handleChange } from "./loginSubComponents/loginFunctions";
-import { handleSubmit } from "./loginSubComponents/loginFunctions";
-import "./loginAnimations.css";
+import { handleChange } from "./loginSubComponents/LoginFunctions";
+import { handleSubmit } from "./loginSubComponents/LoginFunctions";
+import "./LoginAnimations.css";
 
 interface UserPass {
   username: string;

@@ -1,4 +1,4 @@
-import LoginForm from "../../components/login/loginForm";
+import LoginForm from "../../components/login/LoginForm";
 const Login = () => {
   return (
     <div className="flex justify-center items-center w-screen h-screen bg-loginBackground">

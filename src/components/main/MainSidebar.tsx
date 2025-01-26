@@ -5,7 +5,7 @@ import Dashboard from "../../assets/images/main/dashboard.png";
 import MyProfile from "../../assets/images/main/myProfile.png";
 import "./MainAnimations.css";
 import { NavItem } from "./subComponents/sidebar/sidebarComponents/SidebarNavItem";
-import { handleSidebarClick } from "./subComponents/sidebar/sidebarFunctions";
+import { handleSidebarClick } from "./subComponents/sidebar/SidebarFunctions";
 
 // main component
 
