@@ -1,7 +1,14 @@
-import { SetIsActive, sideState } from "./sidebarInterfaces";
 //main component functions
 
 // i used it MainSidebar.tsx to handle state changes while click on any <NavItem/> they are icons and when i click one of them that function is change state of choose (identify purpose) it's for cleaner and for to use less code.
+
+interface SetIsActive {
+  (isActive: boolean): void;
+}
+interface sideState {
+  identifier: string;
+}
+
 export const handleSidebarClick = (
   sidebar: string,
   sidebarStates: sideState,
@@ -9,10 +16,10 @@ export const handleSidebarClick = (
   setIsActive: SetIsActive
 ) => {
   if (sidebar === "base") {
-    setSidebarStates({ identifier: sidebar, state: true });
+    setSidebarStates({ identifier: sidebar });
     setIsActive(true);
   } else {
-    setSidebarStates({ ...sidebarStates, identifier: sidebar, state: false });
+    setSidebarStates({ ...sidebarStates, identifier: sidebar });
     setIsActive(false);
   }
 };

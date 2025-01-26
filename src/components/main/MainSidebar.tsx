@@ -5,17 +5,22 @@ import Dashboard from "../../assets/images/main/dashboard.png";
 import MyProfile from "../../assets/images/main/myProfile.png";
 import "./mainAnimations.css";
 import { NavItem } from "./subComponents/sidebar/sidebarSubComponents";
-import {
-  mainSidebarProps,
-  sideState,
-} from "./subComponents/sidebar/sidebarInterfaces";
 import { handleSidebarClick } from "./subComponents/sidebar/sidebarFunctions";
 
 // main component
-const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isShown }) => {
+
+export interface sideState {
+  identifier: string;
+}
+
+export interface mainSidebarProps {
+  setIsActive: (isActive: boolean) => void;
+  isActive: boolean;
+}
+
+const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
   const [sidebarStates, setSidebarStates] = useState<sideState>({
     identifier: "base",
-    state: true,
   });
 
   const toggleSidebar = useCallback(
@@ -31,13 +36,10 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isShown }) => {
   );
 
   const handleMouseEnter = useCallback(() => {
-    if (sidebarStates.identifier === "base" && isShown === false) {
-      setIsActive(false);
-      setTimeout(() => {
-        setIsActive(true);
-      }, 20);
+    if (sidebarStates.identifier === "base" && isActive === false) {
+      setIsActive(true);
     }
-  }, [isShown, setIsActive, sidebarStates]);
+  }, [isActive, setIsActive, sidebarStates]);
 
   return (
     <div className="w-[5.6%] min-w-[83px]">

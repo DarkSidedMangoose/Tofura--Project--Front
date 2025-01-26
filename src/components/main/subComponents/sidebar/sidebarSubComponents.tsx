@@ -1,13 +1,15 @@
 import React, { memo, useCallback, useEffect, useState } from "react";
-import {
-  NavItemProps,
-  AdditionalInfoOfBaseProps,
-  AdditionalInfoOfBaseStates,
-} from "./sidebarInterfaces";
 import { debounce } from "./sidebarFunctions";
 import "../../mainAnimations.css";
 
 // subComponents of sidebar they will be used as an icons and multiple times because i used there memo hook to avoid re-rendering and optimization overload
+export interface NavItemProps {
+  icon: string;
+  alt: string;
+  isActive: boolean;
+  onClick: () => void;
+  onMouseEnter: () => void;
+}
 export const NavItem: React.FC<NavItemProps> = memo(
   ({ icon, alt, isActive, onClick, onMouseEnter }) => {
     return (
@@ -27,12 +29,23 @@ export const NavItem: React.FC<NavItemProps> = memo(
 );
 
 // subComponentOfSidebarAdditionalInfo
+
+interface AdditionalInfoOfBaseProps {
+  isActive: boolean;
+  setIsActive: (e: boolean) => void;
+}
+interface AdditionalInfoOfBaseStates {
+  baseInfoP: string[];
+  baseInfoChoose: string;
+  baseInfoNdP: string[];
+}
+
 export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
   isActive,
-  isShown,
+  setIsActive,
 }) => {
   // sidebar handling to show and hide via css and handling classname changes
-  const [shown, setShown] = useState(isActive);
+
   // for fix sidebar animation i need screen width and height because if will be width under 1600px  i need different width for animation and i used for it
   const [windowDimensions, setWindowDimensions] = useState({
     width: window.innerWidth,
@@ -69,28 +82,26 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
     };
   }, [handleResize]);
   // for handle base sidebar additional info shown and hide
-  useEffect(() => {
-    setShown(isActive);
-  }, [isActive]);
-  useEffect(() => {
-    isShown(shown);
-  }, [shown]);
+
+  const getSidebarClass = () => {
+    if (isActive && windowDimensions.width > 1600) {
+      return "sidebarBaseInfoShownUp1600pxRight-div";
+    } else if (!isActive && windowDimensions.width > 1600) {
+      return "sidebarBaseInfoCloseUp1600pxLeft-div";
+    } else if (isActive && windowDimensions.width < 1600) {
+      return "sidebarBaseInfoCloseDown1600pxRight-div";
+    } else {
+      return "sidebarBaseInfoCloseDown1600pxLeft-div";
+    }
+  };
   return (
     <div
-      className={`z-0 ${
-        shown && windowDimensions.width > 1600
-          ? "sidebarBaseInfoShownUp1600pxRight-div "
-          : !shown && windowDimensions.width > 1600
-          ? "sidebarBaseInfoCloseUp1600pxLeft-div "
-          : shown && windowDimensions.width < 1600
-          ? "sidebarBaseInfoCloseDown1600pxRight-div"
-          : "sidebarBaseInfoCloseDown1600pxLeft-div"
-      }  h-90% min-h-[600px] bg-white shadow-bottom-right  rounded-br-2xl  justify-center items-center fixed ml-[5%]   `}
-      onMouseLeave={() => setShown(false)} // for handle sidebar close while mouse leave that div
+      className={`z-0 ${getSidebarClass()}  h-90% min-h-[600px] bg-white shadow-bottom-right  rounded-br-2xl  justify-center items-center fixed ml-[5%]   `}
+      onMouseLeave={() => setIsActive(false)} // for handle sidebar close while mouse leave that div
     >
       <div
         className={`${
-          !shown ? "nones" : "flex"
+          !isActive ? "nones" : "flex"
         } w-90% h-[90%]  flex-col space-y-8   `} //nones is in css and means display:none and it handle for when animation is closing, this text what is in that div is show and when sidebar closing doesn't have good look of  animation because of it that div need to set as a none display
       >
         <div className="space-y-24">

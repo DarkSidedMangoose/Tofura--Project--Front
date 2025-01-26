@@ -6,20 +6,22 @@ import { AdditionalInfoOfBase } from "../../components/main/subComponents/sideba
 
 const Main: React.FC = () => {
   const [isActive, setIsActive] = useState<boolean>(true);
-  const [isShown, setIsShown] = useState<boolean>(false);
 
   const handleIsActive = useCallback((e: boolean) => {
     setIsActive(e);
   }, []);
 
-  const handleIsShown = useCallback((e: boolean) => {
-    setIsShown(e);
+  const handleSetIsActive = useCallback((e: boolean) => {
+    setIsActive(e);
   }, []);
   return (
     <div className="w-screen h-screen ">
       <div className="w-full  h-[90%] flex">
-        <MainSidebar setIsActive={handleIsActive} isShown={isShown} />
-        <AdditionalInfoOfBase isActive={isActive} isShown={handleIsShown} />
+        <MainSidebar setIsActive={handleIsActive} isActive={isActive} />
+        <AdditionalInfoOfBase
+          isActive={isActive}
+          setIsActive={handleSetIsActive}
+        />
         <MainMain />
       </div>
       <MainFooter />
