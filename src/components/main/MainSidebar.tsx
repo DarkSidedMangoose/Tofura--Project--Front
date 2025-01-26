@@ -52,21 +52,21 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
             <NavItem
               icon={Base}
               alt="Base"
-              isActive={sidebarStates.identifier === "base"}
+              NavIsActive={sidebarStates.identifier === "base"}
               onClick={() => toggleSidebar("base")}
               onMouseEnter={() => handleMouseEnter()}
             />
             <NavItem
               icon={Dashboard}
               alt="dashboard"
-              isActive={sidebarStates.identifier === "dashboard"}
+              NavIsActive={sidebarStates.identifier === "dashboard"}
               onClick={() => toggleSidebar("dashboard")}
               onMouseEnter={() => null}
             />
             <NavItem
               icon={MyProfile}
               alt="profile"
-              isActive={sidebarStates.identifier === "profile"}
+              NavIsActive={sidebarStates.identifier === "profile"}
               onClick={() => toggleSidebar("profile")}
               onMouseEnter={() => null}
             />

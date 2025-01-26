@@ -6,17 +6,17 @@ import "../../mainAnimations.css";
 export interface NavItemProps {
   icon: string;
   alt: string;
-  isActive: boolean;
+  NavIsActive: boolean;
   onClick: () => void;
   onMouseEnter: () => void;
 }
 export const NavItem: React.FC<NavItemProps> = memo(
-  ({ icon, alt, isActive, onClick, onMouseEnter }) => {
+  ({ icon, alt, NavIsActive, onClick, onMouseEnter }) => {
     return (
       <div
         onClick={onClick}
         className={`w-full h-1/5 flex justify-center items-center rounded-[100%] hover:opacity-70 cursor-pointer ${
-          isActive ? "bg-blue-900" : ""
+          NavIsActive ? "bg-blue-900" : ""
         }`}
         onMouseEnter={onMouseEnter}
       >
