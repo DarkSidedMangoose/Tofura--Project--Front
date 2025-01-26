@@ -1,6 +1,10 @@
 import React from "react";
-import { UserPass } from "./loginInterface";
 import { useNavigate } from "react-router-dom";
+
+interface UserPass {
+  username: string;
+  password: string;
+}
 
 export const handleChange = (
   e: React.ChangeEvent<HTMLInputElement>,

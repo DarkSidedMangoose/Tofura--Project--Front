@@ -8,7 +8,7 @@ import { handleChange } from "./loginSubComponents/loginFunctions";
 import { handleSubmit } from "./loginSubComponents/loginFunctions";
 import "./loginAnimations.css";
 
-export interface UserPass {
+interface UserPass {
   username: string;
   password: string;
 }
