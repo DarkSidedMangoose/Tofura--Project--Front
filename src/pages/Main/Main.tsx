@@ -5,11 +5,14 @@ import MainMain from "../../components/main/mainMain";
 import { AdditionalInfoOfBase } from "../../components/main/subComponents/sidebar/sidebarComponents/AdditionalInfoOfBase";
 
 const Main: React.FC = () => {
-  const [isActive, setIsActive] = useState<boolean>(true);
+  const [isActive, setIsActive] = useState<boolean>(false);
 
-  const handleIsActive = useCallback((e: boolean) => {
-    setIsActive(e);
-  }, []);
+  const handleIsActive = useCallback(
+    (e: boolean) => {
+      setIsActive(e);
+    },
+    [setIsActive]
+  );
 
   const handleSetIsActive = useCallback((e: boolean) => {
     setIsActive(e);
@@ -24,6 +27,7 @@ const Main: React.FC = () => {
         />
         <MainMain />
       </div>
+
       <MainFooter />
     </div>
   );
