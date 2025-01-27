@@ -2,15 +2,15 @@ import React, { memo } from "react";
 
 // subComponents of sidebar they will be used as an icons and multiple times because i used there memo hook to avoid re-rendering and optimization overload
 export interface NavItemProps {
-  icon: string;
-  alt: string;
-  NavIsActive: boolean;
-  onClick: () => void;
+  icon?: string;
+  alt?: string;
+  NavIsActive?: boolean;
+  onClick?: () => void;
   onMouseEnter?: () => void;
 }
 export const NavItem: React.FC<NavItemProps> = memo(
   ({ icon, alt, NavIsActive, onClick, onMouseEnter }) => {
-    console.log("navitemRendered");
+    console.log(`navitemRendered ${alt}`);
     return (
       <div
         onClick={onClick}

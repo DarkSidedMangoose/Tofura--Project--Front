@@ -6,6 +6,7 @@ import MyProfile from "../../assets/images/main/myProfile.png";
 import "./MainAnimations.css";
 import { NavItem } from "./subComponents/sidebar/sidebarComponents/SidebarNavItem";
 import { handleSidebarClick } from "./subComponents/sidebar/SidebarFunctions";
+import { useMainLoading } from "../../contextApis/ContextLoading";
 
 // main component
 
@@ -22,6 +23,7 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
   const [sidebarStates, setSidebarStates] = useState<sideState>({
     identifier: "base",
   });
+  const { setLoading } = useMainLoading();
 
   const toggleSidebar = useCallback(
     (identifier: string) => {
@@ -43,7 +45,7 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
 
   return (
     <div className="w-[5.6%] min-w-[83px]">
-      <div className="flex w-[5%] min-w-[80.5px] h-90% min-h-[600px] fixed z-20">
+      <div className="flex w-[5%] min-w-[80.5px] h-90% min-h-[600px] fixed z-[52]">
         <aside
           className={`z-10 w-full h-full bg-sidebarChoose flex flex-col items-center shadow-bottom-right`}
         >
@@ -53,22 +55,29 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
               icon={Base}
               alt="Base"
               NavIsActive={sidebarStates.identifier === "base"}
-              onClick={() => toggleSidebar("base")}
+              onClick={() => {
+                toggleSidebar("base");
+                setLoading(true);
+              }}
               onMouseEnter={() => handleMouseEnter()}
             />
             <NavItem
               icon={Dashboard}
               alt="dashboard"
               NavIsActive={sidebarStates.identifier === "dashboard"}
-              onClick={() => toggleSidebar("dashboard")}
-              onMouseEnter={() => null}
+              onClick={() => {
+                toggleSidebar("dashboard");
+                setLoading(true);
+              }}
             />
             <NavItem
               icon={MyProfile}
               alt="profile"
               NavIsActive={sidebarStates.identifier === "profile"}
-              onClick={() => toggleSidebar("profile")}
-              onMouseEnter={() => null}
+              onClick={() => {
+                toggleSidebar("profile");
+                setLoading(true);
+              }}
             />
           </nav>
         </aside>

@@ -7,14 +7,7 @@ import { AdditionalInfoOfBase } from "../../components/main/subComponents/sideba
 const Main: React.FC = () => {
   const [isActive, setIsActive] = useState<boolean>(false);
 
-  const handleIsActive = useCallback(
-    (e: boolean) => {
-      setIsActive(e);
-    },
-    [setIsActive]
-  );
-
-  const handleSetIsActive = useCallback((e: boolean) => {
+  const handleIsActive = useCallback((e: boolean) => {
     setIsActive(e);
   }, []);
   return (
@@ -23,7 +16,7 @@ const Main: React.FC = () => {
         <MainSidebar setIsActive={handleIsActive} isActive={isActive} />
         <AdditionalInfoOfBase
           isActive={isActive}
-          setIsActive={handleSetIsActive}
+          setIsActive={handleIsActive}
         />
         <MainMain />
       </div>

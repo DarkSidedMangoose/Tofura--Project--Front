@@ -5,6 +5,7 @@ import Login from "./pages/Login/Login";
 import Main from "./pages/Main/Main";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import { MainLoadingProvider } from "./contextApis/ContextLoading";
 
 const App: React.FC = () => {
   return (
@@ -13,7 +14,14 @@ const App: React.FC = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
-            <Route path="/main" element={<Main />} />
+            <Route
+              path="/main"
+              element={
+                <MainLoadingProvider>
+                  <Main />
+                </MainLoadingProvider>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </Provider>

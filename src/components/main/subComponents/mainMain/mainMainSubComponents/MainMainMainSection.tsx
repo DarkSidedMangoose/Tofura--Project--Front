@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 
-export const MainMainMainSection: React.FC = () => {
+export const MainMainMainSection: React.FC = memo(() => {
   const [states] = useState<{
     header: string[];
     main: {
@@ -97,4 +97,4 @@ export const MainMainMainSection: React.FC = () => {
       ))}
     </div>
   );
-};
+});

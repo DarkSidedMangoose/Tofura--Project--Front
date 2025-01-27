@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import { debounce } from "../SidebarFunctions";
 import "../../../MainAnimations.css";
+import { useMainLoading } from "../../../../../contextApis/ContextLoading";
 interface AdditionalInfoOfBaseProps {
   isActive: boolean;
   setIsActive: (e: boolean) => void;
@@ -17,6 +18,7 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
   isActive,
   setIsActive,
 }) => {
+  const { setLoading } = useMainLoading();
   //to identify on classname which has changed
   const [identifyClassName, setIdentifyClassName] = useState<string>(""); // to identify when width and height change doesnt happend animation bug
   const directionRef = useRef<Direction>(null); // for avoid re-rendering in useEffect function
@@ -91,7 +93,7 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
 
   return (
     <div
-      className={`z-0 ${identifyClassName}  h-90% min-h-[600px] bg-white shadow-bottom-right  rounded-br-2xl  justify-center items-center fixed ml-[5%]   `}
+      className={`z-[51] ${identifyClassName}  h-90% min-h-[600px] bg-white shadow-bottom-right  rounded-br-2xl  justify-center items-center fixed ml-[5%]   `}
       onMouseLeave={() => setIsActive(false)} // for handle sidebar close while mouse leave that div
     >
       <div
@@ -112,12 +114,13 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
                     : " sidebarAdditionalInfoChooseOff"
                 } text-[0.9rem] cursor-pointer text-blue-950 `}
                 key={index}
-                onClick={() =>
+                onClick={() => {
                   setBaseState((prev) => ({
                     ...prev,
                     baseInfoChoose: info,
-                  }))
-                }
+                  }));
+                  setLoading(true);
+                }}
               >
                 {info}
               </p>
@@ -135,13 +138,13 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
                     : " sidebarAdditionalInfoChooseOff"
                 } text-[0.9rem] cursor-pointer text-blue-950 `}
                 key={index}
-                onClick={
-                  () =>
-                    setBaseState((prev) => ({
-                      ...prev,
-                      baseInfoChoose: info,
-                    })) // it's for identify if in additional bases option has choose, and  when choose option it make more bolder and animate it a little bit
-                }
+                onClick={() => {
+                  setBaseState((prev) => ({
+                    ...prev,
+                    baseInfoChoose: info,
+                  }));
+                  setLoading(true);
+                }}
               >
                 {info}
               </p>

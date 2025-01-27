@@ -130,3 +130,42 @@
     display: none;
   }
 }
+
+/* main animations */
+
+.movedLogo {
+  animation: movedLogos 9s linear infinite;
+}
+
+.FromUpToDown {
+  animation: fromUpToDown 0.5s forwards;
+}
+.FromDownToUp {
+  animation: FromDownToUp 0.5s forwards;
+}
+
+@keyframes fromUpToDown {
+  from {
+    height: 0%;
+  }
+  to {
+    height: 100%;
+  }
+}
+@keyframes FromDownToUp {
+  from {
+    height: 100%;
+  }
+  to {
+    height: 0%;
+  }
+}
+
+@keyframes movedLogos {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
