@@ -10,7 +10,6 @@ export interface NavItemProps {
 }
 export const NavItem: React.FC<NavItemProps> = memo(
   ({ icon, alt, NavIsActive, onClick, onMouseEnter }) => {
-    console.log(`${alt} re-rendered`);
     return (
       <div
         onClick={onClick}
