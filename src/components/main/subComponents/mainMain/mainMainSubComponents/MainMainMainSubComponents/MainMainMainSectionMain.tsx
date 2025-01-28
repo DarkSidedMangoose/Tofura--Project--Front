@@ -44,7 +44,7 @@ const MainMainMainSectionMain: React.FC = () => {
       setIdentifier("overBase");
     }
   }, [isOption]);
-  const [state, setState] = useState<stateInterface>({
+  const [state] = useState<stateInterface>({
     mainBase: [
       {
         identifyCode: "sadadadadasdsssssssssssssssssssssssssssss",
