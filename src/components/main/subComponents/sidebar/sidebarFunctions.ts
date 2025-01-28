@@ -15,14 +15,7 @@ export const handleSidebarClick = (
   setSidebarStates: React.Dispatch<React.SetStateAction<sideState>>,
   setIsActive: SetIsActive
 ) => {
-  if (sidebar === "base") {
-    if (sidebarStates.identifier === sidebar) {
-      setIsActive(true);
-    } else {
-      setSidebarStates({ identifier: sidebar });
-      setIsActive(true);
-    }
-  } else if (sidebar === "dashboard") {
+  if (sidebar === "dashboard") {
     if (sidebarStates.identifier === sidebar) {
       setIsActive(false);
     } else {

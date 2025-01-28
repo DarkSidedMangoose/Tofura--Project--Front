@@ -24,7 +24,7 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
     identifier: "base",
   });
   const { setLoading } = useMainLoading();
-  const { isOption } = useAdditionalOption();
+  const { isOption, setOption } = useAdditionalOption();
 
   useEffect(() => {
     if (isOption !== "") {
@@ -33,6 +33,12 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
       });
     }
   }, [isOption]);
+  //sideEffect for additionalInfoOfBases to control which has choosed in there
+  useEffect(() => {
+    if (sidebarStates.identifier !== "base") {
+      setOption("");
+    }
+  }, [sidebarStates, setOption]);
 
   const toggleSidebar = useCallback(
     (identifier: string) => {

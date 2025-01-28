@@ -138,10 +138,10 @@
 }
 
 .FromUpToDown {
-  animation: fromUpToDown 0.5s forwards;
+  animation: fromUpToDown 0.3s forwards;
 }
 .FromDownToUp {
-  animation: FromDownToUp 0.5s forwards;
+  animation: FromDownToUp 0.3s forwards;
 }
 
 @keyframes fromUpToDown {

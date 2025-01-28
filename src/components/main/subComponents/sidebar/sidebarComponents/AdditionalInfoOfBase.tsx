@@ -9,7 +9,6 @@ interface AdditionalInfoOfBaseProps {
 }
 interface AdditionalInfoOfBaseStates {
   baseInfoP: string[];
-  baseInfoChoose: string;
   baseInfoNdP: string[];
 }
 
@@ -19,7 +18,7 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
   isActive,
   setIsActive,
 }) => {
-  const { setOption } = useAdditionalOption();
+  const { isOption, setOption } = useAdditionalOption(); //identify which has choose
   const { setLoading } = useMainLoading();
   //to identify on classname which has changed
   const [identifyClassName, setIdentifyClassName] = useState<string>(""); // to identify when width and height change doesnt happend animation bug
@@ -37,7 +36,6 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
       "ინსპექტირების ობიექტები",
       "შემოწმებული ობიექტების რეესტრი",
     ],
-    baseInfoChoose: "ობიექტების რეესტრი",
     baseInfoNdP: [
       "ახალი ობიექტები",
       "შემოწმებული ობიექტები",
@@ -111,7 +109,7 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
             {baseState.baseInfoP.map((info, index) => (
               <p
                 className={`${
-                  baseState.baseInfoChoose === info //if there is choose one of base it look more boldly and make have mini animation and this classnames are for that
+                  isOption === info //if there is choose one of base it look more boldly and make have mini animation and this classnames are for that
                     ? "font-bold sidebarAdditionalInfoChoose "
                     : " sidebarAdditionalInfoChooseOff"
                 } text-[0.9rem] cursor-pointer text-blue-950 `}
@@ -137,7 +135,7 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
             {baseState.baseInfoNdP.map((info, index) => (
               <p
                 className={`${
-                  baseState.baseInfoChoose === info //same purpose what is in top but there is different bases
+                  isOption === info //same purpose what is in top but there is different bases
                     ? "font-bold sidebarAdditionalInfoChoose "
                     : " sidebarAdditionalInfoChooseOff"
                 } text-[0.9rem] cursor-pointer text-blue-950 `}
