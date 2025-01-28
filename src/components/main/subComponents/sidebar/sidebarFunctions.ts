@@ -16,11 +16,26 @@ export const handleSidebarClick = (
   setIsActive: SetIsActive
 ) => {
   if (sidebar === "base") {
-    setSidebarStates({ identifier: sidebar });
-    setIsActive(true);
+    if (sidebarStates.identifier === sidebar) {
+      setIsActive(true);
+    } else {
+      setSidebarStates({ identifier: sidebar });
+      setIsActive(true);
+    }
+  } else if (sidebar === "dashboard") {
+    if (sidebarStates.identifier === sidebar) {
+      setIsActive(false);
+    } else {
+      setSidebarStates({ ...sidebarStates, identifier: sidebar });
+      setIsActive(false);
+    }
   } else {
-    setSidebarStates({ ...sidebarStates, identifier: sidebar });
-    setIsActive(false);
+    if (sidebarStates.identifier === sidebar) {
+      setIsActive(false);
+    } else {
+      setSidebarStates({ ...sidebarStates, identifier: sidebar });
+      setIsActive(false);
+    }
   }
 };
 

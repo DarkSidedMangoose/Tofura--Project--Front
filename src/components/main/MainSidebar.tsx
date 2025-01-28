@@ -24,7 +24,6 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
     identifier: "base",
   });
   const { setLoading } = useMainLoading();
-
   const toggleSidebar = useCallback(
     (identifier: string) => {
       handleSidebarClick(
@@ -43,6 +42,14 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
     }
   }, [isActive, setIsActive, sidebarStates]);
 
+  const createClickHandler = useCallback(
+    (identifier: string) => () => {
+      toggleSidebar(identifier);
+      setLoading(true);
+    },
+    [toggleSidebar, setLoading]
+  );
+
   return (
     <div className="w-[5.6%] min-w-[83px]">
       <div className="flex w-[5%] min-w-[80.5px] h-90% min-h-[600px] fixed z-[52]">
@@ -55,29 +62,20 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
               icon={Base}
               alt="Base"
               NavIsActive={sidebarStates.identifier === "base"}
-              onClick={() => {
-                toggleSidebar("base");
-                setLoading(true);
-              }}
-              onMouseEnter={() => handleMouseEnter()}
+              onClick={createClickHandler("base")}
+              onMouseEnter={handleMouseEnter}
             />
             <NavItem
               icon={Dashboard}
               alt="dashboard"
               NavIsActive={sidebarStates.identifier === "dashboard"}
-              onClick={() => {
-                toggleSidebar("dashboard");
-                setLoading(true);
-              }}
+              onClick={createClickHandler("dashboard")}
             />
             <NavItem
               icon={MyProfile}
               alt="profile"
               NavIsActive={sidebarStates.identifier === "profile"}
-              onClick={() => {
-                toggleSidebar("profile");
-                setLoading(true);
-              }}
+              onClick={createClickHandler("profile")}
             />
           </nav>
         </aside>
