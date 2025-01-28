@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import MainLogo from "../../assets/images/main/fullLogo.png";
 import Base from "../../assets/images/main/base.png";
 import Dashboard from "../../assets/images/main/dashboard.png";
@@ -7,7 +7,7 @@ import "./MainAnimations.css";
 import { NavItem } from "./subComponents/sidebar/sidebarComponents/SidebarNavItem";
 import { handleSidebarClick } from "./subComponents/sidebar/SidebarFunctions";
 import { useMainLoading } from "../../contextApis/ContextLoading";
-
+import { useAdditionalOption } from "../../contextApis/ContextChooseFromAdditional";
 // main component
 
 export interface sideState {
@@ -24,6 +24,16 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
     identifier: "base",
   });
   const { setLoading } = useMainLoading();
+  const { isOption } = useAdditionalOption();
+
+  useEffect(() => {
+    if (isOption !== "") {
+      setSidebarStates({
+        identifier: "base",
+      });
+    }
+  }, [isOption]);
+
   const toggleSidebar = useCallback(
     (identifier: string) => {
       handleSidebarClick(
@@ -37,10 +47,10 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
   );
 
   const handleMouseEnter = useCallback(() => {
-    if (sidebarStates.identifier === "base" && isActive === false) {
+    if (isActive === false) {
       setIsActive(true);
     }
-  }, [isActive, setIsActive, sidebarStates]);
+  }, [isActive, setIsActive]);
 
   const createClickHandler = useCallback(
     (identifier: string) => () => {
@@ -62,7 +72,6 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
               icon={Base}
               alt="Base"
               NavIsActive={sidebarStates.identifier === "base"}
-              onClick={createClickHandler("base")}
               onMouseEnter={handleMouseEnter}
             />
             <NavItem

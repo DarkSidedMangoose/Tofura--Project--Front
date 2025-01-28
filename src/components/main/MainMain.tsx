@@ -10,7 +10,6 @@ const MainMain: React.FC = () => {
       className={` w-full h-full  min-h-[700px] min-w-[1000px]  flex flex-col justify-center items-center  transition-width relative`}
     >
       <MainLoading />
-
       <MainMainHeaderSection />
       <MainMainMainSection />
     </main>

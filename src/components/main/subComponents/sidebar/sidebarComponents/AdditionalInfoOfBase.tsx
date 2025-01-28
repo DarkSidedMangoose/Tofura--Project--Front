@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState, useRef } from "react";
 import { debounce } from "../SidebarFunctions";
 import "../../../MainAnimations.css";
 import { useMainLoading } from "../../../../../contextApis/ContextLoading";
+import { useAdditionalOption } from "../../../../../contextApis/ContextChooseFromAdditional";
 interface AdditionalInfoOfBaseProps {
   isActive: boolean;
   setIsActive: (e: boolean) => void;
@@ -18,6 +19,7 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
   isActive,
   setIsActive,
 }) => {
+  const { setOption } = useAdditionalOption();
   const { setLoading } = useMainLoading();
   //to identify on classname which has changed
   const [identifyClassName, setIdentifyClassName] = useState<string>(""); // to identify when width and height change doesnt happend animation bug
@@ -119,6 +121,8 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
                     ...prev,
                     baseInfoChoose: info,
                   }));
+                  setOption(info);
+
                   setLoading(true);
                 }}
               >
@@ -143,6 +147,7 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
                     ...prev,
                     baseInfoChoose: info,
                   }));
+                  setOption(info);
                   setLoading(true);
                 }}
               >
