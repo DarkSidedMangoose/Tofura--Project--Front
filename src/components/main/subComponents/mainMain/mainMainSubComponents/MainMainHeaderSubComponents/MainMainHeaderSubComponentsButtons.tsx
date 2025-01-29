@@ -23,7 +23,7 @@ export const MainMainSearchButton: React.FC = memo(() => {
 export const MainMainSearchSendButton: React.FC = memo(() => {
   return (
     <Fragment>
-      <button className="bg-white h-full rounded-[8px] w-[4.5%] min-w-[30px]   border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
+      <button className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px]   border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
         <img className="w-60% h-60% object-contain" src={Search} alt="search" />
       </button>
     </Fragment>
@@ -33,7 +33,7 @@ export const MainMainSearchSendButton: React.FC = memo(() => {
 export const MainMainSearchFilterButton: React.FC = memo(() => {
   return (
     <Fragment>
-      <button className="bg-white h-full rounded-[8px] w-[4.5%] min-w-[30px] border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
+      <button className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px] border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
         <img className="w-60% h-60% object-contain" src={Filter} alt="filter" />
       </button>
     </Fragment>
@@ -43,16 +43,17 @@ export const MainMainSearchFilterButton: React.FC = memo(() => {
 export const MainMainSyncButton: React.FC = memo(() => {
   return (
     <Fragment>
-      <button className="bg-sidebarChoose h-full rounded-[8px] w-[7%] min-w-[60px] border-[1.5px] border-solid border-mainButBorders flex justify-center items-center opacity-85 shadow-bottom">
-        <img className="w-70% h-70% object-contain" src={Sync} alt="sync" />
+      <button className="bg-sidebarChoose h-full rounded-[14%] w-[7%] min-w-[60px] border-[1.5px] border-solid border-mainButBorders flex justify-center items-center opacity-85 shadow-bottom">
+        <img className="w-60% h-60% object-contain" src={Sync} alt="sync" />
 
-        <div className="flex h-full justify-center items-center">
-          <p className="h-full text-white ">|</p>
-          <img
-            className="w-60% h-80% object-contain mb-[5%] "
-            src={ScrollArrow}
-            alt="scrollArrow"
-          />
+        <div className="flex w-40% h-full justify-center items-center">
+          <div className="w-90% h-60%  border-l-[1.5px] border-l-solid  flex justify-center items-center">
+            <img
+              className=" w-90% h-90% object-contain   "
+              src={ScrollArrow}
+              alt="scrollArrow"
+            />
+          </div>
         </div>
       </button>
     </Fragment>
@@ -62,7 +63,7 @@ export const MainMainSyncButton: React.FC = memo(() => {
 export const MainMainPlusButton: React.FC = memo(() => {
   return (
     <Fragment>
-      <button className="bg-sidebarChoose h-full rounded-[8px] w-[4.5%] min-w-[30px] border-[1.5px] border-solid border-mainButBorders flex justify-center items-center opacity-85 shadow-bottom">
+      <button className="bg-sidebarChoose h-full rounded-[14%] w-[4.5%] min-w-[30px] border-[1.5px] border-solid border-mainButBorders flex justify-center items-center opacity-85 shadow-bottom">
         <img className="w-70% h-70% object-contain" src={Plus} alt="plus" />
       </button>
     </Fragment>
@@ -83,7 +84,7 @@ export const MainMainReviewButton: React.FC = memo(() => {
 export const MainMainHistoryButton: React.FC = memo(() => {
   return (
     <Fragment>
-      <button className="bg-white h-full rounded-[8px] w-[4.5%] min-w-[30px]   border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
+      <button className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px]   border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
         <img
           className="w-60% h-60% object-contain"
           src={History}
@@ -97,7 +98,7 @@ export const MainMainHistoryButton: React.FC = memo(() => {
 export const MainMainToArchive: React.FC = memo(() => {
   return (
     <Fragment>
-      <button className="bg-white h-full rounded-[8px] w-[4.5%] min-w-[30px]   border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
+      <button className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px]   border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
         <img
           className="w-60% h-60% object-contain"
           src={Archive}

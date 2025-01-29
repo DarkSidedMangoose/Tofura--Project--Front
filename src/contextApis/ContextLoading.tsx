@@ -30,7 +30,7 @@ export const MainLoadingProvider: React.FC<children> = ({ children }) => {
         setLoading(false);
       }, 1400);
     }
-  });
+  }, [isLoading]);
 
   return (
     <MainLoadingContext.Provider value={{ isLoading, setLoading }}>
