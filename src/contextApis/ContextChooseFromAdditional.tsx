@@ -26,9 +26,7 @@ export const OptionFromAdditionalBaseProvider: React.FC<propsOfComp> = ({
   children,
 }) => {
   const [isOption, setOption] = useState("ობიექტების რეესტრი");
-  useEffect(() => {
-    console.log(`${isOption} optioned`);
-  }, [isOption]);
+  useEffect(() => {}, [isOption]);
 
   return (
     <optionFromAdditionalBase.Provider value={{ isOption, setOption }}>
