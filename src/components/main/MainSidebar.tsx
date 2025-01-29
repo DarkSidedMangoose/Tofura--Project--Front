@@ -27,18 +27,16 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
   const { isOption, setOption } = useAdditionalOption();
 
   useEffect(() => {
-    if (isOption !== "") {
+    if (
+      isOption !== "" &&
+      isOption !== "საინფორმაციო დაფა" &&
+      isOption !== "პროფილი"
+    ) {
       setSidebarStates({
         identifier: "base",
       });
     }
   }, [isOption]);
-  //sideEffect for additionalInfoOfBases to control which has choosed in there
-  useEffect(() => {
-    if (sidebarStates.identifier !== "base") {
-      setOption("");
-    }
-  }, [sidebarStates, setOption]);
 
   const toggleSidebar = useCallback(
     (identifier: string) => {
@@ -48,22 +46,33 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
         setSidebarStates,
         setIsActive
       );
+      if (identifier === "dashboard") {
+        setOption("საინფორმაციო დაფა");
+      } else if (identifier === "profile") {
+        setOption("პროფილი");
+      }
     },
-    [sidebarStates, setSidebarStates, setIsActive]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
 
-  const handleMouseEnter = useCallback(() => {
-    if (isActive === false) {
-      setIsActive(true);
-    }
-  }, [isActive, setIsActive]);
+  const handleMouseEnter = useCallback(
+    () => {
+      if (isActive === false) {
+        setIsActive(true);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   const createClickHandler = useCallback(
     (identifier: string) => () => {
       toggleSidebar(identifier);
       setLoading(true);
     },
-    [toggleSidebar, setLoading]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
 
   return (

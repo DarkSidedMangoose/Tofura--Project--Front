@@ -1,12 +1,15 @@
-import React, { memo } from "react";
+import React, { Fragment, memo } from "react";
 import {
+  MainMainHistoryButton,
   MainMainPlusButton,
   MainMainReviewButton,
   MainMainSearchButton,
   MainMainSearchFilterButton,
   MainMainSearchSendButton,
   MainMainSyncButton,
+  MainMainToArchive,
 } from "./MainMainHeaderSubComponentsButtons";
+import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
 
 export const MainMainHeaderFirstSection: React.FC = memo(() => {
   return (
@@ -19,11 +22,28 @@ export const MainMainHeaderFirstSection: React.FC = memo(() => {
 });
 
 export const MainMainHeaderSecondSection: React.FC = memo(() => {
+  const { isOption } = useAdditionalOption();
   return (
-    <section className="h-full min-h-[30px] w-70% flex items-center gap-[1%] justify-end">
-      <MainMainSyncButton />
-      <MainMainPlusButton />
-      <MainMainReviewButton />
+    <section className="h-full  min-h-[30px] w-70% flex items-center gap-[1%] justify-end">
+      {isOption !== "შემოწმებული ობიექტების რეესტრი" ? (
+        <Fragment>
+          <MainMainSyncButton />
+          <MainMainPlusButton />
+          <MainMainReviewButton />
+          {isOption === "ინსპექტირების ობიექტები" && (
+            <Fragment>
+              <MainMainHistoryButton />
+              <MainMainToArchive />
+            </Fragment>
+          )}
+        </Fragment>
+      ) : (
+        <Fragment>
+          <MainMainReviewButton />
+
+          <MainMainHistoryButton />
+        </Fragment>
+      )}
     </section>
   );
 });

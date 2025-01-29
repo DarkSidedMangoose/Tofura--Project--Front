@@ -119,7 +119,9 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
                     ...prev,
                     baseInfoChoose: info,
                   }));
-                  setOption(info);
+                  setTimeout(() => {
+                    setOption(info);
+                  }, 100);
 
                   setLoading(true);
                 }}
@@ -145,7 +147,9 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
                     ...prev,
                     baseInfoChoose: info,
                   }));
-                  setOption(info);
+                  setTimeout(() => {
+                    setOption(info);
+                  }, 100);
                   setLoading(true);
                 }}
               >

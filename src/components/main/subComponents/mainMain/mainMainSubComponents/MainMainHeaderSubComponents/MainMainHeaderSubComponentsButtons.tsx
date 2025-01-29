@@ -5,6 +5,8 @@ import Sync from "../../../../../../assets/images/main/sync.png";
 import ScrollArrow from "../../../../../../assets/images/main/scrollArrows.png";
 import Plus from "../../../../../../assets/images/main/plus.png";
 import Pen from "../../../../../../assets/images/main/pen.png";
+import Archive from "../../../../../../assets/images/main/archive.png";
+import History from "../../../../../../assets/images/main/history.png";
 
 export const MainMainSearchButton: React.FC = memo(() => {
   return (
@@ -73,6 +75,34 @@ export const MainMainReviewButton: React.FC = memo(() => {
       <button className="bg-white flex gap-[2%] items-center w-[17.5%] min-w-[170px] h-full rounded-[8px] border-[1.5px] border-solid border-mainButBorders font-bold text-blue-950 text-[14px] shadow-bottom ">
         <img className=" h-70% object-contain" src={Pen} alt="plus" />
         დათვალიერება
+      </button>
+    </Fragment>
+  );
+});
+
+export const MainMainHistoryButton: React.FC = memo(() => {
+  return (
+    <Fragment>
+      <button className="bg-white h-full rounded-[8px] w-[4.5%] min-w-[30px]   border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
+        <img
+          className="w-60% h-60% object-contain"
+          src={History}
+          alt="search"
+        />
+      </button>
+    </Fragment>
+  );
+});
+
+export const MainMainToArchive: React.FC = memo(() => {
+  return (
+    <Fragment>
+      <button className="bg-white h-full rounded-[8px] w-[4.5%] min-w-[30px]   border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
+        <img
+          className="w-60% h-60% object-contain"
+          src={Archive}
+          alt="search"
+        />
       </button>
     </Fragment>
   );
