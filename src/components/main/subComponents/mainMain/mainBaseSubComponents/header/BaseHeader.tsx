@@ -2,7 +2,7 @@ import React from "react";
 import {
   MainMainHeaderFirstSection,
   MainMainHeaderSecondSection,
-} from "./BaseHeaders";
+} from "./BaseHeaderSections";
 
 const BaseHeader: React.FC = () => {
   return (
