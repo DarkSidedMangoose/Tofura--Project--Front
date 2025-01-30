@@ -1,6 +1,6 @@
 import React from "react";
-import movedLogo from "./../../../../../assets/images/main/mainLogoCenter.png";
-import { useMainLoading } from "../../../../../contextApis/ContextLoading";
+import movedLogo from "./../../../../assets/images/main/mainLogoCenter.png";
+import { useMainLoading } from "../../../../contextApis/ContextLoading";
 
 export const MainLoading: React.FC<{}> = () => {
   const { isLoading } = useMainLoading();

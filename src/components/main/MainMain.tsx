@@ -1,8 +1,8 @@
 import React from "react";
-import { MainMainMainSection } from "./subComponents/mainMain/mainMainSubComponents/MainMainMainSection";
+import { MainMainMainSection } from "./subComponents/mainMain//MainMainMainSection";
 import "./MainAnimations.css";
-import { MainLoading } from "./subComponents/mainMain/mainMainSubComponents/MainLoading";
-import { MainMainHeaderSections } from "./subComponents/mainMain/mainMainSubComponents/MainMainHeaderSections";
+import { MainLoading } from "./subComponents/mainMain//MainLoading";
+import { MainMainHeaderSections } from "./subComponents/mainMain//MainMainHeaderSections";
 import { useAdditionalOption } from "../../contextApis/ContextChooseFromAdditional";
 
 const MainMain: React.FC = () => {

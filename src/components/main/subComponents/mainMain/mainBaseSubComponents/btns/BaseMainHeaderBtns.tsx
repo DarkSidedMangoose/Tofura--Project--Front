@@ -8,7 +8,7 @@ import Pen from "../../../../../../assets/images/main/pen.png";
 import Archive from "../../../../../../assets/images/main/archive.png";
 import History from "../../../../../../assets/images/main/history.png";
 
-export const MainMainSearchButton: React.FC = memo(() => {
+export const BaseSearchButton: React.FC = memo(() => {
   return (
     <Fragment>
       <input
@@ -20,7 +20,7 @@ export const MainMainSearchButton: React.FC = memo(() => {
   );
 });
 
-export const MainMainSearchSendButton: React.FC = memo(() => {
+export const BaseSearchSendButton: React.FC = memo(() => {
   return (
     <Fragment>
       <button className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px]   border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
@@ -30,7 +30,7 @@ export const MainMainSearchSendButton: React.FC = memo(() => {
   );
 });
 
-export const MainMainSearchFilterButton: React.FC = memo(() => {
+export const BaseSearchFilterButton: React.FC = memo(() => {
   return (
     <Fragment>
       <button className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px] border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
@@ -40,7 +40,7 @@ export const MainMainSearchFilterButton: React.FC = memo(() => {
   );
 });
 
-export const MainMainSyncButton: React.FC = memo(() => {
+export const BaseSyncButton: React.FC = memo(() => {
   return (
     <Fragment>
       <button className="bg-sidebarChoose h-full rounded-[14%] w-[7%] min-w-[60px] border-[1.5px] border-solid border-mainButBorders flex justify-center items-center opacity-85 shadow-bottom">
@@ -60,7 +60,7 @@ export const MainMainSyncButton: React.FC = memo(() => {
   );
 });
 
-export const MainMainPlusButton: React.FC = memo(() => {
+export const BasePlusButton: React.FC = memo(() => {
   return (
     <Fragment>
       <button className="bg-sidebarChoose h-full rounded-[14%] w-[4.5%] min-w-[30px] border-[1.5px] border-solid border-mainButBorders flex justify-center items-center opacity-85 shadow-bottom">
@@ -70,7 +70,7 @@ export const MainMainPlusButton: React.FC = memo(() => {
   );
 });
 
-export const MainMainReviewButton: React.FC = memo(() => {
+export const BaseReviewButton: React.FC = memo(() => {
   return (
     <Fragment>
       <button className="bg-white flex gap-[2%] items-center w-[17.5%] min-w-[170px] h-full rounded-[8px] border-[1.5px] border-solid border-mainButBorders font-bold text-blue-950 text-[14px] shadow-bottom ">
@@ -81,7 +81,7 @@ export const MainMainReviewButton: React.FC = memo(() => {
   );
 });
 
-export const MainMainHistoryButton: React.FC = memo(() => {
+export const BaseHistoryButton: React.FC = memo(() => {
   return (
     <Fragment>
       <button className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px]   border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
@@ -95,7 +95,7 @@ export const MainMainHistoryButton: React.FC = memo(() => {
   );
 });
 
-export const MainMainToArchive: React.FC = memo(() => {
+export const BaseToArchive: React.FC = memo(() => {
   return (
     <Fragment>
       <button className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px]   border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
