@@ -4,7 +4,7 @@ import MainMainMainSectionMain from "./BaseMainMain";
 
 export const BaseMain: React.FC = () => {
   return (
-    <div className="h-full w-full flex items-center flex-col border-t-[1.5px] rounded-bl-lg rounded-br-lg  border-blue-950">
+    <div className="h-full w-full flex items-center flex-col  rounded-bl-lg rounded-br-lg  ">
       <MainMainMainSectionHeader />
       <MainMainMainSectionMain />
     </div>

@@ -146,17 +146,21 @@
 
 @keyframes fromUpToDown {
   from {
+    display: none;
     height: 0%;
   }
   to {
+    display: flex;
     height: 100%;
   }
 }
 @keyframes FromDownToUp {
   from {
+    display: flex;
     height: 100%;
   }
   to {
+    display: none;
     height: 0%;
   }
 }

@@ -5,7 +5,7 @@ export const MainMainMainSection: React.FC = memo(() => {
   return (
     <Fragment>
       <div
-        className={`h-[80%] w-full flex items-center flex-col bg-white rounded-br-lg rounded-bl-lg `}
+        className={`h-[65%] w-[98%] flex items-center flex-col bg-white rounded-br-lg rounded-lg `}
       >
         <BaseMain />
       </div>
