@@ -29,6 +29,33 @@ interface stateInterface {
     jobType: string;
     riskLevel: string;
   }[];
+  newBase: {
+    identifyCode: string;
+    wholeName: string;
+    region: string;
+    fizAddress: string;
+    turnover: string;
+    jobType: string;
+    riskLevel: string;
+  }[];
+  checkedBase: {
+    identifyCode: string;
+    wholeName: string;
+    region: string;
+    fizAddress: string;
+    turnover: string;
+    jobType: string;
+    riskLevel: string;
+  }[];
+  removeBase: {
+    identifyCode: string;
+    wholeName: string;
+    region: string;
+    fizAddress: string;
+    turnover: string;
+    jobType: string;
+    riskLevel: string;
+  }[];
 }
 
 const MainMainMainSectionMain: React.FC = () => {
@@ -42,6 +69,12 @@ const MainMainMainSectionMain: React.FC = () => {
       setIdentifier("inspectBase");
     } else if (isOption === "შემოწმებული ობიექტების რეესტრი") {
       setIdentifier("overBase");
+    } else if (isOption === "ახალი ობიექტები") {
+      setIdentifier("newBase");
+    } else if (isOption === "შემოწმებული ობიექტები") {
+      setIdentifier("checkedBase");
+    } else if (isOption === "წაშლილი ობიექტები") {
+      setIdentifier("removeBase");
     }
   }, [isOption]);
   const [state] = useState<stateInterface>({
@@ -105,6 +138,9 @@ const MainMainMainSectionMain: React.FC = () => {
         riskLevel: "მაღალი",
       },
     ],
+    newBase: [],
+    checkedBase: [],
+    removeBase: [],
   });
   return (
     <>
