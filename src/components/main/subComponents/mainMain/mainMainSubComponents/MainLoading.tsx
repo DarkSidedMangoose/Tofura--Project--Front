@@ -8,7 +8,7 @@ export const MainLoading: React.FC<{}> = () => {
     <section
       className={`${
         isLoading ? "FromUpToDown" : "FromDownToUp"
-      } absolute w-[99%]  top-0 bg-loginButBackground z-40 border-mainButBorders border-r-[5px] border-l-[5px] border-t-[5px] rounded-lg `}
+      } absolute w-[98%]  top-0 bg-loginButBackground z-40 border-mainButBorders border-r-[5px] border-l-[5px] border-t-[5px] rounded-bl-lg rounded-br-lg `}
     >
       <div className="flex w-100% h-100% justify-center items-center">
         <img
