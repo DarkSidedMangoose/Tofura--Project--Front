@@ -9,9 +9,7 @@ export const MainMainMainSection: React.FC = memo(() => {
   return (
     <Fragment>
       {isOption !== "საინფორმაციო დაფა" && isOption !== "პროფილი" ? (
-        <div
-          className={`h-[65%] w-[98%] flex items-center flex-col bg-white rounded-br-lg rounded-lg shadow-boxShadow`}
-        >
+        <div className="w-full h-[80%] ">
           <BaseMain />
         </div>
       ) : (

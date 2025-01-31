@@ -17,9 +17,9 @@ const Dashboard: React.FC = () => {
   const fifthDiagramDashOffSet =
     fifthDiagramDashArray - (fifthDiagramDashArray * 2) / 100;
   return (
-    <div className="w-full h-full relative">
+    <div className="w-50% h-full relative">
       <svg
-        className="w-50% h-70% absolute bottom-[10%] rotate-[270deg]"
+        className="w-full h-90% absolute  bottom-[5%] rotate-[270deg]"
         viewBox="0 0 100 100"
       >
         <circle
