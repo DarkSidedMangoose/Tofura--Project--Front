@@ -77,7 +77,10 @@ const MonthlyDiagram: React.FC = () => {
         <div className="w-full h-[calc(65%)] ">
           <div className="flex transition-transform duration-300 w-full h-full">
             {percentages.map((info, index) => (
-              <div className="h-full  min-w-[calc(100%/3)] flex justify-center items-end border-b-2 border-sidebarChoose   ">
+              <div
+                key={index}
+                className="h-full  min-w-[calc(100%/3)] flex justify-center items-end border-b-2 border-sidebarChoose   "
+              >
                 <div
                   style={{
                     height: `${info.planned}%`,
@@ -102,7 +105,10 @@ const MonthlyDiagram: React.FC = () => {
         <article className="h-[calc(15%)] flex     relative w-full  ">
           <div className="flex transition-transform duration-300 w-full">
             {months.map((e, i) => (
-              <p className="min-w-[calc(100%/3)]   flex justify-center items-center   m-0 p-0">
+              <p
+                key={i}
+                className="min-w-[calc(100%/3)]   flex justify-center items-center   m-0 p-0"
+              >
                 {e}
               </p>
             ))}
