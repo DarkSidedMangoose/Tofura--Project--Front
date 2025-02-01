@@ -6,17 +6,17 @@ import email from "../../assets/images/main/email.png";
 
 const MainFooter: React.FC = memo(() => {
   return (
-    <footer className="fixed bottom-0 w-full  h-12 z-30 flex justify-center footerAnimated-div">
-      <div className="bg-white border-2 flex items-center justify-between w-11/12 shadow-top h-full rounded-lg">
-        <section className="ml-4 flex items-center space-x-2">
-          <div className=" w-6  aspect-w-1 aspect-h-1 transform rotate-[60deg]">
+    <footer className="fixed bottom-0 w-full  h-[5%] z-30 flex justify-center footerAnimated-div">
+      <div className="bg-white border-2 flex items-center justify-between w-11/12 shadow-top h-full rounded-lg relative">
+        <section className="ml-4 flex items-center space-x-2 h-full bg-white relative ">
+          <div className="  h-1/2   aspect-1 flex justify-center rotate-[60deg] ">
             <img
-              className=" object-contain"
+              className=" object-contain "
               alt="navigationIcon"
               src={iconNavigation}
             />
           </div>
-          <p className="text-sm font-bold text-footerText">
+          <p className="text-sm font-bold text-footerText ">
             შრომის ინსპექციის სამსახური
           </p>
         </section>

@@ -149,7 +149,7 @@ const MainMainMainSectionMain: React.FC = () => {
           key={i}
           className="w-98% grid grid-cols-7 h-10% mt-[1%] border-b-[2px] border-black text-gray-700"
         >
-          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap font-bold">
+          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap  font-bold">
             {e.identifyCode}
           </div>
           <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap font-bold">

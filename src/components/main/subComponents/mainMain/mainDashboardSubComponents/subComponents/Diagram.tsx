@@ -24,9 +24,9 @@ const Diagram: React.FC = () => {
     },
   ];
   return (
-    <div className=" rounded-2xl  flex flex-col justify-center  relative shadow-bottom-right w-40% h-50%">
-      <header className=" z-10 h-20%  backdrop-blur-lg rounded-tl-2xl rounded-tr-2xl bg-sidebarChoose     text-lg    w-full flex justify-center items-center text-white font-bold">
-        <h1>ობიექტების დიაგრამული გამოსახულება</h1>
+    <div className=" rounded-2xl  flex flex-col justify-center  relative shadow-bottom-right w-full h-full ">
+      <header className=" z-10 h-10%   rounded-tl-2xl rounded-tr-2xl bg-sidebarChoose        w-full flex justify-center items-center text-white font-bold text-sm">
+        <p>ობიექტების დიაგრამული გამოსახულება</p>
       </header>
       <div className="w-full h-full flex bg-white rounded-bl-2xl rounded-br-2xl">
         <GraphicDiagram />
@@ -90,7 +90,7 @@ const GraphicDiagram: React.FC = () => {
   return (
     <div className="w-50% h-full relative">
       <svg
-        className="w-full h-90% absolute  bottom-[5%] "
+        className="w-full h-90% absolute  bottom-[5%] rotate-180"
         viewBox="0 0 100 100"
       >
         {details.map((detail, index) => {
@@ -106,6 +106,7 @@ const GraphicDiagram: React.FC = () => {
                 strokeWidth="8"
                 fill="none"
               />
+
               <circle
                 cx="50"
                 cy="50"
