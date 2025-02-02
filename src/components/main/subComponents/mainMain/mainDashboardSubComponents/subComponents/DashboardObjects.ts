@@ -80,7 +80,7 @@ export interface YearData {
 }
 
 export const object: YearData = {
-  2021: [
+  1978: [
     { planned: 30, unplanned: 43, month: "იანვარი" },
     { planned: 31, unplanned: 52, month: "თებერვალი" },
     { planned: 20, unplanned: 76, month: "მარტი" },
@@ -94,7 +94,7 @@ export const object: YearData = {
     { planned: 98, unplanned: 99, month: "ნოემბერი" },
     { planned: 65, unplanned: 1, month: "დეკემბერი" },
   ],
-  2022: [
+  1979: [
     { planned: 30, unplanned: 43, month: "იანვარი" },
     { planned: 31, unplanned: 52, month: "თებერვალი" },
     { planned: 20, unplanned: 76, month: "მარტი" },
@@ -108,7 +108,7 @@ export const object: YearData = {
     { planned: 98, unplanned: 99, month: "ნოემბერი" },
     { planned: 65, unplanned: 1, month: "დეკემბერი" },
   ],
-  2023: [
+  1980: [
     { planned: 30, unplanned: 43, month: "იანვარი" },
     { planned: 31, unplanned: 52, month: "თებერვალი" },
     { planned: 20, unplanned: 76, month: "მარტი" },
@@ -122,7 +122,7 @@ export const object: YearData = {
     { planned: 98, unplanned: 99, month: "ნოემბერი" },
     { planned: 65, unplanned: 5, month: "დეკემბერი" },
   ],
-  2024: [
+  1981: [
     { planned: 30, unplanned: 43, month: "იანვარი" },
     { planned: 31, unplanned: 52, month: "თებერვალი" },
     { planned: 20, unplanned: 76, month: "მარტი" },

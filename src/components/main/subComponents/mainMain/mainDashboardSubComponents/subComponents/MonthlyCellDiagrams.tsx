@@ -4,6 +4,7 @@ import "../../../../Scrollbar.css";
 
 const MonthlyCellDiagrams: React.FC = () => {
   const objectLength = Object.keys(object).length;
+
   const years = Array.from(
     { length: objectLength },
     (_, i) => Number(Object.keys(object)[0]) + i
@@ -11,34 +12,30 @@ const MonthlyCellDiagrams: React.FC = () => {
   const [year, setYear] = useState<number>(Number(Object.keys(object)[0]));
   const [yearNd, setYearNd] = useState<number>(Number(Object.keys(object)[0]));
 
-  const [yearIndex, setYearIndex] = useState(
-    Object.keys(object).indexOf(`${year}`)
-  );
   const [yearsNd, setYearsNd] = useState<number[]>(
     Array.from(
-      { length: objectLength - yearIndex },
-      (_, i) => Number(Object.keys(object)[yearIndex]) + i
+      { length: Number(Object.keys(object)[objectLength - 1]) - year + 1 },
+      (_, i) => year + i
     )
   );
-
-  useEffect(() => {
-    setYearIndex(Object.keys(object).indexOf(`${year}`));
-  }, [year]);
 
   useEffect(
     () => {
       setYearsNd(
         Array.from(
-          { length: objectLength - yearIndex },
-          (_, i) => Number(Object.keys(object)[yearIndex]) + i
+          { length: Number(Object.keys(object)[objectLength - 1]) - year + 1 },
+          (_, i) => year + i
         )
       );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [yearIndex]
+    [year]
   );
   useEffect(() => {
-    setYearNd(yearsNd[0]);
+    if (yearNd < year) {
+      setYearNd(yearsNd[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [yearsNd]);
   const handleFirstYearChange = (
     event: React.ChangeEvent<HTMLSelectElement>
