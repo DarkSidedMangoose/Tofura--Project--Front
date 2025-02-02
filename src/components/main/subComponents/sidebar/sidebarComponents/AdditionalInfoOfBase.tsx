@@ -3,13 +3,10 @@ import { debounce } from "../SidebarFunctions";
 import "../../../MainAnimations.css";
 import { useMainLoading } from "../../../../../contextApis/ContextLoading";
 import { useAdditionalOption } from "../../../../../contextApis/ContextChooseFromAdditional";
+import { baseState } from "./SidebarObjects";
 interface AdditionalInfoOfBaseProps {
   isActive: boolean;
   setIsActive: (e: boolean) => void;
-}
-interface AdditionalInfoOfBaseStates {
-  baseInfoP: string[];
-  baseInfoNdP: string[];
 }
 
 type Direction = boolean | null;
@@ -18,7 +15,7 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
   isActive,
   setIsActive,
 }) => {
-  const { isOption, setOption } = useAdditionalOption(); //identify which has choose
+  const { isOption, setOption } = useAdditionalOption();
   const { setLoading } = useMainLoading();
   //to identify on classname which has changed
   const [identifyClassName, setIdentifyClassName] = useState<string>(""); // to identify when width and height change doesnt happend animation bug
@@ -27,20 +24,6 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
   const [windowDimensions, setWindowDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
-  });
-
-  //it's for make code more cleaner and i map them to make code more less and cleaner
-  const [baseState, setBaseState] = useState<AdditionalInfoOfBaseStates>({
-    baseInfoP: [
-      "ობიექტების რეესტრი",
-      "ინსპექტირების ობიექტები",
-      "შემოწმებული ობიექტების რეესტრი",
-    ],
-    baseInfoNdP: [
-      "ახალი ობიექტები",
-      "შემოწმებული ობიექტები",
-      "წაშლილი ობიექტები",
-    ],
   });
 
   //improving performance with debouncing
@@ -115,13 +98,7 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
                 } text-[0.9rem] cursor-pointer text-blue-950 `}
                 key={index}
                 onClick={() => {
-                  setBaseState((prev) => ({
-                    ...prev,
-                    baseInfoChoose: info,
-                  }));
-                  setTimeout(() => {
-                    setOption(info);
-                  }, 100);
+                  setOption(info);
 
                   setLoading(true);
                 }}
@@ -143,13 +120,8 @@ export const AdditionalInfoOfBase: React.FC<AdditionalInfoOfBaseProps> = ({
                 } text-[0.9rem] cursor-pointer text-blue-950 `}
                 key={index}
                 onClick={() => {
-                  setBaseState((prev) => ({
-                    ...prev,
-                    baseInfoChoose: info,
-                  }));
-                  setTimeout(() => {
-                    setOption(info);
-                  }, 100);
+                  setOption(info);
+
                   setLoading(true);
                 }}
               >

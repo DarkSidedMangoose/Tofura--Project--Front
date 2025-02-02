@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import { details, diagramInfo } from "./Objects";
+import React, { Fragment, useEffect } from "react";
+import { details, diagramInfo } from "./DashboardObjects";
 
 const Diagram: React.FC = () => {
   return (
@@ -33,6 +33,7 @@ const Diagram: React.FC = () => {
 export default Diagram;
 
 const GraphicDiagram: React.FC = () => {
+  useEffect(() => {}, []);
   return (
     <div className="w-50% h-full relative">
       <svg

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { months, percentages, YearData } from "./Objects";
+import { months, percentages, YearData } from "./DashboardObjects";
 const MonthlyCellDiagrams: React.FC = () => {
   const years = Array.from({ length: 6 }, (_, i) => 2020 + i);
   const [year, setYear] = useState<number>(2020);
@@ -54,6 +54,28 @@ export default MonthlyCellDiagrams;
 
 const MonthlyDiagram: React.FC<{ year: number }> = ({ year }) => {
   const [identifier, setIdentifier] = useState<keyof YearData>(year);
+  const [percentage, setPercentage] = useState(() => {
+    const newPercentages: YearData = Array.from({
+      length: Object.keys(percentages).length,
+    }).reduce((acc: YearData, _, i) => {
+      acc[2020 + i] = Array.from({ length: 12 }, () => ({
+        planned: 0,
+        unplanned: 0,
+      }));
+      return acc;
+    }, {} as YearData);
+    return newPercentages;
+  });
+
+  useEffect(
+    () => {
+      setTimeout(() => {
+        setPercentage(percentages);
+      }, 2);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   useEffect(() => {
     setIdentifier(year);
@@ -65,13 +87,16 @@ const MonthlyDiagram: React.FC<{ year: number }> = ({ year }) => {
       <section className="w-full h-full overflow-auto flex flex-col justify-end">
         <div className="w-full h-[calc(65%)]">
           <div className="flex transition-transform duration-300 w-full h-full">
-            {percentages[identifier].map((info, index) => (
+            {percentage[identifier].map((info, index) => (
               <div
                 key={index}
                 className="h-full min-w-[calc(100%/3)] flex justify-center items-end border-b-2 border-sidebarChoose"
               >
                 <div
-                  style={{ height: `${info.unplanned}%` }}
+                  style={{
+                    height: `${info.unplanned}%`,
+                    transition: "height 0.5s ease",
+                  }}
                   className="w-20% flex items-center flex-col relative"
                 >
                   <p className="absolute top-[-20px] text-sidebarChoose font-bold">
@@ -82,6 +107,7 @@ const MonthlyDiagram: React.FC<{ year: number }> = ({ year }) => {
                 <div
                   style={{
                     height: `${info.planned}%`,
+                    transition: "height 0.5s ease",
                     backgroundColor: "rgba(0, 0, 75, 0.387)",
                   }}
                   className="w-20% flex items-center flex-col relative"

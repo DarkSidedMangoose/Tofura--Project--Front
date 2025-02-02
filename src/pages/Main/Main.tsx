@@ -7,7 +7,6 @@ import { OptionFromAdditionalBaseProvider } from "../../contextApis/ContextChoos
 
 const Main: React.FC = () => {
   const [isActive, setIsActive] = useState<boolean>(false);
-
   const handleIsActive = useCallback((e: boolean) => {
     setIsActive(e);
   }, []);
@@ -20,6 +19,7 @@ const Main: React.FC = () => {
             isActive={isActive}
             setIsActive={handleIsActive}
           />
+
           <MainMain />
         </OptionFromAdditionalBaseProvider>
       </div>
