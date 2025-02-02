@@ -166,10 +166,12 @@ const MonthlyDiagram: React.FC<{ year: number; yearNd: number }> = ({
                   key={ndIndex}
                   className="flex flex-col  h-full min-w-[calc(100%/3)] items-center justify-center overflow-hidden"
                 >
-                  <p className="  m-0 p-0 text-sidebarChoose font-bold">
+                  <p className="  m-0 p-0 text-sidebarChoose ">
                     {ndInfo.month}
                   </p>
-                  <p>{info}</p>
+                  <p className="  m-0 p-0 text-sidebarChoose font-bold">
+                    {info}
+                  </p>
                 </div>
               ))
             )}
