@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
+import "../../../../Scrollbar.css";
 
 interface stateInterface {
   mainBase: {
@@ -149,25 +150,25 @@ const MainMainMainSectionMain: React.FC = () => {
           key={i}
           className="w-98% grid grid-cols-7 h-10% mt-[1%] border-b-[2px] border-black text-gray-700"
         >
-          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap  font-bold">
+          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap custom-scrollbar  font-bold">
             {e.identifyCode}
           </div>
-          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap font-bold">
+          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap custom-scrollbar font-bold">
             {e.wholeName}
           </div>
-          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap font-bold">
+          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap custom-scrollbar font-bold">
             {e.region}
           </div>
-          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap font-bold">
+          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap custom-scrollbar font-bold">
             {e.fizAddress}
           </div>
-          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap font-bold">
+          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap custom-scrollbar font-bold">
             {e.turnover}
           </div>
-          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap font-bold">
+          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap custom-scrollbar font-bold">
             {e.jobType}
           </div>
-          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap font-bold">
+          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap custom-scrollbar font-bold">
             {e.riskLevel}
           </div>
         </div>

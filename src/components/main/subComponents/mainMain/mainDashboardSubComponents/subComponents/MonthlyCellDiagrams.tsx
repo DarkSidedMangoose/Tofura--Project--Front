@@ -1,27 +1,78 @@
 import React, { useEffect, useState } from "react";
-import { months, percentages, YearData } from "./DashboardObjects";
-const MonthlyCellDiagrams: React.FC = () => {
-  const years = Array.from({ length: 6 }, (_, i) => 2020 + i);
-  const [year, setYear] = useState<number>(2020);
+import { object } from "./DashboardObjects";
+import "../../../../Scrollbar.css";
 
-  const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+const MonthlyCellDiagrams: React.FC = () => {
+  const objectLength = Object.keys(object).length;
+  const years = Array.from(
+    { length: objectLength },
+    (_, i) => Number(Object.keys(object)[0]) + i
+  );
+  const [year, setYear] = useState<number>(Number(Object.keys(object)[0]));
+  const [yearNd, setYearNd] = useState<number>(Number(Object.keys(object)[0]));
+
+  const [yearIndex, setYearIndex] = useState(
+    Object.keys(object).indexOf(`${year}`)
+  );
+  const [yearsNd, setYearsNd] = useState<number[]>(
+    Array.from(
+      { length: objectLength - yearIndex },
+      (_, i) => Number(Object.keys(object)[yearIndex]) + i
+    )
+  );
+
+  useEffect(() => {
+    setYearIndex(Object.keys(object).indexOf(`${year}`));
+  }, [year]);
+
+  useEffect(
+    () => {
+      setYearsNd(
+        Array.from(
+          { length: objectLength - yearIndex },
+          (_, i) => Number(Object.keys(object)[yearIndex]) + i
+        )
+      );
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [yearIndex]
+  );
+  useEffect(() => {
+    setYearNd(yearsNd[0]);
+  }, [yearsNd]);
+  const handleFirstYearChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setYear(Number(event.target.value));
   };
-
+  const handleSecondChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setYearNd(Number(event.target.value));
+  };
   return (
     <section className="w-full h-full bg-white rounded-2xl flex flex-col">
       <header className="w-full h-[35%] text-sm flex flex-col items-end text-white font-bold">
         <article className="w-full h-[calc(100%/35*10)] rounded-tl-2xl rounded-tr-2xl bg-sidebarChoose flex items-center justify-center">
-          <p>დიაგრამა თვეების მიხედვით</p>
+          <p>წლიური დიაგრამა თვეების მიხედვით</p>
         </article>
         <div className="flex w-full h-1/2 justify-between">
           <div className="h-full flex justify-start items-center w-1/3">
             <select
-              className="p-2 border ml-[2%] h-80% w-70% border-gray-600 rounded bg-white text-sidebarChoose cursor-pointer"
-              onChange={handleYearChange}
+              className="p-2 border ml-[2%] focus:border-sidebarChoose outline-none h-80% w-70% border-sidebarChoose rounded bg-white text-sidebarChoose cursor-pointer"
+              onChange={handleFirstYearChange}
               value={year}
             >
               {years.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+            <select
+              className="p-2 border ml-[2%] focus:border-sidebarChoose outline-none h-80% w-70% border-sidebarChoose rounded bg-white text-sidebarChoose cursor-pointer"
+              value={yearNd}
+              onChange={handleSecondChange}
+            >
+              {yearsNd.map((year) => (
                 <option key={year} value={year}>
                   {year}
                 </option>
@@ -45,95 +96,86 @@ const MonthlyCellDiagrams: React.FC = () => {
           </div>
         </div>
       </header>
-      <MonthlyDiagram year={year} />
+      <MonthlyDiagram year={year} yearNd={yearNd} />
     </section>
   );
 };
 
 export default MonthlyCellDiagrams;
 
-const MonthlyDiagram: React.FC<{ year: number }> = ({ year }) => {
-  const [identifier, setIdentifier] = useState<keyof YearData>(year);
-  const [percentage, setPercentage] = useState(() => {
-    const newPercentages: YearData = Array.from({
-      length: Object.keys(percentages).length,
-    }).reduce((acc: YearData, _, i) => {
-      acc[2020 + i] = Array.from({ length: 12 }, () => ({
-        planned: 0,
-        unplanned: 0,
-      }));
-      return acc;
-    }, {} as YearData);
-    return newPercentages;
-  });
-
-  useEffect(
-    () => {
-      setTimeout(() => {
-        setPercentage(percentages);
-      }, 2);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+const MonthlyDiagram: React.FC<{ year: number; yearNd: number }> = ({
+  year,
+  yearNd,
+}) => {
+  const [trys, setTrys] = useState<number[]>([]);
 
   useEffect(() => {
-    setIdentifier(year);
-    console.log(year);
-  }, [year]);
+    const newYears = Array.from({ length: yearNd - year + 1 }, (_, i) => {
+      return year + i;
+    });
+    setTrys(newYears);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [year, yearNd]);
 
   return (
     <main className="w-full h-80% flex">
-      <section className="w-full h-full overflow-auto flex flex-col justify-end">
+      <section className="w-full h-full overflow-auto flex flex-col justify-end custom-scrollbar">
         <div className="w-full h-[calc(65%)]">
           <div className="flex transition-transform duration-300 w-full h-full">
-            {percentage[identifier].map((info, index) => (
-              <div
-                key={index}
-                className="h-full min-w-[calc(100%/3)] flex justify-center items-end border-b-2 border-sidebarChoose"
-              >
+            {trys.map((info, indexs) =>
+              object[info].map((infos, index) => (
                 <div
-                  style={{
-                    height: `${info.unplanned}%`,
-                    transition: "height 0.5s ease",
-                  }}
-                  className="w-20% flex items-center flex-col relative"
+                  key={index}
+                  className="h-full min-w-[calc(100%/3)] flex justify-center items-end border-b-2 border-sidebarChoose"
                 >
-                  <p className="absolute top-[-20px] text-sidebarChoose font-bold">
-                    {info.unplanned}
-                  </p>
-                  <div className="w-full h-full bg-sidebarChoose"></div>
-                </div>
-                <div
-                  style={{
-                    height: `${info.planned}%`,
-                    transition: "height 0.5s ease",
-                    backgroundColor: "rgba(0, 0, 75, 0.387)",
-                  }}
-                  className="w-20% flex items-center flex-col relative"
-                >
-                  <p
-                    style={{ color: "rgba(0, 0, 75, 0.387)" }}
-                    className="absolute top-[-20px] font-bold"
+                  <div
+                    style={{
+                      height: `${infos.unplanned}%`,
+                      transition: "height 0.5s ease",
+                    }}
+                    className="w-20% flex items-center flex-col relative"
                   >
-                    {info.planned}
-                  </p>
-                  <div className="w-full h-full"></div>
+                    <p className="absolute top-[-20px] text-sidebarChoose font-bold">
+                      {infos.unplanned}
+                    </p>
+                    <div className="w-full h-full bg-sidebarChoose"></div>
+                  </div>
+                  <div
+                    style={{
+                      height: `${infos.planned}%`,
+                      transition: "height 0.5s ease",
+                      backgroundColor: "rgba(0, 0, 75, 0.387)",
+                    }}
+                    className="w-20% flex items-center flex-col relative"
+                  >
+                    <p
+                      style={{ color: "rgba(0, 0, 75, 0.387)" }}
+                      className="absolute top-[-20px] font-bold"
+                    >
+                      {infos.planned}
+                    </p>
+                    <div className="w-full h-full"></div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
-        <article className="h-[calc(15%)] flex relative w-full">
+        <article className="h-20% flex relative w-full">
           <div className="flex transition-transform duration-300 w-full">
-            {months.map((e, i) => (
-              <p
-                key={i}
-                className="min-w-[calc(100%/3)] flex justify-center items-center m-0 p-0 text-sidebarChoose font-bold"
-              >
-                {e}
-              </p>
-            ))}
+            {trys.map((info, index) =>
+              object[info].map((ndInfo, ndIndex) => (
+                <div
+                  key={ndIndex}
+                  className="flex flex-col  h-full min-w-[calc(100%/3)] items-center justify-center overflow-hidden"
+                >
+                  <p className="  m-0 p-0 text-sidebarChoose font-bold">
+                    {ndInfo.month}
+                  </p>
+                  <p>{info}</p>
+                </div>
+              ))
+            )}
           </div>
         </article>
       </section>
