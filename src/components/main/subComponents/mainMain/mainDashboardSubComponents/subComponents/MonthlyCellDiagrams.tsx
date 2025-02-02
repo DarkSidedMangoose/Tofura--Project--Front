@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-
+import { months, percentages, YearData } from "./Objects";
 const MonthlyCellDiagrams: React.FC = () => {
   const years = Array.from({ length: 6 }, (_, i) => 2020 + i);
   const [year, setYear] = useState<number>(2020);
-
-  useEffect(() => {
-    console.log(year);
-  }, [year]);
 
   const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setYear(Number(event.target.value));
@@ -56,15 +52,6 @@ const MonthlyCellDiagrams: React.FC = () => {
 
 export default MonthlyCellDiagrams;
 
-interface Percentage {
-  planned: number;
-  unplanned: number;
-}
-
-interface YearData {
-  [year: number]: Percentage[];
-}
-
 const MonthlyDiagram: React.FC<{ year: number }> = ({ year }) => {
   const [identifier, setIdentifier] = useState<keyof YearData>(year);
 
@@ -73,116 +60,12 @@ const MonthlyDiagram: React.FC<{ year: number }> = ({ year }) => {
     console.log(year);
   }, [year]);
 
-  const months = [
-    "იანვარი",
-    "თებერვალი",
-    "მარტი",
-    "აპრილი",
-    "მაისი",
-    "ივნისი",
-    "ივლისი",
-    "აგვისტო",
-    "სექტემბერი",
-    "ოქტომბერი",
-    "ნოემბერი",
-    "დეკემბერი",
-  ];
-
-  const percentages: YearData[] = [
-    {
-      2020: [
-        { planned: 30, unplanned: 43 },
-        { planned: 31, unplanned: 52 },
-        { planned: 20, unplanned: 76 },
-        { planned: 80, unplanned: 61 },
-        { planned: 70, unplanned: 96 },
-        { planned: 100, unplanned: 69 },
-        { planned: 13, unplanned: 30 },
-        { planned: 54, unplanned: 15 },
-        { planned: 13, unplanned: 35 },
-        { planned: 67, unplanned: 55 },
-        { planned: 98, unplanned: 99 },
-        { planned: 65, unplanned: 1 },
-      ],
-      2021: [
-        { planned: 30, unplanned: 43 },
-        { planned: 31, unplanned: 52 },
-        { planned: 20, unplanned: 76 },
-        { planned: 80, unplanned: 61 },
-        { planned: 70, unplanned: 96 },
-        { planned: 100, unplanned: 69 },
-        { planned: 13, unplanned: 30 },
-        { planned: 54, unplanned: 15 },
-        { planned: 13, unplanned: 35 },
-        { planned: 67, unplanned: 55 },
-        { planned: 98, unplanned: 99 },
-        { planned: 65, unplanned: 1 },
-      ],
-      2022: [
-        { planned: 30, unplanned: 43 },
-        { planned: 31, unplanned: 52 },
-        { planned: 20, unplanned: 76 },
-        { planned: 80, unplanned: 61 },
-        { planned: 70, unplanned: 96 },
-        { planned: 100, unplanned: 69 },
-        { planned: 13, unplanned: 30 },
-        { planned: 54, unplanned: 15 },
-        { planned: 13, unplanned: 35 },
-        { planned: 67, unplanned: 55 },
-        { planned: 98, unplanned: 99 },
-        { planned: 65, unplanned: 1 },
-      ],
-      2023: [
-        { planned: 30, unplanned: 43 },
-        { planned: 31, unplanned: 52 },
-        { planned: 20, unplanned: 76 },
-        { planned: 80, unplanned: 61 },
-        { planned: 70, unplanned: 96 },
-        { planned: 100, unplanned: 69 },
-        { planned: 13, unplanned: 30 },
-        { planned: 54, unplanned: 15 },
-        { planned: 13, unplanned: 35 },
-        { planned: 67, unplanned: 55 },
-        { planned: 98, unplanned: 99 },
-        { planned: 65, unplanned: 1 },
-      ],
-      2024: [
-        { planned: 30, unplanned: 43 },
-        { planned: 31, unplanned: 52 },
-        { planned: 20, unplanned: 76 },
-        { planned: 80, unplanned: 61 },
-        { planned: 70, unplanned: 96 },
-        { planned: 100, unplanned: 69 },
-        { planned: 13, unplanned: 30 },
-        { planned: 54, unplanned: 15 },
-        { planned: 13, unplanned: 35 },
-        { planned: 67, unplanned: 55 },
-        { planned: 98, unplanned: 99 },
-        { planned: 65, unplanned: 1 },
-      ],
-      2025: [
-        { planned: 1, unplanned: 1 },
-        { planned: 31, unplanned: 52 },
-        { planned: 20, unplanned: 76 },
-        { planned: 80, unplanned: 61 },
-        { planned: 70, unplanned: 96 },
-        { planned: 100, unplanned: 69 },
-        { planned: 13, unplanned: 30 },
-        { planned: 54, unplanned: 15 },
-        { planned: 13, unplanned: 35 },
-        { planned: 67, unplanned: 55 },
-        { planned: 98, unplanned: 99 },
-        { planned: 65, unplanned: 1 },
-      ],
-    },
-  ];
-
   return (
     <main className="w-full h-80% flex">
       <section className="w-full h-full overflow-auto flex flex-col justify-end">
         <div className="w-full h-[calc(65%)]">
           <div className="flex transition-transform duration-300 w-full h-full">
-            {percentages[0][identifier].map((info, index) => (
+            {percentages[identifier].map((info, index) => (
               <div
                 key={index}
                 className="h-full min-w-[calc(100%/3)] flex justify-center items-end border-b-2 border-sidebarChoose"
