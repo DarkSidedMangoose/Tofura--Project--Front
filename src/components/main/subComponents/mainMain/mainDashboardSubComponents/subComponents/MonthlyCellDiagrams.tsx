@@ -4,21 +4,18 @@ import "../../../../Scrollbar.css";
 
 const MonthlyCellDiagrams: React.FC = () => {
   const objectLength = Object.keys(object).length;
-
+  const [year, setYear] = useState<number>(Number(Object.keys(object)[0]));
+  const [yearNd, setYearNd] = useState<number>(Number(Object.keys(object)[0]));
   const years = Array.from(
     { length: objectLength },
     (_, i) => Number(Object.keys(object)[0]) + i
   );
-  const [year, setYear] = useState<number>(Number(Object.keys(object)[0]));
-  const [yearNd, setYearNd] = useState<number>(Number(Object.keys(object)[0]));
-
   const [yearsNd, setYearsNd] = useState<number[]>(
     Array.from(
       { length: Number(Object.keys(object)[objectLength - 1]) - year + 1 },
       (_, i) => year + i
     )
   );
-
   useEffect(
     () => {
       setYearsNd(
@@ -51,10 +48,10 @@ const MonthlyCellDiagrams: React.FC = () => {
         <article className="w-full h-[calc(100%/35*10)] rounded-tl-2xl rounded-tr-2xl bg-sidebarChoose flex items-center justify-center">
           <p>წლიური დიაგრამა თვეების მიხედვით</p>
         </article>
-        <div className="flex w-full h-1/2 justify-between">
-          <div className="h-full flex justify-start items-center w-1/3">
+        <div className="flex w-full  h-1/2 justify-between">
+          <div className="h-full flex justify-start items-center w-2/3 ">
             <select
-              className="p-2 border ml-[2%] focus:border-sidebarChoose outline-none h-80% w-70% border-sidebarChoose rounded bg-white text-sidebarChoose cursor-pointer"
+              className="p-2 border ml-[2%] focus:border-sidebarChoose outline-none h-80% w-1/3 border-sidebarChoose rounded bg-white text-sidebarChoose cursor-pointer"
               onChange={handleFirstYearChange}
               value={year}
             >
@@ -65,7 +62,7 @@ const MonthlyCellDiagrams: React.FC = () => {
               ))}
             </select>
             <select
-              className="p-2 border ml-[2%] focus:border-sidebarChoose outline-none h-80% w-70% border-sidebarChoose rounded bg-white text-sidebarChoose cursor-pointer"
+              className="p-2 border ml-[2%] focus:border-sidebarChoose outline-none h-80% w-1/3 border-sidebarChoose rounded bg-white text-sidebarChoose cursor-pointer"
               value={yearNd}
               onChange={handleSecondChange}
             >
@@ -76,18 +73,18 @@ const MonthlyCellDiagrams: React.FC = () => {
               ))}
             </select>
           </div>
-          <div className="w-2/3 h-full text-sidebarChoose flex flex-col justify-center items-end text-[10.5px]">
-            <div className="w-40% h-80%">
-              <section className="w-3/5 h-[47.5%] flex items-center gap-[5%]">
-                <div className="aspect-1 h-full bg-sidebarChoose"></div>
+          <div className="w-[calc(100%/3)] h-full text-sidebarChoose flex flex-col justify-center items-end  text-[10.5px]">
+            <div className="w-full  h-80% flex flex-col  justify-center items-end  ">
+              <section className="w-full h-[47.5%] flex items-center gap-[5%] justify-end ">
                 <p>გეგმიური</p>
+                <div className="aspect-1 h-full bg-sidebarChoose"></div>
               </section>
-              <section className="w-3/5 h-[47.5%] flex items-center gap-[5%]">
+              <section className="w-full h-[47.5%] flex  gap-[5%] justify-end">
+                <p>არაგეგმიური</p>
                 <div
                   style={{ backgroundColor: "rgba(0, 0, 75, 0.387)" }}
                   className="aspect-1 h-full"
                 ></div>
-                <p>არაგეგმიური</p>
               </section>
             </div>
           </div>
@@ -158,7 +155,7 @@ const MonthlyDiagram: React.FC<{ year: number; yearNd: number }> = ({
             )}
           </div>
         </div>
-        <article className="h-20% flex relative w-full">
+        <article className="h-20% flex relative w-full ">
           <div className="flex transition-transform duration-300 w-full">
             {trys.map((info, index) =>
               object[info].map((ndInfo, ndIndex) => (
