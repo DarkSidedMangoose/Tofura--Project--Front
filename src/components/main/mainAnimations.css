@@ -1,42 +1,5 @@
 /* sidebar */
 
-.sidebarBaseInfoShownUp1600pxRight-div-fixed {
-  transition: width 0.5s ease-in-out;
-  display: flex;
-  width: 18%;
-}
-.sidebarBaseInfoShownUp1600pxRight-div {
-  transition: width 0.5s ease-in-out;
-  animation: slideInSidebarUp1600px 0.5s forwards;
-}
-.sidebarBaseInfoCloseDown1600pxRight-div-fixed {
-  transition: width 0.5s ease-in-out;
-  margin-left: 81px;
-  display: flex;
-  width: 300px;
-}
-.sidebarBaseInfoCloseDown1600pxRight-div {
-  transition: width 0.5s ease-in-out;
-  animation: slideInSidebarDown1600px 0.5s forwards;
-}
-.sidebarBaseInfoCloseUp1600pxLeft-div-fixed {
-  transition: width 0.5s ease-in-out;
-  display: none;
-  width: 0%;
-}
-.sidebarBaseInfoCloseUp1600pxLeft-div {
-  transition: width 0.5s ease-in-out;
-  animation: slideOutSidebarUp1600px 0.5s forwards;
-}
-.sidebarBaseInfoCloseDown1600pxLeft-div-fixed {
-  transition: width 0.5s ease-in-out;
-  display: none;
-  width: 0px;
-}
-.sidebarBaseInfoCloseDown1600pxLeft-div {
-  transition: width 0.5s ease-in-out;
-  animation: slideOutSidebarDown1600px 0.5s forwards;
-}
 .sidebarAdditionalInfoChoose {
   animation: toRight 0.5s forwards;
 }
@@ -44,54 +7,14 @@
   animation: toLeft 0.5s forwards;
 }
 .transition-width {
-  transition: width 0.5s ease-in-out;
+  transition: width 0.3s ease-in-out;
 }
 
 .nones {
-  animation: setToNone 0.2s forwards;
+  display: none;
 }
-@keyframes slideInSidebarUp1600px {
-  from {
-    display: none;
-    width: 0%;
-  }
-  to {
-    display: flex;
-    width: 18%;
-  }
-}
-@keyframes slideInSidebarDown1600px {
-  from {
-    display: none;
-    width: 0px;
-  }
-  to {
-    margin-left: 81px;
-    display: flex;
-    width: 300px;
-  }
-}
-
-@keyframes slideOutSidebarUp1600px {
-  from {
-    display: flex;
-    width: 18%;
-  }
-  to {
-    display: none;
-    width: 0%;
-  }
-}
-
-@keyframes slideOutSidebarDown1600px {
-  from {
-    display: flex;
-    width: 350px;
-  }
-  to {
-    display: none;
-    width: 0px;
-  }
+.shown {
+  animation: fromNoneToShown 0.3s forwards;
 }
 
 @keyframes toRight {
@@ -122,11 +45,23 @@
     transform: translateY(0);
   }
 }
-@keyframes setToNone {
+@keyframes fromNoneToShown {
   from {
+    opacity: 0;
+    display: none;
+  }
+  to {
+    opacity: 1;
+    display: flex;
+  }
+}
+@keyframes fromShownToNone {
+  from {
+    opacity: 0.2;
     display: flex;
   }
   to {
+    opacity: 0;
     display: none;
   }
 }

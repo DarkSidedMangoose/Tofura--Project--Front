@@ -8,6 +8,7 @@ import { NavItem } from "./subComponents/sidebar/sidebarComponents/SidebarNavIte
 import { handleSidebarClick } from "./subComponents/sidebar/SidebarFunctions";
 import { useMainLoading } from "../../contextApis/ContextLoading";
 import { useAdditionalOption } from "../../contextApis/ContextChooseFromAdditional";
+import { useSidebarMouseEnterProvider } from "../../contextApis/ContextMouseEnterIdentifier";
 // main component
 
 export interface sideState {
@@ -20,6 +21,8 @@ export interface mainSidebarProps {
 }
 
 const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
+  const { SidebarMouseEnterIdentifier, setSidebarMouseEnterIdentifier } =
+    useSidebarMouseEnterProvider();
   const [sidebarStates, setSidebarStates] = useState<sideState>({
     identifier: "base",
   });
@@ -57,14 +60,28 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
   );
 
   const handleMouseEnter = useCallback(
-    () => {
+    (base: string) => {
       if (isActive === false) {
         setIsActive(true);
       }
+      if (SidebarMouseEnterIdentifier === base) {
+      } else {
+        setSidebarMouseEnterIdentifier(base);
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [isActive, SidebarMouseEnterIdentifier]
   );
+
+  useEffect(() => {
+    if (isActive) {
+      setIsActive(false);
+      setTimeout(() => {
+        setIsActive(true);
+      }, 300);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [SidebarMouseEnterIdentifier]);
 
   const createClickHandler = useCallback(
     (identifier: string) => () => {
@@ -94,6 +111,7 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
               alt="dashboard"
               NavIsActive={sidebarStates.identifier === "dashboard"}
               onClick={createClickHandler("dashboard")}
+              onMouseEnter={handleMouseEnter}
             />
             <NavItem
               icon={MyProfile}

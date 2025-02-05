@@ -7,7 +7,7 @@ const Diagram: React.FC = () => {
       <header className=" z-10 h-10%   rounded-tl-2xl rounded-tr-2xl bg-sidebarChoose        w-full flex justify-center items-center text-white font-bold text-sm">
         <p>ობიექტების დიაგრამული გამოსახულება</p>
       </header>
-      <div className="w-full h-full flex bg-white rounded-bl-2xl rounded-br-2xl">
+      <div className="w-full h-90% flex bg-white rounded-bl-2xl rounded-br-2xl">
         <GraphicDiagram />
         <section className="w-50% h-full flex flex-col relative ">
           <div className="absolute bottom-[5%] h-90% right-0 w-full ">

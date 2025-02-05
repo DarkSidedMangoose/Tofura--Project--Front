@@ -4,6 +4,7 @@ import MainFooter from "../../components/main/MainFooter";
 import MainMain from "../../components/main/MainMain";
 import { AdditionalInfoOfBase } from "../../components/main/subComponents/sidebar/sidebarComponents/AdditionalInfoOfBase";
 import { OptionFromAdditionalBaseProvider } from "../../contextApis/ContextChooseFromAdditional";
+import ContextMouseEnterIdentifier from "../../contextApis/ContextMouseEnterIdentifier";
 
 const Main: React.FC = () => {
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -14,13 +15,15 @@ const Main: React.FC = () => {
     <div className="w-screen h-screen ">
       <div className="w-full  h-[90%] flex">
         <OptionFromAdditionalBaseProvider>
-          <MainSidebar setIsActive={handleIsActive} isActive={isActive} />
-          <AdditionalInfoOfBase
-            isActive={isActive}
-            setIsActive={handleIsActive}
-          />
+          <ContextMouseEnterIdentifier>
+            <MainSidebar setIsActive={handleIsActive} isActive={isActive} />
+            <AdditionalInfoOfBase
+              isActive={isActive}
+              setIsActive={handleIsActive}
+            />
 
-          <MainMain />
+            <MainMain />
+          </ContextMouseEnterIdentifier>
         </OptionFromAdditionalBaseProvider>
       </div>
 

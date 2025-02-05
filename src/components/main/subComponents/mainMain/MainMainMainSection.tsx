@@ -13,8 +13,8 @@ export const MainMainMainSection: React.FC = memo(() => {
           <BaseMain />
         </div>
       ) : (
-        <section className="w-[98%] h-[95%] flex justify-center items-center  ">
-          <div className="w-full h-90% gap-[2%] ">
+        <section className="w-[98%] h-full flex justify-center items-center  ">
+          <div className="w-full h-100% gap-[2%] ">
             <DashboardMain />
           </div>
         </section>
