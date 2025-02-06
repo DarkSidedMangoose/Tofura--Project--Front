@@ -6,10 +6,10 @@ import { MapObjects } from "../DashboardObjects";
 const CountryWithRegions: React.FC = () => {
   const [identifyRegion, setIdentifyRegion] = useState<number>(11);
   return (
-    <div className="w-full h-full  rounded-2xl flex flex-col  items-start shadow-boxShadow object-contain">
-      <main className="w-full h-full flex justify-between">
-        <section className="w-60% h-60% rounded-2xl  shadow-bottom-right flex justify-center items-center  bg-loginBackground  ">
-          <div className="w-90% h-90% rounded-2xl  shadow-boxShadow flex justify-center items-center  bg-white  ">
+    <div className="w-full h-full  rounded-2xl flex flex-col  items-start justify-between shadow-boxShadow object-contain ">
+      <main className="w-full h-60% flex justify-evenly items-center bg-loginBackground shadow-boxShadow rounded-2xl">
+        <div className="w-60% h-90% flex justify-center items-center bg-footerText rounded-2xl shadow-boxShadow">
+          <div className="w-95% h-90% rounded-2xl  shadow-boxShadow flex justify-center items-center  bg-white  ">
             <ComposableMap
               className="w-full h-full "
               projection="geoMercator"
@@ -35,9 +35,12 @@ const CountryWithRegions: React.FC = () => {
               </Geographies>
             </ComposableMap>
           </div>
-        </section>
+        </div>
         <CountryWithRegionsAdditionalInfo identifyRegion={identifyRegion} />
       </main>
+      <footer className="w-full h-[38%] rounded-2xl shadow-boxShadow flex justify-center items-center ">
+        <div className="w-[98%] h-90% bg-white shadow-boxShadow rounded-2xl"></div>
+      </footer>
     </div>
   );
 };
@@ -52,8 +55,13 @@ const CountryWithRegionsAdditionalInfo: React.FC<
   CountryWithRegionsAdditionalInfoProps
 > = ({ identifyRegion }) => {
   return (
-    <section className="w-[38%] h-60% rounded-2xl shadow-bottom flex justify-center  bg-loginBackground">
-      {MapObjects[identifyRegion - 1].region}
-    </section>
+    <div className=" h-90% w-[35%] shadow-boxShadow rounded-2xl">
+      <p className="font-bold text-sidebarChoose shadow-bottom bg-white rounded-tl-lg rounded-tr-lg text-m m-0 p-0 h-10% w-full flex justify-center items-center ">
+        {MapObjects[identifyRegion - 1].region}
+      </p>
+      <div className="w-full h-90% bg-footerText rounded-bl-lg rounded-br-lg flex justify-center items-center ">
+        <div className="w-[95%] h-[95%] bg-white rounded-2xl"></div>
+      </div>
+    </div>
   );
 };
