@@ -8,12 +8,17 @@ export const MainMainMainSection: React.FC = memo(() => {
 
   return (
     <Fragment>
-      {isOption !== "საინფორმაციო დაფა" && isOption !== "პროფილი" ? (
+      {isOption === "ობიექტების რეესტრი" ||
+      isOption === "ინსპექტირების ობიექტები" ||
+      isOption === "შემოწმებული ობიექტების რეესტრი" ||
+      isOption === "ახალი ობიექტები" ||
+      isOption === "შემოწმებული ობიექტების რეესტრი" ||
+      isOption === "წაშლილი ობიექტები" ? (
         <div className="w-full h-[80%] ">
           <BaseMain />
         </div>
       ) : (
-        <section className="w-[98%] h-full flex justify-center items-center  ">
+        <section className="w-[98%] h-90% flex justify-center items-center  ">
           <div className="w-full h-100% gap-[2%] ">
             <DashboardMain />
           </div>

@@ -3,6 +3,10 @@ interface AdditionalInfoOfBaseStates {
   baseInfoNdP: string[];
 }
 
+interface AdditionalInfoOfDashboardStates {
+  dashboardInfoP: string[];
+}
+
 export const baseState: AdditionalInfoOfBaseStates = {
   baseInfoP: [
     "ობიექტების რეესტრი",
@@ -13,5 +17,13 @@ export const baseState: AdditionalInfoOfBaseStates = {
     "ახალი ობიექტები",
     "შემოწმებული ობიექტები",
     "წაშლილი ობიექტები",
+  ],
+};
+
+export const dashboardState: AdditionalInfoOfDashboardStates = {
+  dashboardInfoP: [
+    "ობიექტების რეგიონალური რუკა",
+    "ობიექტების დიაგრამული გამოსახულება",
+    "ობიექტების წლიური დიაგრამა თვეების მიხედვით",
   ],
 };

@@ -4,7 +4,7 @@ module.exports = {
     extend: {
       boxShadow: {
         "bottom-right": "10px 10px 15px rgba(0,0,0, 0.3)",
-        "bottom-left": "10px 10px 15px rgba(0,0,0, 0.3)",
+        "bottom-left": "-15px 10px 15px rgba(0,0,0, 0.3)",
         right: "10px 0px 15px rgba(0,0,0, 0.3)",
         left: "-10px 0px 15px rgba(0,0,0, 0.3)",
         top: "0 -10px 15px rgba(0, 0, 0, 0.3)",

@@ -6,16 +6,19 @@ export const MainMainHeaderSections: React.FC = memo(() => {
 
   return (
     <Fragment>
-      {isOption !== "საინფორმაციო დაფა" && (
-        <div className=" w-full  h-[5%] min-h-[50px] flex justify-center items-center relative    ">
-          <h1 className="text-xl  text-sidebarChoose font-bold rounded-2xl h-70% w-full flex justify-center items-center   ">
-            {isOption}
-          </h1>
-        </div>
-      )}
+      <div className=" w-full  h-[10%]  min-h-[50px] flex justify-center items-center relative    ">
+        <h1 className="text-xl  text-sidebarChoose font-bold rounded-2xl h-70% w-full flex justify-center items-center   ">
+          {isOption}
+        </h1>
+      </div>
 
-      {isOption !== "საინფორმაციო დაფა" && isOption !== "პროფილი" ? (
-        <div className="w-full h-[12%] flex justify-center items-center ">
+      {isOption === "ობიექტების რეესტრი" ||
+      isOption === "ინსპექტირების ობიექტები" ||
+      isOption === "შემოწმებული ობიექტების რეესტრი" ||
+      isOption === "ახალი ობიექტები" ||
+      isOption === "შემოწმებული ობიექტების რეესტრი" ||
+      isOption === "წაშლილი ობიექტები" ? (
+        <div className="w-full h-[8%] flex justify-center items-center ">
           <BaseHeader />
         </div>
       ) : (

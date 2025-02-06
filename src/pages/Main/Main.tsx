@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import MainSidebar from "../../components/main/MainSidebar";
 import MainFooter from "../../components/main/MainFooter";
 import MainMain from "../../components/main/MainMain";
-import { AdditionalInfoOfBase } from "../../components/main/subComponents/sidebar/sidebarComponents/AdditionalInfoOfBase";
+import { AdditionalInfo } from "../../components/main/subComponents/sidebar/sidebarComponents/AdditionalInfo";
 import { OptionFromAdditionalBaseProvider } from "../../contextApis/ContextChooseFromAdditional";
 import ContextMouseEnterIdentifier from "../../contextApis/ContextMouseEnterIdentifier";
 
@@ -17,10 +17,7 @@ const Main: React.FC = () => {
         <OptionFromAdditionalBaseProvider>
           <ContextMouseEnterIdentifier>
             <MainSidebar setIsActive={handleIsActive} isActive={isActive} />
-            <AdditionalInfoOfBase
-              isActive={isActive}
-              setIsActive={handleIsActive}
-            />
+            <AdditionalInfo isActive={isActive} setIsActive={handleIsActive} />
 
             <MainMain />
           </ContextMouseEnterIdentifier>
