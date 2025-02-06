@@ -137,3 +137,35 @@ export const object: YearData = {
     { planned: 65, unplanned: 1, month: "დეკემბერი" },
   ],
 };
+
+interface MapObjectsProperties {
+  region: string;
+  violation: number;
+  corrected: number;
+  accidents: number;
+}
+
+export const MapObjects: MapObjectsProperties[] = [
+  { region: "აფხაზეთი", violation: 1322, corrected: 450, accidents: 15 },
+  {
+    region: "სამეგრელო-ზემო სვანეთი",
+    violation: 1322,
+    corrected: 450,
+    accidents: 15,
+  },
+  { region: "შიდა ქართლი", violation: 1322, corrected: 450, accidents: 15 },
+  {
+    region: "რაჭა-ლეჩხუმი და ქვემო-სვანეთი",
+    violation: 1322,
+    corrected: 450,
+    accidents: 15,
+  },
+  { region: "მცხეთა-მთიანეთი", violation: 1322, corrected: 450, accidents: 15 },
+  { region: "კახეთი", violation: 1322, corrected: 450, accidents: 15 },
+  { region: "სამცხე-ჯავახეთი", violation: 1322, corrected: 450, accidents: 15 },
+  { region: "აჭარა", violation: 1322, corrected: 450, accidents: 15 },
+  { region: "ქვემო ქართლი", violation: 1322, corrected: 450, accidents: 15 },
+  { region: "გურია", violation: 1322, corrected: 450, accidents: 15 },
+  { region: "თბილისი", violation: 1322, corrected: 450, accidents: 15 },
+  { region: "იმერეთი", violation: 1322, corrected: 450, accidents: 15 },
+];

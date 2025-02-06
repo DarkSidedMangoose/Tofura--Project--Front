@@ -18,7 +18,7 @@ export const MainMainHeaderSections: React.FC = memo(() => {
       isOption === "ახალი ობიექტები" ||
       isOption === "შემოწმებული ობიექტების რეესტრი" ||
       isOption === "წაშლილი ობიექტები" ? (
-        <div className="w-full h-[8%] flex justify-center items-center ">
+        <div className="w-full h-[7%] flex justify-center items-center ">
           <BaseHeader />
         </div>
       ) : (

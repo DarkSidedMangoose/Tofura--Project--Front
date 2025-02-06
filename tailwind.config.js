@@ -4,6 +4,7 @@ module.exports = {
     extend: {
       boxShadow: {
         "bottom-right": "10px 10px 15px rgba(0,0,0, 0.3)",
+        "bottom-right-Blue": "10px 10px 15px rgba(3, 3, 82, 0.3)",
         "bottom-left": "-15px 10px 15px rgba(0,0,0, 0.3)",
         right: "10px 0px 15px rgba(0,0,0, 0.3)",
         left: "-10px 0px 15px rgba(0,0,0, 0.3)",
@@ -11,6 +12,8 @@ module.exports = {
         bottom: "0 10px 15px rgba(0, 0, 0, 0.3)",
         boxShadow:
           "7px 7px 5px rgba(0,0,0, 0.3), -7px 7px 5px rgba(0,0,0, 0.3), 7px -7px 5px rgba(0,0,0, 0.3), -5px -5px 5px rgba(0,0,0, 0.3), 0 -2px 5px rgba(0,0,0, 0.1), 0 4px 5px rgba(0,0,0, 0.3)",
+        boxShadowBlue:
+          "7px 7px 5px rgba(3, 3, 82, 0.3), -7px 7px 5px rgba(3, 3, 82, 0.3), 7px -7px 5px rgba(3, 3, 82, 0.3), 0 -2px 5px rgba(3, 3, 82, 0.3), 0 4px 5px rgba(3, 3, 82, 0.3)",
       },
       screens: {
         short: { raw: "(max-height: 600px)" },
