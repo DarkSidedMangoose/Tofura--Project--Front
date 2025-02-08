@@ -90,7 +90,7 @@ const CountryWithRegionsAdditionalInfo: React.FC<
   return (
     <div
       style={{ top: `${position.y}px `, left: `${position.x}px` }}
-      className={`absolute  h-[200px] w-[400px]  rounded-2xl flex items-between justify-center flex-col bg-loginBackground  `}
+      className={`absolute  h-[400px] w-[400px]  rounded-2xl flex items-between justify-center flex-col bg-loginBackground  `}
     >
       {/* <p className="font-bold text-sidebarChoose shadow-bottom bg-white rounded-bl-lg rounded-br-lg text-m m-0 p-0 h-10% w-[95%] flex justify-center items-center ">
         {MapObjects[identifyRegion - 1].region}
@@ -102,14 +102,14 @@ const CountryWithRegionsAdditionalInfo: React.FC<
       </header>
       <body className="w-full h-80% bg-[#1d295137]   flex font-semibold  text-footerText  rounded-bl-2xl rounded-br-2xl  ">
         <section className=" h-full w-full flex flex-col  justify-evenly  ">
-          <p>
+          <p className="text-[#99353596]">
             რეგიონში გამოვლენილი დარღვევა:
             {MapObjects[identifyRegion - 1].accidents}
           </p>
-          <p>
+          <p className="text-[#36841b]">
             გამოსწორებული დარღვევა: {MapObjects[identifyRegion - 1].corrected}
           </p>
-          <p>
+          <p className="text-[#e91c1c]">
             გამოვლენილი უბედური შემთხვევები:{" "}
             {MapObjects[identifyRegion - 1].violation}
           </p>
