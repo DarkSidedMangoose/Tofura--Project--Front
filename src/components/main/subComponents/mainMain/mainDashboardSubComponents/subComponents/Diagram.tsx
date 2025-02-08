@@ -3,11 +3,8 @@ import { details, diagramInfo } from "./DashboardObjects";
 
 const Diagram: React.FC = () => {
   return (
-    <div className=" rounded-2xl  flex flex-col justify-center  relative shadow-bottom-right w-full h-full ">
-      <header className=" z-10 h-10%   rounded-tl-2xl rounded-tr-2xl bg-sidebarChoose        w-full flex justify-center items-center text-white font-bold text-sm">
-        <p>ობიექტების დიაგრამული გამოსახულება</p>
-      </header>
-      <div className="w-full h-90% flex bg-white rounded-bl-2xl rounded-br-2xl">
+    <div className=" rounded-2xl  flex flex-col   relative  w-full h-full ">
+      <div className="w-1/2 h-1/2 flex bg-white rounded-bl-2xl rounded-br-2xl">
         <GraphicDiagram />
         <section className="w-50% h-full flex flex-col relative ">
           <div className="absolute bottom-[5%] h-90% right-0 w-full ">

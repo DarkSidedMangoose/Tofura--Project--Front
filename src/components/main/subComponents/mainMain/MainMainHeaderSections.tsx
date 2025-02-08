@@ -9,7 +9,7 @@ export const MainMainHeaderSections: React.FC = memo(() => {
       <div className=" w-full  h-[10%]  min-h-[50px] flex justify-center items-center relative    ">
         <h1
           style={{ width: "auto", paddingRight: "50px", paddingLeft: "50px" }}
-          className="text-xl bg-white  text-sidebarChoose font-bold rounded-lg h-50% w-full flex justify-center items-center  shadow-boxShadow  "
+          className="text-xl   text-sidebarChoose font-bold rounded-lg h-50% w-full flex justify-center items-center   "
         >
           {isOption}
         </h1>
