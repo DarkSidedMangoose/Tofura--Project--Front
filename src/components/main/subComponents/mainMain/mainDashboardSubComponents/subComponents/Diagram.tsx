@@ -3,27 +3,29 @@ import { details, diagramInfo } from "./DashboardObjects";
 
 const Diagram: React.FC = () => {
   return (
-    <div className=" rounded-2xl  flex flex-col   relative  w-full h-full ">
-      <div className="w-1/2 h-1/2 flex bg-white rounded-bl-2xl rounded-br-2xl">
-        <GraphicDiagram />
-        <section className="w-50% h-full flex flex-col relative ">
-          <div className="absolute bottom-[5%] h-90% right-0 w-full ">
-            {diagramInfo.map((info, index) => (
-              <article
-                key={index}
-                className="w-100% h-1/5 flex items-center gap-[5%]"
-              >
-                <div
-                  style={{ backgroundColor: info.color }}
-                  className=" h-[25%] aspect-1  border-solid border-black border-2"
-                ></div>
-                <p className="text-black  text-m">{info.text}</p>
-              </article>
-            ))}
-          </div>
-        </section>
+    <main className="w-full h-full flex justify-evenly  items-center   bg-loginBackground   rounded-2xl">
+      <div className="w-full h-full flex justify-center items-center  rounded-2xl  ">
+        <div className="w-95% h-90% rounded-2xl  shadow-boxShadow flex  justify-start items-center  bg-loginBackground    ">
+          <GraphicDiagram />
+          <section className="w-50% h-full flex flex-col relative ">
+            <div className="absolute bottom-[5%] h-90% right-0 w-full ">
+              {diagramInfo.map((info, index) => (
+                <article
+                  key={index}
+                  className="w-100% h-1/5 flex items-center gap-[5%]"
+                >
+                  <div
+                    style={{ backgroundColor: info.color }}
+                    className=" h-[25%] aspect-1  border-solid border-black border-2"
+                  ></div>
+                  <p className="text-black  text-m">{info.text}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+        </div>
       </div>
-    </div>
+    </main>
   );
 };
 
