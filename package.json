@@ -12,6 +12,7 @@
     "@types/node": "^16.18.119",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "ajv": "^8.17.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-redux": "^9.2.0",
@@ -49,7 +50,6 @@
   "devDependencies": {
     "@types/react-simple-maps": "^3.0.6",
     "autoprefixer": "^10.4.20",
-    "npx": "^10.2.2",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17"
   }
