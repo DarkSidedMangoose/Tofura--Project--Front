@@ -6,9 +6,9 @@ import {
 
 const BaseHeader: React.FC = () => {
   return (
-    <nav className="h-[100%]  w-[99%] flex items-center justify-between  ">
-      <MainMainHeaderFirstSection />
-      <MainMainHeaderSecondSection />
+    <nav className="h-full  w-98% flex items-center justify-between  ">
+      {/* <MainMainHeaderFirstSection />
+      <MainMainHeaderSecondSection /> */}
     </nav>
   );
 };

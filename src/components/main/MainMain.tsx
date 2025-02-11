@@ -9,7 +9,7 @@ const MainMain: React.FC = () => {
   const { isLoading } = useMainLoading();
   return (
     <main
-      className={` w-full h-full  min-h-[600px] min-w-[1000px]  flex flex-col justify-center items-center  transition-width relative`}
+      className={` w-full h-full  min-h-[700px] min-w-[1000px]  flex flex-col justify-center items-center  transition-width relative`}
     >
       <MainLoading />
       <div className="w-[98%] h-full  rounded-bl-lg rounded-br-lg  flex items-center flex-col ">

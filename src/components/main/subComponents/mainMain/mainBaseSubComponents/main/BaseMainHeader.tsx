@@ -11,13 +11,11 @@ export const MainMainMainSectionHeader: React.FC = () => {
     "რისკის დონე",
   ]);
   return (
-    <div className="w-98% grid grid-cols-7 h-10% mt-[2%] border-[1px] rounded-[10px] border-blue-950 bg-loginBackground">
+    <div className="w-full grid grid-cols-7 h-10%  border-[1px] text-white rounded-tl-lg rounded-tr-lg bg-sidebarChoose  ">
       {state.map((e, i) => (
         <div
           key={i}
-          className={`flex ${
-            i === 0 ? "ml-[5%]" : ""
-          } justify-start items-center text-[16px]  text-blue-950 font-bold`}
+          className={`flex items-center justify-start ml-2  text-[14px]   font-semibold`}
         >
           {e}
         </div>

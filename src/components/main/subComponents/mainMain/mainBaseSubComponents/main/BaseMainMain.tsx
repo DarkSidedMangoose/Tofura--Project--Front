@@ -81,7 +81,25 @@ const MainMainMainSectionMain: React.FC = () => {
   const [state] = useState<stateInterface>({
     mainBase: [
       {
-        identifyCode: "sadadadadasdsssssssssssssssssssssssssssss",
+        identifyCode: "საკდლასკდლაკსლდკლ sadasd asd asd asdas",
+        wholeName: "ასდას",
+        region: "მუხრანის დასახლება ნ: 78მუხრანის დsdldllsdlds;ald",
+        fizAddress: "მუხრანის მე-4 პლატო",
+        turnover: "<500 000",
+        jobType: "ნავთობწარმოება",
+        riskLevel: "მაღალი",
+      },
+      {
+        identifyCode: "",
+        wholeName: "ასდას sadsad asd sadas sad sad a das sad sad adsadassa",
+        region: "მუხრანის დასახლება ნ: 78",
+        fizAddress: "მუხრანის მე-4 პლატო",
+        turnover: "<500 000",
+        jobType: "ნავთობწარმოება",
+        riskLevel: "მაღალი",
+      },
+      {
+        identifyCode: "sadadadadas",
         wholeName: "ასდას",
         region: "მუხრანის დასახლება ნ: 78",
         fizAddress: "მუხრანის მე-4 პლატო",
@@ -99,7 +117,8 @@ const MainMainMainSectionMain: React.FC = () => {
         riskLevel: "მაღალი",
       },
       {
-        identifyCode: "0231888213",
+        identifyCode:
+          "0231888213sadadsadadadadsadsadsakdkjlsakdlaskdlka sadsakldkaslkdassadasda;lkdl;ask;ldka;ldk;lsakd;lska;ldkla; sadsadasdasdadaskdl;askdlkaslkdlalkasl sadkjsajdkjaskdjkajdkjakjdka sjadkjaskdjkasjdkajdkj",
         wholeName: "შპს რერო",
         region: "მუხრანის დასახლება ნ: 78",
         fizAddress: "მუხრანის მე-4 პლატო",
@@ -110,7 +129,7 @@ const MainMainMainSectionMain: React.FC = () => {
     ],
     inspectBase: [
       {
-        identifyCode: "sadadadadasdsssssssssssssssssssssssssssss",
+        identifyCode: "sadadada",
         wholeName: "ასდას",
         region: "მუხრანის დასახლება ნ: 78",
         fizAddress: "მუხრანის მე-4 პლატო",
@@ -144,36 +163,99 @@ const MainMainMainSectionMain: React.FC = () => {
     removeBase: [],
   });
   return (
-    <>
+    <div className="h-70% w-full flex  flex-col">
       {state[identifier].map((e, i) => (
         <div
           key={i}
-          className="w-98% grid grid-cols-7 h-10% mt-[1%] border-b-[2px] border-black text-gray-700"
+          className="w-full grid grid-cols-7 h-20% mt-[1%] border-b-[2px] text-gray-700 bg-loginBackground"
         >
-          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap custom-scrollbar  font-bold">
+          <div
+            style={{
+              wordWrap: "break-word",
+              overflowWrap: "break-word",
+              whiteSpace: "normal",
+              wordBreak: "break-word",
+              hyphens: "auto",
+            }}
+            className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+          >
             {e.identifyCode}
           </div>
-          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap custom-scrollbar font-bold">
+          <div
+            style={{
+              wordWrap: "break-word",
+              overflowWrap: "break-word",
+              whiteSpace: "normal",
+              wordBreak: "break-word",
+              hyphens: "auto",
+            }}
+            className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+          >
             {e.wholeName}
           </div>
-          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap custom-scrollbar font-bold">
+          <div
+            style={{
+              wordWrap: "break-word",
+              overflowWrap: "break-word",
+              whiteSpace: "normal",
+              wordBreak: "break-word",
+              hyphens: "auto",
+            }}
+            className="flex justify-start  text-[12px] w-[95%]  overflow-auto custom-scrollbar font-bold"
+          >
             {e.region}
           </div>
-          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap custom-scrollbar font-bold">
+          <div
+            style={{
+              wordWrap: "break-word",
+              overflowWrap: "break-word",
+              whiteSpace: "normal",
+              wordBreak: "break-word",
+              hyphens: "auto",
+            }}
+            className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+          >
             {e.fizAddress}
           </div>
-          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap custom-scrollbar font-bold">
+          <div
+            style={{
+              wordWrap: "break-word",
+              overflowWrap: "break-word",
+              whiteSpace: "normal",
+              wordBreak: "break-word",
+              hyphens: "auto",
+            }}
+            className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+          >
             {e.turnover}
           </div>
-          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap custom-scrollbar font-bold">
+          <div
+            style={{
+              wordWrap: "break-word",
+              overflowWrap: "break-word",
+              whiteSpace: "normal",
+              wordBreak: "break-word",
+              hyphens: "auto",
+            }}
+            className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+          >
             {e.jobType}
           </div>
-          <div className="flex justify-start items-center text-[14px] w-[95%] overflow-x-auto whitespace-nowrap custom-scrollbar font-bold">
+          <div
+            style={{
+              wordWrap: "break-word",
+              overflowWrap: "break-word",
+              whiteSpace: "normal",
+              wordBreak: "break-word",
+              hyphens: "auto",
+            }}
+            className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+          >
             {e.riskLevel}
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
 };
 

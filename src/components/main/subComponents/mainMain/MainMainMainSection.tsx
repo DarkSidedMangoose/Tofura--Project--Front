@@ -14,7 +14,7 @@ export const MainMainMainSection: React.FC = memo(() => {
       isOption === "ახალი ობიექტები" ||
       isOption === "შემოწმებული ობიექტების რეესტრი" ||
       isOption === "წაშლილი ობიექტები" ? (
-        <div className="w-full h-[80%] ">
+        <div className="w-full  h-[80%] ">
           <BaseMain />
         </div>
       ) : isOption === "ობიექტების რეგიონალური რუკა" ||

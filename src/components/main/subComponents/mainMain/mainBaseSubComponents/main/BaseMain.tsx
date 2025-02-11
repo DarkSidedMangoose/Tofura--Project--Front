@@ -10,6 +10,7 @@ export const BaseMain: React.FC = () => {
       >
         <MainMainMainSectionHeader />
         <MainMainMainSectionMain />
+        <footer className="r"></footer>
       </div>
     </div>
   );
