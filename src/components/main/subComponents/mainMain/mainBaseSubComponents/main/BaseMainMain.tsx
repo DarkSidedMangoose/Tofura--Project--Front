@@ -1,65 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
 import "../../../../Scrollbar.css";
-
-interface stateInterface {
-  mainBase: {
-    identifyCode: string;
-    wholeName: string;
-    region: string;
-    fizAddress: string;
-    turnover: string;
-    jobType: string;
-    riskLevel: string;
-  }[];
-  inspectBase: {
-    identifyCode: string;
-    wholeName: string;
-    region: string;
-    fizAddress: string;
-    turnover: string;
-    jobType: string;
-    riskLevel: string;
-  }[];
-  overBase: {
-    identifyCode: string;
-    wholeName: string;
-    region: string;
-    fizAddress: string;
-    turnover: string;
-    jobType: string;
-    riskLevel: string;
-  }[];
-  newBase: {
-    identifyCode: string;
-    wholeName: string;
-    region: string;
-    fizAddress: string;
-    turnover: string;
-    jobType: string;
-    riskLevel: string;
-  }[];
-  checkedBase: {
-    identifyCode: string;
-    wholeName: string;
-    region: string;
-    fizAddress: string;
-    turnover: string;
-    jobType: string;
-    riskLevel: string;
-  }[];
-  removeBase: {
-    identifyCode: string;
-    wholeName: string;
-    region: string;
-    fizAddress: string;
-    turnover: string;
-    jobType: string;
-    riskLevel: string;
-  }[];
-}
+import { bases, stateInterface } from "./BasesObjects";
 
 const MainMainMainSectionMain: React.FC = () => {
+  const [selected, setSelected] = useState<Number>(-1);
+  const [state] = useState<stateInterface>(bases);
   const { isOption } = useAdditionalOption();
   const [identifier, setIdentifier] =
     useState<keyof stateInterface>("mainBase");
@@ -78,183 +24,133 @@ const MainMainMainSectionMain: React.FC = () => {
       setIdentifier("removeBase");
     }
   }, [isOption]);
-  const [state] = useState<stateInterface>({
-    mainBase: [
-      {
-        identifyCode: "საკდლასკდლაკსლდკლ sadasd asd asd asdas",
-        wholeName: "ასდას",
-        region: "მუხრანის დასახლება ნ: 78მუხრანის დsdldllsdlds;ald",
-        fizAddress: "მუხრანის მე-4 პლატო",
-        turnover: "<500 000",
-        jobType: "ნავთობწარმოება",
-        riskLevel: "მაღალი",
-      },
-      {
-        identifyCode: "",
-        wholeName: "ასდას sadsad asd sadas sad sad a das sad sad adsadassa",
-        region: "მუხრანის დასახლება ნ: 78",
-        fizAddress: "მუხრანის მე-4 პლატო",
-        turnover: "<500 000",
-        jobType: "ნავთობწარმოება",
-        riskLevel: "მაღალი",
-      },
-      {
-        identifyCode: "sadadadadas",
-        wholeName: "ასდას",
-        region: "მუხრანის დასახლება ნ: 78",
-        fizAddress: "მუხრანის მე-4 პლატო",
-        turnover: "<500 000",
-        jobType: "ნავთობწარმოება",
-        riskLevel: "მაღალი",
-      },
-      {
-        identifyCode: "0231888213",
-        wholeName: "შპს რერო",
-        region: "მუხრანის დასახლება ნ: 78",
-        fizAddress: "მუხრანის მე-4 პლატო",
-        turnover: "<500 000",
-        jobType: "ნავთობწარმოება",
-        riskLevel: "მაღალი",
-      },
-      {
-        identifyCode:
-          "0231888213sadadsadadadadsadsadsakdkjlsakdlaskdlka sadsakldkaslkdassadasda;lkdl;ask;ldka;ldk;lsakd;lska;ldkla; sadsadasdasdadaskdl;askdlkaslkdlalkasl sadkjsajdkjaskdjkajdkjakjdka sjadkjaskdjkasjdkajdkj",
-        wholeName: "შპს რერო",
-        region: "მუხრანის დასახლება ნ: 78",
-        fizAddress: "მუხრანის მე-4 პლატო",
-        turnover: "<500 000",
-        jobType: "ნავთობწარმოება",
-        riskLevel: "მაღალი",
-      },
-    ],
-    inspectBase: [
-      {
-        identifyCode: "sadadada",
-        wholeName: "ასდას",
-        region: "მუხრანის დასახლება ნ: 78",
-        fizAddress: "მუხრანის მე-4 პლატო",
-        turnover: "<500 000",
-        jobType: "ნავთობწარმოება",
-        riskLevel: "მაღალი",
-      },
-    ],
-    overBase: [
-      {
-        identifyCode: "0231888213",
-        wholeName: "შპს რერო",
-        region: "მუხრანის დასახლება ნ: 78",
-        fizAddress: "მუხრანის მე-4 პლატო",
-        turnover: "<500 000",
-        jobType: "ნავთობწარმოება",
-        riskLevel: "მაღალი",
-      },
-      {
-        identifyCode: "0231888213",
-        wholeName: "შპს რერო",
-        region: "მუხრანის დასახლება ნ: 78",
-        fizAddress: "მუხრანის მე-4 პლატო",
-        turnover: "<500 000",
-        jobType: "ნავთობწარმოება",
-        riskLevel: "მაღალი",
-      },
-    ],
-    newBase: [],
-    checkedBase: [],
-    removeBase: [],
-  });
   return (
-    <div className="h-70% w-full flex  flex-col">
-      {state[identifier].map((e, i) => (
-        <div
-          key={i}
-          className="w-full grid grid-cols-7 h-20% mt-[1%] border-b-[2px] text-gray-700 bg-loginBackground"
-        >
+    <div className="w-full h-90%">
+      <div className="mt-[0.3%] h-70% w-full grid  grid-rows-5 gap-[1%]  ">
+        {state[identifier].map((e, i) => (
           <div
-            style={{
-              wordWrap: "break-word",
-              overflowWrap: "break-word",
-              whiteSpace: "normal",
-              wordBreak: "break-word",
-              hyphens: "auto",
+            onClick={() => {
+              if (selected !== i) {
+                setSelected(i);
+              } else {
+                setSelected(-1);
+              }
             }}
-            className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+            key={i}
+            style={{ transition: "0.5s" }}
+            className={`w-full grid grid-cols-7  h-full border-b-[2px] text-gray-700 bg-loginBackground cursor-pointer ${
+              selected === i ? "bg-sidebarChoose text-white" : ""
+            } `}
           >
-            {e.identifyCode}
+            <div
+              style={{
+                wordWrap: "break-word",
+                overflowWrap: "break-word",
+                whiteSpace: "normal",
+                wordBreak: "break-word",
+                hyphens: "auto",
+              }}
+              className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+            >
+              {e.identifyCode}
+            </div>
+            <div
+              style={{
+                wordWrap: "break-word",
+                overflowWrap: "break-word",
+                whiteSpace: "normal",
+                wordBreak: "break-word",
+                hyphens: "auto",
+              }}
+              className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+            >
+              {e.wholeName}
+            </div>
+            <div
+              style={{
+                wordWrap: "break-word",
+                overflowWrap: "break-word",
+                whiteSpace: "normal",
+                wordBreak: "break-word",
+                hyphens: "auto",
+              }}
+              className="flex justify-start  text-[12px] w-[95%]  overflow-auto custom-scrollbar font-bold"
+            >
+              {e.region}
+            </div>
+            <div
+              style={{
+                wordWrap: "break-word",
+                overflowWrap: "break-word",
+                whiteSpace: "normal",
+                wordBreak: "break-word",
+                hyphens: "auto",
+              }}
+              className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+            >
+              {e.fizAddress}
+            </div>
+            <div
+              style={{
+                wordWrap: "break-word",
+                overflowWrap: "break-word",
+                whiteSpace: "normal",
+                wordBreak: "break-word",
+                hyphens: "auto",
+              }}
+              className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+            >
+              {e.turnover}
+            </div>
+            <div
+              style={{
+                wordWrap: "break-word",
+                overflowWrap: "break-word",
+                whiteSpace: "normal",
+                wordBreak: "break-word",
+                hyphens: "auto",
+              }}
+              className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+            >
+              {e.jobType}
+            </div>
+            <div
+              style={{
+                wordWrap: "break-word",
+                overflowWrap: "break-word",
+                whiteSpace: "normal",
+                wordBreak: "break-word",
+                hyphens: "auto",
+              }}
+              className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+            >
+              {e.riskLevel}
+            </div>
           </div>
-          <div
-            style={{
-              wordWrap: "break-word",
-              overflowWrap: "break-word",
-              whiteSpace: "normal",
-              wordBreak: "break-word",
-              hyphens: "auto",
-            }}
-            className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+        ))}
+      </div>
+      {identifier === "inspectBase" && (
+        <section className="w-full h-[29.7%] flex justify-end gap-[1%] items-center  ">
+          <button
+            className={`w-auto p-[10px] h-1/4 min-h-[45px] bg-[#05052c] text-white ${
+              selected === -1
+                ? "cursor-not-allowed opacity-15 "
+                : "opacity:100 cursor-pointer"
+            }`}
           >
-            {e.wholeName}
-          </div>
-          <div
-            style={{
-              wordWrap: "break-word",
-              overflowWrap: "break-word",
-              whiteSpace: "normal",
-              wordBreak: "break-word",
-              hyphens: "auto",
-            }}
-            className="flex justify-start  text-[12px] w-[95%]  overflow-auto custom-scrollbar font-bold"
+            დავალების გაცემა
+          </button>
+          <button
+            className={`w-auto p-[10px] h-1/4 min-h-[45px] bg-[#05052c] text-white ${
+              selected === -1
+                ? "cursor-not-allowed opacity-15 "
+                : "opacity:100 cursor-pointer"
+            } `}
           >
-            {e.region}
-          </div>
-          <div
-            style={{
-              wordWrap: "break-word",
-              overflowWrap: "break-word",
-              whiteSpace: "normal",
-              wordBreak: "break-word",
-              hyphens: "auto",
-            }}
-            className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
-          >
-            {e.fizAddress}
-          </div>
-          <div
-            style={{
-              wordWrap: "break-word",
-              overflowWrap: "break-word",
-              whiteSpace: "normal",
-              wordBreak: "break-word",
-              hyphens: "auto",
-            }}
-            className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
-          >
-            {e.turnover}
-          </div>
-          <div
-            style={{
-              wordWrap: "break-word",
-              overflowWrap: "break-word",
-              whiteSpace: "normal",
-              wordBreak: "break-word",
-              hyphens: "auto",
-            }}
-            className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
-          >
-            {e.jobType}
-          </div>
-          <div
-            style={{
-              wordWrap: "break-word",
-              overflowWrap: "break-word",
-              whiteSpace: "normal",
-              wordBreak: "break-word",
-              hyphens: "auto",
-            }}
-            className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
-          >
-            {e.riskLevel}
-          </div>
-        </div>
-      ))}
+            დავალების დასრულება
+          </button>
+        </section>
+      )}
     </div>
   );
 };

@@ -39,7 +39,7 @@ module.exports = {
         loginBackground: "#f3eeeee5",
         loginBorderColor: "#808080CC",
         loginButBackground: "#E6E4E3",
-        sidebarChoose: "#030352",
+        sidebarChoose: "#05052c",
         footerText: "#10024a",
         mainButBorders: "#00004D",
       },

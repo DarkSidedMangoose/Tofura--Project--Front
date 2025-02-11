@@ -25,7 +25,7 @@ const LoginForm: React.FC = () => {
       onSubmit={(e) => handleSubmit(e, navigate)}
       className="z-10 opacity-95"
     >
-      <div className="flex flex-col w-400px h-400px justify-center items-center bg-gray-800 gap-2 relative shadow-lg shadow-black stroke-black rounded-lg">
+      <div className="flex flex-col w-400px h-400px justify-center items-center bg-loginBackground gap-2 relative shadow-lg shadow-black stroke-black rounded-lg">
         <div className="absolute top-0 w-full h-20% flex justify-center items-center">
           <img
             src={MainLogoCenter}
