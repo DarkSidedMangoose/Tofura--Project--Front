@@ -50,9 +50,9 @@ const MainMainMainSectionMain: React.FC = () => {
                 wordBreak: "break-word",
                 hyphens: "auto",
               }}
-              className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+              className="flex justify-center items-center    text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
             >
-              {e.identifyCode}
+              <p className="max-h-full w-90%">{e.identifyCode}</p>
             </div>
             <div
               style={{
@@ -62,9 +62,9 @@ const MainMainMainSectionMain: React.FC = () => {
                 wordBreak: "break-word",
                 hyphens: "auto",
               }}
-              className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+              className="flex justify-center items-center  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
             >
-              {e.wholeName}
+              <p className="max-h-full w-90%">{e.wholeName}</p>
             </div>
             <div
               style={{
@@ -74,9 +74,9 @@ const MainMainMainSectionMain: React.FC = () => {
                 wordBreak: "break-word",
                 hyphens: "auto",
               }}
-              className="flex justify-start  text-[12px] w-[95%]  overflow-auto custom-scrollbar font-bold"
+              className="flex justify-center items-center  text-[12px] w-[95%]  overflow-auto custom-scrollbar font-bold"
             >
-              {e.region}
+              <p className="max-h-full w-90%">{e.region}</p>
             </div>
             <div
               style={{
@@ -86,9 +86,9 @@ const MainMainMainSectionMain: React.FC = () => {
                 wordBreak: "break-word",
                 hyphens: "auto",
               }}
-              className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+              className="flex justify-center items-center  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
             >
-              {e.fizAddress}
+              <p className="max-h-full w-90%">{e.fizAddress}</p>
             </div>
             <div
               style={{
@@ -98,9 +98,9 @@ const MainMainMainSectionMain: React.FC = () => {
                 wordBreak: "break-word",
                 hyphens: "auto",
               }}
-              className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+              className="flex justify-center items-center  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
             >
-              {e.turnover}
+              <p className="max-h-full w-90%">{e.turnover}</p>
             </div>
             <div
               style={{
@@ -110,9 +110,9 @@ const MainMainMainSectionMain: React.FC = () => {
                 wordBreak: "break-word",
                 hyphens: "auto",
               }}
-              className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+              className="flex justify-center items-center  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
             >
-              {e.jobType}
+              <p className="max-h-full w-90%">{e.jobType}</p>
             </div>
             <div
               style={{
@@ -122,9 +122,9 @@ const MainMainMainSectionMain: React.FC = () => {
                 wordBreak: "break-word",
                 hyphens: "auto",
               }}
-              className="flex justify-start  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+              className="flex justify-center items-center  text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
             >
-              {e.riskLevel}
+              <p className="max-h-full w-90%">{e.riskLevel}</p>
             </div>
           </div>
         ))}

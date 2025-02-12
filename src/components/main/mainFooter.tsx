@@ -16,18 +16,20 @@ const MainFooter: React.FC = memo(() => {
               src={iconNavigation}
             />
           </div>
-          <p className="text-sm font-bold text-footerText ">
+          <p className="text-sm font-bold text-sidebarChoose ">
             შრომის ინსპექციის სამსახური
           </p>
         </section>
         <section className="mr-4 flex space-x-8">
           <div className="flex items-center space-x-2">
             <img className="w-6 h-6" alt="phoneIcon" src={phone} />
-            <p className="text-sm font-bold text-footerText">0322-22-22-22</p>
+            <p className="text-sm font-bold text-sidebarChoose">
+              0322-22-22-22
+            </p>
           </div>
           <div className="flex items-center space-x-2">
             <img className="w-6 h-6" alt="emailIcon" src={email} />
-            <p className="text-sm font-bold text-footerText">
+            <p className="text-sm font-bold text-sidebarChoose">
               workinspect.moh.gov.ge
             </p>
           </div>
