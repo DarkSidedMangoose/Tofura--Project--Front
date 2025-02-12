@@ -7,8 +7,8 @@ import {
 const BaseHeader: React.FC = () => {
   return (
     <nav className="h-full  w-98% flex items-center justify-between  ">
-      {/* <MainMainHeaderFirstSection />
-      <MainMainHeaderSecondSection /> */}
+      <MainMainHeaderFirstSection />
+      <MainMainHeaderSecondSection />
     </nav>
   );
 };

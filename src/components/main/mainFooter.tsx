@@ -6,7 +6,7 @@ import email from "../../assets/images/main/email.png";
 
 const MainFooter: React.FC = memo(() => {
   return (
-    <footer className="fixed bottom-0 w-full  h-[5%] z-30 flex justify-center footerAnimated-div">
+    <footer className="fixed bottom-0 w-full  h-[6%] z-30 flex justify-center footerAnimated-div">
       <div className=" border-2 flex items-center justify-between w-11/12 shadow-top h-full rounded-lg relative">
         <section className="ml-4 flex items-center space-x-2 h-full bg-loginBackground relative ">
           <div className="  h-1/2   aspect-1 flex justify-center rotate-[60deg] ">

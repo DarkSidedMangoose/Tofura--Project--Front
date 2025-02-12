@@ -4,7 +4,7 @@ import Filter from "../../../../../../assets/images/main/filter.png";
 import Sync from "../../../../../../assets/images/main/sync.png";
 import ScrollArrow from "../../../../../../assets/images/main/scrollArrows.png";
 import Plus from "../../../../../../assets/images/main/plus.png";
-import Pen from "../../../../../../assets/images/main/pen.png";
+import Review from "../../../../../../assets/images/main/review.png";
 import Archive from "../../../../../../assets/images/main/archive.png";
 import History from "../../../../../../assets/images/main/history.png";
 
@@ -12,7 +12,7 @@ export const BaseSearchButton: React.FC = memo(() => {
   return (
     <Fragment>
       <input
-        className="w-[25%] min-w-[200px] text-sm h-full rounded-[8px] border-[1.5px] border-solid border-mainButBorders focus:outline-none shadow-bottom"
+        className="w-[25%] min-w-[200px] text-sm h-full rounded-[8px] border-[2px] border-solid border-sidebarChoose focus:outline-none shadow-bottom"
         type="text"
         placeholder="შეიყვანეთ საძიებო სიტყვა..."
       />
@@ -23,7 +23,7 @@ export const BaseSearchButton: React.FC = memo(() => {
 export const BaseSearchSendButton: React.FC = memo(() => {
   return (
     <Fragment>
-      <button className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px]   border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
+      <button className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px]   border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom">
         <img className="w-60% h-60% object-contain" src={Search} alt="search" />
       </button>
     </Fragment>
@@ -33,7 +33,7 @@ export const BaseSearchSendButton: React.FC = memo(() => {
 export const BaseSearchFilterButton: React.FC = memo(() => {
   return (
     <Fragment>
-      <button className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px] border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
+      <button className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px] border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom">
         <img className="w-60% h-60% object-contain" src={Filter} alt="filter" />
       </button>
     </Fragment>
@@ -43,7 +43,7 @@ export const BaseSearchFilterButton: React.FC = memo(() => {
 export const BaseSyncButton: React.FC = memo(() => {
   return (
     <Fragment>
-      <button className="bg-sidebarChoose h-full rounded-[14%] w-[7%] min-w-[60px] border-[1.5px] border-solid border-mainButBorders flex justify-center items-center opacity-85 shadow-bottom">
+      <button className="bg-sidebarChoose h-full rounded-[14%] w-[7%] min-w-[60px] border-[2px] border-solid border-sidebarChoose flex justify-center items-center opacity-85 shadow-bottom">
         <img className="w-60% h-60% object-contain" src={Sync} alt="sync" />
 
         <div className="flex w-40% h-full justify-center items-center">
@@ -63,7 +63,7 @@ export const BaseSyncButton: React.FC = memo(() => {
 export const BasePlusButton: React.FC = memo(() => {
   return (
     <Fragment>
-      <button className="bg-sidebarChoose h-full rounded-[14%] w-[4.5%] min-w-[30px] border-[1.5px] border-solid border-mainButBorders flex justify-center items-center opacity-85 shadow-bottom">
+      <button className="bg-sidebarChoose h-full rounded-[14%] w-[4.5%] min-w-[30px] border-[2px] border-solid border-sidebarChoose flex justify-center items-center opacity-85 shadow-bottom">
         <img className="w-70% h-70% object-contain" src={Plus} alt="plus" />
       </button>
     </Fragment>
@@ -73,9 +73,13 @@ export const BasePlusButton: React.FC = memo(() => {
 export const BaseReviewButton: React.FC = memo(() => {
   return (
     <Fragment>
-      <button className="bg-white flex gap-[2%] items-center w-[17.5%] min-w-[170px] h-full rounded-[8px] border-[1.5px] border-solid border-mainButBorders font-bold text-blue-950 text-[14px] shadow-bottom ">
-        <img className=" h-70% object-contain" src={Pen} alt="plus" />
-        დათვალიერება
+      <button className="bg-white flex gap-[2%]  items-center w-auto min-w-[150px]  h-full rounded-[8px] border-[2px] border-solid border-sidebarChoose font-semibold text-sidebarChoose text-[14px] shadow-bottom ">
+        <img
+          className=" h-60% object-contain ml-[2%]"
+          src={Review}
+          alt="plus"
+        />
+        <p className="text-sm ">სრულად ნახვა</p>
       </button>
     </Fragment>
   );
@@ -84,7 +88,7 @@ export const BaseReviewButton: React.FC = memo(() => {
 export const BaseHistoryButton: React.FC = memo(() => {
   return (
     <Fragment>
-      <button className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px]   border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
+      <button className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px]   border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom">
         <img
           className="w-60% h-60% object-contain"
           src={History}
@@ -98,7 +102,7 @@ export const BaseHistoryButton: React.FC = memo(() => {
 export const BaseToArchive: React.FC = memo(() => {
   return (
     <Fragment>
-      <button className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px]   border-[1.5px] border-solid border-mainButBorders flex justify-center items-center shadow-bottom">
+      <button className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px]   border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom">
         <img
           className="w-60% h-60% object-contain"
           src={Archive}

@@ -50,7 +50,7 @@ const MainMainMainSectionMain: React.FC = () => {
                 wordBreak: "break-word",
                 hyphens: "auto",
               }}
-              className="flex justify-center items-center    text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
+              className="flex bg-blue justify-center items-center    text-[12px] w-[95%]  overflow-x-auto custom-scrollbar font-bold"
             >
               <p className="max-h-full w-90%">{e.identifyCode}</p>
             </div>
@@ -130,9 +130,9 @@ const MainMainMainSectionMain: React.FC = () => {
         ))}
       </div>
       {identifier === "inspectBase" && (
-        <section className="w-full h-[29.7%] flex justify-end gap-[1%] items-center  ">
+        <section className="w-full h-[29.7%] flex justify-end gap-[1%] items-center    ">
           <button
-            className={`w-auto p-[10px] h-1/4 min-h-[45px] bg-[#05052c] text-white ${
+            className={`w-auto p-[10px] h-1/4 min-h-[45px] rounded-lg shadow-bottom-right  bg-[#05052c] text-white ${
               selected === -1
                 ? "cursor-not-allowed opacity-15 "
                 : "opacity:100 cursor-pointer"
@@ -141,7 +141,7 @@ const MainMainMainSectionMain: React.FC = () => {
             დავალების გაცემა
           </button>
           <button
-            className={`w-auto p-[10px] h-1/4 min-h-[45px] bg-[#05052c] text-white ${
+            className={`w-auto p-[10px] h-1/4 min-h-[45px] rounded-lg shadow-bottom-right bg-[#05052c] text-white ${
               selected === -1
                 ? "cursor-not-allowed opacity-15 "
                 : "opacity:100 cursor-pointer"
