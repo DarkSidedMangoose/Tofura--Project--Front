@@ -25,7 +25,7 @@ const MainMainMainSectionMain: React.FC = () => {
     }
   }, [isOption]);
   return (
-    <div className="w-full h-90%">
+    <div className="w-full h-90% flex flex-col justify-start  items-center">
       <div className="mt-[0.3%] h-70% w-full grid  grid-rows-5 gap-[1%]  ">
         {state[identifier].map((e, i) => (
           <div
@@ -39,7 +39,7 @@ const MainMainMainSectionMain: React.FC = () => {
             key={i}
             style={{ transition: "0.5s" }}
             className={`w-full grid grid-cols-7  h-full border-b-[2px] text-gray-700 bg-loginBackground cursor-pointer ${
-              selected === i ? "bg-sidebarChoose text-white" : ""
+              selected === i ? "bg-sidebarChoose opacity-95 text-white" : ""
             } `}
           >
             <div
@@ -130,7 +130,7 @@ const MainMainMainSectionMain: React.FC = () => {
         ))}
       </div>
       {identifier === "inspectBase" && (
-        <section className="w-full h-[29.7%] flex justify-end gap-[1%] items-center    ">
+        <section className="w-98% h-[29.7%] flex justify-end gap-[1%] items-center     ">
           <button
             className={`w-auto p-[10px] h-1/4 min-h-[45px] rounded-lg shadow-bottom-right  bg-[#05052c] text-white ${
               selected === -1

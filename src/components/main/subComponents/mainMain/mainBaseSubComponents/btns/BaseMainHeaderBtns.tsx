@@ -1,4 +1,4 @@
-import React, { Fragment, memo } from "react";
+import React, { Fragment, memo, useState } from "react";
 import Search from "../../../../../../assets/images/main/search.png";
 import Filter from "../../../../../../assets/images/main/filter.png";
 import Sync from "../../../../../../assets/images/main/sync.png";
@@ -7,6 +7,7 @@ import Plus from "../../../../../../assets/images/main/plus.png";
 import Review from "../../../../../../assets/images/main/review.png";
 import Archive from "../../../../../../assets/images/main/archive.png";
 import History from "../../../../../../assets/images/main/history.png";
+import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
 
 export const BaseSearchButton: React.FC = memo(() => {
   return (
@@ -61,12 +62,31 @@ export const BaseSyncButton: React.FC = memo(() => {
 });
 
 export const BasePlusButton: React.FC = memo(() => {
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const { isOption } = useAdditionalOption();
   return (
-    <Fragment>
-      <button className="bg-sidebarChoose h-full rounded-[14%] w-[4.5%] min-w-[30px] border-[2px] border-solid border-sidebarChoose flex justify-center items-center opacity-85 shadow-bottom">
+    <div className="h-full w-[4.5%] min-w-[30px]  relative">
+      <button
+        onClick={() => {
+          if (isOption === "ინსპექტირების ობიექტები") {
+            setShowDropdown(!showDropdown);
+          }
+        }}
+        className="bg-sidebarChoose h-full rounded-[14%] w-full border-[2px] border-solid border-sidebarChoose flex justify-center items-center opacity-85 shadow-bottom"
+      >
         <img className="w-70% h-70% object-contain" src={Plus} alt="plus" />
       </button>
-    </Fragment>
+      {showDropdown && (
+        <div className="bg-loginBackground w-[200px] mt-[20%] h-[100px]  border-sidebarChoose border-2">
+          <p className="font-semibold text-sidebarChoose text-sm h-1/2 flex justify-center items-center border-b-sidebarChoose border-2 cursor-pointer rounded-tl-2xl rounded-tr-2xl">
+            დოკუმენტის გენერირება
+          </p>
+          <p className="font-semibold text-sidebarChoose text-sm h-1/2 flex justify-center items-center   rounded-bl-2xl rounded-br-2xl cursor-pointer">
+            ატვირთვა
+          </p>
+        </div>
+      )}
+    </div>
   );
 });
 
