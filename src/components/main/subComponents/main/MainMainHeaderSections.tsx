@@ -1,8 +1,12 @@
 import React, { Fragment, memo } from "react";
 import BaseHeader from "./mainBaseSubComponents/header/BaseHeader";
-import { useAdditionalOption } from "../../../../contextApis/ContextChooseFromAdditional";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
+// import { useAdditionalOption } from "../../../../contextApis/ContextChooseFromAdditional";
 export const MainMainHeaderSections: React.FC = memo(() => {
-  const { isOption } = useAdditionalOption();
+  const isOption = useSelector(
+    (state: RootState) => state.AdditionalInfoOption.data
+  );
 
   return (
     <Fragment>

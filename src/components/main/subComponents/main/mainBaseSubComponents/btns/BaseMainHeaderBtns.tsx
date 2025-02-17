@@ -7,7 +7,9 @@ import Plus from "../../../../../../assets/images/main/plus.png";
 import Review from "../../../../../../assets/images/main/review.png";
 import Archive from "../../../../../../assets/images/main/archive.png";
 import History from "../../../../../../assets/images/main/history.png";
-import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../../redux/store";
+// import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
 
 export const BaseSearchButton: React.FC = memo(() => {
   return (
@@ -49,7 +51,10 @@ export const BaseSearchFilterButton: React.FC = memo(() => {
 });
 
 export const BaseSyncButton: React.FC = memo(() => {
-  const { isChoosed } = useAdditionalOption();
+  const isChoosed = useSelector(
+    (state: RootState) => state.BasesChoosedOption.data
+  );
+  // const { isChoosed } = useAdditionalOption();
 
   return (
     <Fragment>
@@ -79,8 +84,15 @@ export const BaseSyncButton: React.FC = memo(() => {
 
 export const BasePlusButton: React.FC = memo(() => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
-  const { isOption } = useAdditionalOption();
-  const { isChoosed } = useAdditionalOption();
+  // const { isOption } = useAdditionalOption();
+  // const { isChoosed } = useAdditionalOption();
+
+  const isOption = useSelector(
+    (state: RootState) => state.AdditionalInfoOption.data
+  );
+  const isChoosed = useSelector(
+    (state: RootState) => state.BasesChoosedOption.data
+  );
 
   useEffect(() => {
     if (!isChoosed) {
@@ -122,7 +134,9 @@ export const BasePlusButton: React.FC = memo(() => {
   );
 });
 export const BaseReviewButton: React.FC = memo(() => {
-  const { isChoosed } = useAdditionalOption();
+  const isChoosed = useSelector(
+    (state: RootState) => state.BasesChoosedOption.data
+  );
   return (
     <Fragment>
       <button
@@ -145,7 +159,9 @@ export const BaseReviewButton: React.FC = memo(() => {
 });
 
 export const BaseHistoryButton: React.FC = memo(() => {
-  const { isChoosed } = useAdditionalOption();
+  const isChoosed = useSelector(
+    (state: RootState) => state.BasesChoosedOption.data
+  );
 
   return (
     <Fragment>
@@ -168,7 +184,9 @@ export const BaseHistoryButton: React.FC = memo(() => {
 });
 
 export const BaseToArchive: React.FC = memo(() => {
-  const { isChoosed } = useAdditionalOption();
+  const isChoosed = useSelector(
+    (state: RootState) => state.BasesChoosedOption.data
+  );
 
   return (
     <Fragment>

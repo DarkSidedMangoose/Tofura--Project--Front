@@ -1,12 +1,16 @@
 import React from "react";
 import CountryWithRegions from "../subComponents/MapCountryWithRegions/CountryWithRegions";
 import "../../../../Scrollbar.css";
-import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
+// import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
 import Diagram from "../subComponents/Diagram";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../../redux/store";
 // import Diagram from "../subComponents/Diagram";
 // import MonthlyCellDiagrams from "../subComponents/MonthlyCellDiagrams";
 const DashboardMain: React.FC = () => {
-  const { isOption } = useAdditionalOption();
+  const isOption = useSelector(
+    (state: RootState) => state.AdditionalInfoOption.data
+  );
 
   return (
     <section className="w-full h-full flex flex-col gap-[5%] justify-center items-center  ">

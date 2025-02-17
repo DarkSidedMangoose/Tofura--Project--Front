@@ -1,10 +1,14 @@
 import React, { Fragment, memo } from "react";
 import { BaseMain } from "./mainBaseSubComponents/main/BaseMain";
-import { useAdditionalOption } from "../../../../contextApis/ContextChooseFromAdditional";
+// import { useAdditionalOption } from "../../../../contextApis/ContextChooseFromAdditional";
 import DashboardMain from "./mainDashboardSubComponents/main/DashboardMain";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
 
 export const MainMainMainSection: React.FC = memo(() => {
-  const { isOption } = useAdditionalOption();
+  const isOption = useSelector(
+    (state: RootState) => state.AdditionalInfoOption.data
+  );
 
   return (
     <Fragment>

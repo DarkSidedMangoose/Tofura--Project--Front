@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import sidebarBaseReducer from "./reducers/sidebarBasesReducer"; // Ensure this path is correct
-import sidebarChooseReducer from "./reducers/sidebarChooseReducer";
+import AdditionalInfoOptionReducer from "./reducers/AdditionalDropdownOption";
+import BasesChoosedOptionReducer from "./reducers/BasesChoosedOption";
+import LoadingScreenReducer from "./reducers/LoadingScreen";
 
 export const store = configureStore({
   reducer: {
-    sidebarBase: sidebarBaseReducer, // it's first sidebar dropright reducer there we define in bases which base option are we located;
-    sidebarChoose: sidebarChooseReducer, // it's sidebar choose reducer from there we define where we are located
+    AdditionalInfoOption: AdditionalInfoOptionReducer, //the purpose of that is to navigate across sidebar options
+    BasesChoosedOption: BasesChoosedOptionReducer, // the purpose of that is to identify object which has choosed and acumulate info about that
+    LoadingScreen: LoadingScreenReducer,
   },
 });
 

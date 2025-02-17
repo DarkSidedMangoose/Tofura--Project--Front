@@ -9,7 +9,9 @@ import {
   BaseSyncButton,
   BaseToArchive,
 } from "../btns/BaseMainHeaderBtns";
-import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../../redux/store";
+// import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
 
 export const MainMainHeaderFirstSection: React.FC = memo(() => {
   return (
@@ -22,7 +24,9 @@ export const MainMainHeaderFirstSection: React.FC = memo(() => {
 });
 
 export const MainMainHeaderSecondSection: React.FC = memo(() => {
-  const { isOption } = useAdditionalOption();
+  const isOption = useSelector(
+    (state: RootState) => state.AdditionalInfoOption.data
+  );
   return (
     <section className="h-[60%]  min-h-[30px] w-70% flex items-center  gap-[1%] justify-end">
       {isOption !== "შემოწმებული ობიექტების რეესტრი" ? (

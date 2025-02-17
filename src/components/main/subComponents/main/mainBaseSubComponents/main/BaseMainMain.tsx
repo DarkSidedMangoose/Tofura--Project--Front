@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
+// import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
 import "../../../../Scrollbar.css";
 import { bases, stateInterface } from "./BasesObjects";
 import { InspectMainButs } from "../btns/BaseMainHeaderBtns";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../../../redux/store";
+import { setChoose } from "../../../../../../redux/reducers/BasesChoosedOption";
 
 const MainMainMainSectionMain: React.FC = () => {
-  const { setChoose, isOption } = useAdditionalOption();
+  // const { setChoose, isOption } = useAdditionalOption();
+  const dispatch: AppDispatch = useDispatch();
+  const isOption = useSelector(
+    (state: RootState) => state.AdditionalInfoOption.data
+  );
+
   const [selected, setSelected] = useState<number>(-1);
   const [identifier, setIdentifier] =
     useState<keyof stateInterface>("mainBase");
@@ -40,10 +48,10 @@ const MainMainMainSectionMain: React.FC = () => {
   const handleRowClick = (index: number) => {
     if (selected !== index) {
       setSelected(index);
-      setChoose(true);
+      dispatch(setChoose(true));
     } else {
       setSelected(-1);
-      setChoose(false);
+      dispatch(setChoose(false));
     }
   };
 

@@ -6,9 +6,12 @@ import MyProfile from "../../assets/images/main/myProfile.png";
 import "./MainAnimations.css";
 import { NavItem } from "./subComponents/sidebar/sidebarComponents/SidebarNavItem";
 import { handleSidebarClick } from "./subComponents/sidebar/SidebarFunctions";
-import { useMainLoading } from "../../contextApis/ContextLoading";
-import { useAdditionalOption } from "../../contextApis/ContextChooseFromAdditional";
+// import { useMainLoading } from "../../contextApis/ContextLoading";
 import { useSidebarMouseEnterProvider } from "../../contextApis/ContextMouseEnterIdentifier";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../redux/store";
+import { setAdditionalInfoOption } from "../../redux/reducers/AdditionalDropdownOption";
+import { setLoadingTrue } from "../../redux/reducers/LoadingScreen";
 // main component
 
 export interface sideState {
@@ -21,13 +24,24 @@ export interface mainSidebarProps {
 }
 
 const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
+  const dispatch: AppDispatch = useDispatch();
+
   const { SidebarMouseEnterIdentifier, setSidebarMouseEnterIdentifier } =
     useSidebarMouseEnterProvider();
   const [sidebarStates, setSidebarStates] = useState<sideState>({
     identifier: "base",
   });
-  const { setLoading } = useMainLoading();
-  const { isOption, setOption } = useAdditionalOption();
+  // const { setLoading } = useMainLoading();
+  const isOption = useSelector(
+    (state: RootState) => state.AdditionalInfoOption.data
+  );
+
+  const setLoading = (data: boolean) => {
+    dispatch(setLoadingTrue(data));
+  };
+  const setOption = (data: string) => {
+    dispatch(setAdditionalInfoOption(data));
+  };
 
   useEffect(() => {
     if (

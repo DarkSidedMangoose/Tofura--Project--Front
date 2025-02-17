@@ -1,9 +1,16 @@
 import React, { Fragment, useEffect } from "react";
 import "../../../MainAnimations.css";
-import { useMainLoading } from "../../../../../contextApis/ContextLoading";
-import { useAdditionalOption } from "../../../../../contextApis/ContextChooseFromAdditional";
+// import { useMainLoading } from "../../../../../contextApis/ContextLoading";
+// import { useAdditionalOption } from "../../../../../contextApis/ContextChooseFromAdditional";
 import { baseState, dashboardState } from "./SidebarObjects";
 import { useSidebarMouseEnterProvider } from "../../../../../contextApis/ContextMouseEnterIdentifier";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../../redux/store";
+import { setAdditionalInfoOption } from "../../../../../redux/reducers/AdditionalDropdownOption";
+import {
+  setLoadingFalse,
+  setLoadingTrue,
+} from "../../../../../redux/reducers/LoadingScreen";
 interface AdditionalInfoOfBaseProps {
   isActive: boolean;
   setIsActive: (e: boolean) => void;
@@ -44,8 +51,20 @@ export const AdditionalInfo: React.FC<AdditionalInfoOfBaseProps> = ({
 };
 
 const AdditionalInfoOfBaseSub: React.FC = () => {
-  const { isOption, setOption } = useAdditionalOption();
-  const { setLoading } = useMainLoading();
+  const dispatch: AppDispatch = useDispatch();
+  // const { isOption, setOption } = useAdditionalOption();
+  const isOption = useSelector(
+    (state: RootState) => state.AdditionalInfoOption.data
+  );
+  const setOption = (data: string) => {
+    dispatch(setAdditionalInfoOption(data));
+  };
+  const setLoading = (data: boolean) => {
+    dispatch(setLoadingTrue(data));
+    setTimeout(() => {
+      setLoadingFalse(false);
+    }, 1400);
+  };
   return (
     <div className="space-y-24 ">
       <section className="flex flex-col space-y-4  ">
@@ -62,8 +81,10 @@ const AdditionalInfoOfBaseSub: React.FC = () => {
             key={index}
             onClick={() => {
               setOption(info);
-
               setLoading(true);
+              setTimeout(() => {
+                setLoading(false);
+              }, 1400);
             }}
           >
             {info}
@@ -86,6 +107,9 @@ const AdditionalInfoOfBaseSub: React.FC = () => {
               setOption(info);
 
               setLoading(true);
+              setTimeout(() => {
+                setLoading(false);
+              }, 1400);
             }}
           >
             {info}
@@ -97,8 +121,17 @@ const AdditionalInfoOfBaseSub: React.FC = () => {
 };
 
 const AdditionalInfoOfDashboardSub: React.FC = () => {
-  const { isOption, setOption } = useAdditionalOption();
-  const { setLoading } = useMainLoading();
+  const dispatch: AppDispatch = useDispatch();
+  const isOption = useSelector(
+    (state: RootState) => state.AdditionalInfoOption.data
+  );
+
+  const setLoading = (data: boolean) => {
+    dispatch(setLoadingFalse(data));
+  };
+  const setOption = (data: string) => {
+    dispatch(setAdditionalInfoOption(data));
+  };
   return (
     <div className="space-y-24 w-full flex justify-center">
       <section className="flex flex-col space-y-4 w-full  ">
@@ -117,6 +150,9 @@ const AdditionalInfoOfDashboardSub: React.FC = () => {
               setOption(info);
 
               setLoading(true);
+              setTimeout(() => {
+                setLoading(false);
+              }, 1400);
             }}
           >
             {info}
