@@ -107,36 +107,39 @@ const CountryWithRegionsAdditionalInfo: React.FC<
   return (
     <div
       style={{ top: `${position.y}px `, left: `${position.x}px` }}
-      className={`absolute  h-[400px] w-[400px]  rounded-2xl flex items-between justify-center flex-col bg-loginBackground  `}
+      className={`absolute  h-[400px] w-[400px]  rounded-2xl flex items-center justify-center flex-col bg-sidebarChoose opacity-85  `}
     >
       {/* <p className="font-bold text-sidebarChoose shadow-bottom bg-white rounded-bl-lg rounded-br-lg text-m m-0 p-0 h-10% w-[95%] flex justify-center items-center ">
         {MapObjects[identifyRegion - 1].region}
       </p> */}
-      <header className="w-full h-20% flex items-center justify-center rounded-tr-2xl rounded-tl-2xl bg-[#1d295137] border-b-2 border-dotted border-sidebarChoose ">
-        <p className="text-black font-bold ">
-          {MapObjects[identifyRegion - 1].region}
-        </p>
-      </header>
-      <body className="w-full h-80% bg-[#1d295137]   flex   text-black  rounded-bl-2xl rounded-br-2xl  ">
-        <section className=" h-full w-full flex flex-col  justify-evenly  ">
-          <p className="flex">
-            რეგიონში გამოვლენილი დარღვევა:
+
+      <section className="w-[95%] h-[95%]">
+        <header className="w-full h-20% flex items-center justify-center bg-loginBackground rounded-tr-2xl rounded-tl-2xl  border-b-2 border-dotted border-loginBackground ">
+          <p className="text-sidebarChoose font-bold ">
+            {MapObjects[identifyRegion - 1].region}
+          </p>
+        </header>
+        <body className="w-full h-80% bg-loginBackground  text-sm  flex   text-sidebarChoose font-semibold  rounded-bl-2xl rounded-br-2xl  ">
+          <section className=" h-full w-full flex flex-col  justify-evenly ml-[2%] ">
+            <p className="flex">
+              რეგიონში გამოვლენილი დარღვევა:
+              <p className="text-[#e91c1c]">
+                {MapObjects[identifyRegion - 1].accidents}
+              </p>
+            </p>
+            <p className="flex">
+              გამოსწორებული დარღვევა:
+              <p className="text-[#36841b]">
+                {MapObjects[identifyRegion - 1].corrected}
+              </p>
+            </p>
             <p className="text-[#e91c1c]">
-              {MapObjects[identifyRegion - 1].accidents}
+              გამოვლენილი უბედური შემთხვევები:{" "}
+              {MapObjects[identifyRegion - 1].violation}
             </p>
-          </p>
-          <p className="flex">
-            გამოსწორებული დარღვევა:
-            <p className="text-[#36841b]">
-              {MapObjects[identifyRegion - 1].corrected}
-            </p>
-          </p>
-          <p className="text-[#e91c1c]">
-            გამოვლენილი უბედური შემთხვევები:{" "}
-            {MapObjects[identifyRegion - 1].violation}
-          </p>
-        </section>
-      </body>
+          </section>
+        </body>
+      </section>
     </div>
   );
 };

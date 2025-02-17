@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import { MainMainMainSection } from "./subComponents/mainMain//MainMainMainSection";
+import { MainMainMainSection } from "./subComponents/main/MainMainMainSection";
 import "./MainAnimations.css";
-import { MainLoading } from "./subComponents/mainMain//MainLoading";
-import { MainMainHeaderSections } from "./subComponents/mainMain//MainMainHeaderSections";
+import { MainLoading } from "./subComponents/main/MainLoading";
+import { MainMainHeaderSections } from "./subComponents/main/MainMainHeaderSections";
 import { useMainLoading } from "../../contextApis/ContextLoading";
 
 const MainMain: React.FC = () => {

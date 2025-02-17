@@ -89,12 +89,7 @@ export const BasePlusButton: React.FC = memo(() => {
   }, [isChoosed]);
 
   return (
-    <div
-      style={{ transition: "0.3s ease-in-out" }}
-      className={`${
-        !isChoosed ? "opacity-20 " : "hover:opacity-70"
-      } h-full w-[4.5%] min-w-[30px] z-50 relative`}
-    >
+    <div className={` h-full w-[4.5%] min-w-[30px] z-50 relative`}>
       <button
         onClick={() => {
           if (isOption === "ინსპექტირების ობიექტები") {
@@ -103,14 +98,18 @@ export const BasePlusButton: React.FC = memo(() => {
             }
           }
         }}
-        className={`bg-sidebarChoose h-full rounded-[14%] w-full border-[2px] border-solid border-sidebarChoose flex justify-center items-center opacity-85 shadow-bottom ${
+        style={{ transition: "0.3s ease-in-out" }}
+        className={`${
+          !isChoosed ? "opacity-20 " : "opacity-85 hover:opacity-70"
+        } bg-sidebarChoose h-full rounded-[14%] w-full border-[2px] border-solid border-sidebarChoose flex justify-center items-center  shadow-bottom ${
           !isChoosed ? "cursor-not-allowed" : "cursor-pointer "
         }`}
       >
         <img className="w-70% h-70% object-contain" src={Plus} alt="plus" />
       </button>
+
       {showDropdown && (
-        <div className="bg-white w-[200px] mt-[20%] h-[100px] border-sidebarChoose border-2">
+        <div className="bg-loginBackground w-[200px] mt-[20%] h-[100px] border-sidebarChoose border-2">
           <p className="font-semibold text-sidebarChoose text-[13px] h-1/2 flex justify-center items-center border-b-sidebarChoose border-b-2 cursor-pointer ">
             დოკუმენტის გენერირება
           </p>
