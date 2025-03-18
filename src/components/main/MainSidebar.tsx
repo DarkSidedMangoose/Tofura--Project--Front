@@ -6,17 +6,11 @@ import MyProfile from "../../assets/images/main/myProfile.png";
 import "./MainAnimations.css";
 import { NavItem } from "./subComponents/sidebar/sidebarComponents/SidebarNavItem";
 import { handleSidebarClick } from "./subComponents/sidebar/SidebarFunctions";
-// import { useMainLoading } from "../../contextApis/ContextLoading";
 import { useSidebarMouseEnterProvider } from "../../contextApis/ContextMouseEnterIdentifier";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
 import { setAdditionalInfoOption } from "../../redux/reducers/AdditionalDropdownOption";
 import { setLoadingTrue } from "../../redux/reducers/LoadingScreen";
-// main component
-
-export interface sideState {
-  identifier: string;
-}
 
 export interface mainSidebarProps {
   setIsActive: (isActive: boolean) => void;
@@ -28,13 +22,13 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
 
   const { SidebarMouseEnterIdentifier, setSidebarMouseEnterIdentifier } =
     useSidebarMouseEnterProvider();
-  const [sidebarStates, setSidebarStates] = useState<sideState>({
-    identifier: "base",
-  });
-  // const { setLoading } = useMainLoading();
+
   const isOption = useSelector(
     (state: RootState) => state.AdditionalInfoOption.data
   );
+
+  const [sidebarStateIdentifier, setSidebarStateIdentifier] =
+    useState<string>("base");
 
   const setLoading = (data: boolean) => {
     dispatch(setLoadingTrue(data));
@@ -45,13 +39,18 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
 
   useEffect(() => {
     if (
-      isOption !== "" &&
-      isOption !== "საინფორმაციო დაფა" &&
-      isOption !== "პროფილი"
+      isOption === "" ||
+      isOption === "ობიექტების რეესტრი" ||
+      isOption === "ინსპექტირების ობიექტები" ||
+      isOption === "შემოწმებული ობიექტების რეესტრი"
     ) {
-      setSidebarStates({
-        identifier: "base",
-      });
+      setSidebarStateIdentifier("base");
+    } else if (
+      isOption === "ობიექტების რეგიონალური რუკა" ||
+      isOption === "ობიექტების დიაგრამული გამოსახულება" ||
+      isOption === "ობიექტების წლიური დიაგრამა თვეების მიხედვით"
+    ) {
+      setSidebarStateIdentifier("dashboard");
     }
   }, [isOption]);
 
@@ -59,8 +58,8 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
     (identifier: string) => {
       handleSidebarClick(
         identifier,
-        sidebarStates,
-        setSidebarStates,
+        sidebarStateIdentifier,
+        setSidebarStateIdentifier,
         setIsActive
       );
       if (identifier === "dashboard") {
@@ -117,20 +116,19 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
             <NavItem
               icon={Base}
               alt="Base"
-              NavIsActive={sidebarStates.identifier === "base"}
+              NavIsActive={sidebarStateIdentifier === "base"}
               onMouseEnter={handleMouseEnter}
             />
             <NavItem
               icon={Dashboard}
               alt="dashboard"
-              NavIsActive={sidebarStates.identifier === "dashboard"}
-              onClick={createClickHandler("dashboard")}
+              NavIsActive={sidebarStateIdentifier === "dashboard"}
               onMouseEnter={handleMouseEnter}
             />
             <NavItem
               icon={MyProfile}
               alt="profile"
-              NavIsActive={sidebarStates.identifier === "profile"}
+              NavIsActive={sidebarStateIdentifier === "profile"}
               onClick={createClickHandler("profile")}
             />
           </nav>
