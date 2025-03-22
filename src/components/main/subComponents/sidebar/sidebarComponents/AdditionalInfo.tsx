@@ -28,7 +28,7 @@ export const AdditionalInfo: React.FC<AdditionalInfoOfBaseProps> = ({
     <div
       className={`z-[51] ${
         isActive ? "w-[18%] narrow:w-[330px] flex" : "w-[0%]"
-      }  h-90% min-h-[600px] bg-loginBackground shadow-bottom-right  rounded-br-2xl  justify-center items-center fixed ml-[5%] transition-width    `}
+      }  h-90% min-h-[600px] bg-loginBackground shadow-bottom-right  rounded-br-2xl  justify-center items-center fixed  ml-[90px] 2xl:ml-[5%] transition-width    `}
       onMouseLeave={() => setIsActive(false)} // for handle sidebar close while mouse leave that div
     >
       <div

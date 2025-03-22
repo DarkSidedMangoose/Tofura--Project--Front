@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import User from "../../assets/images/login/user.png";
 import Password from "../../assets/images/login/password.png";
 import Enter from "../../assets/images/login/login.png";
@@ -22,7 +22,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <form
-      onSubmit={(e) => handleSubmit(e, navigate)}
+      onSubmit={(e) => handleSubmit(e, navigate, userPass)}
       className="z-10 opacity-95"
     >
       <div className="flex flex-col w-400px h-400px justify-center items-center bg-gray-800 gap-2 relative shadow-lg shadow-black stroke-black rounded-lg">
