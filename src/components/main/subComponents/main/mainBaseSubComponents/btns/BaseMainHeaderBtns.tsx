@@ -16,7 +16,7 @@ export const BaseSearchButton: React.FC = memo(() => {
     <Fragment>
       <input
         style={{ transition: "0.3s ease-in-out" }}
-        className="w-[25%] min-w-[200px] text-sm h-full rounded-[8px] border-[2px] border-solid border-sidebarChoose focus:outline-none shadow-bottom hover:opacity-70"
+        className="w-[50%] min-w-[200px] text-sm h-full rounded-[8px] border-[2px] border-solid border-sidebarChoose focus:outline-none shadow-bottom hover:opacity-70"
         type="text"
         placeholder="შეიყვანეთ საძიებო სიტყვა..."
       />
@@ -29,7 +29,7 @@ export const BaseSearchSendButton: React.FC = memo(() => {
     <Fragment>
       <button
         style={{ transition: "0.3s ease-in-out" }}
-        className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px]   border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom hover:opacity-70"
+        className="bg-white h-full rounded-[14%] w-[7%] min-w-[30px]   border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom hover:opacity-70"
       >
         <img className="w-60% h-60% object-contain" src={Search} alt="search" />
       </button>
@@ -42,7 +42,7 @@ export const BaseSearchFilterButton: React.FC = memo(() => {
     <Fragment>
       <button
         style={{ transition: "0.3s ease-in-out" }}
-        className="bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px] border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom hover:opacity-70"
+        className="bg-white h-full rounded-[14%] w-[7%] min-w-[30px] border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom hover:opacity-70"
       >
         <img className="w-60% h-60% object-contain" src={Filter} alt="filter" />
       </button>
@@ -64,7 +64,7 @@ export const BaseSyncButton: React.FC = memo(() => {
           !isChoosed
             ? "opacity-20 cursor-not-allowed"
             : "opacity-85 cursor-pointer hover:opacity-70"
-        } bg-sidebarChoose h-full rounded-[14%] w-[7%] min-w-[60px] border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom`}
+        } bg-sidebarChoose h-full rounded-[14%] w-10%  min-w-[55px] border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom`}
       >
         <img className="w-60% h-60% object-contain" src={Sync} alt="sync" />
 
@@ -101,7 +101,7 @@ export const BasePlusButton: React.FC = memo(() => {
   }, [isChoosed]);
 
   return (
-    <div className={` h-full w-[4.5%] min-w-[30px] z-50 relative`}>
+    <div className={` h-full w-[7%] min-w-[30px] z-50 relative`}>
       <button
         onClick={() => {
           if (isOption === "ინსპექტირების ობიექტები") {
@@ -145,7 +145,7 @@ export const BaseReviewButton: React.FC = memo(() => {
           !isChoosed
             ? "opacity-20 cursor-not-allowed "
             : "opacity-100 cursor-pointer hover:opacity-70 "
-        } bg-white flex gap-[2%] items-center w-auto min-w-[150px] h-full rounded-[8px] border-[2px] border-solid border-sidebarChoose font-semibold text-sidebarChoose text-[14px] shadow-bottom`}
+        } bg-white flex gap-[2%] items-center w-[28%] min-w-[150px] h-full rounded-[8px] border-[2px] border-solid border-sidebarChoose font-semibold text-sidebarChoose text-[14px] shadow-bottom`}
       >
         <img
           className=" h-60% object-contain ml-[2%]"
@@ -171,7 +171,7 @@ export const BaseHistoryButton: React.FC = memo(() => {
           !isChoosed
             ? "opacity-20 cursor-not-allowed "
             : "opacity-100 cursor-pointer hover:opacity-70 "
-        } bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px] border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom`}
+        } bg-white h-full rounded-[14%] w-[7%] min-w-[30px] border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom`}
       >
         <img
           className="w-60% h-60% object-contain"
@@ -196,7 +196,7 @@ export const BaseToArchive: React.FC = memo(() => {
           !isChoosed
             ? "opacity-20 cursor-not-allowed "
             : "opacity-100 cursor-pointer hover:opacity-70  "
-        } bg-white h-full rounded-[14%] w-[4.5%] min-w-[30px] border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom`}
+        } bg-white h-full rounded-[14%] w-[7%] min-w-[30px] border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom`}
       >
         <img
           className="w-60% h-60% object-contain"

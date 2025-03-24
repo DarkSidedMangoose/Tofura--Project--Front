@@ -41,6 +41,7 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
     if (
       isOption === "" ||
       isOption === "ობიექტების რეესტრი" ||
+      isOption === "გაცემული დავალებები" ||
       isOption === "ინსპექტირების ობიექტები" ||
       isOption === "შემოწმებული ობიექტების რეესტრი"
     ) {

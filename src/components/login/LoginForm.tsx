@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import User from "../../assets/images/login/user.png";
 import Password from "../../assets/images/login/password.png";
 import Enter from "../../assets/images/login/login.png";

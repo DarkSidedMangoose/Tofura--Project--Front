@@ -1,49 +1,55 @@
 import React, { useEffect, useState } from "react";
 // import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
 import "../../../../Scrollbar.css";
-import { bases, stateInterface } from "./BasesObjects";
 import { InspectMainButs } from "../btns/BaseMainHeaderBtns";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../../redux/store";
 import { setChoose } from "../../../../../../redux/reducers/BasesChoosedOption";
+import axios from "axios";
+
+interface states {
+  id: string;
+  identifyCode: string;
+  wholeName: string;
+  region: string;
+  fizAddress: string;
+  turnover: string;
+  jobType: string;
+  riskLevel: string;
+}
 
 const MainMainMainSectionMain: React.FC = () => {
-  // const { setChoose, isOption } = useAdditionalOption();
   const dispatch: AppDispatch = useDispatch();
   const isOption = useSelector(
     (state: RootState) => state.AdditionalInfoOption.data
   );
-
+  const isIdentifierInspetObject = useSelector(
+    (state: RootState) => state.inspectObjectIdentifier.data
+  );
   const [selected, setSelected] = useState<number>(-1);
-  const [identifier, setIdentifier] =
-    useState<keyof stateInterface>("mainBase");
-  const [state] = useState<stateInterface>(bases);
+
+  const [state, setState] = useState<states[] | []>([]);
 
   useEffect(() => {
-    switch (isOption) {
-      case "ობიექტების რეესტრი":
-        setIdentifier("mainBase");
-        break;
-      case "ინსპექტირების ობიექტები":
-        setIdentifier("inspectBase");
-        break;
-      case "შემოწმებული ობიექტების რეესტრი":
-        setIdentifier("overBase");
-        break;
-      case "ახალი ობიექტები":
-        setIdentifier("newBase");
-        break;
-      case "შემოწმებული ობიექტები":
-        setIdentifier("checkedBase");
-        break;
-      case "წაშლილი ობიექტები":
-        setIdentifier("removeBase");
-        break;
-      default:
-        setIdentifier("mainBase");
-        break;
+    const takeTasksFromDb = async (arg: string) => {
+      try {
+        const response = await axios.get(
+          `https://localhost:7205/api/tasks/${arg}`,
+          {
+            withCredentials: true,
+          }
+        );
+        setState(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    if (isIdentifierInspetObject === true) {
+      takeTasksFromDb("onGoing");
+    } else {
+      setState([]);
     }
-  }, [isOption]);
+  }, [isIdentifierInspetObject]);
 
   const handleRowClick = (index: number) => {
     if (selected !== index) {
@@ -58,16 +64,17 @@ const MainMainMainSectionMain: React.FC = () => {
   return (
     <div className="w-full h-90% flex flex-col justify-start items-center">
       <div className="mt-[0.3%] h-70% w-full grid grid-rows-5 gap-[1%]">
-        {state[identifier].map((item, index) => (
-          <DataRow
-            key={index}
-            item={item}
-            selected={selected === index}
-            onClick={() => handleRowClick(index)}
-          />
-        ))}
+        {state &&
+          state.map((item, index) => (
+            <DataRow
+              key={index}
+              item={item}
+              selected={selected === index}
+              onClick={() => handleRowClick(index)}
+            />
+          ))}
       </div>
-      {identifier === "inspectBase" && (
+      {isOption === "ინსპექტირების ობიექტები" && (
         <section className="w-98% h-[29.7%] flex justify-end gap-[1%] items-center">
           <InspectMainButs selected={selected} />
         </section>
