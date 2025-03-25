@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 // import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
 import "../../../../Scrollbar.css";
 import { InspectMainButs } from "../btns/BaseMainHeaderBtns";
@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../../redux/store";
 import { setChoose } from "../../../../../../redux/reducers/BasesChoosedOption";
 import axios from "axios";
+import GiveTask from "../subComponents/GiveTask";
 
 interface states {
   id: string;
@@ -27,7 +28,7 @@ const MainMainMainSectionMain: React.FC = () => {
     (state: RootState) => state.inspectObjectIdentifier.data
   );
   const [selected, setSelected] = useState<number>(-1);
-
+  const [btnClicked, setBtnClicked] = useState<boolean>(false);
   const [state, setState] = useState<states[] | []>([]);
 
   useEffect(() => {
@@ -44,10 +45,14 @@ const MainMainMainSectionMain: React.FC = () => {
         console.log(err);
       }
     };
-    if (isIdentifierInspetObject === true) {
+    if (isIdentifierInspetObject === "მიმდინარე დავალებები") {
       takeTasksFromDb("onGoing");
-    } else {
-      setState([]);
+    } else if (isIdentifierInspetObject === "გაცემული დავალებები") {
+      takeTasksFromDb("onPending");
+    } else if (isIdentifierInspetObject === "დასადასტურებელი დავალებები") {
+      takeTasksFromDb("pendingApproval");
+    } else if (isIdentifierInspetObject === "დასრულების მოთხოვნები") {
+      takeTasksFromDb("waitApproval");
     }
   }, [isIdentifierInspetObject]);
 
@@ -60,7 +65,9 @@ const MainMainMainSectionMain: React.FC = () => {
       dispatch(setChoose(false));
     }
   };
-
+  const handleSetClickedOnButton = useCallback((arg: boolean) => {
+    setBtnClicked(arg);
+  }, []);
   return (
     <div className="w-full h-90% flex flex-col justify-start items-center">
       <div className="mt-[0.3%] h-70% w-full grid grid-rows-5 gap-[1%]">
@@ -76,9 +83,15 @@ const MainMainMainSectionMain: React.FC = () => {
       </div>
       {isOption === "ინსპექტირების ობიექტები" && (
         <section className="w-98% h-[29.7%] flex justify-end gap-[1%] items-center">
-          <InspectMainButs selected={selected} />
+          <InspectMainButs
+            selected={selected}
+            clicked={btnClicked}
+            setClicked={handleSetClickedOnButton}
+          />
         </section>
       )}
+
+      {btnClicked && <GiveTask setClick={handleSetClickedOnButton} />}
     </div>
   );
 };

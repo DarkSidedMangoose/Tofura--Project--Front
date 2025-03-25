@@ -1,4 +1,5 @@
 import React, { Fragment, memo, useEffect } from "react";
+import "./BaseHeaderSections.css";
 import {
   BaseHistoryButton,
   BasePlusButton,
@@ -27,7 +28,7 @@ export const MainMainHeaderFirstSection: React.FC = memo(() => {
 export const MainMainHeaderSecondSection: React.FC = memo(() => {
   const dispatch: AppDispatch = useDispatch();
 
-  const clickHandler = (arg: boolean) => {
+  const clickHandler = (arg: string) => {
     dispatch(setInspectBaseIdentifier(arg));
   };
   const isOption = useSelector(
@@ -43,7 +44,38 @@ export const MainMainHeaderSecondSection: React.FC = memo(() => {
     <Fragment>
       {isOption === "ინსპექტირების ობიექტები" && (
         <section className="flex w-30%  h-[60%]   justify-center items-center gap-[1%] text-md ">
-          <button
+          <select
+            id="dropdown"
+            name="options"
+            className="bg-sidebarChoose text-white w-full h-full font-semibold opacity-90 rounded-xl text-sm custom-select  "
+            onChange={(e) => clickHandler(e.target.value)}
+          >
+            <option
+              value="მიმდინარე დავალებები"
+              className="bg-white text-sidebarChoose text-start  "
+            >
+              მიმდინარე დავალებები
+            </option>
+            <option
+              value="გაცემული დავალებები"
+              className="bg-white text-sidebarChoose"
+            >
+              გაცემული დავალებები
+            </option>
+            <option
+              value="დასადასტურებელი დავალებები"
+              className="bg-white text-sidebarChoose"
+            >
+              დასადასტურებელი დავალებები
+            </option>
+            <option
+              value="დასრულების მოთხოვნები"
+              className="bg-white text-sidebarChoose"
+            >
+              დასრულების მოთხოვნები
+            </option>
+          </select>
+          {/* <button
             className={` ${
               isIdentifier
                 ? "bg-sidebarChoose text-white"
@@ -62,7 +94,7 @@ export const MainMainHeaderSecondSection: React.FC = memo(() => {
             onClick={() => clickHandler(false)}
           >
             გაგზავნილი
-          </button>
+          </button> */}
         </section>
       )}
     </Fragment>

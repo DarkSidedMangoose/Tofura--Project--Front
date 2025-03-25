@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface Identifier {
-  data: boolean;
+  data: string;
 }
 
 const initialState: Identifier = {
-  data: false,
+  data: "მიმდინარე დავალებები",
 };
 
 const InspectObjectIdentifierSlice = createSlice({

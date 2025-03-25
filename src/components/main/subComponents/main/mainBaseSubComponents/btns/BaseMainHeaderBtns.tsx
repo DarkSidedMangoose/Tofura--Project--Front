@@ -1,4 +1,4 @@
-import React, { Fragment, memo, useEffect, useState } from "react";
+import React, { Fragment, memo, useCallback, useEffect, useState } from "react";
 import Search from "../../../../../../assets/images/main/search.png";
 import Filter from "../../../../../../assets/images/main/filter.png";
 import Sync from "../../../../../../assets/images/main/sync.png";
@@ -207,9 +207,17 @@ export const BaseToArchive: React.FC = memo(() => {
     </Fragment>
   );
 });
-export const InspectMainButs: React.FC<{ selected: Number }> = ({
-  selected,
-}) => {
+export const InspectMainButs: React.FC<{
+  selected: Number;
+  clicked: boolean;
+  setClicked: (arg: boolean) => void;
+}> = ({ selected, clicked, setClicked }) => {
+  const clickHandler = useCallback(
+    (arg: boolean) => {
+      setClicked(arg);
+    },
+    [setClicked]
+  );
   return (
     <Fragment>
       <button
@@ -219,6 +227,7 @@ export const InspectMainButs: React.FC<{ selected: Number }> = ({
             ? "cursor-not-allowed opacity-15 "
             : "opacity-100 cursor-pointer hover:opacity-70 "
         }`}
+        onClick={() => clickHandler(true)}
       >
         დავალების გაცემა
       </button>
