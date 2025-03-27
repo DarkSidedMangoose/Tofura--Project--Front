@@ -1,6 +1,8 @@
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import createConnection from "../../../signal/CreateConnection";
+import { HubConnection } from "@microsoft/signalr";
 
 interface UserPass {
   username: string;
@@ -19,7 +21,10 @@ export const handleChange = (
 export const handleSubmit = (
   e: React.FormEvent<HTMLFormElement>,
   navigate: ReturnType<typeof useNavigate>,
-  userPass: UserPass
+  userPass: UserPass,
+  setSignalRConnection: React.Dispatch<
+    React.SetStateAction<HubConnection | null>
+  >
 ) => {
   const verifyAuthentification = async (userPass: UserPass) => {
     try {
@@ -31,6 +36,12 @@ export const handleSubmit = (
         }
       );
       console.log("authentification succesfull:", response.data);
+      const connection = createConnection();
+      connection
+        .start()
+        .then(() => console.log("SignalR connection established"))
+        .catch((err) => console.error("SignalR connection error:", err));
+      setSignalRConnection(connection);
       navigate("/main");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {

@@ -27,35 +27,44 @@ const MainMainMainSectionMain: React.FC = () => {
   const isIdentifierInspetObject = useSelector(
     (state: RootState) => state.inspectObjectIdentifier.data
   );
+  const [isIdentifierObjectState, setIsIdentifierObject] = useState<string>(
+    isIdentifierInspetObject
+  );
   const [selected, setSelected] = useState<number>(-1);
   const [btnClicked, setBtnClicked] = useState<boolean>(false);
   const [state, setState] = useState<states[] | []>([]);
 
   useEffect(() => {
-    const takeTasksFromDb = async (arg: string) => {
-      try {
-        const response = await axios.get(
-          `https://localhost:7205/api/tasks/${arg}`,
-          {
-            withCredentials: true,
-          }
-        );
-        setState(response.data);
-      } catch (err) {
-        console.log(err);
+    if (btnClicked === false) {
+      const takeTasksFromDb = async (arg: string) => {
+        try {
+          const response = await axios.get(
+            `https://localhost:7205/api/tasks/${arg}`,
+            {
+              withCredentials: true,
+            }
+          );
+          setState([]);
+          setState(response.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      if (isIdentifierObjectState === "მიმდინარე დავალებები") {
+        takeTasksFromDb("onGoing");
+      } else if (isIdentifierObjectState === "გაცემული დავალებები") {
+        takeTasksFromDb("onPending");
+      } else if (isIdentifierObjectState === "დასადასტურებელი დავალებები") {
+        takeTasksFromDb("pendingApproval");
+      } else if (isIdentifierObjectState === "დასრულების მოთხოვნები") {
+        takeTasksFromDb("waitApproval");
       }
-    };
-    if (isIdentifierInspetObject === "მიმდინარე დავალებები") {
-      takeTasksFromDb("onGoing");
-    } else if (isIdentifierInspetObject === "გაცემული დავალებები") {
-      takeTasksFromDb("onPending");
-    } else if (isIdentifierInspetObject === "დასადასტურებელი დავალებები") {
-      takeTasksFromDb("pendingApproval");
-    } else if (isIdentifierInspetObject === "დასრულების მოთხოვნები") {
-      takeTasksFromDb("waitApproval");
     }
-  }, [isIdentifierInspetObject]);
+  }, [isIdentifierObjectState, btnClicked]);
 
+  useEffect(() => {
+    setIsIdentifierObject(isIdentifierInspetObject);
+  }, [isIdentifierInspetObject]);
   const handleRowClick = (index: number) => {
     if (selected !== index) {
       setSelected(index);
@@ -91,7 +100,9 @@ const MainMainMainSectionMain: React.FC = () => {
         </section>
       )}
 
-      {btnClicked && <GiveTask setClick={handleSetClickedOnButton} />}
+      {btnClicked && (
+        <GiveTask setClick={handleSetClickedOnButton} id={state[selected].id} />
+      )}
     </div>
   );
 };
