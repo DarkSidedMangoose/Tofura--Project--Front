@@ -1,13 +1,13 @@
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import createConnection from "../../../signal/CreateConnection";
-import { HubConnection } from "@microsoft/signalr";
 
 interface UserPass {
   username: string;
   password: string;
 }
+
+const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
 export const handleChange = (
   e: React.ChangeEvent<HTMLInputElement>,
@@ -18,42 +18,35 @@ export const handleChange = (
   setUserPass({ ...UserPass, [name]: value });
 };
 
-export const handleSubmit = (
+// Authentication Service
+const authenticateUser = async (userPass: UserPass): Promise<any> => {
+  const response = await axios.post(`${apiUrl}/auth/login`, userPass, {
+    withCredentials: true,
+  });
+  return response.data;
+};
+
+// Handle Submit Refactor
+export const handleSubmit = async (
   e: React.FormEvent<HTMLFormElement>,
   navigate: ReturnType<typeof useNavigate>,
-  userPass: UserPass,
-  setSignalRConnection: React.Dispatch<
-    React.SetStateAction<HubConnection | null>
-  >
+  userPass: UserPass
 ) => {
-  const verifyAuthentification = async (userPass: UserPass) => {
-    try {
-      const response = await axios.post(
-        "https://localhost:7205/api/auth/login",
-        userPass,
-        {
-          withCredentials: true, // Ensures cookies are included
-        }
-      );
-      console.log("authentification succesfull:", response.data);
-      const connection = createConnection();
-      connection
-        .start()
-        .then(() => console.log("SignalR connection established"))
-        .catch((err) => console.error("SignalR connection error:", err));
-      setSignalRConnection(connection);
-      navigate("/main");
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        // If error is an AxiosError
-        console.error("Axios Error:", error.response?.data || error.message);
-      } else {
-        // For non-Axios errors
-        console.error("Unexpected Error:", (error as Error).message);
-      }
-    }
-  };
-  verifyAuthentification(userPass);
+  e.preventDefault(); // Ensure this happens first
 
-  e.preventDefault();
+  try {
+    const userData = await authenticateUser(userPass);
+    console.log("Authentication successful:", userData);
+
+    // const connection = await initializeSignalRConnection();
+    // setSignalRConnection(connection);
+
+    navigate("/main");
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error("Axios Error:", error.response?.data || error.message);
+    } else {
+      console.error("Unexpected Error:", (error as Error).message);
+    }
+  }
 };

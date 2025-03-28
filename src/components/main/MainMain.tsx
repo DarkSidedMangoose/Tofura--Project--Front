@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import { MainMainMainSection } from "./subComponents/main/MainMainMainSection";
 import "./MainAnimations.css";
 import { MainLoading } from "./subComponents/main/MainLoading";

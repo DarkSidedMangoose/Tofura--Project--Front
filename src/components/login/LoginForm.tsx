@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import User from "../../assets/images/login/user.png";
 import Password from "../../assets/images/login/password.png";
 import Enter from "../../assets/images/login/login.png";
@@ -7,7 +7,6 @@ import MainLogoCenter from "../../assets/images/login/mainLogoCenter.png";
 import { handleChange } from "./loginSubComponents/LoginFunctions";
 import { handleSubmit } from "./loginSubComponents/LoginFunctions";
 import "./LoginAnimations.css";
-import { HubConnection } from "@microsoft/signalr";
 
 interface UserPass {
   username: string;
@@ -16,8 +15,7 @@ interface UserPass {
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
-  const [signalRConnection, setSignalRConnection] =
-    useState<HubConnection | null>(null);
+
   const [userPass, setUserPass] = useState<UserPass>({
     username: "",
     password: "",
@@ -25,9 +23,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <form
-      onSubmit={(e) =>
-        handleSubmit(e, navigate, userPass, setSignalRConnection)
-      }
+      onSubmit={(e) => handleSubmit(e, navigate, userPass)}
       className="z-10 opacity-95"
     >
       <div className="flex flex-col w-400px h-400px justify-center items-center bg-gray-800 gap-2 relative shadow-lg shadow-black stroke-black rounded-lg">

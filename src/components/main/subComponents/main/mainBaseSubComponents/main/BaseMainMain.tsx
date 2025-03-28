@@ -7,6 +7,7 @@ import { AppDispatch, RootState } from "../../../../../../redux/store";
 import { setChoose } from "../../../../../../redux/reducers/BasesChoosedOption";
 import axios from "axios";
 import GiveTask from "../subComponents/GiveTask";
+import { useSignalR } from "../../../../../../contextApis/ContextSignalR";
 
 interface states {
   id: string;
@@ -19,6 +20,7 @@ interface states {
   riskLevel: string;
 }
 
+const apiUrl = process.env.REACT_APP_API_BASE_URL;
 const MainMainMainSectionMain: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const isOption = useSelector(
@@ -27,6 +29,8 @@ const MainMainMainSectionMain: React.FC = () => {
   const isIdentifierInspetObject = useSelector(
     (state: RootState) => state.inspectObjectIdentifier.data
   );
+  const { user, message } = useSignalR();
+
   const [isIdentifierObjectState, setIsIdentifierObject] = useState<string>(
     isIdentifierInspetObject
   );
@@ -38,12 +42,9 @@ const MainMainMainSectionMain: React.FC = () => {
     if (btnClicked === false) {
       const takeTasksFromDb = async (arg: string) => {
         try {
-          const response = await axios.get(
-            `https://localhost:7205/api/tasks/${arg}`,
-            {
-              withCredentials: true,
-            }
-          );
+          const response = await axios.get(`${apiUrl}/tasks/${arg}`, {
+            withCredentials: true,
+          });
           setState([]);
           setState(response.data);
         } catch (err) {
@@ -60,7 +61,7 @@ const MainMainMainSectionMain: React.FC = () => {
         takeTasksFromDb("waitApproval");
       }
     }
-  }, [isIdentifierObjectState, btnClicked]);
+  }, [isIdentifierObjectState, btnClicked, user, message]);
 
   useEffect(() => {
     setIsIdentifierObject(isIdentifierInspetObject);

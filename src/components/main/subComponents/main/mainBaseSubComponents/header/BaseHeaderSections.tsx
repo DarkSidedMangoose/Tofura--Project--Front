@@ -37,9 +37,7 @@ export const MainMainHeaderSecondSection: React.FC = memo(() => {
   const isIdentifier = useSelector(
     (state: RootState) => state.inspectObjectIdentifier.data
   );
-  useEffect(() => {
-    console.log(isIdentifier);
-  }, [isIdentifier]);
+
   return (
     <Fragment>
       {isOption === "ინსპექტირების ობიექტები" && (

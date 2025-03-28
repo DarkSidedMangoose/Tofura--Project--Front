@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
 import { setAdditionalInfoOption } from "../../redux/reducers/AdditionalDropdownOption";
 import { setLoadingTrue } from "../../redux/reducers/LoadingScreen";
+import Leave from "../../assets/images/main/leave.png";
 
 export interface mainSidebarProps {
   setIsActive: (isActive: boolean) => void;
@@ -108,12 +109,12 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
 
   return (
     <div className="w-[5.6%] min-w-[83px]">
-      <div className="flex w-[5%] min-w-[80.5px] h-90% min-h-[600px] fixed z-[52]">
+      <div className="flex w-[5%] min-w-[80.5px] h-90% min-h-[600px] fixed z-[52] ">
         <aside
           className={`z-10 w-full h-full bg-sidebarChoose flex flex-col items-center shadow-bottom-right`}
         >
           <img src={MainLogo} className="w-[70%] mt-[30%]" alt="logo"></img>
-          <nav className="w-[60%] h-[30%] mt-[40%]">
+          <nav className="w-[60%] h-[40%] mt-[40%]">
             <NavItem
               icon={Base}
               alt="Base"
@@ -132,6 +133,7 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
               NavIsActive={sidebarStateIdentifier === "profile"}
               onClick={createClickHandler("profile")}
             />
+            <NavItem icon={Leave} alt="leave" />
           </nav>
         </aside>
       </div>

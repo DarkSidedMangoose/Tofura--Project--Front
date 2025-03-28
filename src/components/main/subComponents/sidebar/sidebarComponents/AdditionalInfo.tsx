@@ -21,9 +21,7 @@ export const AdditionalInfo: React.FC<AdditionalInfoOfBaseProps> = ({
   setIsActive,
 }) => {
   const { SidebarMouseEnterIdentifier } = useSidebarMouseEnterProvider();
-  useEffect(() => {
-    console.log(SidebarMouseEnterIdentifier);
-  }, [SidebarMouseEnterIdentifier]);
+
   return (
     <div
       className={`z-[51] ${

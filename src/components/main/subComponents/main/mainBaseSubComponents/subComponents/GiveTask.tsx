@@ -8,6 +8,8 @@ interface usersInterface {
   id: string;
 }
 
+const apiUrl = process.env.REACT_APP_API_BASE_URL;
+
 const GiveTask: React.FC<{ setClick: (arg: boolean) => void; id: string }> = ({
   setClick,
   id,
@@ -22,12 +24,9 @@ const GiveTask: React.FC<{ setClick: (arg: boolean) => void; id: string }> = ({
   useEffect(() => {
     const takeSpecificUsersFromDb = async () => {
       try {
-        const response = await axios.get(
-          "https://localhost:7205/api/tasks/getUsersForTasks",
-          {
-            withCredentials: true,
-          }
-        );
+        const response = await axios.get(`${apiUrl}/tasks/getUsersForTasks`, {
+          withCredentials: true,
+        });
         setUsers(response.data);
       } catch (err) {
         console.log(`There is an error: ${err}`);
@@ -47,19 +46,13 @@ const GiveTask: React.FC<{ setClick: (arg: boolean) => void; id: string }> = ({
       setClickedIdentifier(-1);
     }
   };
-  useEffect(() => {
-    console.log(sentTasksIdentifiers);
-  }, [sentTasksIdentifiers]);
+  useEffect(() => {}, [sentTasksIdentifiers]);
   const handleGiveTask = useCallback(() => {
     const SendTask = async () => {
       try {
-        await axios.put(
-          "https://localhost:7205/api/tasks/giveTask",
-          sentTasksIdentifiers,
-          {
-            withCredentials: true,
-          }
-        );
+        await axios.put(`${apiUrl}/tasks/giveTask`, sentTasksIdentifiers, {
+          withCredentials: true,
+        });
         handleClick();
       } catch (err) {
         console.log(err);

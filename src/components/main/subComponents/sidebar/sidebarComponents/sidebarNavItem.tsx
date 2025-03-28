@@ -4,7 +4,7 @@ import React, { memo } from "react";
 export interface NavItemProps {
   icon: string;
   alt: string;
-  NavIsActive: boolean;
+  NavIsActive?: boolean;
   onClick?: () => void;
   onMouseEnter?: (arg: string) => void;
 }
