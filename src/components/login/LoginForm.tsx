@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import User from "../../assets/images/login/user.png";
 import Password from "../../assets/images/login/password.png";
 import Enter from "../../assets/images/login/login.png";
@@ -15,6 +15,10 @@ interface UserPass {
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
+  useEffect(() => {
+    console.log("Login component mounted");
+    // Initialization code
+  }, []);
 
   const [userPass, setUserPass] = useState<UserPass>({
     username: "",

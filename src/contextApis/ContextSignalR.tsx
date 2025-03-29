@@ -10,7 +10,6 @@ import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 // Define the SignalR context type
 interface SignalRContextType {
   connection: HubConnection | null;
-  user: string;
   message: string;
 }
 
@@ -27,7 +26,6 @@ export const SignalRProvider = ({
 
   const connectionRef = useRef<HubConnection | null>(null); // Persistent connection reference
 
-  const [user, setUser] = useState<string>(""); // State for user
   const [message, setMessage] = useState<string>(""); // State for message
 
   // Function to create the SignalR connection and handle events
@@ -41,14 +39,10 @@ export const SignalRProvider = ({
         .build();
 
       // Attach the "ReceiveData" handler
-      connectionRef.current.on(
-        "ReceiveData",
-        (receivedUser: string, receivedMessage: string) => {
-          console.log("updated user:", receivedUser);
-          setUser(receivedUser); // Update the user state
-          setMessage(receivedMessage); // Update the message state
-        }
-      );
+      connectionRef.current.on("ReceiveData", (receivedMessage: string) => {
+        console.log(receivedMessage);
+        setMessage(receivedMessage); // Update the message state
+      });
     }
     return connectionRef.current;
   };
@@ -75,15 +69,9 @@ export const SignalRProvider = ({
     };
   }, []); // Dependency array ensures this runs only once
 
-  useEffect(() => {
-    // Debugging: Log user and message updates
-    console.log("User:", user);
-    console.log("Message:", message);
-  }, [user, message]);
-
   return (
     <SignalRContext.Provider
-      value={{ connection: connectionRef.current, user, message }}
+      value={{ connection: connectionRef.current, message }}
     >
       {children}
     </SignalRContext.Provider>
@@ -98,3 +86,4 @@ export const useSignalR = () => {
   }
   return context;
 };
+export {};

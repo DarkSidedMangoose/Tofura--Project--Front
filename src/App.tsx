@@ -10,7 +10,9 @@ const App: React.FC = () => {
   return (
     <div className="w-full h-full bg-loginBackground ">
       <Provider store={store}>
-        <BrowserRouter>
+        <BrowserRouter
+          future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+        >
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/main" element={<Main />} />

@@ -29,7 +29,17 @@ const MainMainMainSectionMain: React.FC = () => {
   const isIdentifierInspetObject = useSelector(
     (state: RootState) => state.inspectObjectIdentifier.data
   );
-  const { user, message } = useSignalR();
+  const { message } = useSignalR();
+  const [signalMessage, setSignalMessage] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (message.startsWith("Update database")) {
+      // Your logic here
+      setSignalMessage(!signalMessage);
+    }
+  }, [message]);
+
+  useEffect(() => {}, [setSignalMessage]);
 
   const [isIdentifierObjectState, setIsIdentifierObject] = useState<string>(
     isIdentifierInspetObject
@@ -61,7 +71,7 @@ const MainMainMainSectionMain: React.FC = () => {
         takeTasksFromDb("waitApproval");
       }
     }
-  }, [isIdentifierObjectState, btnClicked, user, message]);
+  }, [isIdentifierObjectState, btnClicked, signalMessage]);
 
   useEffect(() => {
     setIsIdentifierObject(isIdentifierInspetObject);
