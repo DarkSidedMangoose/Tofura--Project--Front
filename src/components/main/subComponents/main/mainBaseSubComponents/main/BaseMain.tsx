@@ -1,7 +1,6 @@
 import React from "react";
 import MainMainMainSectionHeader from "./BaseMainHeader";
 import MainMainMainSectionMain from "./BaseMainMain";
-import ContextAuthenticatedUserInfo from "../../../../../../contextApis/ContextAuthenticatedUserInfo";
 
 export const BaseMain: React.FC = () => {
   return (
@@ -9,10 +8,9 @@ export const BaseMain: React.FC = () => {
       <div
         className={`h-[90%]  w-[98%] flex items-center flex-col bg-white rounded-br-lg rounded-lg shadow-boxShadow`}
       >
-        <ContextAuthenticatedUserInfo>
-          <MainMainMainSectionHeader />
-          <MainMainMainSectionMain />
-        </ContextAuthenticatedUserInfo>
+        <MainMainMainSectionHeader />
+        <MainMainMainSectionMain />
+
         <footer className="r"></footer>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React, { Fragment, useCallback, useEffect } from "react";
 import { UseContextAuthenticatedUserInfo } from "../../../../../../contextApis/ContextAuthenticatedUserInfo";
+import axios from "axios";
 
 export const InspectMainButs: React.FC<{
   selected: Number;
@@ -15,7 +16,27 @@ export const InspectMainButs: React.FC<{
     },
     [setClicked]
   );
+  const handleEndTask = useCallback(() => {
+    const checkFuntion = async () => {
+      try {
+        await axios.put(
+          "https://localhost:7205/api/tasks/endTask",
 
+          {
+            taskId: "67e0844bf7057b99cd3ee584",
+          },
+
+          {
+            withCredentials: true,
+          }
+        );
+        console.log("s");
+      } catch (error) {
+        console.error("Error ending task:", error);
+      }
+    };
+    checkFuntion();
+  }, []);
   return (
     <Fragment>
       {authenticatedUserInfo.level !== 1 && (
@@ -38,6 +59,7 @@ export const InspectMainButs: React.FC<{
             ? "cursor-not-allowed opacity-15 "
             : "opacity-100 cursor-pointer hover:opacity-70  "
         }`}
+        onClick={() => handleEndTask()}
       >
         დავალების დასრულება
       </button>

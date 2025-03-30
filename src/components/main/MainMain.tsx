@@ -6,6 +6,7 @@ import { MainMainHeaderSections } from "./subComponents/main/MainMainHeaderSecti
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 // import { useMainLoading } from "../../contextApis/ContextLoading";
+import ContextAuthenticatedUserInfo from "../../contextApis/ContextAuthenticatedUserInfo";
 
 const MainMain: React.FC = () => {
   const isLoading = useSelector((state: RootState) => state.LoadingScreen.data);
@@ -18,8 +19,10 @@ const MainMain: React.FC = () => {
       <div className="w-[98%] h-full  rounded-bl-lg rounded-br-lg  flex items-center flex-col ">
         {!isLoading ? (
           <Fragment>
-            <MainMainHeaderSections />
-            <MainMainMainSection />
+            <ContextAuthenticatedUserInfo>
+              <MainMainHeaderSections />
+              <MainMainMainSection />
+            </ContextAuthenticatedUserInfo>
           </Fragment>
         ) : null}
       </div>

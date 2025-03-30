@@ -1,4 +1,4 @@
-import React, { Fragment, memo, useEffect } from "react";
+import React, { Fragment, memo } from "react";
 import "./BaseHeaderSections.css";
 import {
   BaseHistoryButton,
@@ -13,6 +13,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../../redux/store";
 import { setInspectBaseIdentifier } from "../../../../../../redux/reducers/InspectObjectIdentifierState";
+import { UseContextAuthenticatedUserInfo } from "../../../../../../contextApis/ContextAuthenticatedUserInfo";
 // import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
 
 export const MainMainHeaderFirstSection: React.FC = memo(() => {
@@ -26,6 +27,8 @@ export const MainMainHeaderFirstSection: React.FC = memo(() => {
 });
 
 export const MainMainHeaderSecondSection: React.FC = memo(() => {
+  const { authenticatedUserInfo } = UseContextAuthenticatedUserInfo();
+
   const dispatch: AppDispatch = useDispatch();
 
   const clickHandler = (arg: string) => {
@@ -51,18 +54,22 @@ export const MainMainHeaderSecondSection: React.FC = memo(() => {
             >
               მიმდინარე დავალებები
             </option>
-            <option
-              value="გაცემული დავალებები"
-              className="bg-white text-sidebarChoose"
-            >
-              გაცემული დავალებები
-            </option>
-            <option
-              value="დასადასტურებელი დავალებები"
-              className="bg-white text-sidebarChoose"
-            >
-              დასადასტურებელი დავალებები
-            </option>
+            {authenticatedUserInfo.level !== 1 && (
+              <Fragment>
+                <option
+                  value="გაცემული დავალებები"
+                  className="bg-white text-sidebarChoose"
+                >
+                  გაცემული დავალებები
+                </option>
+                <option
+                  value="დასადასტურებელი დავალებები"
+                  className="bg-white text-sidebarChoose"
+                >
+                  დასადასტურებელი დავალებები
+                </option>
+              </Fragment>
+            )}
             <option
               value="დასრულების მოთხოვნები"
               className="bg-white text-sidebarChoose"
