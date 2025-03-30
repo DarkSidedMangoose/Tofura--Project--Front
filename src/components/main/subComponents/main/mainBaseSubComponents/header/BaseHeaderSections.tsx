@@ -34,9 +34,6 @@ export const MainMainHeaderSecondSection: React.FC = memo(() => {
   const isOption = useSelector(
     (state: RootState) => state.AdditionalInfoOption.data
   );
-  const isIdentifier = useSelector(
-    (state: RootState) => state.inspectObjectIdentifier.data
-  );
 
   return (
     <Fragment>

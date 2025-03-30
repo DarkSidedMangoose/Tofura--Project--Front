@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 // import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
 import "../../../../Scrollbar.css";
-import { InspectMainButs } from "../btns/BaseMainHeaderBtns";
+import { InspectMainButs } from "../btns/BaseMainMainBtns";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../../redux/store";
 import { setChoose } from "../../../../../../redux/reducers/BasesChoosedOption";
@@ -20,7 +20,13 @@ interface states {
   riskLevel: string;
 }
 
+interface userInfo {
+  id: string;
+  fullname: string;
+  level: number;
+}
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
+
 const MainMainMainSectionMain: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const isOption = useSelector(
@@ -34,7 +40,6 @@ const MainMainMainSectionMain: React.FC = () => {
 
   useEffect(() => {
     if (message.startsWith("Update database")) {
-      // Your logic here
       setSignalMessage(!signalMessage);
     }
   }, [message]);
