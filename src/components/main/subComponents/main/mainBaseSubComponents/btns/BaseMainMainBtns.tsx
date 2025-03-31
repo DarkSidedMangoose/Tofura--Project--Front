@@ -1,42 +1,42 @@
 import React, { Fragment, useCallback, useEffect } from "react";
 import { UseContextAuthenticatedUserInfo } from "../../../../../../contextApis/ContextAuthenticatedUserInfo";
-import axios from "axios";
 
 export const InspectMainButs: React.FC<{
   selected: Number;
   clicked: boolean;
-  setClicked: (arg: boolean) => void;
-}> = ({ selected, clicked, setClicked }) => {
+  setClickedOnSent: (arg: boolean) => void;
+  setClickedOnEnd: () => void;
+}> = ({ selected, clicked, setClickedOnSent, setClickedOnEnd }) => {
   const { authenticatedUserInfo } = UseContextAuthenticatedUserInfo();
 
   useEffect(() => {}, []);
-  const clickHandler = useCallback(
-    (arg: boolean) => {
-      setClicked(arg);
-    },
-    [setClicked]
-  );
+  const handleSentTask = useCallback(() => {
+    setClickedOnSent(true);
+  }, [setClickedOnSent]);
   const handleEndTask = useCallback(() => {
-    const checkFuntion = async () => {
-      try {
-        await axios.put(
-          "https://localhost:7205/api/tasks/endTask",
+    setClickedOnEnd();
+  }, [setClickedOnEnd]);
+  // const handleEndTask = useCallback(() => {
+  //   const checkFuntion = async () => {
+  //     try {
+  //       await axios.put(
+  //         "https://localhost:7205/api/tasks/endTask",
 
-          {
-            taskId: "67e0844bf7057b99cd3ee584",
-          },
+  //         {
+  //           taskId: "67e0844bf7057b99cd3ee584",
+  //         },
 
-          {
-            withCredentials: true,
-          }
-        );
-        console.log("s");
-      } catch (error) {
-        console.error("Error ending task:", error);
-      }
-    };
-    checkFuntion();
-  }, []);
+  //         {
+  //           withCredentials: true,
+  //         }
+  //       );
+  //       console.log("s");
+  //     } catch (error) {
+  //       console.error("Error ending task:", error);
+  //     }
+  //   };
+  //   checkFuntion();
+  // }, []);
   return (
     <Fragment>
       {authenticatedUserInfo.level !== 1 && (
@@ -47,7 +47,7 @@ export const InspectMainButs: React.FC<{
               ? "cursor-not-allowed opacity-15 "
               : "opacity-100 cursor-pointer hover:opacity-70 "
           }`}
-          onClick={() => clickHandler(true)}
+          onClick={() => handleSentTask()}
         >
           დავალების გაცემა
         </button>

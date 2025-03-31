@@ -20,11 +20,6 @@ interface states {
   riskLevel: string;
 }
 
-interface userInfo {
-  id: string;
-  fullname: string;
-  level: number;
-}
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
 const MainMainMainSectionMain: React.FC = () => {
@@ -50,11 +45,11 @@ const MainMainMainSectionMain: React.FC = () => {
     isIdentifierInspetObject
   );
   const [selected, setSelected] = useState<number>(-1);
-  const [btnClicked, setBtnClicked] = useState<boolean>(false);
+  const [sentBtnClicked, setSentBtnClicked] = useState<boolean>(false);
   const [state, setState] = useState<states[] | []>([]);
 
   useEffect(() => {
-    if (btnClicked === false) {
+    if (sentBtnClicked === false) {
       const takeTasksFromDb = async (arg: string) => {
         try {
           const response = await axios.get(`${apiUrl}/tasks/${arg}`, {
@@ -72,11 +67,13 @@ const MainMainMainSectionMain: React.FC = () => {
         takeTasksFromDb("onPending");
       } else if (isIdentifierObjectState === "დასადასტურებელი დავალებები") {
         takeTasksFromDb("pendingApproval");
-      } else if (isIdentifierObjectState === "დასრულების მოთხოვნები") {
+      } else if (
+        isIdentifierObjectState === "გაგზავნილი დასრულების მოთხოვნები"
+      ) {
         takeTasksFromDb("waitApproval");
       }
     }
-  }, [isIdentifierObjectState, btnClicked, signalMessage]);
+  }, [isIdentifierObjectState, sentBtnClicked, signalMessage]);
 
   useEffect(() => {
     setIsIdentifierObject(isIdentifierInspetObject);
@@ -90,9 +87,31 @@ const MainMainMainSectionMain: React.FC = () => {
       dispatch(setChoose(false));
     }
   };
-  const handleSetClickedOnButton = useCallback((arg: boolean) => {
-    setBtnClicked(arg);
+  const handleSetSentButton = useCallback((arg: boolean) => {
+    setSentBtnClicked(arg);
   }, []);
+  const handleEndTask = useCallback(() => {
+    console.log(state[selected].id);
+    const checkFuntion = async () => {
+      try {
+        await axios.put(
+          "https://localhost:7205/api/tasks/endTask",
+
+          {
+            taskId: state[selected].id,
+          },
+
+          {
+            withCredentials: true,
+          }
+        );
+        setState((prev) => prev.filter((_, index) => index !== selected));
+      } catch (error) {
+        console.error("Error ending task:", error);
+      }
+    };
+    checkFuntion();
+  }, [selected, state]);
   return (
     <div className="w-full h-90% flex flex-col justify-start items-center">
       <div className="mt-[0.3%] h-70% w-full grid grid-rows-5 gap-[1%]">
@@ -109,15 +128,16 @@ const MainMainMainSectionMain: React.FC = () => {
       {isOption === "ინსპექტირების ობიექტები" && (
         <section className="w-98% h-[29.7%] flex justify-end gap-[1%] items-center">
           <InspectMainButs
+            setClickedOnEnd={handleEndTask}
             selected={selected}
-            clicked={btnClicked}
-            setClicked={handleSetClickedOnButton}
+            clicked={sentBtnClicked}
+            setClickedOnSent={handleSetSentButton}
           />
         </section>
       )}
 
-      {btnClicked && (
-        <GiveTask setClick={handleSetClickedOnButton} id={state[selected].id} />
+      {sentBtnClicked && (
+        <GiveTask setClick={handleSetSentButton} id={state[selected].id} />
       )}
     </div>
   );

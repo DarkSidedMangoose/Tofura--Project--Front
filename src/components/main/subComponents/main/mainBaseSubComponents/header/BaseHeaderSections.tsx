@@ -66,15 +66,15 @@ export const MainMainHeaderSecondSection: React.FC = memo(() => {
                   value="დასადასტურებელი დავალებები"
                   className="bg-white text-sidebarChoose"
                 >
-                  დასადასტურებელი დავალებები
+                  გაგზავნილი დასადასტურებელი დავალებები
                 </option>
               </Fragment>
             )}
             <option
-              value="დასრულების მოთხოვნები"
+              value="გაგზავნილი დასრულების მოთხოვნები"
               className="bg-white text-sidebarChoose"
             >
-              დასრულების მოთხოვნები
+              გაგზავნილი დასრულების მოთხოვნები
             </option>
           </select>
           {/* <button
