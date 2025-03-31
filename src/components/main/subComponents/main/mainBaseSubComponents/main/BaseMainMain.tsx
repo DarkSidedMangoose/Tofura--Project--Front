@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-// import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
 import "../../../../Scrollbar.css";
 import { InspectMainButs } from "../btns/BaseMainMainBtns";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,8 +37,6 @@ const MainMainMainSectionMain: React.FC = () => {
       setSignalMessage(!signalMessage);
     }
   }, [message]);
-
-  useEffect(() => {}, [setSignalMessage]);
 
   const [isIdentifierObjectState, setIsIdentifierObject] = useState<string>(
     isIdentifierInspetObject
@@ -112,6 +109,27 @@ const MainMainMainSectionMain: React.FC = () => {
     };
     checkFuntion();
   }, [selected, state]);
+
+  const handleClickDeclinedButton = useCallback(() => {
+    const DeclinedRequest = async () => {
+      try {
+        await axios.put(
+          `${apiUrl}/tasks/declineTask`,
+          {
+            taskId: state[selected].id,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        console.log("declined sent succesfully to the server");
+        setState((prev) => prev.filter((_, index) => index !== selected));
+      } catch (error) {
+        console.error("Error declining task:", error);
+      }
+    };
+    DeclinedRequest();
+  }, [state, selected]);
   return (
     <div className="w-full h-90% flex flex-col justify-start items-center">
       <div className="mt-[0.3%] h-70% w-full grid grid-rows-5 gap-[1%]">
@@ -131,7 +149,9 @@ const MainMainMainSectionMain: React.FC = () => {
             setClickedOnEnd={handleEndTask}
             selected={selected}
             clicked={sentBtnClicked}
+            baseIdentifier={isIdentifierObjectState}
             setClickedOnSent={handleSetSentButton}
+            setClickedOnDeclined={handleClickDeclinedButton}
           />
         </section>
       )}

@@ -4,9 +4,18 @@ import { UseContextAuthenticatedUserInfo } from "../../../../../../contextApis/C
 export const InspectMainButs: React.FC<{
   selected: Number;
   clicked: boolean;
+  baseIdentifier: string;
   setClickedOnSent: (arg: boolean) => void;
   setClickedOnEnd: () => void;
-}> = ({ selected, clicked, setClickedOnSent, setClickedOnEnd }) => {
+  setClickedOnDeclined: () => void;
+}> = ({
+  selected,
+  clicked,
+  setClickedOnSent,
+  setClickedOnEnd,
+  setClickedOnDeclined,
+  baseIdentifier,
+}) => {
   const { authenticatedUserInfo } = UseContextAuthenticatedUserInfo();
 
   useEffect(() => {}, []);
@@ -16,53 +25,48 @@ export const InspectMainButs: React.FC<{
   const handleEndTask = useCallback(() => {
     setClickedOnEnd();
   }, [setClickedOnEnd]);
-  // const handleEndTask = useCallback(() => {
-  //   const checkFuntion = async () => {
-  //     try {
-  //       await axios.put(
-  //         "https://localhost:7205/api/tasks/endTask",
-
-  //         {
-  //           taskId: "67e0844bf7057b99cd3ee584",
-  //         },
-
-  //         {
-  //           withCredentials: true,
-  //         }
-  //       );
-  //       console.log("s");
-  //     } catch (error) {
-  //       console.error("Error ending task:", error);
-  //     }
-  //   };
-  //   checkFuntion();
-  // }, []);
+  const handleDeclineTask = useCallback(() => {
+    setClickedOnDeclined();
+  }, [setClickedOnDeclined]);
   return (
     <Fragment>
-      {authenticatedUserInfo.level !== 1 && (
-        <button
-          style={{ transition: "0.3s ease-in-out" }}
-          className={`w-auto p-[10px] h-1/4 min-h-[45px]  rounded-lg shadow-bottom-right bg-[#05052c] text-white ${
-            selected === -1
-              ? "cursor-not-allowed opacity-15 "
-              : "opacity-100 cursor-pointer hover:opacity-70 "
-          }`}
-          onClick={() => handleSentTask()}
-        >
-          დავალების გაცემა
-        </button>
+      {baseIdentifier === "გაცემული დავალებები" ||
+      baseIdentifier === "გაგზავნილი დასრულების მოთხოვნები" ? (
+        <Fragment></Fragment>
+      ) : (
+        <Fragment>
+          {authenticatedUserInfo.level !== 1 && (
+            <button
+              style={{ transition: "0.3s ease-in-out" }}
+              className={`w-auto p-[10px] h-1/4 min-h-[45px]  rounded-lg shadow-bottom-right bg-[#05052c] text-white ${
+                selected === -1
+                  ? "cursor-not-allowed opacity-15 "
+                  : "opacity-100 cursor-pointer hover:opacity-70 "
+              }`}
+              onClick={() =>
+                baseIdentifier === "მიმდინარე დავალებები"
+                  ? handleSentTask()
+                  : handleDeclineTask()
+              }
+            >
+              {baseIdentifier === "მიმდინარე დავალებები"
+                ? "დავალების გაგზავნა"
+                : "დავალების უარყოფა"}
+            </button>
+          )}
+          <button
+            style={{ transition: "0.3s ease-in-out" }}
+            className={`w-auto p-[10px] h-1/4 min-h-[45px] rounded-lg shadow-bottom-right bg-[#05052c] text-white ${
+              selected === -1
+                ? "cursor-not-allowed opacity-15 "
+                : "opacity-100 cursor-pointer hover:opacity-70  "
+            }`}
+            onClick={() => handleEndTask()}
+          >
+            დავალების დასრულება
+          </button>
+        </Fragment>
       )}
-      <button
-        style={{ transition: "0.3s ease-in-out" }}
-        className={`w-auto p-[10px] h-1/4 min-h-[45px] rounded-lg shadow-bottom-right bg-[#05052c] text-white ${
-          selected === -1
-            ? "cursor-not-allowed opacity-15 "
-            : "opacity-100 cursor-pointer hover:opacity-70  "
-        }`}
-        onClick={() => handleEndTask()}
-      >
-        დავალების დასრულება
-      </button>
     </Fragment>
   );
 };
