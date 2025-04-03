@@ -1,14 +1,15 @@
-import React, { Fragment, memo, useCallback, useEffect, useState } from "react";
-import Search from "../../../../../../assets/images/main/search.png";
-import Filter from "../../../../../../assets/images/main/filter.png";
-import Sync from "../../../../../../assets/images/main/sync.png";
-import ScrollArrow from "../../../../../../assets/images/main/scrollArrows.png";
-import Plus from "../../../../../../assets/images/main/plus.png";
-import Review from "../../../../../../assets/images/main/review.png";
-import Archive from "../../../../../../assets/images/main/archive.png";
-import History from "../../../../../../assets/images/main/history.png";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../../../redux/store";
+import React, { Fragment, memo, useEffect, useState } from "react";
+import Search from "../../../../../../assets/images/main/search.webp";
+import Filter from "../../../../../../assets/images/main/filter.webp";
+import Sync from "../../../../../../assets/images/main/sync.webp";
+import ScrollArrow from "../../../../../../assets/images/main/scrollArrows.webp";
+import Plus from "../../../../../../assets/images/main/plus.webp";
+import Review from "../../../../../../assets/images/main/review.webp";
+import Archive from "../../../../../../assets/images/main/archive.webp";
+import History from "../../../../../../assets/images/main/history.webp";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../../../redux/store";
+import { setTaskLogInfo } from "../../../../../../redux/reducers/TaskLogsInfo";
 // import { useAdditionalOption } from "../../../../../../contextApis/ContextChooseFromAdditional";
 
 export const BaseSearchButton: React.FC = memo(() => {
@@ -101,7 +102,7 @@ export const BasePlusButton: React.FC = memo(() => {
   }, [isChoosed]);
 
   return (
-    <div className={` h-full w-[7%] min-w-[30px] z-50 relative`}>
+    <div className={` h-full w-[7%] min-w-[30px] z-30 relative`}>
       <button
         onClick={() => {
           if (isOption === "ინსპექტირების ობიექტები") {
@@ -162,10 +163,12 @@ export const BaseHistoryButton: React.FC = memo(() => {
   const isChoosed = useSelector(
     (state: RootState) => state.BasesChoosedOption.data
   );
+  const dispatch: AppDispatch = useDispatch();
 
   return (
     <Fragment>
       <button
+        onClick={() => dispatch(setTaskLogInfo(true))}
         style={{ transition: "0.3s ease-in-out" }}
         className={`${
           !isChoosed

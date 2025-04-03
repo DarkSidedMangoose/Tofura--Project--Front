@@ -43,7 +43,7 @@ const MonthlyCellDiagrams: React.FC = () => {
     setYearNd(Number(event.target.value));
   };
   return (
-    <section className="z-10 w-full h-full bg-white rounded-2xl flex flex-col">
+    <section className=" w-full h-full bg-white rounded-2xl flex flex-col">
       <header className="w-full h-[10%] text-sm flex flex-col items-end text-white font-bold">
         <article className="w-full h-full  rounded-tl-2xl rounded-tr-2xl bg-sidebarChoose flex items-center justify-center">
           <p>წლიური დიაგრამა თვეების მიხედვით</p>

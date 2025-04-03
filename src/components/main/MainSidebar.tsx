@@ -1,17 +1,16 @@
 import React, { useState, useCallback, useEffect } from "react";
-import MainLogo from "../../assets/images/main/fullLogo.png";
-import Base from "../../assets/images/main/base.png";
-import Dashboard from "../../assets/images/main/dashboard.png";
-import MyProfile from "../../assets/images/main/myProfile.png";
+import MainLogo from "../../assets/images/main/fullLogo.webp";
+import Base from "../../assets/images/main/base.webp";
+import Dashboard from "../../assets/images/main/dashboard.webp";
+import MyProfile from "../../assets/images/main/myProfile.webp";
 import "./MainAnimations.css";
 import { NavItem } from "./subComponents/sidebar/sidebarComponents/SidebarNavItem";
 import { handleSidebarClick } from "./subComponents/sidebar/SidebarFunctions";
 import { useSidebarMouseEnterProvider } from "../../contextApis/ContextMouseEnterIdentifier";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
-import { setAdditionalInfoOption } from "../../redux/reducers/AdditionalDropdownOption";
-import { setLoadingTrue } from "../../redux/reducers/LoadingScreen";
-import Leave from "../../assets/images/main/leave.png";
+
+import Leave from "../../assets/images/main/leave.webp";
 
 export interface mainSidebarProps {
   setIsActive: (isActive: boolean) => void;
@@ -31,11 +30,8 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
   const [sidebarStateIdentifier, setSidebarStateIdentifier] =
     useState<string>("base");
 
-  const setLoading = (data: boolean) => {
-    dispatch(setLoadingTrue(data));
-  };
   const setOption = (data: string) => {
-    dispatch(setAdditionalInfoOption(data));
+    // dispatch(setAdditionalInfoOption(data));
   };
 
   useEffect(() => {
@@ -101,7 +97,7 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
   const createClickHandler = useCallback(
     (identifier: string) => () => {
       toggleSidebar(identifier);
-      setLoading(true);
+      // setLoading(true);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -109,9 +105,9 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
 
   return (
     <div className="w-[5.6%] min-w-[83px]">
-      <div className="flex w-[5%] min-w-[80.5px] h-90% min-h-[600px] fixed z-[52] ">
+      <div className="flex w-[5%] min-w-[80.5px] h-90% min-h-[600px] fixed z-[40] ">
         <aside
-          className={`z-10 w-full h-full bg-sidebarChoose flex flex-col items-center shadow-bottom-right`}
+          className={` w-full h-full bg-sidebarChoose flex flex-col items-center shadow-bottom-right`}
         >
           <img src={MainLogo} className="w-[70%] mt-[30%]" alt="logo"></img>
           <nav className="w-[60%] h-[40%] mt-[40%]">

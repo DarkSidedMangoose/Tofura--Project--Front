@@ -7,6 +7,13 @@ import { setChoose } from "../../../../../../redux/reducers/BasesChoosedOption";
 import axios from "axios";
 import GiveTask from "../subComponents/GiveTask";
 import { useSignalR } from "../../../../../../contextApis/ContextSignalR";
+import { DataLogs } from "../subComponents/DataLogs";
+
+export interface DataLog {
+  timestamp: string;
+  addedBy: string;
+  description: string;
+}
 
 interface states {
   id: string;
@@ -17,6 +24,7 @@ interface states {
   turnover: string;
   jobType: string;
   riskLevel: string;
+  dataLogs: DataLog[];
 }
 
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
@@ -29,6 +37,8 @@ const MainMainMainSectionMain: React.FC = () => {
   const isIdentifierInspetObject = useSelector(
     (state: RootState) => state.inspectObjectIdentifier.data
   );
+
+  const dataLogsOn = useSelector((state: RootState) => state.TaskLogInfo.data);
   const { message } = useSignalR();
   const [signalMessage, setSignalMessage] = useState<boolean>(false);
 
@@ -46,6 +56,9 @@ const MainMainMainSectionMain: React.FC = () => {
   const [state, setState] = useState<states[] | []>([]);
 
   useEffect(() => {
+    console.log(state);
+  }, [state]);
+  useEffect(() => {
     if (sentBtnClicked === false) {
       const takeTasksFromDb = async (arg: string) => {
         try {
@@ -54,8 +67,13 @@ const MainMainMainSectionMain: React.FC = () => {
           });
           setState([]);
           setState(response.data);
-        } catch (err) {
-          console.log(err);
+        } catch (err: any) {
+          // Chek if the error is 401(unauthorized) and if it is then redirect to login page
+          if (err.response.status === 401) {
+            window.location.href = "/";
+          } else {
+            console.error("Error fetching tasks:", err);
+          }
         }
       };
       if (isIdentifierObjectState === "მიმდინარე დავალებები") {
@@ -159,6 +177,7 @@ const MainMainMainSectionMain: React.FC = () => {
       {sentBtnClicked && (
         <GiveTask setClick={handleSetSentButton} id={state[selected].id} />
       )}
+      {dataLogsOn && <DataLogs data={state[selected].dataLogs} />}
     </div>
   );
 };

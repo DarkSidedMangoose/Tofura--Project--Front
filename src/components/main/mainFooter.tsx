@@ -1,12 +1,12 @@
 import React, { memo } from "react";
 import "./MainAnimations.css";
-import iconNavigation from "../../assets/images/main/click.png";
-import phone from "../../assets/images/main/phone.png";
-import email from "../../assets/images/main/email.png";
+import iconNavigation from "../../assets/images/main/click.webp";
+import phone from "../../assets/images/main/phone.webp";
+import email from "../../assets/images/main/email.webp";
 
 const MainFooter: React.FC = memo(() => {
   return (
-    <footer className="fixed bottom-0 w-full  h-[6%] z-30 flex justify-center bg-loginBackground footerAnimated-div">
+    <footer className="fixed bottom-0 w-full  h-[6%] z-[50] flex justify-center bg-loginBackground footerAnimated-div">
       <div className=" border-2 flex items-center justify-between w-11/12 shadow-top h-full rounded-lg relative">
         <section className="ml-4 flex items-center space-x-2 h-full  relative ">
           <div className="  h-1/2   aspect-1 flex justify-center rotate-[60deg] ">

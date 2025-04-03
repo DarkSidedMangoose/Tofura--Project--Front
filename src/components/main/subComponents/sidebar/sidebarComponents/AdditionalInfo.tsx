@@ -7,10 +7,7 @@ import { useSidebarMouseEnterProvider } from "../../../../../contextApis/Context
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../redux/store";
 import { setAdditionalInfoOption } from "../../../../../redux/reducers/AdditionalDropdownOption";
-import {
-  setLoadingFalse,
-  setLoadingTrue,
-} from "../../../../../redux/reducers/LoadingScreen";
+
 interface AdditionalInfoOfBaseProps {
   isActive: boolean;
   setIsActive: (e: boolean) => void;
@@ -24,7 +21,7 @@ export const AdditionalInfo: React.FC<AdditionalInfoOfBaseProps> = ({
 
   return (
     <div
-      className={`z-[51] ${
+      className={`z-[60] ${
         isActive ? "w-[18%] narrow:w-[330px] flex" : "w-[0%]"
       }  h-90% min-h-[600px] bg-loginBackground shadow-bottom-right  rounded-br-2xl  justify-center items-center fixed  ml-[90px] 2xl:ml-[5%] transition-width    `}
       onMouseLeave={() => setIsActive(false)} // for handle sidebar close while mouse leave that div
@@ -57,12 +54,7 @@ const AdditionalInfoOfBaseSub: React.FC = () => {
   const setOption = (data: string) => {
     dispatch(setAdditionalInfoOption(data));
   };
-  const setLoading = (data: boolean) => {
-    dispatch(setLoadingTrue(data));
-    setTimeout(() => {
-      setLoadingFalse(false);
-    }, 1400);
-  };
+
   return (
     <div className="space-y-24 ">
       <section className="flex flex-col space-y-4  ">
@@ -79,10 +71,6 @@ const AdditionalInfoOfBaseSub: React.FC = () => {
             key={index}
             onClick={() => {
               setOption(info);
-              setLoading(true);
-              setTimeout(() => {
-                setLoading(false);
-              }, 1400);
             }}
           >
             {info}
@@ -103,11 +91,6 @@ const AdditionalInfoOfBaseSub: React.FC = () => {
             key={index}
             onClick={() => {
               setOption(info);
-
-              setLoading(true);
-              setTimeout(() => {
-                setLoading(false);
-              }, 1400);
             }}
           >
             {info}
@@ -124,9 +107,6 @@ const AdditionalInfoOfDashboardSub: React.FC = () => {
     (state: RootState) => state.AdditionalInfoOption.data
   );
 
-  const setLoading = (data: boolean) => {
-    dispatch(setLoadingFalse(data));
-  };
   const setOption = (data: string) => {
     dispatch(setAdditionalInfoOption(data));
   };
@@ -146,11 +126,6 @@ const AdditionalInfoOfDashboardSub: React.FC = () => {
             key={index}
             onClick={() => {
               setOption(info);
-
-              setLoading(true);
-              setTimeout(() => {
-                setLoading(false);
-              }, 1400);
             }}
           >
             {info}

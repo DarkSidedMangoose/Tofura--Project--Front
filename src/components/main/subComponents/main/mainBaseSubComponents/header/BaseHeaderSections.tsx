@@ -1,4 +1,4 @@
-import React, { Fragment, memo } from "react";
+import React, { Fragment, memo, useEffect } from "react";
 import "./BaseHeaderSections.css";
 import {
   BaseHistoryButton,
@@ -102,22 +102,33 @@ export const MainMainHeaderSecondSection: React.FC = memo(() => {
     </Fragment>
   );
 });
-
 export const MainMainHeaderThirdSection: React.FC = memo(() => {
+  const { authenticatedUserInfo } = UseContextAuthenticatedUserInfo();
+  useEffect(() => {
+    console.log("authenticatedUserInfo", authenticatedUserInfo);
+  }, [authenticatedUserInfo]);
   const isOption = useSelector(
     (state: RootState) => state.AdditionalInfoOption.data
+  );
+  const isIdentifierInspetObject = useSelector(
+    (state: RootState) => state.inspectObjectIdentifier.data
   );
   return (
     <section className="h-[60%]  min-h-[30px] w-30%  flex items-center  gap-[1%] justify-end">
       {isOption !== "შემოწმებული ობიექტების რეესტრი" ? (
         <Fragment>
-          <BaseSyncButton />
-          <BasePlusButton />
+          {isIdentifierInspetObject === "მიმდინარე დავალებები" && (
+            <BaseSyncButton />
+          )}
+          {authenticatedUserInfo.level === 1 &&
+            isIdentifierInspetObject === "მიმდინარე დავალებები" && (
+              <BasePlusButton />
+            )}
           <BaseReviewButton />
           {isOption === "ინსპექტირების ობიექტები" && (
             <Fragment>
               <BaseHistoryButton />
-              <BaseToArchive />
+              {/* <BaseToArchive /> */}
             </Fragment>
           )}
         </Fragment>

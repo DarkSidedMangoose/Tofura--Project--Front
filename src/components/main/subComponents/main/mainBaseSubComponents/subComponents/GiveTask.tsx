@@ -61,8 +61,8 @@ const GiveTask: React.FC<{ setClick: (arg: boolean) => void; id: string }> = ({
     SendTask();
   }, [sentTasksIdentifiers, handleClick]);
   return (
-    <div className="fixed w-full h-full top-0 left-0 bg-[#fff6]  flex justify-center items-center z-[150]  ">
-      <div className="bg-[#d3cfcf] w-1/2 min-w-[800px] h-3/4 min-h-[400px] relative text-sidebarChoose flex items-center  shadow-bottom-right flex-col rounded-xl">
+    <div className="fixed w-full h-full top-0 left-0 bg-[#fff6]  flex justify-center items-center z-[61]  ">
+      <div className="bg-[#d3cfcf] w-1/2 min-w-[800px] h-3/4 min-h-[550px] relative text-sidebarChoose flex items-center  shadow-bottom-right flex-col rounded-xl">
         <h1 className="h-10% min-h-[70px] w-full flex justify-center items-center bg-sidebarChoose font-bold shadow-bottom-right text-white rounded-tl-xl rounded-tr-xl">
           დავალების გაცემა
         </h1>

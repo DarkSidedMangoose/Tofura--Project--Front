@@ -3,8 +3,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 interface UserPass {
-  username: string;
-  password: string;
+  Username: string;
+  Password: string;
 }
 
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
@@ -37,9 +37,6 @@ export const handleSubmit = async (
   try {
     const userData = await authenticateUser(userPass);
     console.log("Authentication successful:", userData);
-
-    // const connection = await initializeSignalRConnection();
-    // setSignalRConnection(connection);
 
     navigate("/main");
   } catch (error: unknown) {
