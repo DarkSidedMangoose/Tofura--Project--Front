@@ -18,15 +18,18 @@ export const InspectMainButs: React.FC<{
 }) => {
   const { authenticatedUserInfo } = UseContextAuthenticatedUserInfo();
 
-  useEffect(() => {}, []);
   const handleSentTask = useCallback(() => {
-    setClickedOnSent(true);
-  }, [setClickedOnSent]);
+    if (selected !== -1) {
+      setClickedOnSent(true);
+    }
+  }, [setClickedOnSent, selected]);
   const handleEndTask = useCallback(() => {
     setClickedOnEnd();
   }, [setClickedOnEnd]);
   const handleDeclineTask = useCallback(() => {
-    setClickedOnDeclined();
+    if (selected !== -1) {
+      setClickedOnDeclined();
+    }
   }, [setClickedOnDeclined]);
   return (
     <Fragment>
@@ -61,7 +64,7 @@ export const InspectMainButs: React.FC<{
                 ? "cursor-not-allowed opacity-15 "
                 : "opacity-100 cursor-pointer hover:opacity-70  "
             }`}
-            onClick={() => handleEndTask()}
+            onClick={() => selected !== -1 && handleEndTask()}
           >
             დავალების დასრულება
           </button>

@@ -10,10 +10,10 @@ interface usersInterface {
 
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
-const GiveTask: React.FC<{ setClick: (arg: boolean) => void; id: string }> = ({
-  setClick,
-  id,
-}) => {
+const GiveTask: React.FC<{
+  setClick: (arg: boolean) => void;
+  id: string;
+}> = ({ setClick, id }) => {
   const [clickedIdentifier, setClickedIdentifier] = useState<number>(-1);
   const [users, setUsers] = useState<usersInterface[]>([]);
   const [sentTasksIdentifiers, setSentTasksIdentifiers] = useState<{

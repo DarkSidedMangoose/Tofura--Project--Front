@@ -62,7 +62,7 @@ export const BaseSyncButton: React.FC = memo(() => {
       <button
         style={{ transition: "0.3s ease-in-out" }}
         className={`${
-          !isChoosed
+          isChoosed === -1
             ? "opacity-20 cursor-not-allowed"
             : "opacity-85 cursor-pointer hover:opacity-70"
         } bg-sidebarChoose h-full rounded-[14%] w-10%  min-w-[55px] border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom`}
@@ -96,7 +96,7 @@ export const BasePlusButton: React.FC = memo(() => {
   );
 
   useEffect(() => {
-    if (!isChoosed) {
+    if (isChoosed != -1) {
       setShowDropdown(false);
     }
   }, [isChoosed]);
@@ -106,16 +106,16 @@ export const BasePlusButton: React.FC = memo(() => {
       <button
         onClick={() => {
           if (isOption === "ინსპექტირების ობიექტები") {
-            if (isChoosed === true) {
+            if (isChoosed != -1) {
               setShowDropdown(!showDropdown);
             }
           }
         }}
         style={{ transition: "0.3s ease-in-out" }}
         className={`${
-          !isChoosed ? "opacity-20 " : "opacity-85 hover:opacity-70"
+          isChoosed === -1 ? "opacity-20 " : "opacity-85 hover:opacity-70"
         } bg-sidebarChoose h-full rounded-[14%] w-full border-[2px] border-solid border-sidebarChoose flex justify-center items-center  shadow-bottom ${
-          !isChoosed ? "cursor-not-allowed" : "cursor-pointer "
+          isChoosed === -1 ? "cursor-not-allowed" : "cursor-pointer "
         }`}
       >
         <img className="w-70% h-70% object-contain" src={Plus} alt="plus" />
@@ -143,7 +143,7 @@ export const BaseReviewButton: React.FC = memo(() => {
       <button
         style={{ transition: "0.3s ease-in-out" }}
         className={`${
-          !isChoosed
+          isChoosed === -1
             ? "opacity-20 cursor-not-allowed "
             : "opacity-100 cursor-pointer hover:opacity-70 "
         } bg-white flex gap-[2%] items-center w-[28%] min-w-[150px] h-full rounded-[8px] border-[2px] border-solid border-sidebarChoose font-semibold text-sidebarChoose text-[14px] shadow-bottom`}
@@ -171,7 +171,7 @@ export const BaseHistoryButton: React.FC = memo(() => {
         onClick={() => dispatch(setTaskLogInfo(true))}
         style={{ transition: "0.3s ease-in-out" }}
         className={`${
-          !isChoosed
+          isChoosed === -1
             ? "opacity-20 cursor-not-allowed "
             : "opacity-100 cursor-pointer hover:opacity-70 "
         } bg-white h-full rounded-[14%] w-[7%] min-w-[30px] border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom`}
@@ -196,7 +196,7 @@ export const BaseToArchive: React.FC = memo(() => {
       <button
         style={{ transition: "0.3s ease-in-out" }}
         className={`${
-          !isChoosed
+          isChoosed === -1
             ? "opacity-20 cursor-not-allowed "
             : "opacity-100 cursor-pointer hover:opacity-70  "
         } bg-white h-full rounded-[14%] w-[7%] min-w-[30px] border-[2px] border-solid border-sidebarChoose flex justify-center items-center shadow-bottom`}

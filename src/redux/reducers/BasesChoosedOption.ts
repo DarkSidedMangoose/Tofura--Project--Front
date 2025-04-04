@@ -3,11 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 // this slice identify if in bases component choose one of the option which on buttons and which accumulate information about that object which has choose
 
 interface BasesChoosedOptionInterface {
-  data: boolean;
+  data: number;
 }
 
 const initialState: BasesChoosedOptionInterface = {
-  data: false,
+  data: -1,
 };
 
 const BasesChoosedOptionSlice = createSlice({
