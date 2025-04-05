@@ -15,8 +15,10 @@ const apiUrl = process.env.REACT_APP_API_BASE_URL;
 //interfaces for state which we receive from backend
 export interface DataLog {
   timestamp: string;
-  addedBy: string;
+  addedByName: string;
   description: string;
+  receiverName: string;
+  imgUrl: string;
 }
 
 interface states {
@@ -92,8 +94,10 @@ const MainMainMainSectionMain: React.FC = () => {
         takeTasksFromDb("onGoing");
       } else if (isIdentifierInspetObject === "გაცემული დავალებები") {
         takeTasksFromDb("onPending");
-      } else if (isIdentifierInspetObject === "დასადასტურებელი დავალებები") {
-        takeTasksFromDb("pendingApproval");
+      } else if (
+        isIdentifierInspetObject === "გამოგზავნილი დასრულების მოთხოვნები"
+      ) {
+        takeTasksFromDb("receiveApproval");
       } else if (
         isIdentifierInspetObject === "გაგზავნილი დასრულების მოთხოვნები"
       ) {
@@ -137,8 +141,13 @@ const MainMainMainSectionMain: React.FC = () => {
         );
         setState((prev) => prev.filter((_, index) => index !== isSelected)); // remove task from state when we end it
         dispatch(setChoose(-1)); // make buttons disabled when we end task
-      } catch (error) {
-        console.error("Error ending task:", error);
+      } catch (err: any) {
+        // Chek if the error is 401(unauthorized) and if it is then redirect to login page
+        if (err.response.status === 401) {
+          window.location.href = "/";
+        } else {
+          console.error("Error fetching tasks:", err);
+        }
       }
     };
     checkFuntion();
@@ -160,8 +169,13 @@ const MainMainMainSectionMain: React.FC = () => {
         console.log("declined sent succesfully to the server");
         setState((prev) => prev.filter((_, index) => index !== isSelected));
         dispatch(setChoose(-1));
-      } catch (error) {
-        console.error("Error declining task:", error);
+      } catch (err: any) {
+        // Chek if the error is 401(unauthorized) and if it is then redirect to login page
+        if (err.response.status === 401) {
+          window.location.href = "/";
+        } else {
+          console.error("Error fetching tasks:", err);
+        }
       }
     };
     DeclinedRequest();

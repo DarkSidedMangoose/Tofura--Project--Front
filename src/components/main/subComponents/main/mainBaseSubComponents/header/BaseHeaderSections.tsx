@@ -63,10 +63,10 @@ export const MainMainHeaderSecondSection: React.FC = memo(() => {
                   გაცემული დავალებები
                 </option>
                 <option
-                  value="დასადასტურებელი დავალებები"
+                  value="გამოგზავნილი დასრულების მოთხოვნები"
                   className="bg-white text-sidebarChoose"
                 >
-                  გაგზავნილი დასადასტურებელი დავალებები
+                  გამოგზავნილი დასრულების მოთხოვნები
                 </option>
               </Fragment>
             )}
