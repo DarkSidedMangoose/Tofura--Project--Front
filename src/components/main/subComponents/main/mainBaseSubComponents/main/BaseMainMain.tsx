@@ -19,6 +19,7 @@ export interface DataLog {
   description: string;
   receiverName: string;
   imgUrl: string;
+  comment: string;
 }
 
 interface states {
