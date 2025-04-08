@@ -8,6 +8,7 @@ import axios from "axios";
 import GiveTask from "../subComponents/GiveTask";
 import { useSignalR } from "../../../../../../contextApis/ContextSignalR";
 import { DataLogs } from "../subComponents/DataLogs";
+import Comment from "../subComponents/comment";
 
 //take url for tasks axios requests from env file
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
@@ -39,6 +40,8 @@ interface states {
 const MainMainMainSectionMain: React.FC = () => {
   const dispatch: AppDispatch = useDispatch(); // dispatch for redux
 
+  const [declineTaskComment, setDeclineTaskComment] = useState<string>("");
+
   //message functionality for signalR message receiving
   const { message } = useSignalR(); // signalR message which we receive from backend to update database when task is received
   const [signalMessage, setSignalMessage] = useState<boolean>(false);
@@ -68,6 +71,7 @@ const MainMainMainSectionMain: React.FC = () => {
   const taskLog = useSelector((state: RootState) => state.TaskLogInfo.data);
 
   const [sentBtnClicked, setSentBtnClicked] = useState<boolean>(false); // state for TaskSent component when that component is opened or closed
+  const [comment, setComment] = useState<boolean>(false); // state for comment which we send to backend when we send task to someone
 
   const [state, setState] = useState<states[] | []>([]); // state for tasks which we receive from backend
 
@@ -154,33 +158,51 @@ const MainMainMainSectionMain: React.FC = () => {
     checkFuntion();
   }, [isSelected, state]);
 
+  const closeComment = useCallback(
+    (arg?: string) => {
+      setComment(false);
+      if (arg) {
+        setDeclineTaskComment(arg);
+      }
+    },
+    [setComment]
+  );
+
+  useEffect(() => {
+    if (declineTaskComment !== "") {
+      const DeclinedRequest = async () => {
+        try {
+          await axios.put(
+            `${apiUrl}/tasks/declineTask`,
+            {
+              taskId: state[isSelected].id,
+              comment: declineTaskComment,
+            },
+            {
+              withCredentials: true,
+            }
+          );
+          console.log("declined sent succesfully to the server");
+          setState((prev) => prev.filter((_, index) => index !== isSelected));
+          dispatch(setChoose(-1));
+          setDeclineTaskComment("");
+        } catch (err: any) {
+          // Chek if the error is 401(unauthorized) and if it is then redirect to login page
+          if (err.response.status === 401) {
+            window.location.href = "/";
+          } else {
+            console.error("Error fetching tasks:", err);
+          }
+        }
+      };
+      DeclinedRequest();
+    }
+  }, [declineTaskComment]);
+
   //when we click on the declined button we send the request to the backend to decline the task and remove it from the state and send back to the sender
   const handleClickDeclinedButton = useCallback(() => {
-    const DeclinedRequest = async () => {
-      try {
-        await axios.put(
-          `${apiUrl}/tasks/declineTask`,
-          {
-            taskId: state[isSelected].id,
-          },
-          {
-            withCredentials: true,
-          }
-        );
-        console.log("declined sent succesfully to the server");
-        setState((prev) => prev.filter((_, index) => index !== isSelected));
-        dispatch(setChoose(-1));
-      } catch (err: any) {
-        // Chek if the error is 401(unauthorized) and if it is then redirect to login page
-        if (err.response.status === 401) {
-          window.location.href = "/";
-        } else {
-          console.error("Error fetching tasks:", err);
-        }
-      }
-    };
-    DeclinedRequest();
-  }, [state, isSelected]);
+    setComment(!comment);
+  }, [state, isSelected, comment]);
 
   return (
     <div className="w-full h-90% flex flex-col justify-start items-center">
@@ -211,7 +233,15 @@ const MainMainMainSectionMain: React.FC = () => {
       {sentBtnClicked && (
         <GiveTask setClick={handleSetSentButton} id={state[isSelected].id} />
       )}
-      {taskLog && <DataLogs data={state[isSelected].dataLogs} />}
+      {taskLog && (
+        <DataLogs
+          data={state[isSelected].dataLogs}
+          name={state[isSelected].wholeName}
+        />
+      )}
+      {comment && (
+        <Comment name={state[isSelected].wholeName} onClick={closeComment} />
+      )}
     </div>
   );
 };

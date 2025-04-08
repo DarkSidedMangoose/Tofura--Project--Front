@@ -3,7 +3,10 @@ import { DataLog } from "../main/BaseMainMain";
 import { useDispatch } from "react-redux";
 import { setTaskLogInfo } from "../../../../../../redux/reducers/TaskLogsInfo";
 
-export const DataLogs: React.FC<{ data: DataLog[] }> = ({ data }) => {
+export const DataLogs: React.FC<{ data: DataLog[]; name: string }> = ({
+  data,
+  name,
+}) => {
   const dispatch = useDispatch();
   const closeHandler = () => {
     dispatch(setTaskLogInfo(false));
@@ -15,7 +18,7 @@ export const DataLogs: React.FC<{ data: DataLog[] }> = ({ data }) => {
           ობიექტების ჟურნალი
         </h1>
         <p className="text-md font-semibold h-10% w-full justify-center items-center flex">
-          შპს ატლანტა
+          {name}
         </p>
         <div className="w-90% h-60% bg-white text-[12px] flex  items-center  flex-col overflow-y-auto">
           {data.map((log, index) => (

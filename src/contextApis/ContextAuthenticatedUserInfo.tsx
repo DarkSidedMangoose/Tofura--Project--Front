@@ -54,7 +54,7 @@ const ContextAuthenticatedUserInfo: React.FC<children> = ({ children }) => {
     <authenticatedUserInfoContext.Provider
       value={{ authenticatedUserInfo, setAuthenticatedUserInfo }}
     >
-      {children};
+      {children}
     </authenticatedUserInfoContext.Provider>
   );
 };

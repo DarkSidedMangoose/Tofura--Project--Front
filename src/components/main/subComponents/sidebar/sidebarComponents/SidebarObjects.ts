@@ -1,29 +1,32 @@
-interface AdditionalInfoOfBaseStates {
-  baseInfoP: string[];
-  baseInfoNdP: string[];
+export interface AdditionalInfoOfBaseStates {
+  InfoP: string[];
+  InfoNdP: string[];
 }
 
-interface AdditionalInfoOfDashboardStates {
-  dashboardInfoP: string[];
+export interface AdditionalInfoOfDashboardStates {
+  InfoP: string[];
+}
+
+export interface AdditionalInfoOfSettingsStates {
+  InfoP: string[];
 }
 
 export const baseState: AdditionalInfoOfBaseStates = {
-  baseInfoP: [
+  InfoP: [
     "ობიექტების რეესტრი",
     "ინსპექტირების ობიექტები",
     "შემოწმებული ობიექტების რეესტრი",
   ],
-  baseInfoNdP: [
-    "ახალი ობიექტები",
-    "შემოწმებული ობიექტები",
-    "წაშლილი ობიექტები",
-  ],
+  InfoNdP: ["ახალი ობიექტები", "შემოწმებული ობიექტები", "წაშლილი ობიექტები"],
 };
 
 export const dashboardState: AdditionalInfoOfDashboardStates = {
-  dashboardInfoP: [
+  InfoP: [
     "ობიექტების რეგიონალური რუკა",
     "ობიექტების დიაგრამული გამოსახულება",
     "ობიექტების წლიური დიაგრამა თვეების მიხედვით",
   ],
+};
+export const settingsState: AdditionalInfoOfSettingsStates = {
+  InfoP: ["მომხმარებლების კონფიგურაცია"],
 };

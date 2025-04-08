@@ -24,7 +24,6 @@ const Main: React.FC = () => {
             <MainMain />
           </ContextMouseEnterIdentifier>
         </SignalRProvider>
-        {/* </OptionFromAdditionalBaseProvider> */}
       </div>
 
       <MainFooter />

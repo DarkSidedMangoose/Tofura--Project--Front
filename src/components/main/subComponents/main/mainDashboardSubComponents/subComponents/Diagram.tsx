@@ -3,11 +3,11 @@ import { details, diagramInfo } from "./DashboardObjects";
 
 const Diagram: React.FC = () => {
   return (
-    <main className="w-full h-full flex justify-evenly  items-center   bg-loginBackground   rounded-2xl">
+    <div className="w-full h-full flex justify-evenly  items-center   bg-loginBackground   rounded-2xl">
       <div className="w-full h-full flex justify-center items-center  rounded-2xl  ">
         <div className="w-95% h-90% rounded-2xl  shadow-boxShadow flex  justify-start items-center  bg-loginBackground    ">
           <GraphicDiagram />
-          <section className="w-50% h-full flex flex-col relative ">
+          <div className="w-50% h-full flex flex-col relative ">
             <div className="absolute bottom-[5%] h-90% right-0 w-full ">
               {diagramInfo.map((info, index) => (
                 <article
@@ -22,10 +22,10 @@ const Diagram: React.FC = () => {
                 </article>
               ))}
             </div>
-          </section>
+          </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 

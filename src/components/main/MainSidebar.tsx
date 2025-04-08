@@ -3,12 +3,14 @@ import MainLogo from "../../assets/images/main/fullLogo.webp";
 import Base from "../../assets/images/main/base.webp";
 import Dashboard from "../../assets/images/main/dashboard.webp";
 import MyProfile from "../../assets/images/main/myProfile.webp";
+import Settings from "../../assets/images/main/settings.webp";
 import "./MainAnimations.css";
 import { NavItem } from "./subComponents/sidebar/sidebarComponents/SidebarNavItem";
 import { handleSidebarClick } from "./subComponents/sidebar/SidebarFunctions";
 import { useSidebarMouseEnterProvider } from "../../contextApis/ContextMouseEnterIdentifier";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
+import { setAdditionalInfoOption } from "../../redux/reducers/AdditionalDropdownOption";
 
 import Leave from "../../assets/images/main/leave.webp";
 
@@ -49,6 +51,8 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
       isOption === "ობიექტების წლიური დიაგრამა თვეების მიხედვით"
     ) {
       setSidebarStateIdentifier("dashboard");
+    } else if (isOption === "მომხმარებლების კონფიგურაცია") {
+      setSidebarStateIdentifier("settings");
     }
   }, [isOption]);
 
@@ -94,10 +98,14 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [SidebarMouseEnterIdentifier]);
 
+  const handleMouseClose = useCallback(() => {
+    setIsActive(false);
+  }, [setIsActive]);
   const createClickHandler = useCallback(
     (identifier: string) => () => {
       toggleSidebar(identifier);
       // setLoading(true);
+      dispatch(setAdditionalInfoOption("პროფილი"));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -110,10 +118,10 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
           className={` w-full h-full bg-sidebarChoose flex flex-col items-center shadow-bottom-right`}
         >
           <img src={MainLogo} className="w-[70%] mt-[30%]" alt="logo"></img>
-          <nav className="w-[60%] h-[40%] mt-[40%]">
+          <nav className="w-[60%] h-[50%] mt-[40%]">
             <NavItem
               icon={Base}
-              alt="Base"
+              alt="base"
               NavIsActive={sidebarStateIdentifier === "base"}
               onMouseEnter={handleMouseEnter}
             />
@@ -124,12 +132,19 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
               onMouseEnter={handleMouseEnter}
             />
             <NavItem
+              icon={Settings}
+              alt="settings"
+              NavIsActive={sidebarStateIdentifier === "settings"}
+              onMouseEnter={handleMouseEnter}
+            />
+            <NavItem
               icon={MyProfile}
               alt="profile"
               NavIsActive={sidebarStateIdentifier === "profile"}
               onClick={createClickHandler("profile")}
+              onMouseEnter={handleMouseClose}
             />
-            <NavItem icon={Leave} alt="leave" />
+            <NavItem icon={Leave} alt="leave" onMouseEnter={handleMouseClose} />
           </nav>
         </aside>
       </div>

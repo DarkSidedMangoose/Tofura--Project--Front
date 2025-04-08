@@ -4,6 +4,7 @@ import { BaseMain } from "./mainBaseSubComponents/main/BaseMain";
 import DashboardMain from "./mainDashboardSubComponents/main/DashboardMain";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
+import SettingsMain from "./mainSettingsSubComponents/main/SettingsMain";
 
 export const MainMainMainSection: React.FC = memo(() => {
   const isOption = useSelector(
@@ -23,12 +24,18 @@ export const MainMainMainSection: React.FC = memo(() => {
         </div>
       ) : isOption === "ობიექტების რეგიონალური რუკა" ||
         isOption === "ობიექტების დიაგრამული გამოსახულება" ? (
-        <section className="w-[98%] h-90% flex justify-center items-center  ">
+        <div className="w-[98%] h-90% flex justify-center items-center  ">
           <div className="w-full h-100% gap-[2%] ">
             <DashboardMain />
           </div>
-        </section>
-      ) : null}
+        </div>
+      ) : (
+        isOption === "მომხმარებლების კონფიგურაცია" && (
+          <div className="w-full h-full">
+            <SettingsMain />
+          </div>
+        )
+      )}
     </Fragment>
   );
 });

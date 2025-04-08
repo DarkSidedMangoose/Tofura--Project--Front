@@ -13,7 +13,7 @@ const DashboardMain: React.FC = () => {
   );
 
   return (
-    <section className="w-full h-full flex flex-col gap-[5%] justify-center items-center  ">
+    <div className="w-full h-full flex flex-col gap-[5%] justify-center items-center  ">
       <div className="w-full h-full flex gap-[5%]  ">
         {isOption === "ობიექტების რეგიონალური რუკა" ? (
           <CountryWithRegions />
@@ -21,7 +21,7 @@ const DashboardMain: React.FC = () => {
           <Diagram />
         ) : null}
       </div>
-    </section>
+    </div>
   );
 };
 

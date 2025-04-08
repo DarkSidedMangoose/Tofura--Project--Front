@@ -2,7 +2,14 @@ import React, { Fragment, useEffect } from "react";
 import "../../../MainAnimations.css";
 // import { useMainLoading } from "../../../../../contextApis/ContextLoading";
 // import { useAdditionalOption } from "../../../../../contextApis/ContextChooseFromAdditional";
-import { baseState, dashboardState } from "./SidebarObjects";
+import {
+  AdditionalInfoOfSettingsStates,
+  AdditionalInfoOfBaseStates,
+  AdditionalInfoOfDashboardStates,
+  settingsState,
+  baseState,
+  dashboardState,
+} from "./SidebarObjects";
 import { useSidebarMouseEnterProvider } from "../../../../../contextApis/ContextMouseEnterIdentifier";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../redux/store";
@@ -31,77 +38,28 @@ export const AdditionalInfo: React.FC<AdditionalInfoOfBaseProps> = ({
           !isActive ? "nones" : "shown "
         } w-90% h-[90%]   flex-col space-y-8   `} //nones is in css and means display:none and it handle for when animation is closing, this text what is in that div is show and when sidebar closing doesn't have good look of  animation because of it that div need to set as a none display
       >
-        {SidebarMouseEnterIdentifier === "Base" ? (
-          <Fragment>
-            <AdditionalInfoOfBaseSub />
-          </Fragment>
-        ) : SidebarMouseEnterIdentifier === "dashboard" ? (
-          <Fragment>
-            <AdditionalInfoOfDashboardSub />
-          </Fragment>
-        ) : null}
+        <AdditionalInfoOfSidebar
+          alt={SidebarMouseEnterIdentifier}
+          state={
+            SidebarMouseEnterIdentifier === "base"
+              ? baseState
+              : SidebarMouseEnterIdentifier === "dashboard"
+              ? dashboardState
+              : settingsState
+          }
+        />
       </div>
     </div>
   );
 };
 
-const AdditionalInfoOfBaseSub: React.FC = () => {
-  const dispatch: AppDispatch = useDispatch();
-  // const { isOption, setOption } = useAdditionalOption();
-  const isOption = useSelector(
-    (state: RootState) => state.AdditionalInfoOption.data
-  );
-  const setOption = (data: string) => {
-    dispatch(setAdditionalInfoOption(data));
-  };
-
-  return (
-    <div className="space-y-24 ">
-      <section className="flex flex-col space-y-4  ">
-        <h1 className="flex justify-center text-blue-950 font-bold">
-          მონაცემთა ბაზები
-        </h1>
-        {baseState.baseInfoP.map((info, index) => (
-          <p
-            className={`${
-              isOption === info //if there is choose one of base it look more boldly and make have mini animation and this classnames are for that
-                ? "font-bold sidebarAdditionalInfoChoose "
-                : " sidebarAdditionalInfoChooseOff"
-            } text-[0.9rem] cursor-pointer text-blue-950 `}
-            key={index}
-            onClick={() => {
-              setOption(info);
-            }}
-          >
-            {info}
-          </p>
-        ))}
-      </section>
-      <section className="flex flex-col space-y-4  ">
-        <h1 className="flex justify-center text-blue-950 font-bold">
-          დამატებითი ბაზები
-        </h1>
-        {baseState.baseInfoNdP.map((info, index) => (
-          <p
-            className={`${
-              isOption === info //same purpose what is in top but there is different bases
-                ? "font-bold sidebarAdditionalInfoChoose "
-                : " sidebarAdditionalInfoChooseOff"
-            } text-[0.9rem] cursor-pointer text-blue-950 `}
-            key={index}
-            onClick={() => {
-              setOption(info);
-            }}
-          >
-            {info}
-          </p>
-        ))}
-      </section>
-    </div>
-  );
-};
-
-const AdditionalInfoOfDashboardSub: React.FC = () => {
+const AdditionalInfoOfSidebar: React.FC<{
+  alt: string;
+  state:
+    | AdditionalInfoOfSettingsStates
+    | AdditionalInfoOfBaseStates
+    | AdditionalInfoOfDashboardStates;
+}> = ({ state, alt }) => {
   const dispatch: AppDispatch = useDispatch();
   const isOption = useSelector(
     (state: RootState) => state.AdditionalInfoOption.data
@@ -114,9 +72,13 @@ const AdditionalInfoOfDashboardSub: React.FC = () => {
     <div className="space-y-24 w-full flex justify-center">
       <section className="flex flex-col space-y-4 w-full  ">
         <h1 className="flex w-full justify-center items-center text-blue-950 font-bold ">
-          საინფორმაციო დაფა
+          {alt === "base"
+            ? "მონაცემთა ბაზები"
+            : alt === "dashboard"
+            ? "საინფორმაციო დაფა"
+            : alt === "settings" && "პარამეტრები"}
         </h1>
-        {dashboardState.dashboardInfoP.map((info, index) => (
+        {state.InfoP.map((info, index) => (
           <p
             className={`${
               isOption === info //same purpose what is in top but there is different bases
@@ -131,6 +93,29 @@ const AdditionalInfoOfDashboardSub: React.FC = () => {
             {info}
           </p>
         ))}
+
+        {alt === "base" && (
+          <section className="flex flex-col space-y-4  ">
+            <h1 className="flex justify-center text-blue-950 font-bold">
+              დამატებითი ბაზები
+            </h1>
+            {baseState.InfoNdP.map((info, index) => (
+              <p
+                className={`${
+                  isOption === info //same purpose what is in top but there is different bases
+                    ? "font-bold sidebarAdditionalInfoChoose "
+                    : " sidebarAdditionalInfoChooseOff"
+                } text-[0.9rem] cursor-pointer text-blue-950 `}
+                key={index}
+                onClick={() => {
+                  setOption(info);
+                }}
+              >
+                {info}
+              </p>
+            ))}
+          </section>
+        )}
       </section>
     </div>
   );
