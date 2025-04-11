@@ -1,9 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {
-  StateFetchedData,
-  SystemStruct,
-} from "./interfaces/addNewUserFetchingDataInterfaces";
+import { StateFetchedData } from "./interfaces/addNewUserFetchingDataInterfaces";
 
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
@@ -58,10 +55,10 @@ const AddNewUser: React.FC = () => {
       setStatePropOfStateOfSelect((prev) => {
         const Data = [...prev];
         Data[0] = stateFetchedData[0].levels; // Populate access levels
-        Data[1] = [
-          stateFetchedData[0].systemStruct.department1.name,
-          stateFetchedData[0].systemStruct.department2.name,
-        ]; // Populate departments
+        Data[1] = [];
+        for (var i = 0; i < stateFetchedData[0].departments.length; i++) {
+          Data[1].push(stateFetchedData[0].departments[i].name);
+        } // Populate departments
         return Data;
       });
     }
@@ -86,9 +83,12 @@ const AddNewUser: React.FC = () => {
   useEffect(() => {
     const RequestStructureData = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/structure`, {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          `${apiUrl}/structureNd/getStructureData`,
+          {
+            withCredentials: true,
+          }
+        );
         setStateFetchedData(response.data); // Save fetched data
         console.log("Data fetched successfully");
       } catch (err: any) {
@@ -102,46 +102,6 @@ const AddNewUser: React.FC = () => {
     RequestStructureData();
   }, []);
 
-  // Helper function to handle diversion-related dropdown options
-  const handleDiversions = (department: any, prevValues: any) => {
-    const values = [...prevValues];
-    values[2] = []; // Reset directorate options
-    values[3] = [];
-    for (let i = 1; i <= 5; i++) {
-      const diversion = department.diversions[`diversion${i}`];
-      if (diversion !== null) {
-        values[2].push(diversion.name); // Add diversion names
-      }
-    }
-    return values;
-  };
-
-  //Helper function to handle section-related dropdown options
-  const handleSections = (prevValues: any) => {
-    const values = [...prevValues];
-    values[3] = []; //Reset direcorate options
-    const departmentKey =
-      `department${statesOfSelect[1].departmentIdentifier}` as keyof SystemStruct;
-    const department = stateFetchedData[0]?.systemStruct[departmentKey];
-    const diversionName = statesOfSelect[2].value;
-
-    for (var i = 1; i <= 5; i++) {
-      const diversion = department.diversions[`diversion${i}`];
-
-      if (diversion !== null) {
-        if (diversion.name === diversionName) {
-          for (var o = 1; o <= 2; o++) {
-            const section = diversion.sections[`section${o}`];
-            if (section) {
-              values[3].push(section);
-            }
-          }
-        }
-      }
-    }
-    return values;
-  };
-
   // Handle changes in dropdowns
   const handleChange = (
     arg: string,
@@ -153,30 +113,75 @@ const AddNewUser: React.FC = () => {
       values[controllerIndex].controller = true; // Enable next dropdown
       values[index].value = arg; // Set selected value
       if (index === 1) {
-        values[index].departmentIdentifier =
-          statePropOfStateOfSelect[1].indexOf(arg) + 1;
+        values[1].departmentIdentifier =
+          statePropOfStateOfSelect[1].indexOf(arg);
       }
       return values;
     });
 
     // Handle department-specific logic
     if (index === 1) {
-      if (arg === stateFetchedData[0].systemStruct.department1.name) {
-        setStatePropOfStateOfSelect((prev) =>
-          handleDiversions(stateFetchedData[0].systemStruct.department1, prev)
-        );
-      } else if (arg === stateFetchedData[0].systemStruct.department2.name) {
-        setStatePropOfStateOfSelect((prev) =>
-          handleDiversions(stateFetchedData[0].systemStruct.department2, prev)
-        );
+      for (var i = 0; i < stateFetchedData[0].departments.length; i++) {
+        if (arg === stateFetchedData[0].departments[i].name) {
+          setStatePropOfStateOfSelect((prev) => {
+            const values = [...prev];
+            values[2] = []; // Reset directorate options
+            values[3] = [];
+            setStateOfSelect((prev) => {
+              const result = [...prev];
+              result[2].value = "";
+              result[3].value = "";
+              return result;
+            });
+            for (
+              let o = 0;
+              o < stateFetchedData[0].departments[i].diversions.length;
+              o++
+            ) {
+              const diversion =
+                stateFetchedData[0].departments[i].diversions[o].name;
+              values[2].push(diversion); // Add diversion names
+            }
+            return values;
+          });
+          break;
+        }
       }
     } else if (index === 2) {
-      setStatePropOfStateOfSelect((prev) => handleSections(prev));
+      setStateOfSelect((prev) => {
+        const result = [...prev];
+        result[3].value = "";
+        return result;
+      });
+      setStatePropOfStateOfSelect((prev) => {
+        const values = [...prev];
+        values[3] = []; //Reset direcorate options
+        const currentDepartmentDiversions =
+          stateFetchedData[0].departments[
+            statesOfSelect[1].departmentIdentifier
+              ? statesOfSelect[1].departmentIdentifier
+              : 0
+          ].diversions;
+        for (var i = 0; i < currentDepartmentDiversions.length; i++) {
+          if (currentDepartmentDiversions[i].name === arg) {
+            for (
+              var o = 0;
+              o < currentDepartmentDiversions[i].sections.length;
+              o++
+            ) {
+              values[3].push(currentDepartmentDiversions[i].sections[o]);
+            }
+
+            break;
+          }
+        }
+        return values;
+      });
     }
   };
 
   return (
-    <div className="w-[450px] fixed right-0 h-1/2 flex flex-col">
+    <div className="w-[450px] fixed right-0 top-0 h-3/4 flex flex-col">
       {/* Header */}
       <header className="w-full h-10% bg-sidebarChoose rounded-tl-2xl rounded-tr-2xl flex justify-center items-center text-white font-semibold shadow-bottom">
         ახალი მომხმარებლის დამატება {/* Add New User */}
@@ -184,8 +189,22 @@ const AddNewUser: React.FC = () => {
 
       {/* Main Content */}
       <main className="w-full h-90% text-sm bg-[#d4d0d0] flex">
-        <div className="w-full h-80% flex-col flex items-center overflow-y-auto">
+        <div className="w-full h-80% flex-col flex items-center overflow-y-auto py-4">
           {/* Input for user name */}
+          <div className="w-80% min-h-[100px] flex justify-center items-center flex-col">
+            <p className="w-full">შეიყვანეთ მომხმარებლის ავტორიზაციის კოდი</p>
+            <input
+              className="w-full h-[50px] bg-white rounded-md text-sm"
+              placeholder="...ავტორიზაციის კოდი"
+            />
+          </div>
+          <div className="w-80% min-h-[100px] flex justify-center items-center flex-col">
+            <p className="w-full">შეიყვანეთ მომხმარებლის პაროლი</p>
+            <input
+              className="w-full h-[50px] bg-white rounded-md text-sm"
+              placeholder="...პაროლი"
+            />
+          </div>
           <div className="w-80% min-h-[100px] flex justify-center items-center flex-col">
             <p className="w-full">შეიყვანეთ მომხმარებლის სახელი და გვარი</p>
             <input

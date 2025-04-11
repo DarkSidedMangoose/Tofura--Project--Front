@@ -1,27 +1,42 @@
 export interface StateFetchedData {
   id: string;
   levels: number[];
-  systemStruct: SystemStruct;
+  departments: DepartmentStruct[];
 }
 
-export interface SystemStruct {
-  department1: NameDiversions;
-  department2: NameDiversions;
-}
-
-interface NameDiversions {
+export interface DepartmentStruct {
   name: string;
-  diversions: Diversions;
+  diversions: DiversionStruct[];
 }
 
-interface Diversions {
-  [key: string]: SeparateDiversion;
-}
-
-interface SeparateDiversion {
+interface DiversionStruct {
   name: string;
-  sections: SeparateSection;
+  sections: string[];
 }
-interface SeparateSection {
-  [key: string]: string;
-}
+
+// export interface StateFetchedData {
+//   id: string;
+//   levels: number[];
+//   systemStruct: SystemStruct;
+// }
+
+// export interface SystemStruct {
+//   [key: string]: NameDiversions;
+// }
+
+// interface NameDiversions {
+//   name: string;
+//   diversions: Diversions;
+// }
+
+// interface Diversions {
+//   [key: string]: SeparateDiversion;
+// }
+
+// interface SeparateDiversion {
+//   name: string;
+//   sections: SeparateSection;
+// }
+// interface SeparateSection {
+//   [key: string]: string;
+// }
