@@ -1,10 +1,12 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StateFetchedData } from "./interfaces/addNewUserFetchingDataInterfaces";
-
+import DOMPurify from "dompurify";
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
-const AddNewUser: React.FC = () => {
+const AddNewUser: React.FC<{ onClickClose: () => void }> = ({
+  onClickClose,
+}) => {
   // State to store fetched data
   const [stateFetchedData, setStateFetchedData] = useState<
     [] | StateFetchedData[]
@@ -15,7 +17,26 @@ const AddNewUser: React.FC = () => {
     (number | string)[][]
   >([[], [], [], []]);
 
+  const [stateOfUsersInputs, setStateOfUsersInputs] = useState([
+    {
+      name: "მომხმარებლის ავტორიზაციის კოდი",
+      placeholder: "...ავტორიზაციის კოდი",
+      value: "",
+    },
+    {
+      name: "მომხმარებლის პაროლი",
+      placeholder: "...პაროლი",
+      value: "",
+    },
+    {
+      name: "მომხმარებლის სახელი და გვარი",
+      placeholder: "...სახელი გვარი",
+      value: "",
+    },
+  ]);
+
   // Configuration for dropdown options
+
   const [statesOfSelect, setStateOfSelect] = useState([
     {
       name: "მიუთითეთ დაშვების დონე", // Access level
@@ -30,7 +51,6 @@ const AddNewUser: React.FC = () => {
       controller: false, // Disabled by default
       state: statePropOfStateOfSelect[1],
       departmentIdentifier: 0,
-
       value: "",
     },
     {
@@ -49,14 +69,13 @@ const AddNewUser: React.FC = () => {
     },
   ]);
 
-  // Effect to populate dropdowns when data is fetched
   useEffect(() => {
     if (stateFetchedData.length > 0) {
       setStatePropOfStateOfSelect((prev) => {
         const Data = [...prev];
         Data[0] = stateFetchedData[0].levels; // Populate access levels
         Data[1] = [];
-        for (var i = 0; i < stateFetchedData[0].departments.length; i++) {
+        for (let i = 0; i < stateFetchedData[0].departments.length; i++) {
           Data[1].push(stateFetchedData[0].departments[i].name);
         } // Populate departments
         return Data;
@@ -110,8 +129,32 @@ const AddNewUser: React.FC = () => {
   ) => {
     setStateOfSelect((prev) => {
       const values = [...prev];
-      values[controllerIndex].controller = true; // Enable next dropdown
-      values[index].value = arg; // Set selected value
+      values[1].controller = true;
+      // to make logic which define auto configuration of access which is above 4level or which is equal 4 that logic disable in that kind specific select options because they are auto configurable
+      if (Number(values[0].value) < 4) {
+        values[controllerIndex].controller = true;
+      } else {
+        if (Number(values[0].value) === 4) {
+          if (index === 1) {
+            values[2].controller = true;
+          } else if (index === 2) {
+            values[3].controller = false;
+          }
+        } else {
+          values[2].controller = false;
+        }
+        values[3].controller = false;
+      }
+      // to make logic which define when change level to make empty the values
+      if (index === 0) {
+        values[1].value = "";
+        values[2].controller = false;
+        values[2].value = "";
+        values[3].controller = false;
+        values[3].value = "";
+      }
+      values[index].value = DOMPurify.sanitize(arg); // Set selected value
+
       if (index === 1) {
         values[1].departmentIdentifier =
           statePropOfStateOfSelect[1].indexOf(arg);
@@ -120,8 +163,9 @@ const AddNewUser: React.FC = () => {
     });
 
     // Handle department-specific logic
+
     if (index === 1) {
-      for (var i = 0; i < stateFetchedData[0].departments.length; i++) {
+      for (let i = 0; i < stateFetchedData[0].departments.length; i++) {
         if (arg === stateFetchedData[0].departments[i].name) {
           setStatePropOfStateOfSelect((prev) => {
             const values = [...prev];
@@ -162,10 +206,10 @@ const AddNewUser: React.FC = () => {
               ? statesOfSelect[1].departmentIdentifier
               : 0
           ].diversions;
-        for (var i = 0; i < currentDepartmentDiversions.length; i++) {
+        for (let i = 0; i < currentDepartmentDiversions.length; i++) {
           if (currentDepartmentDiversions[i].name === arg) {
             for (
-              var o = 0;
+              let o = 0;
               o < currentDepartmentDiversions[i].sections.length;
               o++
             ) {
@@ -180,6 +224,45 @@ const AddNewUser: React.FC = () => {
     }
   };
 
+  //close component
+  const handleClose = useCallback(
+    (arg: boolean) => {
+      if (!arg) {
+        onClickClose();
+      }
+    },
+    [onClickClose]
+  );
+
+  const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await axios.post(
+        `${apiUrl}/users/addUsers`,
+        {
+          fullname: stateOfUsersInputs[2].value,
+          username: stateOfUsersInputs[0].value,
+          passwordHash: stateOfUsersInputs[1].value,
+          level: statesOfSelect[0].value,
+          department: statesOfSelect[1].value,
+          diversion: statesOfSelect[2].value,
+          section: statesOfSelect[3].value,
+        },
+        { withCredentials: true }
+      );
+
+      console.log("user Added succefully");
+      onClickClose();
+    } catch (err: any) {
+      // Chek if the error is 401(unauthorized) and if it is then redirect to login page
+      if (err.response.status === 401) {
+        window.location.href = "/";
+      } else {
+        console.error("Error creating tasks:", err);
+      }
+    }
+  };
+
   return (
     <div className="w-[450px] fixed right-0 top-0 h-3/4 flex flex-col">
       {/* Header */}
@@ -188,38 +271,37 @@ const AddNewUser: React.FC = () => {
       </header>
 
       {/* Main Content */}
-      <main className="w-full h-90% text-sm bg-[#d4d0d0] flex">
+      <form
+        onSubmit={onSubmitHandler}
+        className="w-full h-90% text-sm bg-[#d4d0d0] flex flex-col"
+      >
         <div className="w-full h-80% flex-col flex items-center overflow-y-auto py-4">
+          {stateOfUsersInputs.map((props, index) => (
+            <div className="w-80% min-h-[100px] flex justify-center items-center flex-col">
+              <p className="w-full font-semibold">{props.name}</p>
+              <input
+                className="w-full h-[50px] bg-white rounded-md text-sm px-2"
+                placeholder={props.placeholder}
+                value={props.value}
+                onChange={(e) =>
+                  setStateOfUsersInputs((prev) => {
+                    const a = [...prev];
+                    a[index].value = DOMPurify.sanitize(e.target.value);
+                    return a;
+                  })
+                }
+              />
+            </div>
+          ))}
           {/* Input for user name */}
-          <div className="w-80% min-h-[100px] flex justify-center items-center flex-col">
-            <p className="w-full">შეიყვანეთ მომხმარებლის ავტორიზაციის კოდი</p>
-            <input
-              className="w-full h-[50px] bg-white rounded-md text-sm"
-              placeholder="...ავტორიზაციის კოდი"
-            />
-          </div>
-          <div className="w-80% min-h-[100px] flex justify-center items-center flex-col">
-            <p className="w-full">შეიყვანეთ მომხმარებლის პაროლი</p>
-            <input
-              className="w-full h-[50px] bg-white rounded-md text-sm"
-              placeholder="...პაროლი"
-            />
-          </div>
-          <div className="w-80% min-h-[100px] flex justify-center items-center flex-col">
-            <p className="w-full">შეიყვანეთ მომხმარებლის სახელი და გვარი</p>
-            <input
-              className="w-full h-[50px] bg-white rounded-md text-sm"
-              placeholder="...სახელი გვარი"
-            />
-          </div>
 
           {/* Dropdowns */}
           {statesOfSelect.map((values, index) => (
             <div
               key={index}
-              className="w-80% min-h-[100px] flex justify-center items-center flex-col"
+              className="w-80% min-h-[100px] flex justify-center  flex-col"
             >
-              <p>{values.name}</p>
+              <p className="font-semibold">{values.name}</p>
               <select
                 className="w-full min-h-[50px] bg-white rounded-md"
                 id="LevelDropdown"
@@ -250,7 +332,21 @@ const AddNewUser: React.FC = () => {
             </div>
           ))}
         </div>
-      </main>
+        <div className="w-full h-20% flex justify-end items-center gap-[5%] font-semibold">
+          <button
+            className="w-auto h-1/2 px-10 rounded-lg bg-sidebarChoose text-white cursor-not-allowed opacity-40"
+            type="submit"
+          >
+            დამატება
+          </button>
+          <button
+            onClick={() => handleClose(false)}
+            className="w-auto h-1/2 px-8 rounded-lg bg-sidebarChoose text-white"
+          >
+            გაუქმება
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import ConfigureUsersHeader from "../ConfigureUsersHeader";
 import ConfigureUsersMain from "../ConfigureUsersMain";
@@ -16,6 +16,7 @@ export interface UsersInterface {
 }
 
 const ConfigureUsers: React.FC = () => {
+  const [refreshUsers, setRefreshUsers] = useState<boolean>(false);
   const [clickIdentifies, setClickIdentifies] = useState<{
     isAddButtonClicked: boolean;
     isAddFilterClicked: boolean;
@@ -23,24 +24,24 @@ const ConfigureUsers: React.FC = () => {
     isAddButtonClicked: false,
     isAddFilterClicked: false,
   });
-  const handleClickAddButton = useCallback(
-    (arg: boolean, name: string) => {
-      if (name === "AddButton") {
-        setClickIdentifies((prev) => ({ ...prev, isAddButtonClicked: arg }));
-      } else if (name === "AddFilter") {
-        setClickIdentifies((prev) => ({ ...prev, isAddFilterClicked: arg }));
-      }
-    },
-    [clickIdentifies]
-  );
+  const handleClickAddButton = useCallback((arg: boolean, name: string) => {
+    if (name === "AddButton") {
+      setClickIdentifies((prev) => ({ ...prev, isAddButtonClicked: arg }));
+    } else if (name === "AddFilter") {
+      setClickIdentifies((prev) => ({ ...prev, isAddFilterClicked: arg }));
+    }
+  }, []);
+  const handleAddUserClose = useCallback(() => {
+    setRefreshUsers(!refreshUsers);
+    setClickIdentifies((prev) => ({ ...prev, isAddButtonClicked: false }));
+  }, [refreshUsers]);
+
   return (
     <div className="w-full h-full  text-sidebarChoose border-t-2 border-dotted border-opacity-30 border-sidebarChoose py-[2%] flex flex-col items-center  gap-[2%] custom-scrollbar">
       <ConfigureUsersHeader setClickAddButton={handleClickAddButton} />
-      <ConfigureUsersMain />
-      {clickIdentifies.isAddButtonClicked ? (
-        <AddNewUser />
-      ) : (
-        clickIdentifies.isAddFilterClicked && <AddNewUser />
+      <ConfigureUsersMain refreshUsers={refreshUsers} />
+      {clickIdentifies.isAddButtonClicked && (
+        <AddNewUser onClickClose={handleAddUserClose} />
       )}
     </div>
   );
