@@ -1,104 +1,60 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
-import { StateFetchedData } from "./interfaces/addNewUserFetchingDataInterfaces";
+import {
+  StateFetchedData,
+  StateOfSelect,
+} from "./interfaces/addNewUserFetchingDataInterfaces";
 import DOMPurify from "dompurify";
+import {
+  helperSetStateOfSelect,
+  helperStatePropOfStateOfSelect,
+  helperStatePropOfStateOfSelectNd,
+} from "./configureUsersHelperFunctions/AddNewUserHelperFunctions";
+import {
+  StateOfUsersInputs,
+  StatesOfSelect,
+} from "./configureUsersDatas/ConfigureUsersDatas";
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
 const AddNewUser: React.FC<{ onClickClose: () => void }> = ({
   onClickClose,
 }) => {
-  // State to store fetched data
+  // States
   const [stateFetchedData, setStateFetchedData] = useState<
     [] | StateFetchedData[]
-  >([]);
-
-  // State for storing dropdown selections
+  >([]); // Fetched data from API
   const [statePropOfStateOfSelect, setStatePropOfStateOfSelect] = useState<
     (number | string)[][]
-  >([[], [], [], []]);
+  >([[], [], [], []]); // Dropdown options
+  const [stateOfUsersInputs, setStateOfUsersInputs] =
+    useState(StateOfUsersInputs); // User input fields
+  const [statesOfSelect, setStateOfSelect] = useState<StateOfSelect[]>(
+    StatesOfSelect(statePropOfStateOfSelect)
+  ); // Dropdown states
 
-  const [stateOfUsersInputs, setStateOfUsersInputs] = useState([
-    {
-      name: "მომხმარებლის ავტორიზაციის კოდი",
-      placeholder: "...ავტორიზაციის კოდი",
-      value: "",
-    },
-    {
-      name: "მომხმარებლის პაროლი",
-      placeholder: "...პაროლი",
-      value: "",
-    },
-    {
-      name: "მომხმარებლის სახელი და გვარი",
-      placeholder: "...სახელი გვარი",
-      value: "",
-    },
-  ]);
-
-  // Configuration for dropdown options
-
-  const [statesOfSelect, setStateOfSelect] = useState([
-    {
-      name: "მიუთითეთ დაშვების დონე", // Access level
-      firstOption: "დაშვების დონე", // Placeholder option
-      controller: true, // Initially enabled
-      state: statePropOfStateOfSelect[0],
-      value: "", // Default selected value
-    },
-    {
-      name: "მიუთითეთ დეპარტამენტი", // Department
-      firstOption: "დეპარტამენტი", // Placeholder option
-      controller: false, // Disabled by default
-      state: statePropOfStateOfSelect[1],
-      departmentIdentifier: 0,
-      value: "",
-    },
-    {
-      name: "მიუთითეთ სამართველო", // Directorate
-      firstOption: "სამართველო", // Placeholder option
-      controller: false, // Disabled by default
-      state: statePropOfStateOfSelect[2],
-      value: "",
-    },
-    {
-      name: "მიუთითეთ განყოფილება", // Division
-      firstOption: "განყოფილება", // Placeholder option
-      controller: false, // Disabled by default
-      state: statePropOfStateOfSelect[3],
-      value: "",
-    },
-  ]);
-
+  // Effect to populate dropdown options when data is fetched
   useEffect(() => {
     if (stateFetchedData.length > 0) {
       setStatePropOfStateOfSelect((prev) => {
-        const Data = [...prev];
-        Data[0] = stateFetchedData[0].levels; // Populate access levels
-        Data[1] = [];
-        for (let i = 0; i < stateFetchedData[0].departments.length; i++) {
-          Data[1].push(stateFetchedData[0].departments[i].name);
-        } // Populate departments
-        return Data;
+        const values = [...prev];
+        values[0] = stateFetchedData[0].levels; // Populate access levels
+        values[1] = stateFetchedData[0].departments.map((dept) => dept.name); // Populate departments
+        return values;
       });
     }
   }, [stateFetchedData]);
 
-  // Effect to update statesOfSelect whenever statePropOfStateOfSelect changes
+  // Effect to synchronize dropdown options with their states
   useEffect(() => {
     setStateOfSelect((prev) =>
       prev.map((item, index) => ({
         ...item,
-        state: statePropOfStateOfSelect[index], // Sync state data
+        state: statePropOfStateOfSelect[index], // Attach the corresponding options
       }))
     );
   }, [statePropOfStateOfSelect]);
 
-  // Log dropdown states for debugging
-  useEffect(() => {
-    console.log(statesOfSelect);
-  }, [statesOfSelect]);
-
-  // Fetch structure data from API
+  // Fetch structure data from API when the component mounts
   useEffect(() => {
     const RequestStructureData = async () => {
       try {
@@ -108,13 +64,13 @@ const AddNewUser: React.FC<{ onClickClose: () => void }> = ({
             withCredentials: true,
           }
         );
-        setStateFetchedData(response.data); // Save fetched data
+        setStateFetchedData(response.data); // Save the fetched data
         console.log("Data fetched successfully");
       } catch (err: any) {
         if (err.response?.status === 401) {
           window.location.href = "/"; // Redirect if unauthorized
         } else {
-          console.error("Error while fetching data", err);
+          console.error("Error fetching data", err);
         }
       }
     };
@@ -122,147 +78,73 @@ const AddNewUser: React.FC<{ onClickClose: () => void }> = ({
   }, []);
 
   // Handle changes in dropdowns
-  const handleChange = (
-    arg: string,
-    controllerIndex: number,
-    index: number
-  ) => {
-    setStateOfSelect((prev) => {
-      const values = [...prev];
-      values[1].controller = true;
-      // to make logic which define auto configuration of access which is above 4level or which is equal 4 that logic disable in that kind specific select options because they are auto configurable
-      if (Number(values[0].value) < 4) {
-        values[controllerIndex].controller = true;
-      } else {
-        if (Number(values[0].value) === 4) {
-          if (index === 1) {
-            values[2].controller = true;
-          } else if (index === 2) {
-            values[3].controller = false;
-          }
-        } else {
-          values[2].controller = false;
-        }
-        values[3].controller = false;
-      }
-      // to make logic which define when change level to make empty the values
-      if (index === 0) {
-        values[1].value = "";
-        values[2].controller = false;
-        values[2].value = "";
-        values[3].controller = false;
-        values[3].value = "";
-      }
-      values[index].value = DOMPurify.sanitize(arg); // Set selected value
-
-      if (index === 1) {
-        values[1].departmentIdentifier =
-          statePropOfStateOfSelect[1].indexOf(arg);
-      }
-      return values;
+  const handleChange = (arg: string, index: number) => {
+    setStateOfSelect((prevState) => {
+      return helperSetStateOfSelect(
+        prevState,
+        index,
+        arg,
+        statePropOfStateOfSelect
+      );
     });
 
-    // Handle department-specific logic
-
+    // Update department-specific dropdowns
     if (index === 1) {
       for (let i = 0; i < stateFetchedData[0].departments.length; i++) {
         if (arg === stateFetchedData[0].departments[i].name) {
           setStatePropOfStateOfSelect((prev) => {
-            const values = [...prev];
-            values[2] = []; // Reset directorate options
-            values[3] = [];
-            setStateOfSelect((prev) => {
-              const result = [...prev];
-              result[2].value = "";
-              result[3].value = "";
-              return result;
-            });
-            for (
-              let o = 0;
-              o < stateFetchedData[0].departments[i].diversions.length;
-              o++
-            ) {
-              const diversion =
-                stateFetchedData[0].departments[i].diversions[o].name;
-              values[2].push(diversion); // Add diversion names
-            }
-            return values;
+            return helperStatePropOfStateOfSelect(prev, i, stateFetchedData); // Populate diversions
           });
           break;
         }
       }
     } else if (index === 2) {
-      setStateOfSelect((prev) => {
-        const result = [...prev];
-        result[3].value = "";
-        return result;
-      });
+      //Update diversion specific dropdowns
       setStatePropOfStateOfSelect((prev) => {
-        const values = [...prev];
-        values[3] = []; //Reset direcorate options
-        const currentDepartmentDiversions =
-          stateFetchedData[0].departments[
-            statesOfSelect[1].departmentIdentifier
-              ? statesOfSelect[1].departmentIdentifier
-              : 0
-          ].diversions;
-        for (let i = 0; i < currentDepartmentDiversions.length; i++) {
-          if (currentDepartmentDiversions[i].name === arg) {
-            for (
-              let o = 0;
-              o < currentDepartmentDiversions[i].sections.length;
-              o++
-            ) {
-              values[3].push(currentDepartmentDiversions[i].sections[o]);
-            }
-
-            break;
-          }
-        }
-        return values;
+        return helperStatePropOfStateOfSelectNd(
+          prev,
+          stateFetchedData,
+          statesOfSelect,
+          arg
+        ); // Populate divisions
       });
     }
   };
 
-  //close component
+  // Close the component and notify the parent
   const handleClose = useCallback(
     (arg: boolean) => {
-      if (!arg) {
-        onClickClose();
-      }
+      if (!arg) onClickClose();
     },
     [onClickClose]
   );
 
+  // Submit user data to the server
   const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await axios.post(
         `${apiUrl}/users/addUsers`,
         {
-          fullname: stateOfUsersInputs[2].value,
-          username: stateOfUsersInputs[0].value,
-          passwordHash: stateOfUsersInputs[1].value,
-          level: statesOfSelect[0].value,
-          department: statesOfSelect[1].value,
-          diversion: statesOfSelect[2].value,
-          section: statesOfSelect[3].value,
+          fullname: stateOfUsersInputs[2].value, // User's full name
+          username: stateOfUsersInputs[0].value, // Authorization code
+          passwordHash: stateOfUsersInputs[1].value, // Password
+          level: statesOfSelect[0].value, // Access level
+          department: statesOfSelect[1].value, // Department
+          diversion: statesOfSelect[2].value, // Diversion
+          section: statesOfSelect[3].value, // Division
         },
         { withCredentials: true }
       );
-
-      console.log("user Added succefully");
-      onClickClose();
+      onClickClose(); // Close the component after successful submission
     } catch (err: any) {
-      // Chek if the error is 401(unauthorized) and if it is then redirect to login page
-      if (err.response.status === 401) {
-        window.location.href = "/";
+      if (err.response?.status === 401) {
+        window.location.href = "/"; // Redirect if unauthorized
       } else {
-        console.error("Error creating tasks:", err);
+        console.error("Error submitting data:", err);
       }
     }
   };
-
   return (
     <div className="w-[450px] fixed right-0 top-0 h-3/4 flex flex-col">
       {/* Header */}
@@ -310,8 +192,8 @@ const AddNewUser: React.FC<{ onClickClose: () => void }> = ({
                 disabled={!values.controller} // Enable based on controller
                 onChange={(e) =>
                   values.firstOption === "განყოფილება"
-                    ? handleChange(e.target.value, index, index)
-                    : handleChange(e.target.value, index + 1, index)
+                    ? handleChange(e.target.value, index)
+                    : handleChange(e.target.value, index)
                 }
               >
                 {/* Placeholder option */}

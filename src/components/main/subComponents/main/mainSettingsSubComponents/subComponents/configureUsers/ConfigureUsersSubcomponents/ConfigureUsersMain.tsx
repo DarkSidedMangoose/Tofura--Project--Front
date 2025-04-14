@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
-import "../../../../../Scrollbar.css";
-import PropertyNames, { ValuesOfHeader } from "./ConfigureUsersDatas";
-import { UsersInterface } from "./ConfigureUsersSubcomponents/ConfigureUsers";
-import Edit from "../../../../../../../assets/images/main/edit.webp";
+import "../../../../../../Scrollbar.css";
+import {
+  PropertyNames,
+  ValuesOfHeader,
+} from "./configureUsersDatas/ConfigureUsersDatas";
+import { UsersInterface } from "../ConfigureUsers";
+import Edit from "../../../../../../../../assets/images/main/edit.webp";
 
 const ConfigureUsersMain: React.FC<{ refreshUsers: boolean }> = ({
   refreshUsers,
@@ -47,7 +50,13 @@ const ConfigureUsersMain: React.FC<{ refreshUsers: boolean }> = ({
         >
           {ValuesOfHeader.map((value, index) => (
             <div className="w-full h-full flex justify-center items-center">
-              <p className="w-90% ">{value}</p>
+              <p
+                className={`w-90% ${
+                  index === 0 && "flex justify-center items-center"
+                } `}
+              >
+                {value}
+              </p>
             </div>
           ))}
         </div>

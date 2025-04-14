@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import ConfigureUsers from "../subComponents/configureUsers/ConfigureUsersSubcomponents/ConfigureUsers";
+import ConfigureUsers from "../subComponents/configureUsers/ConfigureUsers";
 import AddNewUser from "../subComponents/configureUsers/ConfigureUsersSubcomponents/AddNewUser";
 
 const SettingsMain: React.FC = () => {

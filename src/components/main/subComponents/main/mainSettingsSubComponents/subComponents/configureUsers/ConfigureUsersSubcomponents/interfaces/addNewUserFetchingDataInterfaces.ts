@@ -13,3 +13,12 @@ interface DiversionStruct {
   name: string;
   sections: string[];
 }
+
+export interface StateOfSelect {
+  name: string;
+  firstOption: string;
+  controller: boolean;
+  state: (string | number)[];
+  departmentIdentifier?: number;
+  value: string;
+}

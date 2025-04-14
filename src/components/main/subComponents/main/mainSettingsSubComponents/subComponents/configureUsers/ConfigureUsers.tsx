@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 
-import ConfigureUsersHeader from "../ConfigureUsersHeader";
-import ConfigureUsersMain from "../ConfigureUsersMain";
-import AddNewUser from "./AddNewUser";
+import ConfigureUsersHeader from "./ConfigureUsersSubcomponents/ConfigureUsersHeader";
+import ConfigureUsersMain from "./ConfigureUsersSubcomponents/ConfigureUsersMain";
+import AddNewUser from "./ConfigureUsersSubcomponents/AddNewUser";
 
 export interface UsersInterface {
   id: string;
