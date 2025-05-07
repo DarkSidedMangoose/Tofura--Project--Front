@@ -1,9 +1,35 @@
-import React, { useCallback, useState } from "react";
+import axios from "axios";
+import React, { useCallback, useEffect, useState } from "react";
 
-const Comment: React.FC<{ name: string; onClick: (arg?: string) => void }> = ({
-  name,
-  onClick,
-}) => {
+const apiUrl = process.env.REACT_APP_API_BASE_URL;
+const Comment: React.FC<{
+  name: string;
+  onClick: (arg?: string) => void;
+  id: string;
+}> = ({ name, onClick, id }) => {
+  const [senterAndReceiver, setSenterAndReceiver] = useState<{
+    senterName: string;
+    receiverName: string;
+  }>({
+    senterName: "",
+    receiverName: "",
+  });
+  useEffect(() => {
+    const SendRequest = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/tasks/getUserInfo`, {
+          params: {
+            taskId: id,
+          },
+          withCredentials: true,
+        });
+        setSenterAndReceiver(response.data);
+      } catch (err: any) {
+        console.log("error is occured");
+      }
+    };
+    SendRequest();
+  }, [id]);
   const [comment, setComment] = useState<string>("");
   const handleChangeComment = (arg: string) => {
     setComment(arg);
@@ -25,25 +51,25 @@ const Comment: React.FC<{ name: string; onClick: (arg?: string) => void }> = ({
         <h1 className=" font-semibold h-[10%] min-h-[60px]  text-[16px] bg-sidebarChoose flex justify-center items-center w-full rounded-tl-xl rounded-tr-xl text-white shadow-bottom-right">
           დავალების უარყოფა
         </h1>
-        <p className="text-md font-semibold h-[50px] w-full justify-center items-center flex">
+        <p className="text-md  h-[50px] w-full justify-center items-center flex font-bold">
           {name}
         </p>
-        <div className="w-[95%] h-5% flex items-center justify-between">
-          <p>
-            <span className="font-bold">გამგზავნი:</span> {"გამგზავნის სახელი"}
+        <div className="w-full h-10%  items-center flex justify-between">
+          <p className="px-5 w-40% gap-2">
+            <span className="font-bold    ">გამგზავნი:</span>
+            {senterAndReceiver.senterName}
           </p>
-          <p>
-            <span className="font-bold">მიმღები:</span> {"მიმღების სახელი"}
+          <p className=" flex  w-20% justify-center  ">კომენტარი</p>
+          <p className="px-5 w-40% flex justify-end gap-2">
+            <span className="font-bold ">მიმღები:</span>
+            {senterAndReceiver.receiverName}
           </p>
         </div>
-        <div className="w-95% h-1/2 flex flex-col items-center">
-          <p className=" flex justify-center w-auto p-5 font-semibold ">
-            კომენტარი
-          </p>
+        <div className="w-95% h-1/2 flex flex-col  justify-between">
           <textarea
             onChange={(e) => handleChangeComment(e.target.value)}
             value={comment}
-            className="w-full h-90% text-left p-2 rounded-xl shadow-bottom-right"
+            className="w-full h-90% text-left p-2 rounded-xl shadow-bottom-right text-black"
           ></textarea>
         </div>
         <div className="w-95% h-20% flex justify-end items-center gap-[2%]">
@@ -53,7 +79,10 @@ const Comment: React.FC<{ name: string; onClick: (arg?: string) => void }> = ({
           >
             კომენტარის გაგზავნა
           </button>
-          <button className="w-auto px-5 h-1/3 min-h-[50px] bg-sidebarChoose text-white font-semibold rounded-lg shadow-bottom-right ">
+          <button
+            onClick={() => handleClickButton("decline")}
+            className="w-auto px-5 h-1/3 min-h-[50px] bg-sidebarChoose text-white font-semibold rounded-lg shadow-bottom-right "
+          >
             გაუქმება
           </button>
         </div>

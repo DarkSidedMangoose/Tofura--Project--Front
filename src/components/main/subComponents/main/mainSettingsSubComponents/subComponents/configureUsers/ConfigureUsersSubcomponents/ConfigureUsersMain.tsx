@@ -39,7 +39,7 @@ const ConfigureUsersMain: React.FC<{ refreshUsers: boolean }> = ({
     GetUsersAsync();
   }, [refreshUsers]);
   return (
-    <div className="w-[98%] h-[80%] bg-white rounded-2xl flex flex-col gap-[0.5%] ">
+    <div className="w-[98%] h-90% bg-white rounded-2xl flex flex-col gap-[0.5%] shadow-boxShadow">
       <div className="w-full flex h-[70px] min-h-[70px] bg-sidebarChoose  text-white rounded-tl-lg rounded-tr-lg shadow-bottom">
         <div
           style={{

@@ -240,7 +240,11 @@ const MainMainMainSectionMain: React.FC = () => {
         />
       )}
       {comment && (
-        <Comment name={state[isSelected].wholeName} onClick={closeComment} />
+        <Comment
+          id={state[isSelected].id}
+          name={state[isSelected].wholeName}
+          onClick={closeComment}
+        />
       )}
     </div>
   );

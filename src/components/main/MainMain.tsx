@@ -2,12 +2,11 @@ import React, { Fragment } from "react";
 import { MainMainMainSection } from "./subComponents/main/MainMainMainSection";
 import "./MainAnimations.css";
 import { MainMainHeaderSections } from "./subComponents/main/MainMainHeaderSections";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+
 // import { useMainLoading } from "../../contextApis/ContextLoading";
 import ContextAuthenticatedUserInfo from "../../contextApis/ContextAuthenticatedUserInfo";
 
-const MainMain = () => {
+const MainMain:React.FC = () => {
   return (
     <main
       className={` w-full h-full  min-h-[750px] min-w-[1000px]  flex flex-col justify-center items-center  transition-width relative`}

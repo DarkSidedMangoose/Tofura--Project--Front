@@ -12,6 +12,7 @@ const Main: React.FC = () => {
   const handleIsActive = useCallback((e: boolean) => {
     setIsActive(e);
   }, []);
+
   return (
     <div className="w-screen h-screen ">
       <div className="w-full  h-[90%] flex">

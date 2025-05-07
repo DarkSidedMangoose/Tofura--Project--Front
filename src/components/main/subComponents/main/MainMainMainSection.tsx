@@ -31,7 +31,7 @@ export const MainMainMainSection: React.FC = memo(() => {
         </div>
       ) : (
         isOption === "მომხმარებლების კონფიგურაცია" && (
-          <div className="w-full h-full">
+          <div className="w-full h-80%">
             <SettingsMain />
           </div>
         )

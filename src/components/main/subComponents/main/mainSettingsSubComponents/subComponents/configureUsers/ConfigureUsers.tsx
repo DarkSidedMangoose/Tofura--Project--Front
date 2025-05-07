@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
-import ConfigureUsersHeader from "./ConfigureUsersSubcomponents/ConfigureUsersHeader";
 import ConfigureUsersMain from "./ConfigureUsersSubcomponents/ConfigureUsersMain";
 import AddNewUser from "./ConfigureUsersSubcomponents/AddNewUser";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../../../redux/store";
 export interface UsersInterface {
   id: string;
   fullname: string;
@@ -16,6 +16,14 @@ export interface UsersInterface {
 }
 
 const ConfigureUsers: React.FC = () => {
+  const ConfigureUsersHeaderButOptions =
+    useSelector((state: RootState) => state.ConfigureUsersHeaderButOptionSetter);
+
+    useEffect(() => {
+       if (ConfigureUsersHeaderButOptions.identifier === "AddButton") {
+         setClickIdentifies((prev) => ({ ...prev, isAddButtonClicked: ConfigureUsersHeaderButOptions.show }));
+       }
+    },[ConfigureUsersHeaderButOptions])
   const [refreshUsers, setRefreshUsers] = useState<boolean>(false);
   const [clickIdentifies, setClickIdentifies] = useState<{
     isAddButtonClicked: boolean;
@@ -24,24 +32,16 @@ const ConfigureUsers: React.FC = () => {
     isAddButtonClicked: false,
     isAddFilterClicked: false,
   });
-  const handleClickAddButton = useCallback((arg: boolean, name: string) => {
-    if (name === "AddButton") {
-      setClickIdentifies((prev) => ({ ...prev, isAddButtonClicked: arg }));
-    } else if (name === "AddFilter") {
-      setClickIdentifies((prev) => ({ ...prev, isAddFilterClicked: arg }));
-    }
-  }, []);
+  
   const handleAddUserClose = useCallback(() => {
     setRefreshUsers(!refreshUsers);
-    setClickIdentifies((prev) => ({ ...prev, isAddButtonClicked: false }));
   }, [refreshUsers]);
 
   return (
-    <div className="w-full h-full  text-sidebarChoose border-t-2 border-dotted border-opacity-30 border-sidebarChoose py-[2%] flex flex-col items-center  gap-[2%] custom-scrollbar">
-      <ConfigureUsersHeader setClickAddButton={handleClickAddButton} />
+    <div className="w-full h-full  text-sidebarChoose   border-sidebarChoose  flex flex-col items-center   custom-scrollbar">
       <ConfigureUsersMain refreshUsers={refreshUsers} />
       {clickIdentifies.isAddButtonClicked && (
-        <AddNewUser onClickClose={handleAddUserClose} />
+        <AddNewUser handleAddUserClose={handleAddUserClose} />
       )}
     </div>
   );

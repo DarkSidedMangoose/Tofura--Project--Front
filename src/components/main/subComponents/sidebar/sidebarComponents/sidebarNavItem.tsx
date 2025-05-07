@@ -14,7 +14,7 @@ export const NavItem: React.FC<NavItemProps> = memo(
       <div
         onClick={onClick}
         className={`w-full h-1/5 flex justify-center items-center rounded-[100%] hover:opacity-70 cursor-pointer ${
-          NavIsActive ? "bg-blue-900" : ""
+          NavIsActive && "bg-blue-900"
         }`}
         onMouseEnter={onMouseEnter ? () => onMouseEnter(alt) : undefined}
       >

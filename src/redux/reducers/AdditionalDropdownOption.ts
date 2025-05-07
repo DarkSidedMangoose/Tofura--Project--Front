@@ -3,9 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 interface AdditionalInfoOptionInterface {
   data: string;
 }
-
+const cookieValue = localStorage.getItem("additionalInfoState");
 const initialState: AdditionalInfoOptionInterface = {
-  data: "ობიექტების რეესტრი",
+  data: cookieValue ? cookieValue : "ობიექტების რეესტრი",
 };
 
 const AdditionalInfoOptionSlice = createSlice({

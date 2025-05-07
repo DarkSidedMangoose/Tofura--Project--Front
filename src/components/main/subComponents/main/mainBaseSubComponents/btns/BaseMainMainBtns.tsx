@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect } from "react";
+import React, { Fragment, useCallback } from "react";
 import { UseContextAuthenticatedUserInfo } from "../../../../../../contextApis/ContextAuthenticatedUserInfo";
 
 export const InspectMainButs: React.FC<{
@@ -10,7 +10,6 @@ export const InspectMainButs: React.FC<{
   setClickedOnDeclined: () => void;
 }> = ({
   selected,
-  clicked,
   setClickedOnSent,
   setClickedOnEnd,
   setClickedOnDeclined,
@@ -30,7 +29,7 @@ export const InspectMainButs: React.FC<{
     if (selected !== -1) {
       setClickedOnDeclined();
     }
-  }, [setClickedOnDeclined]);
+  }, [setClickedOnDeclined, selected]);
   return (
     <Fragment>
       {baseIdentifier === "გაცემული დავალებები" ||

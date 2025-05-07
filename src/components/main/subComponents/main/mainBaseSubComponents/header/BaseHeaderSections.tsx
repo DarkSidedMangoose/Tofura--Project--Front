@@ -8,7 +8,6 @@ import {
   BaseSearchFilterButton,
   BaseSearchSendButton,
   BaseSyncButton,
-  BaseToArchive,
 } from "../btns/BaseMainHeaderBtns";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../../redux/store";
@@ -33,7 +32,11 @@ export const MainMainHeaderSecondSection: React.FC = memo(() => {
 
   const clickHandler = (arg: string) => {
     dispatch(setInspectBaseIdentifier(arg));
+    localStorage.setItem("inspetBaseIdentifier", arg);
   };
+  const isIdentifierInspetObject = useSelector(
+    (state: RootState) => state.inspectObjectIdentifier.data
+  );
   const isOption = useSelector(
     (state: RootState) => state.AdditionalInfoOption.data
   );
@@ -45,6 +48,7 @@ export const MainMainHeaderSecondSection: React.FC = memo(() => {
           <select
             id="dropdown"
             name="options"
+            value={isIdentifierInspetObject}
             className="bg-sidebarChoose text-white w-full h-full font-semibold opacity-90 rounded-xl text-sm custom-select  "
             onChange={(e) => clickHandler(e.target.value)}
           >
@@ -77,26 +81,6 @@ export const MainMainHeaderSecondSection: React.FC = memo(() => {
               გაგზავნილი დასრულების მოთხოვნები
             </option>
           </select>
-          {/* <button
-            className={` ${
-              isIdentifier
-                ? "bg-sidebarChoose text-white"
-                : "bg-white text-sidebarChoose"
-            } border-2  border-sidebarChoose font-semibold rounded-lg w-1/2 h-full`}
-            onClick={() => clickHandler(true)}
-          >
-            მიმდინარე
-          </button>
-          <button
-            className={` ${
-              isIdentifier
-                ? "bg-white text-sidebarChoose"
-                : "bg-sidebarChoose text-white"
-            } border-2  border-sidebarChoose font-semibold rounded-lg w-1/2 h-full`}
-            onClick={() => clickHandler(false)}
-          >
-            გაგზავნილი
-          </button> */}
         </section>
       )}
     </Fragment>

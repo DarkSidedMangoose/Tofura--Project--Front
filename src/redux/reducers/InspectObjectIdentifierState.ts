@@ -4,8 +4,9 @@ interface Identifier {
   data: string;
 }
 
+const value = localStorage.getItem("inspetBaseIdentifier");
 const initialState: Identifier = {
-  data: "მიმდინარე დავალებები",
+  data: value ? value : "მიმდინარე დავალებები",
 };
 
 const InspectObjectIdentifierSlice = createSlice({

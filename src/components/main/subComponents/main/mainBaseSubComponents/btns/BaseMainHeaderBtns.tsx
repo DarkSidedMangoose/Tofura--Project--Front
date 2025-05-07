@@ -96,17 +96,20 @@ export const BasePlusButton: React.FC = memo(() => {
   );
 
   useEffect(() => {
-    if (isChoosed != -1) {
+    if (isChoosed !== -1) {
       setShowDropdown(false);
     }
   }, [isChoosed]);
 
+  const handleClick = (arg: any) => {
+    setShowDropdown(false);
+  };
   return (
     <div className={` h-full w-[7%] min-w-[30px] z-30 relative`}>
       <button
         onClick={() => {
           if (isOption === "ინსპექტირების ობიექტები") {
-            if (isChoosed != -1) {
+            if (isChoosed !== -1) {
               setShowDropdown(!showDropdown);
             }
           }
@@ -122,11 +125,17 @@ export const BasePlusButton: React.FC = memo(() => {
       </button>
 
       {showDropdown && (
-        <div className="bg-loginBackground w-[200px] mt-[20%] h-[100px] border-sidebarChoose border-2">
-          <p className="font-semibold text-sidebarChoose text-[13px] h-1/2 flex justify-center items-center border-b-sidebarChoose border-b-2 cursor-pointer ">
+        <div className="bg-white w-[200px] mt-[20%] h-[100px] border-[1px] border-solid border-sidebarChoose rounded-[8px]">
+          <p
+            className="font-semibold text-sidebarChoose text-[13px] h-1/2 flex justify-center items-center border-b-sidebarChoose border-b-[1px] cursor-pointer "
+            onClick={(arg) => handleClick(arg)}
+          >
             დოკუმენტის გენერირება
           </p>
-          <p className="font-semibold text-sidebarChoose text-[13px] h-1/2 flex justify-center items-center  cursor-pointer">
+          <p
+            className="font-semibold text-sidebarChoose text-[13px] h-1/2 flex justify-center items-center  cursor-pointer"
+            onClick={(arg) => handleClick(arg)}
+          >
             ატვირთვა
           </p>
         </div>

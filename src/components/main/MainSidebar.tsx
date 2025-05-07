@@ -106,6 +106,7 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
       toggleSidebar(identifier);
       // setLoading(true);
       dispatch(setAdditionalInfoOption("პროფილი"));
+      localStorage.setItem("additionalInfoState", "პროფილი");
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -118,7 +119,7 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
           className={` w-full h-full bg-sidebarChoose flex flex-col items-center shadow-bottom-right`}
         >
           <img src={MainLogo} className="w-[70%] mt-[30%]" alt="logo"></img>
-          <nav className="w-[60%] h-[50%] mt-[40%]">
+          <nav className="w-[60%] h-[40%] mt-[40%]">
             <NavItem
               icon={Base}
               alt="base"

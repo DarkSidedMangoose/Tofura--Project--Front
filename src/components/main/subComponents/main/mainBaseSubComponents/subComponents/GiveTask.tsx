@@ -94,12 +94,12 @@ const GiveTask: React.FC<{
                 alt={`${user.fullname}`}
               />
               <div className="w-[83%] h-80% flex flex-col items-center  absolute right-0 ">
-                <div className=" relative w-full h-full flex flex-col  ">
+                <div className=" relative w-full h-full flex flex-col text-sm ">
                   <p className="w-full flex justify-center font-bold ">{`${user.fullname}`}</p>
 
                   <p className="w-full flex justify-start  ">
-                    <span className="font-bold mr-2">განხრა: </span>
-                    {user.diversion}
+                    <span className="font-bold mr-2">დეპარტამენტი: </span>
+                    {user.department}
                   </p>
                   <p className="w-full flex justify-start ">
                     <span className="font-bold mr-2">თანამდებობა: </span>
@@ -108,7 +108,7 @@ const GiveTask: React.FC<{
                   {user.department && (
                     <p className="w-full  flex justify-start  ">
                       <span className="font-bold mr-2">სამართველო: </span>
-                      {`${user.department}`}
+                      {`${user.diversion}`}
                     </p>
                   )}
                 </div>

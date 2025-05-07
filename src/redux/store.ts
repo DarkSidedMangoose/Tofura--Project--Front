@@ -3,6 +3,7 @@ import AdditionalInfoOptionReducer from "./reducers/AdditionalDropdownOption";
 import BasesChoosedOptionReducer from "./reducers/BasesChoosedOption";
 import InspectObjectIdentifierReducer from "./reducers/InspectObjectIdentifierState";
 import setTaskLogInfoReducer from "./reducers/TaskLogsInfo";
+import setConfigureUsersHeaderSubComponentsShow from "./reducers/ConfigureUsersHeaderButOptions";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,8 @@ export const store = configureStore({
     BasesChoosedOption: BasesChoosedOptionReducer, // the purpose of that is to identify object which has choosed and acumulate info about that
     inspectObjectIdentifier: InspectObjectIdentifierReducer,
     TaskLogInfo: setTaskLogInfoReducer,
+    ConfigureUsersHeaderButOptionSetter:
+      setConfigureUsersHeaderSubComponentsShow,
   },
 });
 

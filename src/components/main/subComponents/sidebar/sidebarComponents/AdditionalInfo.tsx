@@ -67,6 +67,7 @@ const AdditionalInfoOfSidebar: React.FC<{
 
   const setOption = (data: string) => {
     dispatch(setAdditionalInfoOption(data));
+    localStorage.setItem("additionalInfoState", data);
   };
   return (
     <div className="space-y-24 w-full flex justify-center">

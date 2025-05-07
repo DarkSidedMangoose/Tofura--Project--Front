@@ -14,11 +14,15 @@ import {
   StateOfUsersInputs,
   StatesOfSelect,
 } from "./configureUsersDatas/ConfigureUsersDatas";
+import { useDispatch } from "react-redux";
+import { setConfigureUsersHeaderButOptions } from "../../../../../../../../redux/reducers/ConfigureUsersHeaderButOptions";
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
-const AddNewUser: React.FC<{ onClickClose: () => void }> = ({
-  onClickClose,
+const AddNewUser: React.FC<{ handleAddUserClose: () => void }> = ({
+  handleAddUserClose,
 }) => {
+  const dispatch = useDispatch();
+
   // States
   const [stateFetchedData, setStateFetchedData] = useState<
     [] | StateFetchedData[]
@@ -112,12 +116,15 @@ const AddNewUser: React.FC<{ onClickClose: () => void }> = ({
   };
 
   // Close the component and notify the parent
-  const handleClose = useCallback(
-    (arg: boolean) => {
-      if (!arg) onClickClose();
-    },
-    [onClickClose]
-  );
+  const handleClose = useCallback(() => {
+    handleAddUserClose();
+    dispatch(
+      setConfigureUsersHeaderButOptions({
+        show: false,
+        identifier: "AddButton",
+      })
+    );
+  }, []);
 
   // Submit user data to the server
   const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -136,7 +143,7 @@ const AddNewUser: React.FC<{ onClickClose: () => void }> = ({
         },
         { withCredentials: true }
       );
-      onClickClose(); // Close the component after successful submission
+      handleClose(); // Close the component after successful submission
     } catch (err: any) {
       if (err.response?.status === 401) {
         window.location.href = "/"; // Redirect if unauthorized
@@ -160,8 +167,11 @@ const AddNewUser: React.FC<{ onClickClose: () => void }> = ({
         <div className="w-full h-80% flex-col flex items-center overflow-y-auto py-4">
           {stateOfUsersInputs.map((props, index) => (
             <div className="w-80% min-h-[100px] flex justify-center items-center flex-col">
-              <p className="w-full font-semibold">{props.name}</p>
+              <label htmlFor={`${props.name}`} className="w-full font-semibold">
+                {props.name}
+              </label>
               <input
+                id={`${props.name}`}
                 className="w-full h-[50px] bg-white rounded-md text-sm px-2"
                 placeholder={props.placeholder}
                 value={props.value}
@@ -183,10 +193,12 @@ const AddNewUser: React.FC<{ onClickClose: () => void }> = ({
               key={index}
               className="w-80% min-h-[100px] flex justify-center  flex-col"
             >
-              <p className="font-semibold">{values.name}</p>
+              <label htmlFor={`${values.name}`} className="font-semibold">
+                {values.name}
+              </label>
               <select
+                id={`${values.name}`}
                 className="w-full min-h-[50px] bg-white rounded-md"
-                id="LevelDropdown"
                 name="options"
                 value={values.value} // Default state
                 disabled={!values.controller} // Enable based on controller
@@ -214,7 +226,7 @@ const AddNewUser: React.FC<{ onClickClose: () => void }> = ({
             </div>
           ))}
         </div>
-        <div className="w-full h-20% flex justify-end items-center gap-[5%] font-semibold">
+        <div className="w-full h-20% flex justify-end items-center gap-[5%] font-semibold shadow-bottom-right">
           <button
             className="w-auto h-1/2 px-10 rounded-lg bg-sidebarChoose text-white cursor-not-allowed opacity-40"
             type="submit"
@@ -222,7 +234,7 @@ const AddNewUser: React.FC<{ onClickClose: () => void }> = ({
             დამატება
           </button>
           <button
-            onClick={() => handleClose(false)}
+            onClick={() => handleClose()}
             className="w-auto h-1/2 px-8 rounded-lg bg-sidebarChoose text-white"
           >
             გაუქმება
