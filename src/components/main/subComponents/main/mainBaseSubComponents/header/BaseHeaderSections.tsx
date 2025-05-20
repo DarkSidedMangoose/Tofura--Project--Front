@@ -99,7 +99,7 @@ export const MainMainHeaderThirdSection: React.FC = memo(() => {
   );
   return (
     <section className="h-[60%]  min-h-[30px] w-30%  flex items-center  gap-[1%] justify-end">
-      {isOption !== "შემოწმებული ობიექტების რეესტრი" ? (
+      {isOption !== "შემოწმებული ობიექტების რეესტრი" || isOption  ? (
         <Fragment>
           {isIdentifierInspetObject === "მიმდინარე დავალებები" && (
             <BaseSyncButton />

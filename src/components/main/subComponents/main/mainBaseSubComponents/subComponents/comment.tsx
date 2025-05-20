@@ -47,7 +47,7 @@ const Comment: React.FC<{
 
   return (
     <div className="bg-[#fff6] w-full h-full fixed top-0 left-0 z-[61] flex flex-col items-center justify-center">
-      <div className=" bg-[#e3e0e0] w-1/2 min-w-[800px] h-3/4 min-h-[400px] relative text-sidebarChoose flex items-center  shadow-bottom-right flex-col  rounded-xl">
+      <div className=" bg-[#e3e0e0] w-1/2 min-w-[900px] h-3/4 min-h-[400px] relative text-sidebarChoose flex items-center  shadow-bottom-right flex-col  rounded-xl">
         <h1 className=" font-semibold h-[10%] min-h-[60px]  text-[16px] bg-sidebarChoose flex justify-center items-center w-full rounded-tl-xl rounded-tr-xl text-white shadow-bottom-right">
           დავალების უარყოფა
         </h1>
@@ -55,11 +55,10 @@ const Comment: React.FC<{
           {name}
         </p>
         <div className="w-full h-10%  items-center flex justify-between">
-          <p className="px-5 w-40% gap-2">
+          <p className="px-5 w-40% flex gap-2">
             <span className="font-bold    ">გამგზავნი:</span>
             {senterAndReceiver.senterName}
           </p>
-          <p className=" flex  w-20% justify-center  ">კომენტარი</p>
           <p className="px-5 w-40% flex justify-end gap-2">
             <span className="font-bold ">მიმღები:</span>
             {senterAndReceiver.receiverName}
@@ -69,6 +68,7 @@ const Comment: React.FC<{
           <textarea
             onChange={(e) => handleChangeComment(e.target.value)}
             value={comment}
+            placeholder={` მაგ: "დავალებას აკლია ფოტო ვიდეო მასალები."`}
             className="w-full h-90% text-left p-2 rounded-xl shadow-bottom-right text-black"
           ></textarea>
         </div>
