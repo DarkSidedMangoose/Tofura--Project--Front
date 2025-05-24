@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "../../../../Scrollbar.css";
-import { InspectMainButs } from "../btns/BaseMainMainBtns";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../../redux/store";
 import { setChoose } from "../../../../../../redux/reducers/BasesChoosedOption";
@@ -9,6 +8,8 @@ import GiveTask from "../subComponents/GiveTask";
 import { useSignalR } from "../../../../../../contextApis/ContextSignalR";
 import { DataLogs } from "../subComponents/DataLogs";
 import Comment from "../subComponents/comment";
+import { setInspectBaseIdentifier } from "../../../../../../redux/reducers/InspectObjectIdentifierState";
+import { OnGoingInspectButtons } from "../../../../../reusableComponents/MainMain/OngoingInspectButtons";
 
 //take url for tasks axios requests from env file
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
@@ -56,6 +57,15 @@ const MainMainMainSectionMain: React.FC = () => {
   const isOption = useSelector(
     (state: RootState) => state.AdditionalInfoOption.data
   );
+
+  //
+  useEffect(() => {
+    if (isOption !== "ინსპექტირების ობიექტები") {
+    dispatch(setInspectBaseIdentifier("მიმდინარე დავალებები"));
+    localStorage.setItem("inspetBaseIdentifier", "მიმდინარე დავალებები");
+    console.log("mimdinare");
+    }
+  }, [isOption]);
 
   // take identifier of which kind of data is selected in tasks(onGoing, onPending, onApproval, pendingApproval) from redux
   const isIdentifierInspetObject = useSelector(
@@ -219,7 +229,7 @@ const MainMainMainSectionMain: React.FC = () => {
       </div>
       {isOption === "ინსპექტირების ობიექტები" && (
         <section className="w-98% h-[29.7%] flex justify-end gap-[1%] items-center">
-          <InspectMainButs
+          <OnGoingInspectButtons
             setClickedOnEnd={handleEndTask}
             selected={isSelected}
             clicked={sentBtnClicked}

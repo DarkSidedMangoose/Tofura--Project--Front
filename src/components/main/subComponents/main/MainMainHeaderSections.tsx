@@ -1,8 +1,7 @@
 import React, { Fragment, memo } from "react";
-import BaseHeader from "./mainBaseSubComponents/header/BaseHeader";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import ConfigrueUsersHeader from "./mainSettingsSubComponents/subComponents/configureUsers/ConfigureUsersSubcomponents/ConfigureUsersHeader";
+import ButtonsHeader from "../../../reusableComponents/MainHeaders/ButtonsHeader";
 // import { useAdditionalOption } from "../../../../contextApis/ContextChooseFromAdditional";
 
 export const MainMainHeaderSections: React.FC = memo(() => {
@@ -27,15 +26,14 @@ export const MainMainHeaderSections: React.FC = memo(() => {
       isOption === "ახალი ობიექტები" ||
       isOption === "შემოწმებული ობიექტების რეესტრი" ||
       isOption === "წაშლილი ობიექტები" ? (
-        <div className="w-full h-[7%] flex justify-center items-center  ">
-          <BaseHeader />
-        </div>
+        <ButtonsHeader identifier="base" />
       ) : (
-        isOption === "მომხმარებლების კონფიგურაცია" && 
-        <div className="w-full h-[7%] flex justify-center items-center  ">
-        
-        <ConfigrueUsersHeader /> 
-        </div>
+        isOption === "მომხმარებლების კონფიგურაცია" && (
+          // <div className="w-full h-[7%] flex justify-center items-center  ">
+          <ButtonsHeader identifier="Settings" />
+          /* <ConfigrueUsersHeader />  */
+          // </div>
+        )
       )}
     </Fragment>
   );

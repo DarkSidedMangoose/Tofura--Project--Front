@@ -17,16 +17,24 @@ const Comment: React.FC<{
   useEffect(() => {
     const SendRequest = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/tasks/getUserInfo`, {
-          params: {
-            taskId: id,
-          },
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          `${apiUrl}/tasks/getCommentDesireDatas`,
+          {
+            params: {
+              taskId: id,
+            },
+            withCredentials: true,
+          }
+        );
         setSenterAndReceiver(response.data);
       } catch (err: any) {
-        console.log("error is occured");
-      }
+        if (err.response.status === 401) {
+          window.location.href = "/";
+        } else {
+          console.error("Error fetching tasks:", err);
+        }
+      } 
+    
     };
     SendRequest();
   }, [id]);
@@ -69,7 +77,7 @@ const Comment: React.FC<{
             onChange={(e) => handleChangeComment(e.target.value)}
             value={comment}
             placeholder={` მაგ: "დავალებას აკლია ფოტო ვიდეო მასალები."`}
-            className="w-full h-90% text-left p-2 rounded-xl shadow-bottom-right text-black"
+            className="w-full h-90% text-left p-2 rounded-xl shadow-bottom-right text-black outline-none "
           ></textarea>
         </div>
         <div className="w-95% h-20% flex justify-end items-center gap-[2%]">

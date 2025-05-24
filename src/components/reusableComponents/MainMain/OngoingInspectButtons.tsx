@@ -1,7 +1,7 @@
 import React, { Fragment, useCallback } from "react";
-import { UseContextAuthenticatedUserInfo } from "../../../../../../contextApis/ContextAuthenticatedUserInfo";
+import { UseContextAuthenticatedUserInfo } from "../../../contextApis/ContextAuthenticatedUserInfo";
 
-export const InspectMainButs: React.FC<{
+export const OnGoingInspectButtons: React.FC<{
   selected: Number;
   clicked: boolean;
   baseIdentifier: string;

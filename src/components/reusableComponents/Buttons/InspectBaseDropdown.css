@@ -1,0 +1,9 @@
+.custom-select {
+    text-align: center;
+    text-align-last: center;
+    cursor: pointer;
+  }
+  .custom-select option {
+    text-align: left;
+  }
+  
