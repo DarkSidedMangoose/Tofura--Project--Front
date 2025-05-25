@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useCallback, useEffect } from 'react'
 import { Search } from '../Buttons/Search';
 import { Send } from '../Buttons/Send';
 import { Filter } from '../Buttons/Filter';
@@ -11,18 +11,33 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 
 const ButtonsHeader: React.FC<{identifier: string}> = ({identifier}) => {
+  const [inputValue, setInputValue] = React.useState<string>("");
+  const [sendClicked, setSendClicked] = React.useState<boolean>(false);
   const isOption = useSelector(
     (state: RootState) => state.AdditionalInfoOption.data
   );
   const isIdentifierInspetObject = useSelector(
     (state: RootState) => state.inspectObjectIdentifier.data
   );
+  const handleInputChange = useCallback((arg: string) => {
+    // Handle input change logic here
+    setInputValue(arg)
+  },[]);
+
+  const handleClick = useCallback(() => {
+    setSendClicked(!sendClicked);
+
+  }, [sendClicked]);
+ useEffect(() => {
+  console.log(sendClicked, "sendClicked")
+  console.log(inputValue, "inputValue")
+ },[sendClicked])
   return (
     <div className="w-full h-[7%] flex justify-center items-center">
       <div className="h-full  w-98% flex items-center justify-between">
         <div className="h-60% w-40% min-h-[30px] flex items-center gap-[0.5%]">
-          <Search />
-          <Send />
+          <Search identifier={identifier} onChange={handleInputChange}/>
+          <Send onClick={handleClick}/>
           <Filter />
         </div>
         {identifier === "base" && (
