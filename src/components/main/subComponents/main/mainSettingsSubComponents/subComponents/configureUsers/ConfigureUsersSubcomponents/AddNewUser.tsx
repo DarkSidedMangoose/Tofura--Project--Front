@@ -191,7 +191,7 @@ const AddNewUser: React.FC<{ handleAddUserClose: () => void }> = ({
           {statesOfSelect.map((values, index) => (
             <div
               key={index}
-              className="w-80% min-h-[100px] flex justify-center  flex-col"
+              className="w-80% min-h-[100px] max-h-[100px] flex justify-center  flex-col"
             >
               <label htmlFor={`${values.name}`} className="font-semibold">
                 {values.name}

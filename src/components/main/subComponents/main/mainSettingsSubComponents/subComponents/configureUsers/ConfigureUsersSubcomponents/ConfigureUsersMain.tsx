@@ -50,7 +50,7 @@ const ConfigureUsersMain: React.FC<{ refreshUsers: boolean }> = ({
       <div className="w-[99.78%] min-h-300px h-80% bg-white overflow-y-auto flex flex-col gap-[0.5%] shadow-boxShadow rounded-bl-2xl rounded-br-2xl">
         {usersInfo.map((infos, index) => (
           <div
-            className="min-h-[100px] max-h-[100px] w-full grid  border-b-2  text-sm text-gray-700 bg-loginBackground font-semibold "
+            className="min-h-[100px]  w-full grid  border-b-2  text-sm text-gray-700 bg-loginBackground font-semibold "
             style={{
               gridTemplateColumns: "50px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 50px",
               gridTemplateRows: "1fr",

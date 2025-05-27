@@ -10,6 +10,7 @@ import { DataLogs } from "../subComponents/DataLogs";
 import Comment from "../subComponents/comment";
 import { setInspectBaseIdentifier } from "../../../../../../redux/reducers/InspectObjectIdentifierState";
 import { OnGoingInspectButtons } from "../../../../../reusableComponents/MainMain/OngoingInspectButtons";
+// import "../../../../Scrollbar.css"
 
 //take url for tasks axios requests from env file
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
@@ -215,8 +216,8 @@ const MainMainMainSectionMain: React.FC = () => {
   }, [state, isSelected, comment]);
 
   return (
-    <div className="w-full h-90% flex flex-col justify-start items-center">
-      <div className=" h-70% w-full grid grid-rows-5 gap-[1%]">
+    <div className="w-full min-h-[400px] h-full flex flex-col justify-start items-center overflow-y-auto custom-scrollbar">
+      <div className=" h-80%  w-full flex flex-col  gap-[1%] overflow-y-auto shadow-bottom-right ">
         {state &&
           state.map((item, index) => (
             <DataRow
@@ -228,7 +229,7 @@ const MainMainMainSectionMain: React.FC = () => {
           ))}
       </div>
       {isOption === "ინსპექტირების ობიექტები" && (
-        <section className="w-98% h-[29.7%] flex justify-end gap-[1%] items-center">
+        <section className="w-98% h-[20%] flex justify-end gap-[1%] items-center">
           <OnGoingInspectButtons
             setClickedOnEnd={handleEndTask}
             selected={isSelected}
@@ -291,7 +292,7 @@ const DataRow: React.FC<{
     <div
       onClick={onClick}
       style={{ transition: "0.5s" }}
-      className={`w-full  grid grid-cols-7 h-full min-h-[100px] border-b-[2px] text-gray-700 bg-loginBackground cursor-pointer ${
+      className={`w-full  grid grid-cols-7 grid-rows-1 h-full min-h-[100px] max-h-[100px] border-b-[2px] text-gray-700 bg-loginBackground cursor-pointer ${
         selected
           ? " bg-sidebarChoose opacity-95 text-white"
           : "hover:opacity-60"

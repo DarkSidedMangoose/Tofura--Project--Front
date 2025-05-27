@@ -15,7 +15,7 @@ export const Review: React.FC = memo(() => {
           isChoosed === -1
             ? "opacity-20 cursor-not-allowed "
             : "opacity-100 cursor-pointer hover:opacity-70 "
-        } bg-white flex gap-[2%] items-center w-[28%] min-w-[150px] h-full rounded-[8px] border-[2px] border-solid border-sidebarChoose font-semibold text-sidebarChoose text-[14px] shadow-bottom`}
+        } bg-white flex gap-[2%] items-center w-auto min-w-[170px] px-2 h-full rounded-[8px] border-[2px] border-solid border-sidebarChoose font-semibold text-sidebarChoose text-[14px] shadow-bottom`}
       >
         <img
           className=" h-60% object-contain ml-[2%]"
