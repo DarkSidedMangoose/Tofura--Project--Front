@@ -38,13 +38,16 @@ const ButtonsHeader: React.FC<{identifier: string}> = ({identifier}) => {
         <div className="h-60% w-40% min-h-[30px] flex items-center gap-[0.5%]">
           <Search identifier={identifier} onChange={handleInputChange} />
           <Send onClick={handleClick} />
-          <Filter identifier={identifier} />
+          {identifier === "base" && (
+            
+            <Filter identifier={identifier} />
+          )}
         </div>
-        {identifier === "base" && (
           <div className="h-60% w-30% min-h-[30px] flex items-center gap-[0.5%]">
+        {identifier === "base" && (
             <InspectBaseDropdown />
+          )}
           </div>
-        )}
         <div className="h-[60%]  min-h-[30px] w-40%  flex items-center  gap-[1%] justify-end">
           {(isOption === "ობიექტების რეესტრი" ||
             identifier === "Settings" ||

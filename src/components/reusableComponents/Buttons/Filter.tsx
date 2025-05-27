@@ -1,6 +1,6 @@
 import React, {  memo, useCallback } from "react";
 import FilterIcon from "../../../assets/images/main/filter.webp";
-import FilterForBase from "../MainHeaders/Filters/FilterForBase";
+import FilterForBase from "../MainHeaders/FilterForBase";
 
 
 export const Filter: React.FC<{ identifier: string }> = memo(({ identifier }) => {

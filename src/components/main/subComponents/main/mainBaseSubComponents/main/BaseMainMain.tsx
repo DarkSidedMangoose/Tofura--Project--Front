@@ -216,7 +216,7 @@ const MainMainMainSectionMain: React.FC = () => {
 
   return (
     <div className="w-full h-90% flex flex-col justify-start items-center">
-      <div className="mt-[0.3%] h-70% w-full grid grid-rows-5 gap-[1%]">
+      <div className=" h-70% w-full grid grid-rows-5 gap-[1%]">
         {state &&
           state.map((item, index) => (
             <DataRow
@@ -291,7 +291,7 @@ const DataRow: React.FC<{
     <div
       onClick={onClick}
       style={{ transition: "0.5s" }}
-      className={`w-full grid grid-cols-7 h-full border-b-[2px] text-gray-700 bg-loginBackground cursor-pointer ${
+      className={`w-full  grid grid-cols-7 h-full min-h-[100px] border-b-[2px] text-gray-700 bg-loginBackground cursor-pointer ${
         selected
           ? " bg-sidebarChoose opacity-95 text-white"
           : "hover:opacity-60"

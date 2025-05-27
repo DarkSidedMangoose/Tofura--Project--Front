@@ -8,6 +8,7 @@ import {
 } from "./configureUsersDatas/ConfigureUsersDatas";
 import { UsersInterface } from "../ConfigureUsers";
 import Edit from "../../../../../../../../assets/images/main/edit.webp";
+import MainMainHeader from "../../../../../../../reusableComponents/MainMain/MainMainHeader";
 
 const ConfigureUsersMain: React.FC<{ refreshUsers: boolean }> = ({
   refreshUsers,
@@ -37,32 +38,16 @@ const ConfigureUsersMain: React.FC<{ refreshUsers: boolean }> = ({
       }
     };
     GetUsersAsync();
-  }, [refreshUsers]);
+  }, [refreshUsers, apiUrl]);
   return (
-    <div className="w-[98%] h-90%   flex flex-col  ">
-      <div className="w-full flex h-[70px]  min-h-[70px] bg-sidebarChoose  text-white rounded-tl-lg rounded-tr-lg shadow-bottom=">
-        <div
-          style={{
-            gridTemplateColumns: "50px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 50px",
-            gridTemplateRows: "1fr",
-            // Optional, ensures a single row with equal height
-          }}
-          className="h-[70px] min-h-[70px] w-[98%] grid   text-white text-[14px]   font-semibold "
+    <div className="w-[98%] h-full   flex flex-col  items-center  ">
+      <div
+          className={`min-h-[10%]   w-[99.9%] flex items-center flex-col  rounded-br-lg rounded-lg shadow-boxShadow`}
         >
-          {ValuesOfHeader.map((value, index) => (
-            <div className="w-full h-full flex justify-center items-center">
-              <p
-                className={`w-90% ${
-                  index === 0 && "flex justify-center items-center"
-                } `}
-              >
-                {value}
-              </p>
-            </div>
-          ))}
+
+      <MainMainHeader value={ValuesOfHeader} />
         </div>
-      </div>
-      <div className="w-full min-h-300px bg-white overflow-y-auto flex flex-col gap-[0.5%] shadow-boxShadow rounded-bl-2xl rounded-br-2xl">
+      <div className="w-[99.78%] min-h-300px h-80% bg-white overflow-y-auto flex flex-col gap-[0.5%] shadow-boxShadow rounded-bl-2xl rounded-br-2xl">
         {usersInfo.map((infos, index) => (
           <div
             className="min-h-[100px] max-h-[100px] w-full grid  border-b-2  text-sm text-gray-700 bg-loginBackground font-semibold "

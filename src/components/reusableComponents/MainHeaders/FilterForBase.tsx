@@ -8,7 +8,7 @@ const FilterForBase: React.FC<{ onClickClose: () => void }> = ({
     }
     , [onClickClose]);
   return (
-    <div className="absolute flex flex-col w-[700px] h-[400px] bg-white top-[100%] left-0 rounded-xl border-2 border-gray-700 p-3 text-[#a5a1a1] gap-[1.5%] justify-between ">
+    <div className="absolute flex flex-col w-[700px] h-[400px] bg-white top-[100%] left-0 rounded-xl border-2 border-gray-700 p-3 text-[#a5a1a1] gap-[1.5%] justify-between z-50 ">
       <p className="text-[14px] h-[8%] font-bold">კომპლექსური ძებნა</p>
       <input
         placeholder="მიუთითეთ საძიებო სიტყვა..."

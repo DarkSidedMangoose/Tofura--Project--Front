@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import ConfigureUsers from "../subComponents/configureUsers/ConfigureUsers";
 
 const SettingsMain: React.FC = () => {

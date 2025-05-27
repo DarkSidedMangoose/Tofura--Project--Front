@@ -1,4 +1,4 @@
-import React, { Fragment, memo } from "react";
+import React, { Fragment, memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import ButtonsHeader from "../../../reusableComponents/MainHeaders/ButtonsHeader";
@@ -8,7 +8,19 @@ export const MainMainHeaderSections: React.FC = memo(() => {
   const isOption = useSelector(
     (state: RootState) => state.AdditionalInfoOption.data
   );
-
+  const [identifier,setIdnetifier] = useState<string>("base");
+  useEffect(() => {
+    if(isOption === "ობიექტების რეესტრი" ||
+      isOption === "ინსპექტირების ობიექტები" ||
+      isOption === "შემოწმებული ობიექტების რეესტრი" ||
+      isOption === "ახალი ობიექტები" ||
+      isOption === "შემოწმებული ობიექტების რეესტრი" ||
+      isOption === "წაშლილი ობიექტები") {
+      setIdnetifier("base");
+    } else if (isOption === "მომხმარებლების კონფიგურაცია") {
+      setIdnetifier("Settings");
+      }
+  },[isOption])
   return (
     <Fragment>
       <div className=" w-full  h-[10%]  min-h-[50px] flex justify-center items-center relative    ">
@@ -20,21 +32,14 @@ export const MainMainHeaderSections: React.FC = memo(() => {
         </h1>
       </div>
 
-      {isOption === "ობიექტების რეესტრი" ||
+      {(isOption === "ობიექტების რეესტრი" ||
       isOption === "ინსპექტირების ობიექტები" ||
       isOption === "შემოწმებული ობიექტების რეესტრი" ||
       isOption === "ახალი ობიექტები" ||
       isOption === "შემოწმებული ობიექტების რეესტრი" ||
-      isOption === "წაშლილი ობიექტები" ? (
-        <ButtonsHeader identifier="base" />
-      ) : (
-        isOption === "მომხმარებლების კონფიგურაცია" && (
-          // <div className="w-full h-[7%] flex justify-center items-center  ">
-          <ButtonsHeader identifier="Settings" />
-          /* <ConfigrueUsersHeader />  */
-          // </div>
-        )
-      )}
+      isOption === "წაშლილი ობიექტები" || isOption === "მომხმარებლების კონფიგურაცია") && (
+        <ButtonsHeader identifier={identifier} />
+      ) }
     </Fragment>
   );
 });
