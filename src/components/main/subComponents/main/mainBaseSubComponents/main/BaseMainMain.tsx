@@ -10,6 +10,7 @@ import { DataLogs } from "../subComponents/DataLogs";
 import Comment from "../subComponents/comment";
 import { setInspectBaseIdentifier } from "../../../../../../redux/reducers/InspectObjectIdentifierState";
 import { OnGoingInspectButtons } from "../../../../../reusableComponents/MainMain/OngoingInspectButtons";
+import ViewAddObjectData from "../subComponents/ViewAddObjectData";
 // import "../../../../Scrollbar.css"
 
 //take url for tasks axios requests from env file
@@ -217,7 +218,14 @@ const MainMainMainSectionMain: React.FC = () => {
 
   return (
     <div className="w-full min-h-[400px] h-full flex flex-col justify-start items-center overflow-y-auto custom-scrollbar">
-      <div className=" h-80%  w-full flex flex-col  gap-[1%] overflow-y-auto shadow-bottom-right ">
+      <div
+        className={`${
+          isOption === "ინსპექტირების ობიექტები" &&
+          isIdentifierInspetObject === "მიმდინარე დავალებები"
+            ? "h-80%"
+            : "h-full"
+        }  w-full flex flex-col  gap-[1%] overflow-y-auto shadow-bottom-right `}
+      >
         {state &&
           state.map((item, index) => (
             <DataRow
@@ -228,19 +236,20 @@ const MainMainMainSectionMain: React.FC = () => {
             />
           ))}
       </div>
-      {isOption === "ინსპექტირების ობიექტები" && (
-        <section className="w-98% h-[20%] flex justify-end gap-[1%] items-center">
-          <OnGoingInspectButtons
-            setClickedOnEnd={handleEndTask}
-            selected={isSelected}
-            clicked={sentBtnClicked}
-            baseIdentifier={isIdentifierInspetObject}
-            setClickedOnSent={handleSetSentButton}
-            setClickedOnDeclined={handleClickDeclinedButton}
-          />
-        </section>
-      )}
-
+      {isOption === "ინსპექტირების ობიექტები" &&
+        isIdentifierInspetObject === "მიმდინარე დავალებები" && (
+          <section className="w-98% h-[20%] flex justify-end gap-[1%] items-center">
+            <OnGoingInspectButtons
+              setClickedOnEnd={handleEndTask}
+              selected={isSelected}
+              clicked={sentBtnClicked}
+              baseIdentifier={isIdentifierInspetObject}
+              setClickedOnSent={handleSetSentButton}
+              setClickedOnDeclined={handleClickDeclinedButton}
+            />
+          </section>
+        )}
+      <ViewAddObjectData />
       {sentBtnClicked && (
         <GiveTask setClick={handleSetSentButton} id={state[isSelected].id} />
       )}
