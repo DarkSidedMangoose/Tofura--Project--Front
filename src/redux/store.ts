@@ -2,17 +2,16 @@ import { configureStore } from "@reduxjs/toolkit";
 import AdditionalInfoOptionReducer from "./reducers/AdditionalDropdownOption";
 import BasesChoosedOptionReducer from "./reducers/BasesChoosedOption";
 import InspectObjectIdentifierReducer from "./reducers/InspectObjectIdentifierState";
-import setTaskLogInfoReducer from "./reducers/TaskLogsInfo";
 import setConfigureUsersHeaderSubComponentsShow from "./reducers/ConfigureUsersHeaderButOptions";
-
+import baseSubcomponentsShownSlice from "./reducers/BaseSubcomponentsShown";
 export const store = configureStore({
   reducer: {
     AdditionalInfoOption: AdditionalInfoOptionReducer, //the purpose of that is to navigate across sidebar options
     BasesChoosedOption: BasesChoosedOptionReducer, // the purpose of that is to identify object which has choosed and acumulate info about that
     inspectObjectIdentifier: InspectObjectIdentifierReducer,
-    TaskLogInfo: setTaskLogInfoReducer,
     ConfigureUsersHeaderButOptionSetter:
       setConfigureUsersHeaderSubComponentsShow,
+      baseSubComponentOptionsShown: baseSubcomponentsShownSlice, // This reducer manages the visibility state of base subcomponents in the application
   },
 });
 

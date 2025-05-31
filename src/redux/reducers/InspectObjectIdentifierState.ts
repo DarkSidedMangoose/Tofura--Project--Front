@@ -6,7 +6,7 @@ interface Identifier {
 
 const value = localStorage.getItem("inspetBaseIdentifier");
 const initialState: Identifier = {
-  data: value ? value : "მიმდინარე დავალებები",
+  data: value ? value : "გამოგზავნილი დასრულების მოთხოვნები",
 };
 
 const InspectObjectIdentifierSlice = createSlice({

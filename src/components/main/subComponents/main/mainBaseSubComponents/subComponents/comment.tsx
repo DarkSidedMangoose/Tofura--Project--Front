@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
+import { setBaseSubcomponentsShown } from "../../../../../../redux/reducers/BaseSubcomponentsShown";
+import { useDispatch } from "react-redux";
 
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
 const Comment: React.FC<{
@@ -14,6 +16,7 @@ const Comment: React.FC<{
     senterName: "",
     receiverName: "",
   });
+  const dispatch = useDispatch();
   useEffect(() => {
     const SendRequest = async () => {
       try {
@@ -45,6 +48,7 @@ const Comment: React.FC<{
   const handleClickButton = useCallback(
     (arg: string) => {
       if (arg === "send") {
+        dispatch(setBaseSubcomponentsShown(""));
         onClick(comment);
       } else {
         onClick();
@@ -88,7 +92,7 @@ const Comment: React.FC<{
             კომენტარის გაგზავნა
           </button>
           <button
-            onClick={() => handleClickButton("decline")}
+            onClick={() => dispatch(setBaseSubcomponentsShown(""))}
             className="w-auto px-5 h-1/3 min-h-[50px] bg-sidebarChoose text-white font-semibold rounded-lg shadow-bottom-right "
           >
             გაუქმება

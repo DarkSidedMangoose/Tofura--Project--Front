@@ -109,16 +109,10 @@ const FilterForBase: React.FC<{ onClickClose: () => void }> = ({
             placeholder="საქმიანობის გან. მისამართი"
           />
           <div className="h-[28%] flex flex-col font-bold items-start text-sidebarChoose">
-            <p className="h-1/3">თარიღი:</p>
-            <button className="h-2/3 w-2/3 border-[1px] rounded-sm border-gray-400 flex items-center px-2 gap-2">
-              <img
-                src={Calendar}
-                alt="calendar"
-                className="w-[24px] h-[24px]"
-              />
-              26/05/2025
-              <img src={DownArrow} alt="arrow" className="w-[16px] h-[16px]" />
-            </button>
+            <p className="h-1/3 w-full">თარიღი:</p>
+              <input
+                type="date" className='border-[1px] border-gray-400 h-2/3 w-2/3' />
+              
           </div>
           <div className="h-[30%] flex  w-full items-end gap-2 text-[14px] ">
             <button

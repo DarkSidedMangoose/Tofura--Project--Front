@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
+import { setBaseSubcomponentsShown } from "../../../../../../redux/reducers/BaseSubcomponentsShown";
+import { useDispatch } from "react-redux";
 
 interface usersInterface {
   fullname: string;
@@ -23,6 +25,8 @@ const GiveTask: React.FC<{
     receiveUserId: string;
   }>({ taskId: id, receiveUserId: "" });
 
+
+  const dispatch = useDispatch();
   useEffect(() => {
     const takeSpecificUsersFromDb = async () => {
       try {
@@ -60,7 +64,7 @@ const GiveTask: React.FC<{
         await axios.put(`${apiUrl}/tasks/giveTask`, sentTasksIdentifiers, {
           withCredentials: true,
         });
-        handleClick();
+        dispatch(setBaseSubcomponentsShown(""))
       } catch (err: any) {
         // Chek if the error is 401(unauthorized) and if it is then redirect to login page
         if (err.response.status === 401) {
@@ -127,7 +131,7 @@ const GiveTask: React.FC<{
           </button>
           <button
             className="bg-sidebarChoose text-white font-semibold  w-20% h-1/2 rounded-lg shadow-bottom-right transition-all duration-500"
-            onClick={() => handleClick()}
+            onClick={() => dispatch(setBaseSubcomponentsShown(""))}
           >
             გაუქმება
           </button>

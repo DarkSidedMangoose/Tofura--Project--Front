@@ -50,6 +50,9 @@ const ContextAuthenticatedUserInfo: React.FC<children> = ({ children }) => {
     };
     getUserInfo();
   }, []);
+  useEffect(() => {
+    console.log(authenticatedUserInfo)
+  },[authenticatedUserInfo])
   return (
     <authenticatedUserInfoContext.Provider
       value={{ authenticatedUserInfo, setAuthenticatedUserInfo }}
@@ -63,3 +66,8 @@ export default ContextAuthenticatedUserInfo;
 
 export const UseContextAuthenticatedUserInfo = () =>
   useContext(authenticatedUserInfoContext);
+
+
+
+
+

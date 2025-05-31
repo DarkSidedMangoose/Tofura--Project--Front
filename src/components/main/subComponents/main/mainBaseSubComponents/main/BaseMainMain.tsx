@@ -45,7 +45,13 @@ const MainMainMainSectionMain: React.FC = () => {
 
   const [declineTaskComment, setDeclineTaskComment] = useState<string>("");
 
-  //message functionality for signalR message receiving
+
+  const {baseSubComponentsState} = useSelector(
+    (state: RootState) => state.baseSubComponentOptionsShown
+  ); // take base subcomponents shown state from redux
+ 
+    
+    //message functionality for signalR message receiving
   const { message } = useSignalR(); // signalR message which we receive from backend to update database when task is received
   const [signalMessage, setSignalMessage] = useState<boolean>(false);
   useEffect(() => {
@@ -65,7 +71,6 @@ const MainMainMainSectionMain: React.FC = () => {
     if (isOption !== "ინსპექტირების ობიექტები") {
     dispatch(setInspectBaseIdentifier("მიმდინარე დავალებები"));
     localStorage.setItem("inspetBaseIdentifier", "მიმდინარე დავალებები");
-    console.log("mimdinare");
     }
   }, [isOption]);
 
@@ -80,8 +85,7 @@ const MainMainMainSectionMain: React.FC = () => {
   );
 
   // take taskLogs from redux (taskLogs like history of Task from birth to data flow every step what happened to it)
-  const taskLog = useSelector((state: RootState) => state.TaskLogInfo.data);
-
+  
   const [sentBtnClicked, setSentBtnClicked] = useState<boolean>(false); // state for TaskSent component when that component is opened or closed
   const [comment, setComment] = useState<boolean>(false); // state for comment which we send to backend when we send task to someone
 
@@ -96,7 +100,10 @@ const MainMainMainSectionMain: React.FC = () => {
             withCredentials: true,
           });
           setState(response.data);
-          dispatch(setChoose(-1)); // for buttons to be disabled when we take new data from backend
+          if (baseSubComponentsState === "") {
+
+            dispatch(setChoose(-1)); // for buttons to be disabled when we take new data from backend
+          }
         } catch (err: any) {
           // Chek if the error is 401(unauthorized) and if it is then redirect to login page
           if (err.response.status === 401) {
@@ -121,7 +128,12 @@ const MainMainMainSectionMain: React.FC = () => {
         takeTasksFromDb("waitApproval");
       }
     }
-  }, [isIdentifierInspetObject, sentBtnClicked, signalMessage]); // databases changes SentTask component open and close and signalR message receiving is cause re-render
+  }, [
+    isIdentifierInspetObject,
+    sentBtnClicked,
+    signalMessage,
+    baseSubComponentsState,
+  ]); // databases changes SentTask component open and close and signalR message receiving is cause re-render
 
   //when we click on the row of the table we set the selected task in redux and if we click again on the same task we unselect it
   const handleRowClick = (index: number) => {
@@ -212,9 +224,9 @@ const MainMainMainSectionMain: React.FC = () => {
   }, [declineTaskComment]);
 
   //when we click on the declined button we send the request to the backend to decline the task and remove it from the state and send back to the sender
-  const handleClickDeclinedButton = useCallback(() => {
-    setComment(!comment);
-  }, [state, isSelected, comment]);
+  // const handleClickDeclinedButton = useCallback(() => {
+  //   setComment(!comment);
+  // }, [state, isSelected, comment]);
 
   return (
     <div className="w-full min-h-[400px] h-full flex flex-col justify-start items-center overflow-y-auto custom-scrollbar">
@@ -223,7 +235,7 @@ const MainMainMainSectionMain: React.FC = () => {
           isOption === "ინსპექტირების ობიექტები" &&
           isIdentifierInspetObject === "მიმდინარე დავალებები"
             ? "h-80%"
-            : "h-full"
+            : "h-80%"
         }  w-full flex flex-col  gap-[1%] overflow-y-auto shadow-bottom-right `}
       >
         {state &&
@@ -237,29 +249,27 @@ const MainMainMainSectionMain: React.FC = () => {
           ))}
       </div>
       {isOption === "ინსპექტირების ობიექტები" &&
-        isIdentifierInspetObject === "მიმდინარე დავალებები" && (
+        (isIdentifierInspetObject === "მიმდინარე დავალებები" || isIdentifierInspetObject === "გამოგზავნილი დასრულების მოთხოვნები") && (
           <section className="w-98% h-[20%] flex justify-end gap-[1%] items-center">
             <OnGoingInspectButtons
               setClickedOnEnd={handleEndTask}
               selected={isSelected}
               clicked={sentBtnClicked}
-              baseIdentifier={isIdentifierInspetObject}
-              setClickedOnSent={handleSetSentButton}
-              setClickedOnDeclined={handleClickDeclinedButton}
             />
           </section>
         )}
-      <ViewAddObjectData />
-      {sentBtnClicked && (
+      {baseSubComponentsState === "addObject" && <ViewAddObjectData />}
+
+      {baseSubComponentsState === "sendTask" && (
         <GiveTask setClick={handleSetSentButton} id={state[isSelected].id} />
       )}
-      {taskLog && (
+      {baseSubComponentsState === "taskLogs" && (
         <DataLogs
           data={state[isSelected].dataLogs}
           name={state[isSelected].wholeName}
         />
       )}
-      {comment && (
+      {baseSubComponentsState === "comment" && (
         <Comment
           id={state[isSelected].id}
           name={state[isSelected].wholeName}

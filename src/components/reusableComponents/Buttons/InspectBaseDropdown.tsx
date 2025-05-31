@@ -20,7 +20,7 @@ export const InspectBaseDropdown: React.FC = memo(() => {
   const isOption = useSelector(
     (state: RootState) => state.AdditionalInfoOption.data
   );
-
+  
   return (
     <Fragment>
       {isOption === "ინსპექტირების ობიექტები" && (
@@ -34,7 +34,7 @@ export const InspectBaseDropdown: React.FC = memo(() => {
           >
             <option
               value="მიმდინარე დავალებები"
-              className="bg-white text-sidebarChoose text-start  "
+              className="bg-white text-sidebarChoose text-start   "
             >
               მიმდინარე დავალებები
             </option>

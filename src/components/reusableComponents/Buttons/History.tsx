@@ -1,8 +1,8 @@
 import { Fragment, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store";
-import { setTaskLogInfo } from "../../../redux/reducers/TaskLogsInfo";
 import Historys from "../../../assets/images/main/history.webp";
+import { setBaseSubcomponentsShown } from "../../../redux/reducers/BaseSubcomponentsShown";
 
 export const History: React.FC = memo(() => {
   const isChoosed = useSelector(
@@ -13,7 +13,7 @@ export const History: React.FC = memo(() => {
   return (
     <Fragment>
       <button
-        onClick={() => dispatch(setTaskLogInfo(true))}
+        onClick={() => isChoosed !== -1 && dispatch(setBaseSubcomponentsShown("taskLogs"))}
         style={{ transition: "0.3s ease-in-out" }}
         className={`${
           isChoosed === -1
@@ -24,7 +24,7 @@ export const History: React.FC = memo(() => {
         <img
           className="w-60% h-60% object-contain"
           src={Historys}
-          alt="search"
+          alt="History"
         />
       </button>
     </Fragment>

@@ -1,16 +1,14 @@
 import React, { Fragment } from "react";
 import { DataLog } from "../main/BaseMainMain";
 import { useDispatch } from "react-redux";
-import { setTaskLogInfo } from "../../../../../../redux/reducers/TaskLogsInfo";
+import { setBaseSubcomponentsShown } from "../../../../../../redux/reducers/BaseSubcomponentsShown";
 
 export const DataLogs: React.FC<{ data: DataLog[]; name: string }> = ({
   data,
   name,
 }) => {
   const dispatch = useDispatch();
-  const closeHandler = () => {
-    dispatch(setTaskLogInfo(false));
-  };
+  
   return (
     <div className="bg-[#fff6] w-full h-full fixed top-0 left-0 z-[61] flex flex-col items-center justify-center">
       <div className="bg-[#e3e0e0] shadow-boxShadow w-1/2 min-w-[800px] h-3/4 min-h-[400px] relative text-sidebarChoose flex items-center   flex-col  rounded-xl">
@@ -64,7 +62,7 @@ export const DataLogs: React.FC<{ data: DataLog[]; name: string }> = ({
           <button
             className=" w-auto shadow-boxShadow h-2/5 pl-[5%] pr-[5%] bg-sidebarChoose text-white rounded-xl hover:opacity-70 transition-all duration-300  "
             onClick={() => {
-              closeHandler();
+              dispatch(setBaseSubcomponentsShown(""));
             }}
           >
             დახურვა
