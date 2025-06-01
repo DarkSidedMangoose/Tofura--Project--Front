@@ -27,7 +27,7 @@ interface StateTyes {
     groupedName: string;
     riskLevel: string;
   };
-  ActivityForm: {
+  activityForm: {
     registerOrgan: string;
     form: string;
     govermentalRegisterDate: string;
@@ -53,17 +53,17 @@ interface StateTyes {
     level3: { userId: string; status: string; fromUserId: string };
     level2: { userId: string; status: string; fromUserId: string };
     level1: { userId: string; status: string; fromUserId: string };
-    dataLogs: {
-      level: number;
-      timestamp: string;
-      addedByName: string;
-      description: string;
-      receiverName: string;
-      receiverId: string;
-      comment: string;
-      imgUrl: string;
-    }[];
   };
+  dataLogs: {
+    level: number;
+    timestamp: string;
+    addedByName: string;
+    description: string;
+    receiverName: string;
+    receiverId: string;
+    comment: string;
+    imgUrl: string;
+  }[];
 
 }
 
@@ -86,7 +86,7 @@ const ViewAddObjectData:React.FC = () => {
       groupedName: "",
       riskLevel: "",
     },
-    ActivityForm: {
+    activityForm: {
       registerOrgan: "",
       form: "",
       govermentalRegisterDate: "",
@@ -112,19 +112,45 @@ const ViewAddObjectData:React.FC = () => {
       level3: { userId: "string", status: "string", fromUserId: "string" },
       level2: { userId: "string", status: "string", fromUserId: "string" },
       level1: { userId: "string", status: "string", fromUserId: "string" },
-      dataLogs: [{
-        level: 7,
-        timestamp: "s",
-        addedByName: "string",
-        description: "string",
-        receiverName: "string",
-        receiverId: "string",
-        comment: "string",
-        imgUrl: "string",
-      }]
-    }
+    },
+    dataLogs: [{
+      level: 7,
+      timestamp: "s",
+      addedByName: "string",
+      description: "string",
+      receiverName: "string",
+      receiverId: "string",
+      comment: "string",
+      imgUrl: "string",
+    }]
   });
   const datas = {
+    objectIdentifierData: [
+      {
+        name: "საიდენტიფიკაციო კოდი",
+        id: "identifyCode",
+        type: "text",
+        propname: "objectIdentifierData",
+      },
+      {
+        name: "სრული დასახელება",
+        id: "fullName",
+        type: "text",
+        propname: "objectIdentifierData",
+      },
+      {
+        name: "მშობელი ორგანიზაცია",
+        id: "parentOrganization",
+        type: "text",
+        propname: "objectIdentifierData",
+      },
+      {
+        name: "მშობელი ორგანიზაციის სრული დასახელება",
+        id: "parentOrganizationFullName",
+        type: "text",
+        propname: "objectIdentifierData",
+      },
+    ],
     addresses: [
       {
         name: "თბილისი",
@@ -195,54 +221,54 @@ const ViewAddObjectData:React.FC = () => {
         name: "საქმიანობის კოდი",
         type: "text",
         id: "workingCode",
-        propname: "actualityinformation",
+        propname: "activityinformation",
       },
       {
         name: "საქმიანობის დასახელება",
         type: "text",
 
-        propname: "actualityinformation",
+        propname: "activityinformation",
         id: "workingDescription",
       },
       {
         name: "დამჯგუფებელი დასახელება",
         type: "text",
 
-        propname: "actualityinformation",
+        propname: "activityinformation",
         id: "groupedName",
       },
       {
         name: "რისკის დონე",
         type: "text",
 
-        propname: "actualityinformation",
+        propname: "activityinformation",
         id: "riskLevel",
       },
     ],
-    ActivityForm: [
+    activityForm: [
       {
         name: "მარეგისტრირებელი ორგანო",
         type: "text",
         id: "registerOrgan",
-        propname: "ActivityForm",
+        propname: "activityForm",
       },
       {
         name: "სამართლებრივი ფორმა",
         type: "select",
         id: "form",
-        propname: "ActivityForm",
+        propname: "activityForm",
       },
       {
         name: "სახელმწიფო რეგისტრაციის თარიღი",
         type: "date",
         id: "govermentalRegisterDate",
-        propname: "ActivityForm",
+        propname: "activityForm",
       },
       {
         name: "ბოლო ცვლილების თარიღი",
         type: "date",
         id: "lastChangeDate",
-        propname: "ActivityForm",
+        propname: "activityForm",
       },
     ],
     payerInfo: [
@@ -271,6 +297,7 @@ const ViewAddObjectData:React.FC = () => {
         type: "select",
         id: "employedCount",
         propname: "payerInfo",
+        options: [100, 200, 300],
       },
     ],
   };
@@ -307,12 +334,19 @@ const AddTask = async () => {
       [propname]: {
         ...prev[propname],
         [id]:
+          id === "addressesOfFactActions" ?
+          [e.target.value] :
           type === "checkbox"
             ? (e.target as HTMLInputElement).checked
             : e.target.value,
       },
     }));
   };
+
+
+  useEffect(() => {
+    console.log("Current state:", states);
+  }, [states])
   return (
     <div className="w-[100vw] h-[100vh] flex flex-col fixed top-0 left-0  z-[100] justify-center items-center bg-[#d8d5d59a]">
       <header className="w-[900px] h-[50px] shadow-boxShadow flex items-center justify-center bg-sidebarChoose rounded-tl-lg rounded-tr-lg ">
@@ -324,29 +358,59 @@ const AddTask = async () => {
         <div className="w-full  min-h-[100px] flex justify-between ">
           <div className="w-2/4 h-full flex flex-col gap-4 ">
             <div className="flex  gap-[5%] w-full  h-1/2 items-center ">
-              <input
-                type="text"
-                className="border-[1px] border-gray-400 h-full w-1/2 px-1 outline-none "
-                placeholder="საიდენტიფიკაციო"
-              />
-              <input
+              {datas.objectIdentifierData.map(
+                (data, index) =>
+                  (index === 0 || index === 1) && (
+                    <Fragment key={index}>
+                      <input
+                        type={data.type}
+                        id={data.id}
+                        className="border-[1px] border-gray-400 h-full w-1/2 px-1 outline-none "
+                        placeholder={data.name}
+                        onChange={(e) =>
+                          changeHandler(
+                            data.propname as keyof StateTyes,
+                            data.id,
+                            data.type,
+                            data.name,
+                            e
+                          )
+                        }
+                      />
+                    </Fragment>
+                  )
+              )}
+
+              {/* <input
                 type="text"
                 placeholder="სრული დასახელება"
                 className="border-[1px] border-gray-400 h-full w-1/2 px-1 outline-none"
-              />
+              /> */}
               <img src={PublicBusiness} className="h-[24px]" alt="icon" />
             </div>
             <div className="flex  gap-[5%] h-1/2 w-full items-center ">
-              <input
-                type="text"
-                className="border-[1px] border-gray-400 h-full px-1 w-1/2 outline-none "
-                placeholder="მშობელი ორგანიზაცია"
-              />
-              <input
-                type="text"
-                placeholder="სრული დასახელება"
-                className="border-[1px] border-gray-400 h-full w-1/2 px-1 outline-none"
-              />
+              {datas.objectIdentifierData.map(
+                (data, index) =>
+                  (index === 2 || index === 3) && (
+                    <Fragment key={index}>
+                      <input
+                        type={data.type}
+                        id={data.id}
+                        className="border-[1px] border-gray-400 h-full w-1/2 px-1 outline-none "
+                        placeholder={data.name}
+                        onChange={(e) =>
+                          changeHandler(
+                            data.propname as keyof StateTyes,
+                            data.id,
+                            data.type,
+                            data.name,
+                            e
+                          )
+                        }
+                      />
+                    </Fragment>
+                  )
+              )}
               <img src={PublicBusiness} className="h-[24px]" alt="icon" />
             </div>
           </div>
@@ -457,7 +521,7 @@ const AddTask = async () => {
               <h1 className="text-[15px]  py-2 border-b-2 border-[#11277e] font-semibold">
                 საქმიანობის ფორმა
               </h1>
-              {datas.ActivityForm.map((data, index) => (
+              {datas.activityForm.map((data, index) => (
                 <div
                   key={index}
                   className="flex flex-col gap-2 mt-2 w-full min-h-[70px]"
@@ -611,8 +675,12 @@ const AddTask = async () => {
                             )
                           }
                         >
-                          <option value="option1">1</option>
-                          <option value="option2">2</option>
+                          
+                          {data.options?.map((option, optIndex) => (
+                            <option key={optIndex} value={option}>
+                              {option}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     )
@@ -627,7 +695,10 @@ const AddTask = async () => {
               >
                 გაუქმება
               </button>
-              <button className="w-1/2 h-12 bg-sidebarChoose border-[1px] border-gray-400 text-white font-bold rounded-lg text-[14px]" onClick={() => AddTask()}>
+              <button
+                className="w-1/2 h-12 bg-sidebarChoose border-[1px] border-gray-400 text-white font-bold rounded-lg text-[14px]"
+                onClick={() => AddTask()}
+              >
                 დამატება
               </button>
             </div>

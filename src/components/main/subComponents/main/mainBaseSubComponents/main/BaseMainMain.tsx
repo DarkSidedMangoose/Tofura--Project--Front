@@ -29,11 +29,11 @@ export interface DataLog {
 interface states {
   id: string;
   identifyCode: string;
-  wholeName: string;
+  fullName: string;
   region: string;
-  fizAddress: string;
-  turnover: string;
-  jobType: string;
+  factAddress: string;
+  iurPersonIncomeRotation: string;
+  workingDescription: string;
   riskLevel: string;
   dataLogs: DataLog[];
 }
@@ -152,6 +152,9 @@ const MainMainMainSectionMain: React.FC = () => {
     [setSentBtnClicked]
   );
 
+  useEffect(() => {
+console.log("State changed:", state);
+  },[state])
   //when we click on the end task button we send the request to the backend to end the task and remove it from the state
   const handleEndTask = useCallback(() => {
     console.log(state[isSelected].id);
@@ -249,7 +252,9 @@ const MainMainMainSectionMain: React.FC = () => {
           ))}
       </div>
       {isOption === "ინსპექტირების ობიექტები" &&
-        (isIdentifierInspetObject === "მიმდინარე დავალებები" || isIdentifierInspetObject === "გამოგზავნილი დასრულების მოთხოვნები") && (
+        (isIdentifierInspetObject === "მიმდინარე დავალებები" ||
+          isIdentifierInspetObject ===
+            "გამოგზავნილი დასრულების მოთხოვნები") && (
           <section className="w-98% h-[20%] flex justify-end gap-[1%] items-center">
             <OnGoingInspectButtons
               setClickedOnEnd={handleEndTask}
@@ -266,13 +271,13 @@ const MainMainMainSectionMain: React.FC = () => {
       {baseSubComponentsState === "taskLogs" && (
         <DataLogs
           data={state[isSelected].dataLogs}
-          name={state[isSelected].wholeName}
+          name={state[isSelected].fullName}
         />
       )}
       {baseSubComponentsState === "comment" && (
         <Comment
           id={state[isSelected].id}
-          name={state[isSelected].wholeName}
+          name={state[isSelected].fullName}
           onClick={closeComment}
         />
       )}
@@ -284,11 +289,11 @@ export default MainMainMainSectionMain;
 
 interface Base {
   identifyCode: string;
-  wholeName: string;
+  fullName: string;
   region: string;
-  fizAddress: string;
-  turnover: string;
-  jobType: string;
+  factAddress: string;
+  iurPersonIncomeRotation: string;
+  workingDescription: string;
   riskLevel: string;
 }
 
@@ -299,11 +304,11 @@ const DataRow: React.FC<{
 }> = ({ item, selected, onClick }) => {
   const divState: Array<keyof Base> = [
     "identifyCode",
-    "wholeName",
+    "fullName",
     "region",
-    "fizAddress",
-    "turnover",
-    "jobType",
+    "factAddress",
+    "iurPersonIncomeRotation",
+    "workingDescription",
     "riskLevel",
   ];
 
