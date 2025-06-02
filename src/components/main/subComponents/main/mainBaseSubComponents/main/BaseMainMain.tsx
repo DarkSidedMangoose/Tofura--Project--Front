@@ -263,7 +263,9 @@ console.log("State changed:", state);
             />
           </section>
         )}
-      {baseSubComponentsState === "addObject" && <ViewAddObjectData />}
+      {baseSubComponentsState === "addObject" && (
+        <ViewAddObjectData identifier={"add"} />
+      )}
 
       {baseSubComponentsState === "sendTask" && (
         <GiveTask setClick={handleSetSentButton} id={state[isSelected].id} />
@@ -280,6 +282,9 @@ console.log("State changed:", state);
           name={state[isSelected].fullName}
           onClick={closeComment}
         />
+      )}
+      {baseSubComponentsState === "reviews" && (
+        <ViewAddObjectData identifier={"review"} taskId={state[isSelected].id} />
       )}
     </div>
   );

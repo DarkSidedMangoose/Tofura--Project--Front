@@ -61,7 +61,7 @@ export const Plus: React.FC<{
               [1, 2].includes(authenticatedUserInfo.level)
             ) {
               setShowDropdown(!showDropdown);
-            } else {
+            } else if (authenticatedUserInfo.level === 7) {
               dispatch(setBaseSubcomponentsShown("addObject"));
             }
           } else if (identifier === "Settings") {
@@ -70,28 +70,27 @@ export const Plus: React.FC<{
         }}
         style={{ transition: "0.3s ease-in-out" }}
         className={`${
-          isChoosed === -1 && identifier === "base"
-            ? "opacity-20 "
-            : "opacity-85 hover:opacity-70"
-        } bg-sidebarChoose h-full rounded-[14%] w-full border-[2px] border-solid border-sidebarChoose flex justify-center items-center  shadow-bottom ${
-          isChoosed === -1 && identifier === "base"
-            ? "cursor-not-allowed"
-            : "cursor-pointer "
-        }`}
+          isChoosed === -1 &&
+          identifier === "base" &&
+          authenticatedUserInfo.level !== 7
+            ? "opacity-20 cursor-not-allowed "
+            : "opacity-85 hover:opacity-70 cursor-pointer"
+        } bg-sidebarChoose h-full rounded-[14%] w-full border-[2px] border-solid border-sidebarChoose flex justify-center items-center  shadow-bottom
+          `}
       >
         <img className="w-70% h-70% object-contain" src={Pluss} alt="plus" />
       </button>
 
       {showDropdown && (
-        <div className="bg-white absolute top-full w-[200px] mt-[20%] h-[100px] border-[1px] border-solid border-sidebarChoose rounded-[8px]">
+        <div className="bg-loginBackground absolute top-full w-[200px] mt-[20%] h-[100px] border-[1px] border-solid border-sidebarChoose rounded-sm font-bold">
           <p
-            className="font-semibold text-sidebarChoose text-[13px] h-1/2 flex justify-center items-center border-b-sidebarChoose border-b-[1px] cursor-pointer "
+            className=" text-sidebarChoose text-[13px] h-1/2 flex justify-center items-center border-b-sidebarChoose border-b-[1px] cursor-pointer "
             onClick={(arg) => handleClick(arg)}
           >
             დოკუმენტის გენერირება
           </p>
           <p
-            className="font-semibold text-sidebarChoose text-[13px] h-1/2 flex justify-center items-center  cursor-pointer"
+            className=" text-sidebarChoose text-[13px] h-1/2 flex justify-center items-center  cursor-pointer"
             onClick={(arg) => handleClick(arg)}
           >
             ატვირთვა

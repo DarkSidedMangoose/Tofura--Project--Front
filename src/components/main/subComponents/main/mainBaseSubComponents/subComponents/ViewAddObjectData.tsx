@@ -19,7 +19,7 @@ interface StateTyes {
     streetFactAddress: string;
     streetIurAddress: string;
     postalCode: string;
-    addressesOfFactActions: []; // Array of addresses for fact activity
+    addressesOfFactActions: "";
   };
   activityinformation: {
     workingCode: string;
@@ -40,10 +40,10 @@ interface StateTyes {
     parentOrganizationFullName: string;
   };
   payerInfo: {
-    VAT: boolean; // Checkbox for VAT payer
+    vat: boolean; // Checkbox for VAT payer
     fizPersonIncome: string; // Radio for individual income
     iurPersonIncomeRotation: string; // Radio for legal entity turnover
-    employedCount: string; // Select for number of employees
+    employedCount: number; // Select for number of employees
   };
   dataFlow: {
     level7: { userId: string; status: string; fromUserId: string };
@@ -67,9 +67,35 @@ interface StateTyes {
 
 }
 
-const ViewAddObjectData:React.FC = () => {
+const ViewAddObjectData:React.FC<{identifier: string, taskId?: string}> = ({identifier, taskId}) => {
   const dispatch = useDispatch();
 
+ useEffect(() => {
+  if (identifier === "review") {
+    const GetTaskData = async () => {
+      try {
+        const response = await axios.get(
+          `${apiUrl}/tasks/getSpecificTaskData`,
+          {
+            params: {
+              taskId: taskId,
+            },
+            withCredentials: true,
+          }
+        );
+        setStates(response.data);
+        console.log("Task data fetched successfully:", response.data);
+      } catch (error: any) {
+        console.error("Error fetching task data:", error);
+        if (error.response && error.response.status === 401) {
+          window.location.href = "/";
+        }
+        console.error("Error fetching task data:", error);
+      }
+    };
+    GetTaskData();
+  }
+ },[taskId]);
   const [states, setStates] = useState<StateTyes>({
     addresses: {
       region: "",
@@ -78,7 +104,7 @@ const ViewAddObjectData:React.FC = () => {
       streetFactAddress: "",
       streetIurAddress: "",
       postalCode: "",
-      addressesOfFactActions: [], // Array of addresses for fact activity
+      addressesOfFactActions: "", // Array of addresses for fact activity
     },
     activityinformation: {
       workingCode: "",
@@ -99,13 +125,17 @@ const ViewAddObjectData:React.FC = () => {
       parentOrganizationFullName: "",
     },
     payerInfo: {
-      VAT: false, // Checkbox for VAT payer
+      vat: true, // Checkbox for VAT payer
       fizPersonIncome: "", // Radio for individual income
       iurPersonIncomeRotation: "", // Radio for legal entity turnover
-      employedCount: "", // Select for number of employees
+      employedCount: 200, // Select for number of employees
     },
     dataFlow: {
-      level7: { userId: "", status: "string", fromUserId: "string" },
+      level7: {
+        userId: "67dfeceb854c7b027fc75729",
+        status: "onGoing",
+        fromUserId: "string",
+      },
       level6: { userId: "string", status: "string", fromUserId: "string" },
       level5: { userId: "string", status: "string", fromUserId: "string" },
       level4: { userId: "string", status: "string", fromUserId: "s" },
@@ -113,16 +143,18 @@ const ViewAddObjectData:React.FC = () => {
       level2: { userId: "string", status: "string", fromUserId: "string" },
       level1: { userId: "string", status: "string", fromUserId: "string" },
     },
-    dataLogs: [{
-      level: 7,
-      timestamp: "s",
-      addedByName: "string",
-      description: "string",
-      receiverName: "string",
-      receiverId: "string",
-      comment: "string",
-      imgUrl: "string",
-    }]
+    dataLogs: [
+      {
+        level: 7,
+        timestamp: "s",
+        addedByName: "string",
+        description: "string",
+        receiverName: "string",
+        receiverId: "string",
+        comment: "string",
+        imgUrl: "string",
+      },
+    ],
   });
   const datas = {
     objectIdentifierData: [
@@ -153,7 +185,7 @@ const ViewAddObjectData:React.FC = () => {
     ],
     addresses: [
       {
-        name: "თბილისი",
+        name: "რეგიონი",
         id: "region",
         type: "select",
         propname: "addresses",
@@ -257,6 +289,7 @@ const ViewAddObjectData:React.FC = () => {
         type: "select",
         id: "form",
         propname: "activityForm",
+        options: ["საზოგადოებრივი ორგანიზაცია", "საზოგადოება", "საკოოპერატივო საზოგადოება", "საკოოპერატივო საზოგადოება"],
       },
       {
         name: "სახელმწიფო რეგისტრაციის თარიღი",
@@ -275,7 +308,7 @@ const ViewAddObjectData:React.FC = () => {
       {
         name: "დღგს გადამხდელი",
         type: "checkbox",
-        id: "VAT",
+        id: "vat",
         propname: "payerInfo",
       },
       {
@@ -294,10 +327,9 @@ const ViewAddObjectData:React.FC = () => {
       },
       {
         name: "დასაქმებულ პირთა რაოდენობა",
-        type: "select",
+        type: "text",
         id: "employedCount",
         propname: "payerInfo",
-        options: [100, 200, 300],
       },
     ],
   };
@@ -334,11 +366,10 @@ const AddTask = async () => {
       [propname]: {
         ...prev[propname],
         [id]:
-          id === "addressesOfFactActions" ?
-          [e.target.value] :
+         
           type === "checkbox"
             ? (e.target as HTMLInputElement).checked
-            : e.target.value,
+            : id === "employedCount" ? Number(e.target.value) : e.target.value ,
       },
     }));
   };
@@ -351,7 +382,9 @@ const AddTask = async () => {
     <div className="w-[100vw] h-[100vh] flex flex-col fixed top-0 left-0  z-[100] justify-center items-center bg-[#d8d5d59a]">
       <header className="w-[900px] h-[50px] shadow-boxShadow flex items-center justify-center bg-sidebarChoose rounded-tl-lg rounded-tr-lg ">
         <h1 className="text-[18px] font-semibold text-white">
-          ობიექტის დამატება
+          {identifier === "review"
+            ? "ობიექტის ინფორმაცია"
+            : "ობიექტის დამატება"}
         </h1>
       </header>
       <div className="w-[900px] h-4/5 shadow-boxShadow flex flex-col gap-8 bg-white p-10 rounded-bl-lg rounded-br-lg overflow-y-scroll text-[11px]  ">
@@ -367,6 +400,12 @@ const AddTask = async () => {
                         id={data.id}
                         className="border-[1px] border-gray-400 h-full w-1/2 px-1 outline-none "
                         placeholder={data.name}
+                        disabled={identifier === "review"}
+                        value={
+                          states.objectIdentifierData[
+                            data.id as keyof typeof states.objectIdentifierData
+                          ]
+                        }
                         onChange={(e) =>
                           changeHandler(
                             data.propname as keyof StateTyes,
@@ -398,6 +437,12 @@ const AddTask = async () => {
                         id={data.id}
                         className="border-[1px] border-gray-400 h-full w-1/2 px-1 outline-none "
                         placeholder={data.name}
+                        disabled={identifier === "review"}
+                        value={
+                          states.objectIdentifierData[
+                            data.id as keyof typeof states.objectIdentifierData
+                          ]
+                        }
                         onChange={(e) =>
                           changeHandler(
                             data.propname as keyof StateTyes,
@@ -445,6 +490,12 @@ const AddTask = async () => {
                   </label>
                   {data.type === "select" ? (
                     <select
+                      disabled={identifier === "review"}
+                      value={
+                        states.addresses[
+                          data.id as keyof typeof states.addresses
+                        ]
+                      }
                       onChange={(e) =>
                         changeHandler(
                           data.propname as keyof StateTyes,
@@ -457,7 +508,9 @@ const AddTask = async () => {
                       id={data.id}
                       className="w-full h-3/4 border-[2px] min-h-[40px] border-gray-400"
                     >
-                      <option value="">{data.name}</option>
+                      <option value="" disabled={true}>
+                        აირჩიეთ რეგიონი
+                      </option>
                       {data.options?.map((option, optIndex) => (
                         <option key={optIndex} value={option}>
                           {option}
@@ -468,7 +521,13 @@ const AddTask = async () => {
                     <input
                       type="text"
                       id={data.id}
+                      disabled={identifier === "review"}
                       className="w-full h-3/4 min-h-[40px] border-[2px] border-gray-400"
+                      value={
+                        states.addresses[
+                          data.id as keyof typeof states.addresses
+                        ]
+                      }
                       onChange={(e) =>
                         changeHandler(
                           data.propname as keyof StateTyes,
@@ -500,8 +559,14 @@ const AddTask = async () => {
                   </label>
                   <input
                     type="text"
+                    disabled={identifier === "review"}
                     id={data.id}
                     className="w-full h-3/4 min-h-[40px] border-[2px] border-gray-400"
+                    value={
+                      states.activityinformation[
+                        data.id as keyof typeof states.activityinformation
+                      ]
+                    }
                     onChange={(e) =>
                       changeHandler(
                         data.propname as keyof StateTyes,
@@ -535,6 +600,12 @@ const AddTask = async () => {
                         {data.name}
                       </label>
                       <select
+                        disabled={identifier === "review"}
+                        value={
+                          states.activityForm[
+                            data.id as keyof typeof states.activityForm
+                          ]
+                        }
                         onChange={(e) =>
                           changeHandler(
                             data.propname as keyof StateTyes,
@@ -547,9 +618,14 @@ const AddTask = async () => {
                         id={data.id}
                         className="w-full h-3/4 border-[2px] min-h-[40px] border-gray-400"
                       >
-                        <option value="">{data.name}</option>
-                        <option value="option1">ოპცია 1</option>
-                        <option value="option2">ოპცია 2</option>
+                        <option value="" disabled>
+                          აირჩიეთ ფორმა
+                        </option>
+                        {data.options?.map((option, optIndex) => (
+                          <option key={optIndex} value={option}>
+                            {option}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   ) : (
@@ -561,6 +637,12 @@ const AddTask = async () => {
                         {data.name}
                       </label>
                       <input
+                        disabled={identifier === "review"}
+                        value={
+                          states.activityForm[
+                            data.id as keyof typeof states.activityForm
+                          ]
+                        }
                         onChange={(e) =>
                           changeHandler(
                             data.propname as keyof StateTyes,
@@ -589,6 +671,8 @@ const AddTask = async () => {
                     <div key={index} className="flex items-center gap-2 mt-2">
                       <input
                         type="checkbox"
+                        checked={states.payerInfo.vat}
+                        disabled={identifier === "review"}
                         onChange={(e) =>
                           changeHandler(
                             data.propname as keyof StateTyes,
@@ -626,9 +710,16 @@ const AddTask = async () => {
                             className="flex items-center gap-2"
                           >
                             <input
+                              checked={
+                                states.payerInfo[
+                                  data.id as keyof typeof states.payerInfo
+                                ] === data.options?.[optIndex]
+                              }
                               type="radio"
                               id={`${data.id}-${optIndex}`}
                               name={data.id}
+                              disabled={identifier === "review"}
+                              value={data.options?.[optIndex]}
                               onChange={(e) =>
                                 changeHandler(
                                   data.propname as keyof StateTyes,
@@ -651,7 +742,7 @@ const AddTask = async () => {
                       </div>
                     </div>
                   ) : (
-                    data.type === "select" && (
+                    data.type === "text" && (
                       <div
                         key={index}
                         className="flex flex-col gap-2 mt-2 w-full min-h-[70px]"
@@ -662,9 +753,11 @@ const AddTask = async () => {
                         >
                           {data.name}
                         </label>
-                        <select
-                          id={data.id}
-                          className="w-1/5 h-3/4 border-[2px] border-gray-400"
+                        <input
+                        disabled={identifier === "review"}
+                          type={data.type}
+                          className="h-full w-[15%] px-[2px] border-[1px] rounded-sm border-[#6c6c72] flex justify-center items-center  "
+                          value={states.payerInfo.employedCount}
                           onChange={(e) =>
                             changeHandler(
                               data.propname as keyof StateTyes,
@@ -674,33 +767,28 @@ const AddTask = async () => {
                               e
                             )
                           }
-                        >
-                          
-                          {data.options?.map((option, optIndex) => (
-                            <option key={optIndex} value={option}>
-                              {option}
-                            </option>
-                          ))}
-                        </select>
+                        />
                       </div>
                     )
                   )}
                 </Fragment>
               ))}
             </div>
-            <div className="w-full gap-4 flex h-full items-end">
+            <div className="w-full gap-4 flex h-full justify-end items-end">
               <button
                 onClick={() => dispatch(setBaseSubcomponentsShown(""))}
-                className="w-1/2 h-12 bg-white border-[1px] border-gray-400 text-sidebarChoose font-bold rounded-lg text-[14px]"
+                className="w-1/2  h-12 bg-white border-[1px] border-gray-400 text-sidebarChoose font-bold rounded-lg text-[14px]"
               >
                 გაუქმება
               </button>
-              <button
-                className="w-1/2 h-12 bg-sidebarChoose border-[1px] border-gray-400 text-white font-bold rounded-lg text-[14px]"
-                onClick={() => AddTask()}
-              >
-                დამატება
-              </button>
+              {identifier !== "review" && (
+                <button
+                  className="w-1/2 h-12 bg-sidebarChoose border-[1px] border-gray-400 text-white font-bold rounded-lg text-[14px]"
+                  onClick={() => AddTask()}
+                >
+                  დამატება
+                </button>
+              )}
             </div>
           </div>
         </div>

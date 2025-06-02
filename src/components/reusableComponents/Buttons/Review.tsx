@@ -2,8 +2,14 @@ import { Fragment, memo } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import Reviews from "../../../assets/images/main/review.webp";
+import { setBaseSubcomponentsShown } from "../../../redux/reducers/BaseSubcomponentsShown";
+import { useDispatch } from "react-redux";
 
 export const Review: React.FC = memo(() => {
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    dispatch(setBaseSubcomponentsShown("reviews"));
+  };
   const isChoosed = useSelector(
     (state: RootState) => state.BasesChoosedOption.data
   );
@@ -11,6 +17,7 @@ export const Review: React.FC = memo(() => {
     <Fragment>
       <button
         style={{ transition: "0.3s ease-in-out" }}
+        onClick={() => isChoosed !== -1 && handleClick()}
         className={`${
           isChoosed === -1
             ? "opacity-20 cursor-not-allowed "
