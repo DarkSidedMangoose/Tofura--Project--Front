@@ -6,6 +6,7 @@ import { AdditionalInfo } from "../../components/main/subComponents/sidebar/side
 // import { OptionFromAdditionalBaseProvider } from "../../contextApis/ContextChooseFromAdditional";
 import ContextMouseEnterIdentifier from "../../contextApis/ContextMouseEnterIdentifier";
 import { SignalRProvider } from "../../contextApis/ContextSignalR";
+import ContextAuthenticatedUserInfo from "../../contextApis/ContextAuthenticatedUserInfo";
 
 const Main: React.FC = () => {
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -18,12 +19,15 @@ const Main: React.FC = () => {
       <div className="w-full  h-[90%] flex">
         {/* <OptionFromAdditionalBaseProvider> */}
         <SignalRProvider>
+        <ContextAuthenticatedUserInfo>
+
           <ContextMouseEnterIdentifier>
             <MainSidebar setIsActive={handleIsActive} isActive={isActive} />
             <AdditionalInfo  />
 
             <MainMain />
           </ContextMouseEnterIdentifier>
+          </ContextAuthenticatedUserInfo>
         </SignalRProvider>
       </div>
 

@@ -11,6 +11,7 @@ import Comment from "../subComponents/comment";
 import { setInspectBaseIdentifier } from "../../../../../../redux/reducers/InspectObjectIdentifierState";
 import { OnGoingInspectButtons } from "../../../../../reusableComponents/MainMain/OngoingInspectButtons";
 import ViewAddObjectData from "../subComponents/ViewAddObjectData";
+import Generate from "../subComponents/Generate";
 // import "../../../../Scrollbar.css"
 
 //take url for tasks axios requests from env file
@@ -286,6 +287,11 @@ console.log("State changed:", state);
       {baseSubComponentsState === "reviews" && (
         <ViewAddObjectData identifier={"review"} taskId={state[isSelected].id} />
       )}
+      {
+        baseSubComponentsState === "generate" && (
+          <Generate />
+        )
+      }
     </div>
   );
 };

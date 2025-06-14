@@ -41,6 +41,8 @@ export const Plus: React.FC<{
 
   const handleClick = (arg: any) => {
     setShowDropdown(false);
+      dispatch(setBaseSubcomponentsShown(arg));
+
   };
   return (
     <div
@@ -82,13 +84,13 @@ export const Plus: React.FC<{
         className="bg-loginBackground absolute top-full w-[200px] mt-[20%] h-[100px] border-[1px] border-solid border-sidebarChoose rounded-sm font-bold">
           <p
             className=" text-sidebarChoose text-[13px] h-1/2 flex justify-center items-center border-b-sidebarChoose border-b-[1px] cursor-pointer "
-            onClick={(arg) => handleClick(arg)}
+            onClick={(arg) => handleClick("generate")}
           >
             დოკუმენტის გენერირება
           </p>
           <p
             className=" text-sidebarChoose text-[13px] h-1/2 flex justify-center items-center  cursor-pointer"
-            onClick={(arg) => handleClick(arg)}
+            onClick={(arg) => handleClick("upload")}
           >
             ატვირთვა
           </p>

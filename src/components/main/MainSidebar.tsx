@@ -14,11 +14,15 @@ import { setAdditionalInfoOption } from "../../redux/reducers/AdditionalDropdown
 
 import Leave from "../../assets/images/main/leave.webp";
 import { setAdditionalShow } from "../../redux/reducers/AdditionalShow";
+import axios from "axios";
+import { UseContextAuthenticatedUserInfo } from "../../contextApis/ContextAuthenticatedUserInfo";
 
 export interface mainSidebarProps {
   setIsActive: (isActive: boolean) => void;
   isActive: boolean;
 }
+
+const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
 const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
   const dispatch: AppDispatch = useDispatch();
@@ -26,6 +30,8 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
   const { SidebarMouseEnterIdentifier, setSidebarMouseEnterIdentifier } =
     useSidebarMouseEnterProvider();
 
+    const {authenticatedUserInfo} = UseContextAuthenticatedUserInfo()
+   
   const isOption = useSelector(
     (state: RootState) => state.AdditionalInfoOption.data
   );
@@ -115,7 +121,19 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
-
+   const logOutHandler = async () => {
+    try {
+      await axios.get(`${apiUrl}/users/LogOut`, {
+        params: {
+          taskId: authenticatedUserInfo.id,
+        },
+        withCredentials: true,
+      });
+      window.location.href = "https://localhost:3000/";
+      }catch(err) {
+      console.error(err)
+    }
+   }
   return (
     <div className="w-[5.6%] min-w-[83px]">
       <div className="flex w-[5%] min-w-[80.5px] h-90% min-h-[600px] fixed z-[40] ">
@@ -149,7 +167,7 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
               onClick={createClickHandler("profile")}
               onMouseEnter={handleMouseClose}
             />
-            <NavItem icon={Leave} alt="leave" onMouseEnter={handleMouseClose} />
+            <NavItem icon={Leave} alt="leave" onClick={() => logOutHandler()} onMouseEnter={handleMouseClose} />
           </nav>
         </aside>
       </div>

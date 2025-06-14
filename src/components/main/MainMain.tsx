@@ -4,7 +4,6 @@ import "./MainAnimations.css";
 import { MainMainHeaderSections } from "./subComponents/main/MainMainHeaderSections";
 
 // import { useMainLoading } from "../../contextApis/ContextLoading";
-import ContextAuthenticatedUserInfo from "../../contextApis/ContextAuthenticatedUserInfo";
 import { setAdditionalShow } from "../../redux/reducers/AdditionalShow";
 import { useDispatch, UseDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
@@ -23,10 +22,8 @@ const MainMain:React.FC = () => {
     >
       <div className="w-[98%] h-full  rounded-bl-lg rounded-br-lg  flex items-center flex-col ">
         <Fragment>
-          <ContextAuthenticatedUserInfo>
             <MainMainHeaderSections />
             <MainMainMainSection />
-          </ContextAuthenticatedUserInfo>
         </Fragment>
       </div>
     </main>
