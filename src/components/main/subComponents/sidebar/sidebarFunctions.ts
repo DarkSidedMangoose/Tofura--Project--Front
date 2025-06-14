@@ -2,6 +2,8 @@
 
 // i used it MainSidebar.tsx to handle state changes while click on any <NavItem/> they are icons and when i click one of them that function is change state of choose (identify purpose) it's for cleaner and for to use less code.
 
+
+
 export const handleSidebarClick = (
   sidebar: string,
   sidebarStatesIdentifier: string,

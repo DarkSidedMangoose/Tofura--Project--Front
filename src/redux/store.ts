@@ -4,6 +4,7 @@ import BasesChoosedOptionReducer from "./reducers/BasesChoosedOption";
 import InspectObjectIdentifierReducer from "./reducers/InspectObjectIdentifierState";
 import setConfigureUsersHeaderSubComponentsShow from "./reducers/ConfigureUsersHeaderButOptions";
 import baseSubcomponentsShownSlice from "./reducers/BaseSubcomponentsShown";
+import AdditionalShowReducer from "./reducers/AdditionalShow"
 export const store = configureStore({
   reducer: {
     AdditionalInfoOption: AdditionalInfoOptionReducer, //the purpose of that is to navigate across sidebar options
@@ -11,7 +12,8 @@ export const store = configureStore({
     inspectObjectIdentifier: InspectObjectIdentifierReducer,
     ConfigureUsersHeaderButOptionSetter:
       setConfigureUsersHeaderSubComponentsShow,
-      baseSubComponentOptionsShown: baseSubcomponentsShownSlice, // This reducer manages the visibility state of base subcomponents in the application
+    baseSubComponentOptionsShown: baseSubcomponentsShownSlice, // This reducer manages the visibility state of base subcomponents in the application
+    setAdditionalShow: AdditionalShowReducer,
   },
 });
 

@@ -14,28 +14,24 @@ import { useSidebarMouseEnterProvider } from "../../../../../contextApis/Context
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../redux/store";
 import { setAdditionalInfoOption } from "../../../../../redux/reducers/AdditionalDropdownOption";
+import { setAdditionalShow } from "../../../../../redux/reducers/AdditionalShow";
 
-interface AdditionalInfoOfBaseProps {
-  isActive: boolean;
-  setIsActive: (e: boolean) => void;
-}
 
-export const AdditionalInfo: React.FC<AdditionalInfoOfBaseProps> = ({
-  isActive,
-  setIsActive,
-}) => {
+
+export const AdditionalInfo: React.FC = () => {
   const { SidebarMouseEnterIdentifier } = useSidebarMouseEnterProvider();
-
+  const additionalShow = useSelector((state: RootState) => state.setAdditionalShow.data)
+  const dispatch: AppDispatch = useDispatch()
   return (
     <div
       className={`z-[60] ${
-        isActive ? "w-[18%] narrow:w-[330px] flex" : "w-[0%]"
-      }  h-90% min-h-[600px] bg-loginBackground shadow-bottom-right  rounded-br-2xl  justify-center items-center fixed  ml-[90px] 2xl:ml-[5%] transition-width    `}
-      onMouseLeave={() => setIsActive(false)} // for handle sidebar close while mouse leave that div
+        additionalShow ? "w-[18%] narrow:w-[330px] flex" : "w-[0%]"
+      }  h-90% min-h-[600px] bg-loginBackground shadow-bottom-right  rounded-br-2xl  justify-center items-center fixed  ml-[80px] 2xl:ml-[5%] transition-width    `}
+      onMouseLeave={() => dispatch(setAdditionalShow(false))} // for handle sidebar close while mouse leave that div
     >
       <div
         className={`${
-          !isActive ? "nones" : "shown "
+          !additionalShow ? "nones" : "shown "
         } w-90% h-[90%]   flex-col space-y-8   `} //nones is in css and means display:none and it handle for when animation is closing, this text what is in that div is show and when sidebar closing doesn't have good look of  animation because of it that div need to set as a none display
       >
         <AdditionalInfoOfSidebar

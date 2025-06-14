@@ -6,6 +6,7 @@ import  WorkingInspect  from "../../../../../../assets/images/main/WorkingInspec
 import { useDispatch } from 'react-redux';
 import { setBaseSubcomponentsShown } from '../../../../../../redux/reducers/BaseSubcomponentsShown';
 import axios from 'axios';
+import { UseContextAuthenticatedUserInfo } from '../../../../../../contextApis/ContextAuthenticatedUserInfo';
 
 
 
@@ -69,7 +70,7 @@ interface StateTyes {
 
 const ViewAddObjectData:React.FC<{identifier: string, taskId?: string}> = ({identifier, taskId}) => {
   const dispatch = useDispatch();
-
+const {authenticatedUserInfo} = UseContextAuthenticatedUserInfo()
  useEffect(() => {
   if (identifier === "review") {
     const GetTaskData = async () => {
@@ -132,8 +133,8 @@ const ViewAddObjectData:React.FC<{identifier: string, taskId?: string}> = ({iden
     },
     dataFlow: {
       level7: {
-        userId: "67dfeceb854c7b027fc75729",
-        status: "onGoing",
+        userId: "",
+        status: "",
         fromUserId: "string",
       },
       level6: { userId: "string", status: "string", fromUserId: "string" },
@@ -338,7 +339,10 @@ const AddTask = async () => {
 
       const response = await axios.post(
         `${apiUrl}/tasks/addNewTask`,
-        { ...states },
+        { 
+          FirstArgument: states, 
+          SecondArgument: authenticatedUserInfo
+      },
         {
           withCredentials: true,
         }

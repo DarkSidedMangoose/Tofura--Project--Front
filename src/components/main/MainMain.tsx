@@ -5,11 +5,21 @@ import { MainMainHeaderSections } from "./subComponents/main/MainMainHeaderSecti
 
 // import { useMainLoading } from "../../contextApis/ContextLoading";
 import ContextAuthenticatedUserInfo from "../../contextApis/ContextAuthenticatedUserInfo";
+import { setAdditionalShow } from "../../redux/reducers/AdditionalShow";
+import { useDispatch, UseDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../redux/store";
+
 
 const MainMain:React.FC = () => {
+  const dispatch: AppDispatch = useDispatch()
+   const isOption = useSelector(
+      (state: RootState) => state.setAdditionalShow.data
+    );
+
   return (
     <main
       className={` w-full h-full  min-h-[750px] min-w-[1000px]  flex flex-col justify-center items-center  transition-width relative`}
+      onMouseEnter={() => isOption && dispatch(setAdditionalShow(false))}
     >
       <div className="w-[98%] h-full  rounded-bl-lg rounded-br-lg  flex items-center flex-col ">
         <Fragment>

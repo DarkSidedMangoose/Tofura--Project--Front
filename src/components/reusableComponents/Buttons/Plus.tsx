@@ -8,11 +8,8 @@ import { setBaseSubcomponentsShown } from "../../../redux/reducers/BaseSubcompon
 export const Plus: React.FC<{
   identifier: string;
   handleClickAddObjectButton: () => void;
-}> = memo(({ identifier, handleClickAddObjectButton }) => {
-  const isShownData = useSelector(
-    (state: RootState) =>
-      state.baseSubComponentOptionsShown.baseSubComponentsState
-  );
+}> = memo(({ identifier}) => {
+
   
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const { authenticatedUserInfo } = UseContextAuthenticatedUserInfo();
@@ -31,9 +28,7 @@ export const Plus: React.FC<{
     );
   }, [ConfigureUsersHeaderButOption]);
 
-  useEffect(() => {
-    console.log(isShownData);
-  },[isShownData]);
+  
   const isChoosed = useSelector(
     (state: RootState) => state.BasesChoosedOption.data
   );
@@ -81,8 +76,10 @@ export const Plus: React.FC<{
         <img className="w-70% h-70% object-contain" src={Pluss} alt="plus" />
       </button>
 
-      {showDropdown && (
-        <div className="bg-loginBackground absolute top-full w-[200px] mt-[20%] h-[100px] border-[1px] border-solid border-sidebarChoose rounded-sm font-bold">
+      {showDropdown && isChoosed !== -1 && (
+        <div
+        
+        className="bg-loginBackground absolute top-full w-[200px] mt-[20%] h-[100px] border-[1px] border-solid border-sidebarChoose rounded-sm font-bold">
           <p
             className=" text-sidebarChoose text-[13px] h-1/2 flex justify-center items-center border-b-sidebarChoose border-b-[1px] cursor-pointer "
             onClick={(arg) => handleClick(arg)}

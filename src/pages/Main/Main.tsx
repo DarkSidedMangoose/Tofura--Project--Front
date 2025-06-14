@@ -20,7 +20,7 @@ const Main: React.FC = () => {
         <SignalRProvider>
           <ContextMouseEnterIdentifier>
             <MainSidebar setIsActive={handleIsActive} isActive={isActive} />
-            <AdditionalInfo isActive={isActive} setIsActive={handleIsActive} />
+            <AdditionalInfo  />
 
             <MainMain />
           </ContextMouseEnterIdentifier>

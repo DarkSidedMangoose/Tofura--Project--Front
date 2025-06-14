@@ -13,6 +13,7 @@ import { AppDispatch, RootState } from "../../redux/store";
 import { setAdditionalInfoOption } from "../../redux/reducers/AdditionalDropdownOption";
 
 import Leave from "../../assets/images/main/leave.webp";
+import { setAdditionalShow } from "../../redux/reducers/AdditionalShow";
 
 export interface mainSidebarProps {
   setIsActive: (isActive: boolean) => void;
@@ -28,6 +29,8 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
   const isOption = useSelector(
     (state: RootState) => state.AdditionalInfoOption.data
   );
+
+  const AdditionalShow = useSelector((state: RootState) => state.setAdditionalShow)
 
   const [sidebarStateIdentifier, setSidebarStateIdentifier] =
     useState<string>("base");
@@ -76,8 +79,8 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
 
   const handleMouseEnter = useCallback(
     (base: string) => {
-      if (isActive === false) {
-        setIsActive(true);
+      if (AdditionalShow.data === false) {
+        dispatch(setAdditionalShow(true));
       }
       if (SidebarMouseEnterIdentifier === base) {
       } else {
@@ -85,22 +88,23 @@ const MainSidebar: React.FC<mainSidebarProps> = ({ setIsActive, isActive }) => {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isActive, SidebarMouseEnterIdentifier]
+    [AdditionalShow.data, SidebarMouseEnterIdentifier]
   );
 
-  useEffect(() => {
-    if (isActive) {
-      setIsActive(false);
-      setTimeout(() => {
-        setIsActive(true);
-      }, 300);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [SidebarMouseEnterIdentifier]);
+  // useEffect(() => {
+  //   if (AdditionalShow) {
+  //     dispatch(setAdditionalShow(false));
+  //     setTimeout(() => {
+  //       dispatch(setAdditionalShow(true));
+  //     }, 300);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [SidebarMouseEnterIdentifier]);
 
   const handleMouseClose = useCallback(() => {
-    setIsActive(false);
-  }, [setIsActive]);
+    dispatch(setAdditionalShow(false));
+
+  }, []);
   const createClickHandler = useCallback(
     (identifier: string) => () => {
       toggleSidebar(identifier);
