@@ -7,7 +7,7 @@ import axios from "axios";
 import GiveTask from "../subComponents/GiveTask";
 import { useSignalR } from "../../../../../../contextApis/ContextSignalR";
 import { DataLogs } from "../subComponents/DataLogs";
-import Comment from "../subComponents/comment";
+import Comment from "../subComponents/Comment";
 import { setInspectBaseIdentifier } from "../../../../../../redux/reducers/InspectObjectIdentifierState";
 import { OnGoingInspectButtons } from "../../../../../reusableComponents/MainMain/OngoingInspectButtons";
 import ViewAddObjectData from "../subComponents/ViewAddObjectData";

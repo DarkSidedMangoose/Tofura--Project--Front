@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import Map from "./Geo.json";
-import "./mapCss.css";
+import "./MapCss.css";
 import { MapObjects } from "../DashboardObjects";
 
 const CountryWithRegions: React.FC = () => {
