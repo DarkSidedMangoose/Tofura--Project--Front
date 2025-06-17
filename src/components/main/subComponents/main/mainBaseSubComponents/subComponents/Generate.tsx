@@ -14,10 +14,15 @@ const Generate = (props: Props) => {
   return (
     <div className='fixed left-0 top-0 z-40 w-full h-full flex justify-center items-center bg-loginBackground'>
         <div className='w-full h-full min-w-[800px] min-h-[700px]  relative shadow-bottom-right flex-col'>
-          <div className='fixed w-full h-full left-0 top-0 bg-loginBackground z-10 flex justify-center items-center'>
-            <div className='w-80% h-80% bg-white'></div>
+          { state.addNewTemplate && 
 
+            <div className='fixed w-full h-full left-0 top-0 bg-loginBackground z-10 flex justify-center items-center'>
+            <div className='w-80% h-80% bg-white'>
+
+            <button onClick={() => setState((prev) => ({...prev, addNewTemplate:false}))} className='w-200px h-auto p-4 font-semibold bg-sidebarChoose rounded-lg text-white'>Close</button>
+            </div>
           </div>
+          }
         <p className='w-full h-10% bg-sidebarChoose text-white flex justify-center items-center text-xl shadow-bottom-right'>{state.navState}</p>
         <div className='flex h-90% '>
 
