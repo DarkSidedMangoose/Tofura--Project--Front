@@ -4,11 +4,12 @@ import "../../../../Scrollbar.css"
 import Logo from "../../../../../../assets/images/main/fullLogo.webp"
 import { setBaseSubcomponentsShown } from '../../../../../../redux/reducers/BaseSubcomponentsShown'
 import Add from '../../../../../../assets/images/main/plus.webp'
+import GenerateAddReviewUseTemplate from './GenerateAddReviewUseTemplate'
 type Props = {}
 
 const Generate = (props: Props) => {
   const dispatch = useDispatch()
-  const [state, setState] = useState<{navState:string, templates:string[], choosedTemplate:string, addNewTemplate: boolean}>({navState: "შაბლონები",templates:["ინვოისის გაგზავნის შაბლონი","ოქმის შაბლონი"],choosedTemplate:"",addNewTemplate:false})
+  const [state, setState] = useState<{navState:string, templates:string[], choosedTemplate:string, addNewTemplate: boolean,addNewTemplateNavState: string}>({navState: "შაბლონები",templates:["ინვოისის გაგზავნის შაბლონი","ოქმის შაბლონი"],choosedTemplate:"",addNewTemplate:false, addNewTemplateNavState: "შაბლონი"})
 
 
   return (
@@ -16,12 +17,7 @@ const Generate = (props: Props) => {
         <div className='w-full h-full min-w-[800px] min-h-[700px]  relative shadow-bottom-right flex-col'>
           { state.addNewTemplate && 
 
-            <div className='fixed w-full h-full left-0 top-0 bg-loginBackground z-10 flex justify-center items-center'>
-            <div className='w-80% h-80% bg-white'>
-
-            <button onClick={() => setState((prev) => ({...prev, addNewTemplate:false}))} className='w-200px h-auto p-4 font-semibold bg-sidebarChoose rounded-lg text-white'>Close</button>
-            </div>
-          </div>
+            <GenerateAddReviewUseTemplate setState={setState} state={state} />
           }
         <p className='w-full h-10% bg-sidebarChoose text-white flex justify-center items-center text-xl shadow-bottom-right'>{state.navState}</p>
         <div className='flex h-90% '>
