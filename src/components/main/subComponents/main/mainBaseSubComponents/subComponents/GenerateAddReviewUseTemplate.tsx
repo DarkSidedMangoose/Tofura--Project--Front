@@ -38,7 +38,7 @@ const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
 const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
 
-  const [templateOptionDropdown, setTemplateOptionDropdown] = useState<number>(-1)
+  const [templateOptionDropdown, setTemplateOptionDropdown] = useState<number>(0)
   const [paragraphInnerState, setParagraphInnerState] = useState<number[]>([])
  
   const [templateState, setTemplateState] = useState<TemplateItem[][]>([[
@@ -115,13 +115,78 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
         
       ],]
     }
-  ]]);
+  ],
+[
+    {
+      name: "aa",
+      
+      children: [[[
+
+        
+        { name: "type", type: "select", option: ["text", "table", "image"] },
+        { name: "content", type: "textarea" },
+        { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+        { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
+        { name: "font size", type: "input" },
+        { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
+        { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
+        { name: "color", type: "color" },
+        { name: "background color", type: "color" },
+        
+      ],
+     
+      ],[[
+        { name: "type", type: "select", option: ["text", "table", "image"] },
+        { name: "content", type: "textarea" },
+        { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+        { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
+        { name: "font size", type: "input" },
+        { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
+        { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
+        { name: "color", type: "color" },
+        { name: "background color", type: "color" },
+        
+      ]],
+    [[
 
 
-   useEffect(() => {
+      { name: "type", type: "select", option: ["text", "table", "image"] },
+      { name: "content", type: "textarea" },
+      { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+      { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
+        { name: "font size", type: "input" },
+        { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
+        { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
+        { name: "color", type: "color" },
+        { name: "background color", type: "color" },
+        
+      ]
+      ],
+    [
+      [
+
+        { name: "type", type: "select", option: ["text", "table", "image"] },
+        { name: "content", type: "textarea" },
+        { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+        { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
+        { name: "font size", type: "input" },
+        { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
+        { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
+        { name: "color", type: "color" },
+        { name: "background color", type: "color" },
+      ]
+        
+      ],]
+    }
+  ]
+]);
+
+
+  useEffect(() => {
     let a = []
-    if(templateOptionDropdown !== -1) {
-      for(var i = 0; i < templateState[0][templateOptionDropdown].children.length; i ++) {
+     if (templateOptionDropdown !== -1) {
+      console.log(templateOptionDropdown)
+      for(var i = 0; i < templateState[templateOptionDropdown][0].children.length; i ++) {
         a.push(1)
        
       }
@@ -134,7 +199,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
     console.log(paragraphInnerState)
   },[paragraphInnerState])
 
-  const handleChangeType = (selected: string, templateIndex: number, childIndex: number) => {
+  const handleChangeType = (selected: string, templateIndex: number, childIndex: number, optionIndex:number) => {
     setTemplateState((prev: TemplateItem[][]) => {
       // Deep copy the previous state
       const newState = prev.map(templateArr =>
@@ -143,9 +208,11 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
           children: template.children.map(child => [...child])
         }))
       );
+      console.log(newState)
+      console.log(newState[templateIndex][0].children[childIndex][optionIndex])
      switch (selected) {
   case "text":
-    newState[0][templateIndex].children[childIndex] = [[
+    newState[templateIndex][0].children[childIndex][optionIndex] = [
 
       { name: "type", type: "select", value: "text", option: ["text", "table", "image"] },
       { name: "content", type: "textarea" },
@@ -156,13 +223,13 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
       { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
       { name: "color", type: "color" },
       { name: "background color", type: "color" },
+    
     ]
-    ];
     return newState;
 
   case "table":
-    newState[0][templateIndex].children[childIndex] = [
-      [
+    newState[templateIndex][0].children[childIndex][optionIndex] = [
+      
 
         { name: "type", type: "select", value: "table", option: ["text", "table", "image"] },
         { name: "rows", type: "input", value: "2" },
@@ -172,13 +239,13 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
         { name: "alignment", type: "select", option: ["left", "center", "right"] },
         { name: "width", type: "input" },
         { name: "background color", type: "color" },
-      ]
+      
     ];
     return newState;
 
   case "image":
-    newState[0][templateIndex].children[childIndex] = [
-      [
+    newState[templateIndex][0].children[childIndex][optionIndex] = [
+      
 
         { name: "type", type: "select", value: "image", option: ["text", "table", "image"] },
         { name: "source", type: "input", placeholder: "Image URL or path" },
@@ -187,7 +254,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
       { name: "height", type: "input" },
       { name: "alignment", type: "select", option: ["left", "center", "right"] },
       { name: "border radius", type: "input" },
-    ]
+    
     ];
     return newState;
 
@@ -203,15 +270,17 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
   const renderField = (
     option: templateItemObjectProps,
     templateIndex: number,
-    childIndex: number
+    childIndex: number,
+    optionIndex: number
   ) => {
     switch (option.type) {
       case "select":
         return (
           <select
+          value={option.value}
             onChange={(e) =>
               option.name === "type" &&
-              handleChangeType(e.target.value, templateIndex, childIndex)
+              handleChangeType(e.target.value, templateIndex, childIndex,optionIndex)
             }
             className='h-[50px] min-w-full text-sm px-4 bg-loginBackground'
           >
@@ -266,6 +335,37 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
     }
   };
 
+  const AddNewValueInParagraph = (i: number, templateRowChildIndex: number, childIndex:number) => {
+    console.log(i)
+    console.log(childIndex)
+    setTemplateState((prev: TemplateItem[][]) => {
+      // Deep copy the previous state
+      const newState = prev.map(templateArr =>
+        templateArr.map(template => ({
+          ...template,
+          children: template.children.map(child => [...child])
+        }))
+      );
+      // You can add your logic here to modify newState as needed
+     newState[i][templateRowChildIndex].children[childIndex].push(
+      [
+
+      { name: "type", type: "select", value: "text", option: ["text", "table", "image"] },
+      { name: "content", type: "textarea" },
+      { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+      { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
+      { name: "font size", type: "input" },
+      { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
+      { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
+      { name: "color", type: "color" },
+      { name: "background color", type: "color" },
+    
+    ]
+     )
+     return newState
+    });
+  }
+
   const sendRequest = async() => {
     try {
     const response = await axios.post(`${apiUrl}/generateWordFile`,{args: templateState},{withCredentials: true})
@@ -296,13 +396,21 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
         </ul>
       </div>
 
-      <div className='w-80% h-80% bg-white shadow-boxShadow'>
+      <div className='w-80% h-80% bg-white  shadow-boxShadow'>
         <div className='w-full h-[90%] flex flex-col gap-2'>
           {templateState.map((templateRow, i) => (
+            
             <div key={i} className={`w-full bg-loginBackground transition-all ${templateOptionDropdown === i ? "h-[600px]" : "h-[100px]"} flex gap-2`}>
+              {templateRow.map((templateRowChild, templateRowChildIndex) => (
+                <Fragment >
+
+               
               <div className='w-full h-full flex justify-between relative px-[4%]'>
+                
                 <div className='h-full flex items-center'>
-                  {templateOptionDropdown !== i && <h1>{templateRow[0].name}</h1>}
+                  
+                   
+                  {templateOptionDropdown !== i && <h1>{templateRowChild.name}</h1>}
                 </div>
 
                 {templateOptionDropdown === i && (
@@ -311,75 +419,75 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                       <div
                         className='h-auto w-auto text-white text-lg font-semibold px-2'
                       >
-                      {templateRow[0].name}
+                      {templateRowChild.name}
                       </div>
                     </div>
+                   
+                    {templateRowChild.children.map((childGroup, childIndex) => (
+                        <Fragment key={childIndex}>
+                          <h1 className="w-full flex justify-center items-center text-sidebarChoose font-bold">
+                            აბზაცი {childIndex + 1}
+                          </h1>
 
-                    {templateRow[0].children.map((childGroup, childIndex) => (
- <Fragment key={childIndex}>
-  <h1 className="w-full flex justify-center items-center text-sidebarChoose font-bold">
-    აბზაცი {childIndex + 1}
-  </h1>
+                          {/* Container for left label column + scrollable data */}
+                          <div className="w-full min-h-[300px] flex bg-white rounded-lg text-sidebarChoose relative">
 
-  {/* Container for left label column + scrollable data */}
-  <div className="w-full min-h-[300px] flex bg-white rounded-lg text-sidebarChoose relative">
+                            {/* Sticky left label column */}
+                            <div className="sticky left-0 z-10 bg-white flex flex-col justify-start min-w-[180px] border-r">
+                              {childGroup.map((option, optionIndex) => (
+                                <div
+                                  key={optionIndex}
+                                  onClick={() => 
+                                  {
 
-    {/* Sticky left label column */}
-    <div className="sticky left-0 z-10 bg-white flex flex-col justify-start min-w-[180px] border-r">
-      {childGroup.map((option, optionIndex) => (
-        <div
-          key={optionIndex}
-          onClick={() => 
-          {
+                                    setParagraphInnerState((prev) => {
+                                      const updated = [...prev];
+                                      updated[childIndex] = optionIndex + 1;
+                                      return updated;
+                                    })}
+                                  }
+                                  className={`h-[50px] flex items-center pl-2 border-b text-sm font-semibold ${optionIndex+1 === paragraphInnerState[childIndex] && "bg-sidebarChoose text-white" } `}
+                                >
+                                  აბზაცის {optionIndex + 1} ნაწილი
+                                </div>
+                              ))}
+                            </div>
 
-            setParagraphInnerState((prev) => {
-              const updated = [...prev];
-              updated[childIndex] = optionIndex + 1;
-              return updated;
-            })}
-          }
-          className={`h-[50px] flex items-center pl-2 border-b text-sm font-semibold ${optionIndex+1 === paragraphInnerState[childIndex] && "bg-sidebarChoose text-white" } `}
-        >
-          აბზაცის {optionIndex + 1} ნაწილი
-        </div>
-      ))}
-    </div>
+                            {/* Horizontally scrollable content */}
+                            <div className="overflow-x-auto h-full w-full px-2">
+                              <div className="flex flex-col gap-4 h-full">
+                                {childGroup.map((option, optionIndex) => (
+                                  <Fragment>
 
-    {/* Horizontally scrollable content */}
-    <div className="overflow-x-auto w-full px-2">
-      <div className="flex flex-col gap-4">
-        {childGroup.map((option, optionIndex) => (
-          <Fragment>
+                                    {optionIndex+1 === paragraphInnerState[childIndex] && (
+                                  <div key={optionIndex} className="flex gap-[4%] h-full overflow-y-hidden">
+                                      <Fragment>
 
-            {optionIndex+1 === paragraphInnerState[childIndex] && (
-          <div key={optionIndex} className="flex gap-[4%]  overflow-y-hidden">
-              <Fragment>
+                                        {option.map((grandChild, grandChildIndex) => (
+                                          <div
+                                            key={grandChildIndex}
+                                            className="min-w-[200px] flex flex-col gap-2 justify-start items-center"
+                                            >
+                                            <label>{grandChild.name}</label>
+                                            {renderField(grandChild, i, childIndex, optionIndex)}
+                                          </div>
+                                        ))}
+                                      </Fragment>
+                                  </div>
+                                    )}
+                                    </Fragment>
+                                ))}
+                              </div>
+                            </div>
 
-                {option.map((grandChild, grandChildIndex) => (
-                  <div
-                    key={grandChildIndex}
-                    className="min-w-[200px] flex flex-col gap-2 justify-start items-center"
-                    >
-                    <label>{grandChild.name}</label>
-                    {renderField(grandChild, i, childIndex)}
-                  </div>
-                ))}
-              </Fragment>
-          </div>
-            )}
-            </Fragment>
-        ))}
-      </div>
-    </div>
+                            {/* Button in corner */}
+                            <div onClick={() => AddNewValueInParagraph(i,templateRowChildIndex, childIndex)} className="absolute bottom-[10%] right-2 h-[50px] w-auto px-2 border-2 flex justify-center items-center rounded-lg cursor-pointer bg-sidebarChoose text-white">
+                              აბზაცის გაგრძელების დამატება
+                            </div>
+                          </div>
+                        </Fragment>
 
-    {/* Button in corner */}
-    <div className="absolute bottom-[10%] right-2 h-[50px] w-auto px-2 border-2 flex justify-center items-center rounded-lg cursor-pointer bg-sidebarChoose text-white">
-      აბზაცის გაგრძელების დამატება
-    </div>
-  </div>
-</Fragment>
-
-))}
+                    ))}
                   </div>
                 )}
                 {
@@ -399,8 +507,12 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                   />
                 </div>
               </div>
+              </Fragment>
+      ))
+    }
             </div>
           ))}
+ 
         </div>
 
         <div className='w-full h-[10%] flex justify-end items-center'>

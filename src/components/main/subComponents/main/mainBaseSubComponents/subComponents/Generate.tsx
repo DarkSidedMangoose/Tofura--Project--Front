@@ -9,7 +9,7 @@ type Props = {}
 
 const Generate = (props: Props) => {
   const dispatch = useDispatch()
-  const [state, setState] = useState<{navState:string, templates:string[], choosedTemplate:string, addNewTemplate: boolean,addNewTemplateNavState: string}>({navState: "შაბლონები",templates:["ინვოისის გაგზავნის შაბლონი","ოქმის შაბლონი"],choosedTemplate:"",addNewTemplate:false, addNewTemplateNavState: "შაბლონი"})
+  const [state, setState] = useState<{navState:string, templates:string[], choosedTemplate:string, addNewTemplate: boolean,addNewTemplateNavState: string}>({navState: "შაბლონები",templates:["ინვოისის გაგზავნის შაბლონი","ოქმის შაბლონი"],choosedTemplate:"",addNewTemplate:true, addNewTemplateNavState: "შაბლონი"})
 
 
   return (
