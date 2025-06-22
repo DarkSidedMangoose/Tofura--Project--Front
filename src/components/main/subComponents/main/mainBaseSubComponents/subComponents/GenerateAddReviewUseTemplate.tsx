@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import Down from '../../../../../../assets/images/main/down2.png'
-import "../../../../Scrollbar.css"
+import React, { Fragment, useEffect, useState } from 'react';
+import Down from '../../../../../../assets/images/main/down2.png';
+import "../../../../Scrollbar.css";
 import axios from 'axios';
 
 type templateItemObjectProps = {
@@ -10,12 +10,12 @@ type templateItemObjectProps = {
   value?: string;
   option?: string[];
   placeholder?: string;
-}
+};
 
 type TemplateItem = {
   name: string;
   children: templateItemObjectProps[][][];
-}
+};
 
 interface Props {
   state: {
@@ -24,7 +24,7 @@ interface Props {
     choosedTemplate: string;
     addNewTemplate: boolean;
     addNewTemplateNavState: string;
-  },
+  };
   setState: React.Dispatch<React.SetStateAction<{
     navState: string;
     templates: string[];
@@ -37,235 +37,117 @@ interface Props {
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
 const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
+  const [templateOptionDropdown, setTemplateOptionDropdown] = useState<number>(0);
+  const [paragraphInnerState, setParagraphInnerState] = useState<number[]>([]);
+  
 
-  const [templateOptionDropdown, setTemplateOptionDropdown] = useState<number>(0)
-  const [paragraphInnerState, setParagraphInnerState] = useState<number[]>([])
- 
-  const [templateState, setTemplateState] = useState<TemplateItem[][]>([[
+  const [templateState, setTemplateState] = useState<TemplateItem[]>([
     {
       name: "თავსართი",
-      
-      children: [[[
-
-        
-        { name: "type", type: "select", option: ["text", "table", "image"] },
-        { name: "content", type: "textarea" },
-        { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-        { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-        { name: "font size", type: "input" },
-        { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-        { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-        { name: "color", type: "color" },
-        { name: "background color", type: "color" },
-        
+      children: [
+        [[
+          { name: "type", type: "select", option: ["text", "table", "image"] },
+          { name: "content", type: "textarea" },
+          { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+          { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
+          { name: "font size", type: "input" },
+          { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
+          { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
+          { name: "color", type: "color" },
+          { name: "background color", type: "color" }
+        ], [
+          
+        ]],
+        [[
+          { name: "type", type: "select", option: ["text", "table", "image"] },
+          { name: "content", type: "textarea" },
+          { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+          { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
+          { name: "font size", type: "input" },
+          { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
+          { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
+          { name: "color", type: "color" },
+          { name: "background color", type: "color" }
+        ], [
+          
+        ]],
       ],
-      [
 
-        { name: "type", type: "select", option: ["text", "table", "image"] },
-        { name: "content", type: "textarea" },
-        { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-        { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-        { name: "font size", type: "input" },
-        { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-        { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-        { name: "color", type: "color" },
-        { name: "background color", type: "color" },
-        
-      ],
-      ],[[
-        { name: "type", type: "select", option: ["text", "table", "image"] },
-        { name: "content", type: "textarea" },
-        { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-        { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-        { name: "font size", type: "input" },
-        { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-        { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-        { name: "color", type: "color" },
-        { name: "background color", type: "color" },
-        
-      ]],
-    [[
-
-
-      { name: "type", type: "select", option: ["text", "table", "image"] },
-      { name: "content", type: "textarea" },
-      { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-      { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-        { name: "font size", type: "input" },
-        { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-        { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-        { name: "color", type: "color" },
-        { name: "background color", type: "color" },
-        
-      ]
-      ],
-    [
-      [
-
-        { name: "type", type: "select", option: ["text", "table", "image"] },
-        { name: "content", type: "textarea" },
-        { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-        { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-        { name: "font size", type: "input" },
-        { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-        { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-        { name: "color", type: "color" },
-        { name: "background color", type: "color" },
-      ]
-        
-      ],]
-    }
-  ],
-[
+    },
     {
       name: "aa",
-      
-      children: [[[
-
-        
-        { name: "type", type: "select", option: ["text", "table", "image"] },
-        { name: "content", type: "textarea" },
-        { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-        { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-        { name: "font size", type: "input" },
-        { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-        { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-        { name: "color", type: "color" },
-        { name: "background color", type: "color" },
-        
-      ],
-     
-      ],[[
-        { name: "type", type: "select", option: ["text", "table", "image"] },
-        { name: "content", type: "textarea" },
-        { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-        { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-        { name: "font size", type: "input" },
-        { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-        { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-        { name: "color", type: "color" },
-        { name: "background color", type: "color" },
-        
-      ]],
-    [[
-
-
-      { name: "type", type: "select", option: ["text", "table", "image"] },
-      { name: "content", type: "textarea" },
-      { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-      { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-        { name: "font size", type: "input" },
-        { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-        { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-        { name: "color", type: "color" },
-        { name: "background color", type: "color" },
-        
+      children: [
+        [[
+          { name: "type", type: "select", option: ["text", "table", "image"] },
+          { name: "content", type: "textarea" },
+          { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+          { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
+          { name: "font size", type: "input" },
+          { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
+          { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
+          { name: "color", type: "color" },
+          { name: "background color", type: "color" }
+        ]]
       ]
-      ],
-    [
-      [
-
-        { name: "type", type: "select", option: ["text", "table", "image"] },
-        { name: "content", type: "textarea" },
-        { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-        { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-        { name: "font size", type: "input" },
-        { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-        { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-        { name: "color", type: "color" },
-        { name: "background color", type: "color" },
-      ]
-        
-      ],]
     }
-  ]
-]);
-
+  ]);
 
   useEffect(() => {
-    let a = []
-     if (templateOptionDropdown !== -1) {
-      console.log(templateOptionDropdown)
-      for(var i = 0; i < templateState[templateOptionDropdown][0].children.length; i ++) {
-        a.push(1)
-       
+    if (templateOptionDropdown !== -1) {
+      const sectionCount = templateState[templateOptionDropdown]?.children.length || 0;
+      setParagraphInnerState(new Array(sectionCount).fill(1));
+    }
+  }, [templateOptionDropdown]);
+  
+
+  const handleChangeType = (selected: string, templateIndex: number, childIndex: number, optionIndex: number) => {
+    setTemplateState((prev) => {
+      const newState = [...prev];
+      const childrenCopy = [...newState[templateIndex].children];
+      const sectionCopy = [...childrenCopy[childIndex]];
+      switch (selected) {
+        case "text":
+          sectionCopy[optionIndex] = [
+            { name: "type", type: "select", value: "text", option: ["text", "table", "image"] },
+            { name: "content", type: "textarea" },
+            { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+            { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
+            { name: "font size", type: "input" },
+            { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
+            { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
+            { name: "color", type: "color" },
+            { name: "background color", type: "color" }
+          ];
+          break;
+        case "table":
+          sectionCopy[optionIndex] = [
+            { name: "type", type: "select", value: "table", option: ["text", "table", "image"] },
+            { name: "rows", type: "input", value: "2" },
+            { name: "columns", type: "input", value: "2" },
+            { name: "border", type: "select", option: ["none", "solid", "dashed", "dotted"] },
+            { name: "cell padding", type: "input" },
+            { name: "alignment", type: "select", option: ["left", "center", "right"] },
+            { name: "width", type: "input" },
+            { name: "background color", type: "color" }
+          ];
+          break;
+        case "image":
+          sectionCopy[optionIndex] = [
+            { name: "type", type: "select", value: "image", option: ["text", "table", "image"] },
+            { name: "source", type: "input", placeholder: "Image URL or path" },
+            { name: "alt text", type: "input" },
+            { name: "width", type: "input" },
+            { name: "height", type: "input" },
+            { name: "alignment", type: "select", option: ["left", "center", "right"] },
+            { name: "border radius", type: "input" }
+          ];
+          break;
       }
-    }
-    console.log(a)
-    setParagraphInnerState(a)
-  },[templateOptionDropdown])
-
-  useEffect(() => {
-    console.log(paragraphInnerState)
-  },[paragraphInnerState])
-
-  const handleChangeType = (selected: string, templateIndex: number, childIndex: number, optionIndex:number) => {
-    setTemplateState((prev: TemplateItem[][]) => {
-      // Deep copy the previous state
-      const newState = prev.map(templateArr =>
-        templateArr.map(template => ({
-          ...template,
-          children: template.children.map(child => [...child])
-        }))
-      );
-      console.log(newState)
-      console.log(newState[templateIndex][0].children[childIndex][optionIndex])
-     switch (selected) {
-  case "text":
-    newState[templateIndex][0].children[childIndex][optionIndex] = [
-
-      { name: "type", type: "select", value: "text", option: ["text", "table", "image"] },
-      { name: "content", type: "textarea" },
-      { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-      { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-      { name: "font size", type: "input" },
-      { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-      { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-      { name: "color", type: "color" },
-      { name: "background color", type: "color" },
-    
-    ]
-    return newState;
-
-  case "table":
-    newState[templateIndex][0].children[childIndex][optionIndex] = [
-      
-
-        { name: "type", type: "select", value: "table", option: ["text", "table", "image"] },
-        { name: "rows", type: "input", value: "2" },
-        { name: "columns", type: "input", value: "2" },
-        { name: "border", type: "select", option: ["none", "solid", "dashed", "dotted"] },
-        { name: "cell padding", type: "input" },
-        { name: "alignment", type: "select", option: ["left", "center", "right"] },
-        { name: "width", type: "input" },
-        { name: "background color", type: "color" },
-      
-    ];
-    return newState;
-
-  case "image":
-    newState[templateIndex][0].children[childIndex][optionIndex] = [
-      
-
-        { name: "type", type: "select", value: "image", option: ["text", "table", "image"] },
-        { name: "source", type: "input", placeholder: "Image URL or path" },
-      { name: "alt text", type: "input" },
-      { name: "width", type: "input" },
-      { name: "height", type: "input" },
-      { name: "alignment", type: "select", option: ["left", "center", "right"] },
-      { name: "border radius", type: "input" },
-    
-    ];
-    return newState;
-
-  default:
-    return newState;
-}
-    })
-    console.log("User selected type:", selected);
-    console.log("Template index:", templateIndex, "Child index:", childIndex);
-    // TODO: Replace children[childIndex] based on selected type
-  }
+      childrenCopy[childIndex] = sectionCopy;
+      newState[templateIndex].children = childrenCopy;
+      return newState;
+    });
+  };
 
   const renderField = (
     option: templateItemObjectProps,
@@ -277,10 +159,10 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
       case "select":
         return (
           <select
-          value={option.value}
+            value={option.value}
             onChange={(e) =>
               option.name === "type" &&
-              handleChangeType(e.target.value, templateIndex, childIndex,optionIndex)
+              handleChangeType(e.target.value, templateIndex, childIndex, optionIndex)
             }
             className='h-[50px] min-w-full text-sm px-4 bg-loginBackground'
           >
@@ -291,95 +173,87 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
           </select>
         );
       case "input":
-        return (
-          <input
-            type="text"
-            placeholder={option.placeholder}
-            className='h-[50px] min-w-full text-sm px-4 bg-loginBackground'
-          />
-        );
+        return <input type="text" placeholder={option.placeholder} className='h-[50px] min-w-full text-sm px-4 bg-loginBackground' />;
       case "textarea":
-        return (
-          <textarea
-            placeholder={option.placeholder}
-            className='h-[250px] min-w-full text-sm p-2 resize-none bg-loginBackground'
-          />
-        );
+        return <textarea placeholder={option.placeholder} className='h-[250px] min-w-full text-sm p-2 resize-none bg-loginBackground' />;
       case "multiselect":
         return (
-          <div className='flex  justify-between w-full h-[50px] items-center'>
+          <div className='flex justify-between w-full h-[50px] items-center'>
             {option.option?.map((style, idx) => (
-              <label key={idx} className='flex flex-col  items-center  '>
-                <input type="checkbox" className='' />
+              <label key={idx} className='flex flex-col items-center'>
+                <input type="checkbox" />
                 <span>{style}</span>
               </label>
             ))}
           </div>
         );
       case "color":
-        return (
-          <input
-            type="color"
-            className='h-[40px] w-[60px] border rounded'
-          />
-        );
-      case "file":
-        return (
-          <input
-            type="file"
-            className='w-full text-sm'
-          />
-        );
+        return <input type="color" className='h-[40px] w-[60px] border rounded' />;
       default:
         return <span className='text-red-500 text-sm'>Unknown type: {option.type}</span>;
     }
   };
 
-  const AddNewValueInParagraph = (i: number, templateRowChildIndex: number, childIndex:number) => {
-    console.log(i)
-    console.log(childIndex)
-    setTemplateState((prev: TemplateItem[][]) => {
-      // Deep copy the previous state
-      const newState = prev.map(templateArr =>
-        templateArr.map(template => ({
+  const handleAddNewParagraph = (templateIndex: number) => {
+    setParagraphInnerState((prev) => ([...prev,1]))
+    setTemplateState((prevTemplates) =>
+      prevTemplates.map((template, i) => {
+        if (i !== templateIndex) return template;
+        return {
           ...template,
-          children: template.children.map(child => [...child])
-        }))
-      );
-      // You can add your logic here to modify newState as needed
-     newState[i][templateRowChildIndex].children[childIndex].push(
-      [
-
-      { name: "type", type: "select", value: "text", option: ["text", "table", "image"] },
-      { name: "content", type: "textarea" },
-      { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-      { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-      { name: "font size", type: "input" },
-      { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-      { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-      { name: "color", type: "color" },
-      { name: "background color", type: "color" },
+          children: [
+            ...template.children,
+            [[
+              { name: "type", type: "select", value: "text", option: ["text", "table", "image"] },
+              { name: "content", type: "textarea" },
+              { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+              { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
+              { name: "font size", type: "input" },
+              { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
+              { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
+              { name: "color", type: "color" },
+              { name: "background color", type: "color" }
+            ]]
+          ]
+        };
+      })
+    );
     
-    ]
-     )
-     return newState
-    });
   }
+  
+  const AddNewValueInParagraph = (templateIndex: number, childIndex: number) => {
+  setTemplateState((prevTemplates) =>
+    prevTemplates.map((template, i) => {
+      if (i !== templateIndex) return template;
 
-  const sendRequest = async() => {
-    try {
-    const response = await axios.post(`${apiUrl}/generateWordFile`,{args: templateState},{withCredentials: true})
+      const newChildren = template.children.map((child, ci) => {
+        if (ci !== childIndex) return child;
 
+        // Clone existing child blocks and append a new one
+        return [
+          ...child,
+          [
+            { name: "type", type: "select", value: "text", option: ["text", "table", "image"] },
+            { name: "content", type: "textarea" },
+            { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+            { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
+            { name: "font size", type: "input" },
+            { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
+            { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
+            { name: "color", type: "color" },
+            { name: "background color", type: "color" }
+          ]
+        ];
+      });
 
-    }catch(err: any) {
-      if(err.response.status === 401) {
-            window.location.href = "/";
+      return {
+        ...template,
+        children: newChildren
+      };
+    })
+  );
+};
 
-      }else {
-        console.error(err)
-      }
-    }
-  }
   return (
     <div className='fixed w-full h-full left-0 top-0 bg-loginBackground z-10 flex flex-col justify-center items-center'>
       <div className='w-1/3 h-[5%] flex justify-center items-end'>
@@ -401,8 +275,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
           {templateState.map((templateRow, i) => (
             
             <div key={i} className={`w-full bg-loginBackground transition-all ${templateOptionDropdown === i ? "h-[600px]" : "h-[100px]"} flex gap-2`}>
-              {templateRow.map((templateRowChild, templateRowChildIndex) => (
-                <Fragment >
+            
 
                
               <div className='w-full h-full flex justify-between relative px-[4%]'>
@@ -410,7 +283,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                 <div className='h-full flex items-center'>
                   
                    
-                  {templateOptionDropdown !== i && <h1>{templateRowChild.name}</h1>}
+                  {templateOptionDropdown !== i && <h1>{templateRow.name}</h1>}
                 </div>
 
                 {templateOptionDropdown === i && (
@@ -419,11 +292,11 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                       <div
                         className='h-auto w-auto text-white text-lg font-semibold px-2'
                       >
-                      {templateRowChild.name}
+                      {templateRow.name}
                       </div>
                     </div>
                    
-                    {templateRowChild.children.map((childGroup, childIndex) => (
+                    {templateRow.children.map((childGroup, childIndex) => (
                         <Fragment key={childIndex}>
                           <h1 className="w-full flex justify-center items-center text-sidebarChoose font-bold">
                             აბზაცი {childIndex + 1}
@@ -481,7 +354,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                             </div>
 
                             {/* Button in corner */}
-                            <div onClick={() => AddNewValueInParagraph(i,templateRowChildIndex, childIndex)} className="absolute bottom-[10%] right-2 h-[50px] w-auto px-2 border-2 flex justify-center items-center rounded-lg cursor-pointer bg-sidebarChoose text-white">
+                            <div onClick={() => AddNewValueInParagraph(i, childIndex)} className="absolute bottom-[10%] right-2 h-[50px] w-auto px-2 border-2 flex justify-center items-center rounded-lg cursor-pointer bg-sidebarChoose text-white">
                               აბზაცის გაგრძელების დამატება
                             </div>
                           </div>
@@ -493,7 +366,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                 {
                   templateOptionDropdown === i && 
                     <div className='absolute bottom-0 h-[calc(15%-4px)] flex justify-center items-center '>
-                  <button className='h-1/2 bg-sidebarChoose text-white px-2 rounded-lg cursor-pointer'>ახალი აბზაცის დამატება</button>
+                  <button onClick={() => handleAddNewParagraph(i)} className='h-1/2 bg-sidebarChoose text-white px-2 rounded-lg cursor-pointer'>ახალი აბზაცის დამატება</button>
                   </div>
                 }
               
@@ -507,9 +380,8 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                   />
                 </div>
               </div>
-              </Fragment>
-      ))
-    }
+             
+    
             </div>
           ))}
  
@@ -522,7 +394,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
           >
             დახურვა
           </button>
-          <button onClick={() => sendRequest()}>გენერირება</button>
+          <button >გენერირება</button>
         </div>
       </div>
     </div>
