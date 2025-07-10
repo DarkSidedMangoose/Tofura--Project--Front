@@ -88,7 +88,8 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
           { name: "background color", type: "color" }
         ]]
       ]
-    }
+    },
+    
   ]);
   const [templateRow, setTemplateRow] = useState<TemplateItem | null>(null);
 
@@ -181,23 +182,26 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
       </div>
 
       <div className='w-80% h-80% bg-white  shadow-boxShadow'>
-        <div className='w-full h-[90%] flex flex-col gap-2'>
+        <div className='w-full h-[85%] flex flex-col gap-2 overflow-y-auto '>
           {templateState.map((templateRow, i) => (
             
             <div onClick={() => {
               setTemplateRow(templateRow);
               setTemplateOptionDropdown(templateOptionDropdown === i ? -1 : i);
-            }} key={i} className={`w-full bg-loginBackground transition-all  cursor-pointer hover:opacity-80 duration-200 h-[100px] flex gap-2`}>
+            }} key={i} className={`w-full bg-loginBackground transition-all  cursor-pointer hover:opacity-80 duration-200 min-h-[100px] flex gap-2 justify-between`}>
             
 
                
               <div className='w-full h-full flex justify-between relative px-[4%]'>
                 
-                <div className='h-full flex items-center'>
+                <div className='h-full flex items-center font-bold'>
                   
                    
                   {templateOptionDropdown !== i && <h1>{templateRow.name}</h1>}
                 </div>
+                  <div className='w-20% h-full flex flex-col items-center justify-between'>
+                    a
+                  </div>
 
                 
                 
@@ -225,7 +229,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
             <TemplateChoosedOption templateState={templateState} i={templateOptionDropdown} paragraphInnerState={paragraphInnerState} setParagraphInnerState={setParagraphInnerState} AddNewValueInParagraph={AddNewValueInParagraph} setTemplateState={setTemplateState} handleAddNewParagraph={handleAddNewParagraph} setTemplateOptionDropdown={setTemplateOptionDropdown} />
                   </div>
                 )}
-        <div className='w-full h-[10%] flex justify-end items-center'>
+        <div className='w-full h-[15%] flex justify-end items-center'>
           <button
             onClick={() => setState(prev => ({ ...prev, addNewTemplate: false }))}
             className='w-200px mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white'

@@ -110,7 +110,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
     };
     
   return (
-    <div className='h-full bg-white  w-full overflow-y-auto px-4 custom-scrollbar bg-[#e1e2e2f1] rounded-xl mt-2 shadow-bottom-right flex flex-col gap-10 relative'>
+    <div className='h-full   w-full overflow-y-auto px-4 custom-scrollbar bg-gray-200 rounded-xl mt-2 shadow-bottom-right flex flex-col gap-10 relative'>
                         <div className=' bg-sidebarChoose  min-h-[80px] flex flex-col justify-center  items-center gap-2 absolute top-0 w-full left-0'>
                           <div
                             className='h-auto w-auto text-white text-lg font-semibold px-2'
@@ -118,7 +118,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
                           {templateState[i].name}
                           </div>
                         </div>
-          <div className='mt-[85px] overflow-y-scroll h-80% w-full '>
+          <div className='mt-[85px] overflow-y-scroll h-80% w-full flex flex-col gap-10 '>
               
                         {templateState[i].children.map((childGroup:any, childIndex:any) => (
                             <Fragment key={childIndex}>
@@ -191,7 +191,12 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
                               <div className='absolute left-0 bottom-0 h-[calc(20%-100px)] px-2 w-full flex justify-between items-center  '>
               <button onClick={() => handleAddNewParagraph(i)} className='h-full bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer'>ახალი აბზაცის დამატება</button>
               <div className='w-auto px-2 flex gap-2 h-full'>
-                  <button className="bg-sidebarChoose w-auto h-full text-white rounded-xl px-4">შენახვა</button><button className="bg-sidebarChoose text-white rounded-xl px-4" onClick={() => setTemplateOptionDropdown(-1)}>გაუქმება</button>
+                 
+          <button
+            className='w-200px mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white'
+          >შენახვა</button>
+
+          <button className="w-200px mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white" onClick={() => setTemplateOptionDropdown(-1)}>გაუქმება</button>
               </div>
                   </div>
                       </div>
