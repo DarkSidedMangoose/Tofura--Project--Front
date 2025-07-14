@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import Down from '../../../../../../assets/images/main/down2.png';
+import RemIcon from '../../../../../../assets/images/main/cogwheel.webp';
 import "../../../../Scrollbar.css";
 import axios from 'axios';
 import TemplateChoosedOption from './TemplateChoosedOption';
@@ -168,12 +168,12 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
   return (
     <div className='fixed w-full h-full left-0 top-0 bg-loginBackground z-10 flex flex-col justify-center items-center'>
       <div className='w-1/3 h-[5%] flex justify-center items-end'>
-        <ul className='w-full h-full flex gap-2'>
+        <ul className='w-full h-full flex '>
           {["შაბლონი", "შაბლონის ვიზუალი"].map((e, i) => (
             <li
               key={i}
               onClick={() => setState(prev => ({ ...prev, addNewTemplateNavState: e }))}
-              className={`w-1/2 h-full flex justify-center items-center ${state.addNewTemplateNavState === e ? "bg-sidebarChoose text-white border-white" : "bg-white text-sidebarChoose border-sidebarChoose"} border-2 cursor-pointer`}
+              className={`w-1/2 h-full flex justify-center items-center ${state.addNewTemplateNavState === e ? "bg-sidebarChoose text-white border-white" : "bg-white text-sidebarChoose border-sidebarChoose"} cursor-pointer`}
             >
               {e}
             </li>
@@ -199,8 +199,8 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                    
                   {templateOptionDropdown !== i && <h1>{templateRow.name}</h1>}
                 </div>
-                  <div className='w-20% h-full flex flex-col items-center justify-between'>
-                    a
+                  <div className='w-[5%] flex flex-col items-center justify-center'>
+                  <img src={ RemIcon} className='w-full' />
                   </div>
 
                 
