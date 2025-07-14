@@ -79,7 +79,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
               handleChangeType(e.target.value, templateIndex, childIndex, optionIndex)
               
             }
-            className='h-[50px] min-w-full text-sm px-4 bg-loginBackground'
+            className='h-[50px] min-w-full text-sm px-4 bg-white border rounded'
           >
             <option disabled>აირჩიე</option>
             {option.option?.map((o, idx) => (
@@ -88,15 +88,15 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
           </select>
         );
       case "input":
-        return <input type="text" placeholder={option.placeholder} className='h-[50px] min-w-full text-sm px-4 bg-loginBackground' />;
+        return <input type="text" placeholder={option.placeholder} className='h-[50px] min-w-full text-sm px-4 bg-white border rounded' />;
       case "textarea":
-        return <textarea placeholder={option.placeholder} className='h-[250px] min-w-full text-sm p-2 resize-none bg-loginBackground' />;
+        return <textarea placeholder={option.placeholder} className='h-[250px] min-w-full text-sm p-2 resize-none bg-white border rounded' />;
       case "multiselect":
         return (
-          <div className='flex justify-between w-full h-[50px] items-center'>
+          <div className='flex  w-full h-auto gap-4 flex-col '>
             {option.option?.map((style, idx) => (
-              <label key={idx} className='flex flex-col items-center'>
-                <input type="checkbox" />
+              <label key={idx} className='flex gap-2 w-full  '>
+                <input type="checkbox" className='w-[50px]' />
                 <span>{style}</span>
               </label>
             ))}
@@ -110,15 +110,15 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
     };
     
   return (
-    <div className='h-full   w-full overflow-y-auto px-4 custom-scrollbar bg-gray-200 rounded-xl mt-2 shadow-bottom-right flex flex-col gap-10 relative'>
-                        <div className=' bg-sidebarChoose  min-h-[80px] flex flex-col justify-center  items-center gap-2 absolute top-0 w-full left-0'>
+    <div className='h-full   w-full overflow-y-auto px-4 custom-scrollbar bg-white rounded-xl gap-4  shadow-bottom-right flex flex-col  relative'>
+                        <div className=' bg-sidebarChoose  min-h-[80px] flex flex-col justify-center  items-center gap-2  w-full '>
                           <div
-                            className='h-auto w-auto text-white text-lg font-semibold px-2'
+                            className='h-auto  text-white text-lg font-semibold px-2'
                           >
                           {templateState[i].name}
                           </div>
                         </div>
-          <div className='mt-[85px] overflow-y-scroll h-80% w-full flex flex-col gap-10 '>
+          <div className='  overflow-y-scroll h-full  w-full flex flex-col gap-10 '>
               
                         {templateState[i].children.map((childGroup:any, childIndex:any) => (
                             <Fragment key={childIndex}>
@@ -127,7 +127,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
                               </h1>
     
                               {/* Container for left label column + scrollable data */}
-                              <div className="w-full min-h-[300px] flex bg-white rounded-lg text-sidebarChoose relative">
+                              <div className="w-full min-h-[300px] flex bg-loginBackground rounded-lg text-sidebarChoose relative">
     
                                 {/* Sticky left label column */}
                                 <div className="sticky left-0 z-10 bg-white flex flex-col justify-start min-w-[180px] border-r">
@@ -188,15 +188,15 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
                         ))}
                        </div>
               
-                              <div className='absolute left-0 bottom-0 h-[calc(20%-100px)] px-2 w-full flex justify-between items-center  '>
-              <button onClick={() => handleAddNewParagraph(i)} className='h-full bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer'>ახალი აბზაცის დამატება</button>
-              <div className='w-auto px-2 flex gap-2 h-full'>
+                              <div className=' min-h-[80px] px-2 w-full flex justify-between items-center bg-white  '>
+              <button onClick={() => handleAddNewParagraph(i)} className='h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer'>ახალი აბზაცის დამატება</button>
+              <div className='w-auto px-2 flex gap-2 h-full items-center'>
                  
           <button
-            className='w-200px mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white'
+            className='w-200px h-2/3 mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white'
           >შენახვა</button>
 
-          <button className="w-200px mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white" onClick={() => setTemplateOptionDropdown(-1)}>გაუქმება</button>
+          <button className="w-200px h-2/3 mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white" onClick={() => setTemplateOptionDropdown(-1)}>გაუქმება</button>
               </div>
                   </div>
                       </div>
