@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import RemIcon from '../../../../../../assets/images/main/cogwheel.webp';
+import Settings from '../../../../../../assets/images/main/cogwheel.webp';
+import RemIcon from '../../../../../../assets/images/main/delete.webp';
 import "../../../../Scrollbar.css";
 import axios from 'axios';
 import TemplateChoosedOption from './TemplateChoosedOption';
@@ -166,8 +167,8 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
 };
 
   return (
-    <div className='fixed w-full h-full left-0 top-0 bg-loginBackground z-10 flex flex-col justify-center items-center'>
-      <div className='w-1/3 h-[5%] flex justify-center items-end'>
+    <div className='fixed inset-0 bg-loginBackground z-10 flex flex-col justify-center items-center'>
+      <div className='w-1/3 h-[5%] min-h-[50px] flex justify-center items-end'>
         <ul className='w-full h-full flex '>
           {["შაბლონი", "შაბლონის ვიზუალი"].map((e, i) => (
             <li
@@ -181,8 +182,8 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
         </ul>
       </div>
 
-      <div className='w-80% h-80% bg-white  shadow-boxShadow'>
-        <div className='w-full h-[85%] flex flex-col gap-2 overflow-y-auto '>
+      <div className='w-80% min-h-[640px] max-h-[80vh] bg-white  shadow-boxShadow'>
+        <div className='w-full  h-[85%] flex flex-col gap-2 overflow-y-auto '>
           {templateState.map((templateRow, i) => (
             
             <div onClick={() => {
@@ -199,8 +200,13 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                    
                   {templateOptionDropdown !== i && <h1>{templateRow.name}</h1>}
                 </div>
-                  <div className='w-[5%] flex flex-col items-center justify-center'>
-                  <img src={ RemIcon} className='w-full' />
+                  <div className='w-auto flex gap-4  items-center justify-center'>
+                  <img src={Settings} className='h-1/2' onClick={(e) => {
+                    e.stopPropagation() 
+                  }} />
+                  <img src={RemIcon} className='h-1/2' onClick={(e) => {
+                    e.stopPropagation() 
+                   }} />
                   </div>
 
                 
@@ -229,7 +235,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
             <TemplateChoosedOption templateState={templateState} i={templateOptionDropdown} paragraphInnerState={paragraphInnerState} setParagraphInnerState={setParagraphInnerState} AddNewValueInParagraph={AddNewValueInParagraph} setTemplateState={setTemplateState} handleAddNewParagraph={handleAddNewParagraph} setTemplateOptionDropdown={setTemplateOptionDropdown} />
                   </div>
                 )}
-        <div className='w-full h-[15%] flex justify-end items-center'>
+        <div className='w-full h-[15%] min-h-[90px] flex justify-end items-center'>
           <button
             onClick={() => setState(prev => ({ ...prev, addNewTemplate: false }))}
             className='w-200px mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white'
