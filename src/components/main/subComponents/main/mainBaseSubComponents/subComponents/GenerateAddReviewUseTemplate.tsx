@@ -16,7 +16,7 @@ export type templateItemObjectProps = {
 
 type TemplateItem = {
   name: string;
-  remove: boolean;
+  remove: boolean | null;
   children: templateItemObjectProps[][][];
 };
 
@@ -45,7 +45,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
   const [templateState, setTemplateState] = useState<TemplateItem[]>([
     {
       name: "თავსართი",
-      remove: false,
+      remove: null,
       children: [
         [[
           { name: "type", type: "select", option: ["text", "table", "image"] },
@@ -78,7 +78,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
     },
     {
       name: "მთავარი ტექსტი",
-      remove: false,
+      remove: null,
       children: [
         [[
           { name: "type", type: "select", option: ["text", "table", "image"] },
@@ -211,12 +211,12 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                       e.stopPropagation() 
                       setTemplateState((prev) =>
                         prev.map((item, idx) =>
-                          idx === i ? { ...item, remove: !templateRow.remove } : item
+                          idx === i ? { ...item, remove: templateRow.remove === null ? true : !templateRow.remove } : item
                         )
                       );
                   }} />
-                  <button className={`${templateRow.remove ? "SlideEffectRemoveSectionTrue " : "SlideEffectRemoveSectionFalse "}`} onClick={(e) => { e.stopPropagation() }}>
-                    <span className={`${templateRow.remove ? "flex" : "hidden"}`}>წაშლა</span> </button>
+                  <button className={`${templateRow.remove === null ? "hidden": templateRow.remove === false  ? "SlideEffectRemoveSectionFalse " : "SlideEffectRemoveSectionTrue"}`} onClick={(e) => { e.stopPropagation() }}>
+                    <span className={`${templateRow.remove === null ? "hidden" : templateRow.remove === true ? "flex" : "hidden"}`}>წაშლა</span> </button>
                   </div>
 
                 
