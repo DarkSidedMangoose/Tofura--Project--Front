@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import Settings from '../../../../../../assets/images/main/cogwheel.webp';
 import RemIcon from '../../../../../../assets/images/main/delete.webp';
 import "../../../../Scrollbar.css";
-import axios from 'axios';
+import "./Sliders.css"
 import TemplateChoosedOption from './TemplateChoosedOption';
 
 export type templateItemObjectProps = {
@@ -16,6 +16,7 @@ export type templateItemObjectProps = {
 
 type TemplateItem = {
   name: string;
+  remove: boolean;
   children: templateItemObjectProps[][][];
 };
 
@@ -44,6 +45,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
   const [templateState, setTemplateState] = useState<TemplateItem[]>([
     {
       name: "თავსართი",
+      remove: false,
       children: [
         [[
           { name: "type", type: "select", option: ["text", "table", "image"] },
@@ -76,6 +78,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
     },
     {
       name: "მთავარი ტექსტი",
+      remove: false,
       children: [
         [[
           { name: "type", type: "select", option: ["text", "table", "image"] },
@@ -182,45 +185,45 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
         </ul>
       </div>
 
-      <div className='w-80% min-h-[640px] max-h-[80vh] bg-white  shadow-boxShadow'>
-        <div className='w-full  h-[85%] flex flex-col gap-2 overflow-y-auto '>
+      <div className='w-80% min-h-[640px] max-h-[80vh] bg-white  shadow-boxShadow '>
+        <div className='w-full  h-[85%] flex flex-col gap-2 overflow-y-auto overflow-x-hidden '>
           {templateState.map((templateRow, i) => (
             
             <div onClick={() => {
               setTemplateRow(templateRow);
               setTemplateOptionDropdown(templateOptionDropdown === i ? -1 : i);
-            }} key={i} className={`w-full bg-loginBackground transition-all  cursor-pointer hover:opacity-80 duration-200 min-h-[100px] flex gap-2 justify-between`}>
+            }} key={i} className={`w-full bg-loginBackground transition-all  cursor-pointer  duration-200 min-h-[100px] flex gap-2 justify-between`}>
             
 
                
-              <div className='w-full h-full flex justify-between relative px-[4%]'>
+              <div className='w-full h-full flex justify-between relative '>
                 
-                <div className='h-full flex items-center font-bold'>
+                <div className='h-full flex items-center font-bold px-4'>
                   
                    
                   {templateOptionDropdown !== i && <h1>{templateRow.name}</h1>}
                 </div>
                   <div className='w-auto flex gap-4  items-center justify-center'>
-                  <img src={Settings} className='h-1/2' onClick={(e) => {
-                    e.stopPropagation() 
+                    <img src={Settings} className='h-1/2  hover:scale-105 hover:opacity-90 transition-all duration-200'  onClick={(e) => {
+                      e.stopPropagation() 
+                    }} />
+                    <img src={RemIcon} className={`h-1/2  hover:scale-105 hover:opacity-90 transition-all duration-200 mr-2`} onClick={(e) => {
+                      e.stopPropagation() 
+                      setTemplateState((prev) =>
+                        prev.map((item, idx) =>
+                          idx === i ? { ...item, remove: !templateRow.remove } : item
+                        )
+                      );
                   }} />
-                  <img src={RemIcon} className='h-1/2' onClick={(e) => {
-                    e.stopPropagation() 
-                   }} />
+                  <button className={`${templateRow.remove ? "SlideEffectRemoveSectionTrue " : "SlideEffectRemoveSectionFalse "}`} onClick={(e) => { e.stopPropagation() }}>
+                    <span className={`${templateRow.remove ? "flex" : "hidden"}`}>წაშლა</span> </button>
                   </div>
 
                 
                 
               
                 
-                {/* <div className={`absolute right-[4%] ${templateOptionDropdown === i ? "bottom-0 h-15%" : "h-full"} w-[40px] flex justify-center items-center`}>
-                  <img
-                    onClick={() => setTemplateOptionDropdown(templateOptionDropdown === i ? -1 : i)}
-                    className={`h-[40px] transition-all duration-500 cursor-pointer ${templateOptionDropdown === i ? "rotate-180" : "rotate-0"}`}
-                    src={Down}
-                    alt="toggle"
-                  />
-                </div> */}
+      
               </div>
              
     

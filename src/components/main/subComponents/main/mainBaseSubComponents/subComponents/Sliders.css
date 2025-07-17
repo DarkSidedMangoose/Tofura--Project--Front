@@ -1,0 +1,49 @@
+.SlideEffectRemoveSectionTrue{
+   
+    height: 100%;
+    background-color: #e3342f; /* Tailwind's red-700 */
+    color: white;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    animation: slideEffect 0.2s ease forwards;;
+}
+.SlideEffectRemoveSectionFalse {
+    height: 100%;
+    background-color: #e3342f; /* Tailwind's red-700 */
+    color: white;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    animation: slideEffectRemove 0.2s ease forwards;;
+}
+
+@keyframes slideEffect {
+    from {
+         width: 0%;
+        min-width: 0px;
+        display: none;
+        transform: translateX(100%);
+    }
+    to {
+        width: 20%;
+        display: flex;
+        min-width: 180px;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideEffectRemove {
+    from {
+        width: 20%;
+        min-width: 180px;
+        display: flex;;
+        transform: translateX(0);
+    }
+    to {
+        width: 0%;
+        display: none;
+        min-width: 0px;;
+        transform: translateX(100%);
+    }
+}
