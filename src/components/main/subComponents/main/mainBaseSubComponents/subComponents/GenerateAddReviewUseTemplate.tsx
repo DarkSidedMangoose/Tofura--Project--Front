@@ -186,9 +186,17 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
       </div>
 
       <div className='w-80% min-h-[640px] max-h-[80vh] bg-white  shadow-boxShadow '>
-        <div className='w-full  h-[85%] flex flex-col gap-2 overflow-y-auto overflow-x-hidden '>
+        <div className='w-full  h-[85%] flex flex-col gap-2 overflow-y-auto overflow-x-hidden items-end '>
+          {templateState.length === 0 && (
+            <button className='h-[70px] flex justify-center  items-center bg-loginBackground font-bold text-sidebarChoose w-[300px]'>ახალი სექციის დამატება</button>
+              
+          )}
           {templateState.map((templateRow, i) => (
-            
+            <div key={i} className='w-full flex flex-col items-end gap-2'>
+              {(i === 0 ) && 
+              
+            <button className='h-[70px] flex justify-center  items-center bg-loginBackground font-bold text-sidebarChoose w-[300px]'>ახალი სექციის დამატება</button>
+              }
             <div onClick={() => {
               setTemplateRow(templateRow);
               setTemplateOptionDropdown(templateOptionDropdown === i ? -1 : i);
@@ -215,7 +223,13 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                         )
                       );
                   }} />
-                  <button className={`${templateRow.remove === null ? "hidden": templateRow.remove === false  ? "SlideEffectRemoveSectionFalse " : "SlideEffectRemoveSectionTrue"}`} onClick={(e) => { e.stopPropagation() }}>
+                  <button className={`${templateRow.remove === null ? "hidden" : templateRow.remove === false ? "SlideEffectRemoveSectionFalse " : "SlideEffectRemoveSectionTrue"}`} onClick={(e) => {
+                    e.stopPropagation() 
+                    setTemplateState((prev) => {
+                      return prev.filter((_, idx) => idx !== i)
+                    })
+
+                   }} >
                     <span className={`${templateRow.remove === null ? "hidden" : templateRow.remove === true ? "flex" : "hidden"}`}>წაშლა</span> </button>
                   </div>
 
@@ -227,7 +241,10 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
               </div>
              
     
-            </div>
+              </div>
+            <button className='h-[70px] flex justify-center  items-center bg-loginBackground font-bold text-sidebarChoose w-[300px]'>ახალი სექციის დამატება</button>
+              
+              </div>
           ))}
  
         </div>
