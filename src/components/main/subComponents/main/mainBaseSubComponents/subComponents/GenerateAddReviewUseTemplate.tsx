@@ -173,7 +173,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
 
   return (
     <div className='fixed inset-0 bg-loginBackground z-10 flex flex-col justify-center items-center'>
-      {addSection && (<GenerateAddNewSection />)}
+      {addSection && (<GenerateAddNewSection setTemplateShowState={setAddSection } />)}
       <div className='w-1/3 h-[5%] min-h-[50px] flex justify-center items-end'>
         <ul className='w-full h-full flex '>
           {["შაბლონი", "შაბლონის ვიზუალი"].map((e, i) => (
@@ -190,7 +190,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
 
       <div className='w-80% min-h-[640px] max-h-[80vh] bg-white  shadow-boxShadow '>
         <div className='w-full  h-[85%] flex flex-col gap-2 overflow-y-auto overflow-x-hidden items-end '>
-            <button className='h-[70px] flex justify-center  items-center bg-loginBackground font-bold text-sidebarChoose w-[300px]' >ახალი სექციის დამატება</button>
+            <button className='h-[70px] flex justify-center  items-center bg-loginBackground font-bold text-sidebarChoose w-[300px]' onClick={() => setAddSection(true)} >ახალი სექციის დამატება</button>
               
           {templateState.map((templateRow, i) => (
             <div key={i} className='w-full flex flex-col items-end gap-2'>
@@ -243,7 +243,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
              
     
               </div>
-            <button className='h-[70px] flex justify-center  items-center bg-loginBackground font-bold text-sidebarChoose w-[300px]'>ახალი სექციის დამატება</button>
+            <button className='h-[70px] flex justify-center  items-center bg-loginBackground font-bold text-sidebarChoose w-[300px]' onClick={() => setAddSection(true)}>ახალი სექციის დამატება</button>
               
               </div>
           ))}
