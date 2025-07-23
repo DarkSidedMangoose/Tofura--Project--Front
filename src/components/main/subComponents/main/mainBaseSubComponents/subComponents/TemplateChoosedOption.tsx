@@ -110,7 +110,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
     };
     
   return (
-    <div className='h-full   w-full overflow-y-auto px-4 custom-scrollbar bg-white rounded-xl gap-4  shadow-bottom-right flex flex-col  relative'>
+    <div className='h-full   w-full overflow-y-auto px-4 custom-scrollbar bg-white rounded-xl gap-4  shadow-bottom-right flex flex-col  relative z-20'>
                         <div className=' bg-sidebarChoose  min-h-[80px] flex flex-col justify-center  items-center gap-2  w-full '>
                           <div
                             className='h-auto  text-white text-lg font-semibold px-2'

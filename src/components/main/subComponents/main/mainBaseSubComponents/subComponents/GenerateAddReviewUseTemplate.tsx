@@ -4,7 +4,6 @@ import RemIcon from '../../../../../../assets/images/main/delete.webp';
 import "../../../../Scrollbar.css";
 import "./Sliders.css"
 import TemplateChoosedOption from './TemplateChoosedOption';
-import GenerateAddNewSection from './GenerateAddNewSection';
 
 export type templateItemObjectProps = {
   name: string;
@@ -41,6 +40,7 @@ interface Props {
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
 const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
+  const [addNewSection, setAddNewSection] = useState<boolean[]>([false]);
   const [addSection, setAddSection] = useState<boolean>(true);
   const [templateOptionDropdown, setTemplateOptionDropdown] = useState<number>(-1);
   const [paragraphInnerState, setParagraphInnerState] = useState<number[]>([]);
@@ -97,6 +97,22 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
     },
     
   ]);
+  useEffect(() => {
+    const template = [false]
+    templateState.forEach((e) => {
+      template.push(false)
+    })
+    setAddNewSection(template);
+
+
+  }, [])
+  
+  useEffect(() => {
+    console.log("Template State Updated:", templateState);
+  }, []);
+  useEffect(() => { 
+    console.log("Template State Updated:", addNewSection);
+  },[addNewSection])
   const [templateRow, setTemplateRow] = useState<TemplateItem | null>(null);
 
   
@@ -173,7 +189,6 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
 
   return (
     <div className='fixed inset-0 bg-loginBackground z-10 flex flex-col justify-center items-center'>
-      {addSection && (<GenerateAddNewSection setTemplateShowState={setAddSection } />)}
       <div className='w-1/3 h-[5%] min-h-[50px] flex justify-center items-end'>
         <ul className='w-full h-full flex '>
           {["შაბლონი", "შაბლონის ვიზუალი"].map((e, i) => (
@@ -190,7 +205,34 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
 
       <div className='w-80% min-h-[640px] max-h-[80vh] bg-white  shadow-boxShadow '>
         <div className='w-full  h-[85%] flex flex-col gap-2 overflow-y-auto overflow-x-hidden items-end '>
-            <button className='h-[70px] flex justify-center  items-center bg-loginBackground font-bold text-sidebarChoose w-[300px]' onClick={() => setAddSection(true)} >ახალი სექციის დამატება</button>
+          {addNewSection[0] && (
+
+            <div className='absolute z-10 h-[70px] flex justify-center  items-center bg-sidebarChoose font-bold text-white w-[300px] '></div>
+          )
+          
+          }
+          <button className='h-[70px] flex justify-center  items-center bg-sidebarChoose font-bold text-white w-[300px] ' onClick={() => {
+            setTemplateState((prev) => {
+                    const newTemplates = [...prev];
+                   newTemplates.forEach((template, index) => {
+                        template.remove = null; // Reset remove state for other templates
+                    })
+                    return newTemplates;
+                  })
+                  setAddNewSection((prev) => {
+                    const newSections = [...prev];
+                    prev.forEach((e, index) => {
+                      if (index != 0) {
+                        newSections[index] = false; // Reset all other sections
+
+                      } else {
+                        newSections[index] = true; // Toggle the clicked section
+                      }
+                    })
+                    return newSections;
+                  });
+                }
+                }>ახალი სექციის დამატება</button>
               
           {templateState.map((templateRow, i) => (
             <div key={i} className='w-full flex flex-col items-end gap-2'>
@@ -210,7 +252,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                 <div className='h-full flex items-center font-bold px-4'>
                   
                    
-                  {templateOptionDropdown !== i && <h1>{templateRow.name}</h1>}
+                  {templateOptionDropdown !== i && <h1 >{i+1}) {templateRow.name}</h1>}
                 </div>
                   <div className='w-auto flex gap-4  items-center justify-center'>
                     <img src={Settings} className='h-1/2  hover:scale-105 hover:opacity-90 transition-all duration-200'  onClick={(e) => {
@@ -218,9 +260,25 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                     }} />
                     <img src={RemIcon} className={`h-1/2  hover:scale-105 hover:opacity-90 transition-all duration-200 mr-2`} onClick={(e) => {
                       e.stopPropagation() 
+                      setAddNewSection((prev) => {
+                        const AddNewSection = [...prev];
+                        AddNewSection.forEach((e, index) => {
+                            prev[index] = false; // Reset all other sections
+                        });
+                        return AddNewSection;
+                      })
                       setTemplateState((prev) =>
-                        prev.map((item, idx) =>
-                          idx === i ? { ...item, remove: templateRow.remove === null ? true : !templateRow.remove } : item
+                        prev.map((item, idx) => {
+                          if (idx === i) {
+                            if (item.remove === null) {
+                              return { ...item, remove: true };
+                            } else {
+                              return { ...item, remove: !item.remove };
+                            }
+                          }
+                          
+                          return { ...item, remove:  null  }; // Reset remove state for other items
+                        }
                         )
                       );
                   }} />
@@ -243,7 +301,34 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
              
     
               </div>
-            <button className='h-[70px] flex justify-center  items-center bg-loginBackground font-bold text-sidebarChoose w-[300px]' onClick={() => setAddSection(true)}>ახალი სექციის დამატება</button>
+              <div className='h-[70px] w-[300px] relative'>
+                {addNewSection[i + 1] && (
+                  <div className='absolute z-10 h-[70px] flex justify-center  items-center bg-sidebarChoose font-bold text-white w-[300px] '></div>
+
+                )}
+                <button className='h-[70px] flex justify-center  items-center bg-sidebarChoose font-bold text-white w-[300px] ' onClick={() => {
+                  setTemplateState((prev) => {
+                    const newTemplates = [...prev];
+                   newTemplates.forEach((template, index) => {
+                        template.remove = null; // Reset remove state for other templates
+                    })
+                    return newTemplates;
+                  })
+                  setAddNewSection((prev) => {
+                    const newSections = [...prev];
+                    prev.forEach((e, index) => {
+                      if (index != i+1) {
+                        newSections[index] = false; // Reset all other sections
+
+                      } else {
+                        newSections[index] = true; // Toggle the clicked section
+                      }
+                    })
+                    return newSections;
+                  });
+                }
+                }>ახალი სექციის დამატება</button>
+</div>
               
               </div>
           ))}
@@ -252,7 +337,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
           {templateOptionDropdown !== -1 && (
                   
                  
-                  <div className='fixed w-full h-full flex justify-center items-center left-0 top-0 z-80'>
+                  <div className='fixed w-full h-full flex justify-center items-center left-0 top-0 z-20'>
             <TemplateChoosedOption templateState={templateState} i={templateOptionDropdown} paragraphInnerState={paragraphInnerState} setParagraphInnerState={setParagraphInnerState} AddNewValueInParagraph={AddNewValueInParagraph} setTemplateState={setTemplateState} handleAddNewParagraph={handleAddNewParagraph} setTemplateOptionDropdown={setTemplateOptionDropdown} />
                   </div>
                 )}
