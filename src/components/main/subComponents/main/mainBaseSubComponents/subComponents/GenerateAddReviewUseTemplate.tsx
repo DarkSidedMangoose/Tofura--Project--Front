@@ -1,6 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import Settings from '../../../../../../assets/images/main/cogwheel.webp';
 import RemIcon from '../../../../../../assets/images/main/delete.webp';
+import ConfirmIcon from '../../../../../../assets/images/main/right.webp';
+import DeclineIcon from '../../../../../../assets/images/main/cancel.webp';
 import "../../../../Scrollbar.css";
 import "./Sliders.css"
 import TemplateChoosedOption from './TemplateChoosedOption';
@@ -41,7 +43,7 @@ const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
 const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
   const [addNewSection, setAddNewSection] = useState<boolean[]>([false]);
-  const [addSection, setAddSection] = useState<boolean>(true);
+  const [addedSectionName, setAddedSectionName] = useState<string>("");
   const [templateOptionDropdown, setTemplateOptionDropdown] = useState<number>(-1);
   const [paragraphInnerState, setParagraphInnerState] = useState<number[]>([]);
   const [templateState, setTemplateState] = useState<TemplateItem[]>([
@@ -123,6 +125,46 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
     }
   }, [templateOptionDropdown]);
   
+   const insertAtIndex = (index: number, item: TemplateItem) => {
+    setTemplateState((prevTemplates) => {
+      const newTemplates = [...prevTemplates];
+      newTemplates.splice(index, 0, item);
+      return newTemplates;
+    })
+  }
+
+  const handleAddNewSection = (index: number) => { 
+    setAddNewSection((prev) => {
+      const newSections = [...prev];
+      newSections.push(true); // Add a new section
+      newSections.forEach((e, idx) => {
+      
+        newSections[idx] = false; // Reset all other sections
+      })
+      return newSections;
+    });
+    
+    insertAtIndex(index, {
+      name: `${addedSectionName}`,
+      remove: null,
+      children: [
+        [[
+          { name: "type", type: "select", option: ["text", "table", "image"] },
+          { name: "content", type: "textarea" },
+          { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+          { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
+          { name: "font size", type: "input" },
+          { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
+          { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
+          { name: "color", type: "color" },
+          { name: "background color", type: "color" }
+        ]]
+      ]
+    })
+    setAddedSectionName(""); // Reset the section name input
+    setTemplateOptionDropdown(-1); // Close the dropdown if open
+}
+
 
  
   const handleAddNewParagraph = (templateIndex: number) => {
@@ -153,8 +195,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
   }
   
   const AddNewValueInParagraph = (templateIndex: number, childIndex: number) => {
-    console.log(templateIndex, childIndex);
-    console.log(templateState)
+   
   setTemplateState((prevTemplates) =>
     prevTemplates.map((template, i) => {
       if (i !== templateIndex) return template;
@@ -207,11 +248,22 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
         <div className='w-full  h-[85%] flex flex-col gap-2 overflow-y-auto overflow-x-hidden items-end '>
           {addNewSection[0] && (
 
-            <div className='absolute z-10 h-[70px] flex justify-center  items-center bg-sidebarChoose font-bold text-white w-[300px] '></div>
+            <div className='absolute z-10 h-[70px] flex gap-8 justify-center  items-center bg-sidebarChoose font-bold text-white w-[300px] '>
+              <input className='w-2/3 h-2/3 text-[10px] px-2 text-sidebarChoose' value={addedSectionName} onChange={(e) => setAddedSectionName(e.target.value)} type='text' placeholder='...შეიყვანეთ სექციის სახელი' />
+              <div className='w-auto h-2/3 flex flex-col gap-2'>
+                <img className='w-auto h-[47%] cursor-pointer hover:opacity-80 hover:scale-125 transition-all duration-200 'onClick={() => handleAddNewSection(0)} src={ ConfirmIcon} />
+                <img className='w-auto h-[47%] cursor-pointer hover:opacity-80 hover:scale-125 transition-all duration-200' onClick={() =>  setAddNewSection((prev) =>  {
+                    const newSections = [...prev];
+                    newSections[0] = false; // Reset the first section
+                  return newSections; 
+                  
+                })} src={ DeclineIcon} />
+                </div>
+            </div>
           )
           
           }
-          <button className='h-[70px] flex justify-center  items-center bg-sidebarChoose font-bold text-white w-[300px] ' onClick={() => {
+          <button className='min-h-[70px] flex justify-center  items-center bg-sidebarChoose font-bold text-white w-[300px] ' onClick={() => {
             setTemplateState((prev) => {
                     const newTemplates = [...prev];
                    newTemplates.forEach((template, index) => {
@@ -303,7 +355,18 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
               </div>
               <div className='h-[70px] w-[300px] relative'>
                 {addNewSection[i + 1] && (
-                  <div className='absolute z-10 h-[70px] flex justify-center  items-center bg-sidebarChoose font-bold text-white w-[300px] '></div>
+                 <div className='absolute z-10 h-[70px] flex gap-8 justify-center  items-center bg-sidebarChoose font-bold text-white w-[300px] '>
+              <input className='w-2/3 h-2/3 text-[10px] px-2 text-sidebarChoose' value={addedSectionName} onChange={(e) => setAddedSectionName(e.target.value)} type='text' placeholder='...შეიყვანეთ სექციის სახელი' />
+              <div className='w-auto h-2/3 flex flex-col gap-2'>
+                <img className='w-auto h-[47%] cursor-pointer hover:opacity-80 hover:scale-125 transition-all duration-200 'onClick={() => handleAddNewSection(i+1)} src={ ConfirmIcon} />
+                <img className='w-auto h-[47%] cursor-pointer hover:opacity-80 hover:scale-125 transition-all duration-200' onClick={() =>  setAddNewSection((prev) =>  {
+                    const newSections = [...prev];
+                    newSections[i+1] = false; // Reset the first section
+                  return newSections; 
+                  
+                })} src={ DeclineIcon} />
+                </div>
+            </div>
 
                 )}
                 <button className='h-[70px] flex justify-center  items-center bg-sidebarChoose font-bold text-white w-[300px] ' onClick={() => {
