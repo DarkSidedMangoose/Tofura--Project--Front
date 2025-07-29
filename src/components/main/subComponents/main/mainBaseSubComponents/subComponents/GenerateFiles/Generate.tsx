@@ -1,15 +1,14 @@
 import React, { Fragment, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import "../../../../Scrollbar.css"
-import Logo from "../../../../../../assets/images/main/fullLogo.webp"
-import { setBaseSubcomponentsShown } from '../../../../../../redux/reducers/BaseSubcomponentsShown'
-import Add from '../../../../../../assets/images/main/plus.webp'
+import "../../../../../Scrollbar.css"
+import { setBaseSubcomponentsShown } from '../../../../../../../redux/reducers/BaseSubcomponentsShown'
+import Add from '../../../../../../../assets/images/main/plus.webp'
 import GenerateAddReviewUseTemplate from './GenerateAddReviewUseTemplate'
 type Props = {}
 
 const Generate = (props: Props) => {
   const dispatch = useDispatch()
-  const [state, setState] = useState<{navState:string, templates:string[], choosedTemplate:string, addNewTemplate: boolean,addNewTemplateNavState: string}>({navState: "შაბლონები",templates:["ინვოისის გაგზავნის შაბლონი","ოქმის შაბლონი"],choosedTemplate:"",addNewTemplate:true, addNewTemplateNavState: "შაბლონი"})
+  const [state, setState] = useState<{navState:string, templates:string[], choosedTemplate:string, addNewTemplate: boolean,addNewTemplateNavState: string}>({navState: "Word-შაბლონები",templates:["ინვოისის გაგზავნის შაბლონი","ოქმის შაბლონი"],choosedTemplate:"",addNewTemplate:true, addNewTemplateNavState: "შაბლონი"})
 
 
   return (
@@ -23,7 +22,7 @@ const Generate = (props: Props) => {
         <div className='flex h-90% '>
 
         <div className="h-full w-[85%] bg-white overflow-y-auto custom-scrollbar  ">
-          {state.navState === "შაბლონები" && (
+          {state.navState === "Word-შაბლონები" && (
           <Fragment>
           <div className='gap-2 flex flex-col'>
 
@@ -49,7 +48,7 @@ const Generate = (props: Props) => {
 
           <div className='w-[20%] h-full z-0  bg-[#f3f1f1]  relative  shadow-left '>
             <ul className='w-full h-auto flex flex-col'>
-              {["შაბლონები","კონფიგურაცია"].map((item, idx) => (
+              {["Word-შაბლონები","Excell-შაბლონები"].map((item, idx) => (
                 <li onClick={() => setState((prev) => ({...prev,navState:item}))} key={idx} className={` w-full h-[100px] flex justify-center items-center border-b-[1px] border-2  cursor-pointer ${item === state.navState ? "bg-sidebarChoose  text-white opacity-90" : "hover:opacity-50"}`}>{item}</li>
               ))}
             </ul>

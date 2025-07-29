@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import { templateItemObjectProps } from './GenerateAddReviewUseTemplate';
+import ParagraphStructure from './ParagraphStructure';
 
 interface Props {
     templateState: any;
@@ -15,14 +16,15 @@ interface Props {
 
 
 const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInnerState, setParagraphInnerState, AddNewValueInParagraph,setTemplateState,handleAddNewParagraph, setTemplateOptionDropdown }) => {
-    const handleChangeType = (selected: string, templateIndex: number, childIndex: number, optionIndex: number) => {
+  const [paragraphStructureShow, setParagraphStructureShow] = React.useState<boolean>(false);
+  const handleChangeType = (selected: string, templateIndex: number, childIndex: number, optionIndex: number) => {
+      
     setTemplateState((prev) => {
       const newState = [...prev];
-      const childrenCopy = [...newState[templateIndex].children];
-      const sectionCopy = [...childrenCopy[childIndex]];
+      const childrenCopy = [...newState[templateIndex].children[childIndex].children];
       switch (selected) {
         case "text":
-          sectionCopy[optionIndex] = [
+          childrenCopy[optionIndex] = [
             { name: "type", type: "select", value: "text", option: ["text", "table", "image"] },
             { name: "content", type: "textarea" },
             { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
@@ -35,7 +37,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
           ];
           break;
         case "table":
-          sectionCopy[optionIndex] = [
+          childrenCopy[optionIndex] = [
             { name: "type", type: "select", value: "table", option: ["text", "table", "image"] },
             { name: "rows", type: "input", value: "2" },
             { name: "columns", type: "input", value: "2" },
@@ -47,7 +49,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
           ];
           break;
         case "image":
-          sectionCopy[optionIndex] = [
+          childrenCopy[optionIndex] = [
             { name: "type", type: "select", value: "image", option: ["text", "table", "image"] },
             { name: "source", type: "input", placeholder: "Image URL or path" },
             { name: "alt text", type: "input" },
@@ -58,8 +60,8 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
           ];
           break;
       }
-      childrenCopy[childIndex] = sectionCopy;
-      newState[templateIndex].children = childrenCopy;
+      
+      newState[templateIndex].children[childIndex].children = childrenCopy;
       return newState;
     });
   };
@@ -111,6 +113,11 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
     
   return (
     <div className='h-full   w-full overflow-y-auto px-4 custom-scrollbar bg-white rounded-xl gap-4  shadow-bottom-right flex flex-col  relative z-20'>
+      {paragraphStructureShow && 
+        <Fragment>
+          {<ParagraphStructure stateOfParagraph={templateState[i].children}/>}
+      </Fragment>
+      }
                         <div className=' bg-sidebarChoose  min-h-[80px] flex flex-col justify-center  items-center gap-2  w-full '>
                           <div
                             className='h-auto  text-white text-lg font-semibold px-2'
@@ -123,7 +130,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
                         {templateState[i].children.map((childGroup:any, childIndex:any) => (
                             <Fragment key={childIndex}>
                               <h1 className="w-full flex justify-center items-center text-sidebarChoose font-bold">
-                                აბზაცი {childIndex + 1}
+                              {childGroup.name}
                               </h1>
     
                               {/* Container for left label column + scrollable data */}
@@ -131,7 +138,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
     
                                 {/* Sticky left label column */}
                                 <div className="sticky left-0 z-10 bg-white flex flex-col justify-start min-w-[180px] border-r">
-                                  {childGroup.map((option:any, optionIndex:any) => (
+                                  {childGroup.children.map((option:any, optionIndex:any) => (
                                     <div
                                       key={optionIndex}
                                       onClick={() => 
@@ -153,7 +160,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
                                 {/* Horizontally scrollable content */}
                                 <div className="overflow-x-auto h-full w-full px-2">
                                   <div className="flex flex-col gap-4 h-full">
-                                    {childGroup.map((option:any, optionIndex:any) => (
+                                    {childGroup.children.map((option:any, optionIndex:any) => (
                                       <Fragment>
     
                                         {optionIndex+1 === paragraphInnerState[childIndex] && (
@@ -188,8 +195,14 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
                         ))}
                        </div>
               
-                              <div className=' min-h-[80px] px-2 w-full flex justify-between items-center bg-white  '>
+      <div className=' min-h-[80px] px-2 w-full flex justify-between items-center bg-white  '>
+        <div className="h-full flex items-center gap-4">
+          
+        <button  className='h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer' onClick={() => setParagraphStructureShow(true)}>აბზაცთა განლაგება</button>
+              
               <button onClick={() => handleAddNewParagraph(i)} className='h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer'>ახალი აბზაცის დამატება</button>
+        </div>
+              
               <div className='w-auto px-2 flex gap-2 h-full items-center'>
                  
           <button

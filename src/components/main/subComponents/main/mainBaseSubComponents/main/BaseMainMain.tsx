@@ -11,7 +11,7 @@ import Comment from "../subComponents/Comment";
 import { setInspectBaseIdentifier } from "../../../../../../redux/reducers/InspectObjectIdentifierState";
 import { OnGoingInspectButtons } from "../../../../../reusableComponents/MainMain/OngoingInspectButtons";
 import ViewAddObjectData from "../subComponents/ViewAddObjectData";
-import Generate from "../subComponents/Generate";
+import Generate from "../subComponents/GenerateFiles/Generate";
 // import "../../../../Scrollbar.css"
 
 //take url for tasks axios requests from env file

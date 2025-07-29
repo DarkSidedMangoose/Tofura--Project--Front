@@ -1,10 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import Settings from '../../../../../../assets/images/main/cogwheel.webp';
-import RemIcon from '../../../../../../assets/images/main/delete.webp';
-import ConfirmIcon from '../../../../../../assets/images/main/right.webp';
-import DeclineIcon from '../../../../../../assets/images/main/cancel.webp';
-import "../../../../Scrollbar.css";
-import "./Sliders.css"
+import RemIcon from '../../../../../../../assets/images/main/delete.webp';
+import ConfirmIcon from '../../../../../../../assets/images/main/right.webp';
+import DeclineIcon from '../../../../../../../assets/images/main/cancel.webp';
+import "../../../../../Scrollbar.css";
+import "../Sliders.css"
 import TemplateChoosedOption from './TemplateChoosedOption';
 
 export type templateItemObjectProps = {
@@ -16,10 +15,14 @@ export type templateItemObjectProps = {
   placeholder?: string;
 };
 
+type templateItemProps = {
+  name: string;
+  children: templateItemObjectProps[][]
+}
 type TemplateItem = {
   name: string;
   remove: boolean | null;
-  children: templateItemObjectProps[][][];
+  children: templateItemProps[];
 };
 
 interface Props {
@@ -51,52 +54,44 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
       name: "თავსართი",
       remove: null,
       children: [
-        [[
-          { name: "type", type: "select", option: ["text", "table", "image"] },
-          { name: "content", type: "textarea" },
-          { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-          { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-          { name: "font size", type: "input" },
-          { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-          { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-          { name: "color", type: "color" },
-          { name: "background color", type: "color" }
-        ], [
-          
-        ]],
-        [[
-          { name: "type", type: "select", option: ["text", "table", "image"] },
-          { name: "content", type: "textarea" },
-          { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-          { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-          { name: "font size", type: "input" },
-          { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-          { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-          { name: "color", type: "color" },
-          { name: "background color", type: "color" }
-        ], [
-          
-        ]],
-      ],
-
-    },
-    {
-      name: "მთავარი ტექსტი",
-      remove: null,
-      children: [
-        [[
-          { name: "type", type: "select", option: ["text", "table", "image"] },
-          { name: "content", type: "textarea" },
-          { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-          { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-          { name: "font size", type: "input" },
-          { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-          { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-          { name: "color", type: "color" },
-          { name: "background color", type: "color" }
-        ]]
+        {
+          name: "paragraphName",
+          children: [
+            [
+            
+              
+              
+              { name: "type", type: "select", option: ["text", "table", "image"] },
+            { name: "content", type: "textarea" },
+            { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+            { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
+            { name: "font size", type: "input" },
+            { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
+            { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
+            { name: "color", type: "color" },
+            { name: "background color", type: "color" }
+            ],
+            [
+            
+              
+              
+              { name: "type", type: "select", option: ["text", "table", "image"] },
+            { name: "content", type: "textarea" },
+            { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+            { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
+            { name: "font size", type: "input" },
+            { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
+            { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
+            { name: "color", type: "color" },
+            { name: "background color", type: "color" }
+            ]
+          ]
+        },
       ]
     },
+    
+      
+    
     
   ]);
   useEffect(() => {
@@ -148,18 +143,24 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
       name: `${addedSectionName}`,
       remove: null,
       children: [
-        [[
-          { name: "type", type: "select", option: ["text", "table", "image"] },
-          { name: "content", type: "textarea" },
-          { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+        {
+          name: "paragraphName",
+          children: [[
+
+            { name: "type", type: "select", option: ["text", "table", "image"] },
+            { name: "content", type: "textarea" },
+            { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
           { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
           { name: "font size", type: "input" },
           { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
           { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
           { name: "color", type: "color" },
           { name: "background color", type: "color" }
-        ]]
+        ]
       ]
+        }]
+      
+      
     })
     setAddedSectionName(""); // Reset the section name input
     setTemplateOptionDropdown(-1); // Close the dropdown if open
@@ -176,18 +177,25 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
           ...template,
           children: [
             ...template.children,
-            [[
-              { name: "type", type: "select", value: "text", option: ["text", "table", "image"] },
-              { name: "content", type: "textarea" },
-              { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-              { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
+            {
+              name: "paragraphName",
+              children: [
+                [
+
+                  { name: "type", type: "select", value: "text", option: ["text", "table", "image"] },
+                  { name: "content", type: "textarea" },
+                { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+                { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
               { name: "font size", type: "input" },
               { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
               { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
               { name: "color", type: "color" },
               { name: "background color", type: "color" }
-            ]]
-          ]
+              ]
+            ]
+            }
+            ]
+          
         };
       })
     );
@@ -195,44 +203,37 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
   }
   
   const AddNewValueInParagraph = (templateIndex: number, childIndex: number) => {
-   
-  setTemplateState((prevTemplates) =>
-    prevTemplates.map((template, i) => {
-      if (i !== templateIndex) return template;
+  setTemplateState((prev: TemplateItem[]) => {
+    // Deep clone of previous state to avoid mutation confusion
+    const newState = JSON.parse(JSON.stringify(prev));
 
-      const newChildren = template.children.map((child, ci) => {
-        if (ci !== childIndex) return child;
+    // Defensive access
+    const targetChildren = newState?.[templateIndex]?.children?.[childIndex]?.children;
+    if (!Array.isArray(targetChildren)) return prev;
 
-        // Clone existing child blocks and append a new one
-        return [
-          ...child,
-          [
-            { name: "type", type: "select", value: "text", option: ["text", "table", "image"] },
-            { name: "content", type: "textarea" },
-            { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-            { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-            { name: "font size", type: "input" },
-            { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-            { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-            { name: "color", type: "color" },
-            { name: "background color", type: "color" }
-          ]
-        ];
-      });
+    const newBlock = [
+      { name: "type", type: "select", value: "text", option: ["text", "table", "image"] },
+      { name: "content", type: "textarea" },
+      { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
+      { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
+      { name: "font size", type: "input" },
+      { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
+      { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
+      { name: "color", type: "color" },
+      { name: "background color", type: "color" }
+    ];
 
-      return {
-        ...template,
-        children: newChildren
-      };
-    })
-  );
+    targetChildren.push(newBlock);
+    return newState;
+  });
 };
+
 
   return (
     <div className='fixed inset-0 bg-loginBackground z-10 flex flex-col justify-center items-center'>
-      <div className='w-1/3 h-[5%] min-h-[50px] flex justify-center items-end'>
-        <ul className='w-full h-full flex '>
-          {["შაბლონი", "შაბლონის ვიზუალი"].map((e, i) => (
+      <div className='w-[700px] h-[5%] min-h-[50px] flex justify-center items-end'>
+        <ul className='w-full h-full flex gap-2 '>
+          {["შაბლონი","შაბლონის კონფიგურაცია", "შაბლონის ვიზუალი"].map((e, i) => (
             <li
               key={i}
               onClick={() => setState(prev => ({ ...prev, addNewTemplateNavState: e }))}
@@ -263,14 +264,16 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
           )
           
           }
-          <button className='min-h-[70px] flex justify-center  items-center bg-sidebarChoose font-bold text-white w-[300px] ' onClick={() => {
+          <button className='mt-2 min-h-[70px] flex justify-center  items-center bg-sidebarChoose font-bold text-white w-[300px] ' onClick={() => {
             setTemplateState((prev) => {
                     const newTemplates = [...prev];
                    newTemplates.forEach((template, index) => {
                         template.remove = null; // Reset remove state for other templates
                     })
                     return newTemplates;
-                  })
+            })
+                  setAddedSectionName("");
+                  setTemplateOptionDropdown(-1); // Close the dropdown if open
                   setAddNewSection((prev) => {
                     const newSections = [...prev];
                     prev.forEach((e, index) => {
@@ -307,9 +310,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                   {templateOptionDropdown !== i && <h1 >{i+1}) {templateRow.name}</h1>}
                 </div>
                   <div className='w-auto flex gap-4  items-center justify-center'>
-                    <img src={Settings} className='h-1/2  hover:scale-105 hover:opacity-90 transition-all duration-200'  onClick={(e) => {
-                      e.stopPropagation() 
-                    }} />
+                   
                     <img src={RemIcon} className={`h-1/2  hover:scale-105 hover:opacity-90 transition-all duration-200 mr-2`} onClick={(e) => {
                       e.stopPropagation() 
                       setAddNewSection((prev) => {
@@ -377,6 +378,8 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                     })
                     return newTemplates;
                   })
+                   setAddedSectionName("");
+                  setTemplateOptionDropdown(-1); // Close the dropdown if open
                   setAddNewSection((prev) => {
                     const newSections = [...prev];
                     prev.forEach((e, index) => {
@@ -415,7 +418,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
             onClick={() => setState(prev => ({ ...prev, addNewTemplate: false }))}
             className='w-200px mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white'
           >
-          გენერირება</button>
+          შენახვა</button>
         </div>
       </div>
     </div>
