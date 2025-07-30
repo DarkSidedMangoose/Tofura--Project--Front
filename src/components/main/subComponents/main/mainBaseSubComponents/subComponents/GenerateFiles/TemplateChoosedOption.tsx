@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useCallback } from 'react'
 import { templateItemObjectProps } from './GenerateAddReviewUseTemplate';
-import { ParagraphStructure } from './PopUps';
+import PopUpsAddNewParagraph, { ParagraphStructure } from './PopUps';
 
 interface Props {
     templateState: any;
@@ -9,7 +9,7 @@ interface Props {
     setParagraphInnerState: React.Dispatch<React.SetStateAction<number[]>>;
     AddNewValueInParagraph: (i: number, childIndex: number) => void;
     setTemplateState: React.Dispatch<React.SetStateAction<any[]>>;
-    handleAddNewParagraph: (i: number) => void;
+    handleAddNewParagraph: (i: number, text: string) => void;
     setTemplateOptionDropdown: React.Dispatch<React.SetStateAction<number>>
 
 }
@@ -22,8 +22,17 @@ export type TemplatePopUpProps = {
 const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInnerState, setParagraphInnerState, AddNewValueInParagraph,setTemplateState,handleAddNewParagraph, setTemplateOptionDropdown }) => {
   const [templatePopUpProps, setTemplatePopUpProps] = React.useState<TemplatePopUpProps>({
     paragraphStructureShow: false,
-    paragraphAddNew: false
+    paragraphAddNew: false,
   });
+  const handleClickAddNewParagraph = useCallback((i: number) => {
+    setTemplatePopUpProps((prev) => ({ ...prev, paragraphAddNew: true }));
+
+    
+  }, [templatePopUpProps])
+  const handleAddNewParagraphWithName = useCallback((text: string) => {
+    handleAddNewParagraph(i, text)
+    setTemplatePopUpProps((prev) => ({...prev, paragraphAddNew: false}))
+  },[templatePopUpProps,i])
   const handleChangeType = (selected: string, templateIndex: number, childIndex: number, optionIndex: number) => {
       
     setTemplateState((prev) => {
@@ -120,10 +129,13 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
     
   return (
     <div className='h-full   w-full overflow-y-auto px-4 custom-scrollbar bg-white rounded-xl gap-4  shadow-bottom-right flex flex-col  relative z-20'>
-      {templatePopUpProps.paragraphStructureShow === true && 
+      {templatePopUpProps.paragraphStructureShow === true ?
         <Fragment>
-          {<ParagraphStructure stateOfParagraph={templateState[i].children} popUpsState={ templatePopUpProps} setPopUpsState={setTemplatePopUpProps} />}
-      </Fragment>
+          {<ParagraphStructure stateOfParagraph={templateState[i].children} popUpsState={templatePopUpProps} setPopUpsState={setTemplatePopUpProps} />}
+        </Fragment> : templatePopUpProps.paragraphAddNew === true && 
+        <Fragment>
+            <PopUpsAddNewParagraph setPopUpsState={setTemplatePopUpProps} handleClick={ handleAddNewParagraphWithName} />
+        </Fragment>
       }
                         <div className=' bg-sidebarChoose  min-h-[80px] flex flex-col justify-center  items-center gap-2  w-full '>
                           <div
@@ -207,7 +219,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
           
         <button  className='h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer' onClick={() => setTemplatePopUpProps((prev) => ({...prev,paragraphStructureShow: true}))}>აბზაცთა განლაგება</button>
               
-              <button onClick={() => handleAddNewParagraph(i)} className='h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer'>ახალი აბზაცის დამატება</button>
+              <button onClick={() => handleClickAddNewParagraph(i)} className='h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer'>ახალი აბზაცის დამატება</button>
         </div>
               
               <div className='w-auto px-2 flex gap-2 h-full items-center'>

@@ -168,7 +168,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
 
 
  
-  const handleAddNewParagraph = (templateIndex: number) => {
+  const handleAddNewParagraph = (templateIndex: number, name: string) => {
     setParagraphInnerState((prev) => ([...prev,1]))
     setTemplateState((prevTemplates) =>
       prevTemplates.map((template, i) => {
@@ -178,7 +178,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
           children: [
             ...template.children,
             {
-              name: "paragraphName",
+              name: name,
               children: [
                 [
 
