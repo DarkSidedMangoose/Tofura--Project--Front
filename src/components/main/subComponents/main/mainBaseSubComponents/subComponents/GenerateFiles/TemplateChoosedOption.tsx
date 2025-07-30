@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { templateItemObjectProps } from './GenerateAddReviewUseTemplate';
-import ParagraphStructure from './ParagraphStructure';
+import { ParagraphStructure } from './PopUps';
 
 interface Props {
     templateState: any;
@@ -14,9 +14,16 @@ interface Props {
 
 }
 
+export type TemplatePopUpProps = {
+  paragraphStructureShow: boolean;
+  paragraphAddNew: boolean;
+}
 
 const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInnerState, setParagraphInnerState, AddNewValueInParagraph,setTemplateState,handleAddNewParagraph, setTemplateOptionDropdown }) => {
-  const [paragraphStructureShow, setParagraphStructureShow] = React.useState<boolean>(false);
+  const [templatePopUpProps, setTemplatePopUpProps] = React.useState<TemplatePopUpProps>({
+    paragraphStructureShow: false,
+    paragraphAddNew: false
+  });
   const handleChangeType = (selected: string, templateIndex: number, childIndex: number, optionIndex: number) => {
       
     setTemplateState((prev) => {
@@ -113,9 +120,9 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
     
   return (
     <div className='h-full   w-full overflow-y-auto px-4 custom-scrollbar bg-white rounded-xl gap-4  shadow-bottom-right flex flex-col  relative z-20'>
-      {paragraphStructureShow && 
+      {templatePopUpProps.paragraphStructureShow === true && 
         <Fragment>
-          {<ParagraphStructure stateOfParagraph={templateState[i].children}/>}
+          {<ParagraphStructure stateOfParagraph={templateState[i].children} popUpsState={ templatePopUpProps} setPopUpsState={setTemplatePopUpProps} />}
       </Fragment>
       }
                         <div className=' bg-sidebarChoose  min-h-[80px] flex flex-col justify-center  items-center gap-2  w-full '>
@@ -198,7 +205,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
       <div className=' min-h-[80px] px-2 w-full flex justify-between items-center bg-white  '>
         <div className="h-full flex items-center gap-4">
           
-        <button  className='h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer' onClick={() => setParagraphStructureShow(true)}>აბზაცთა განლაგება</button>
+        <button  className='h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer' onClick={() => setTemplatePopUpProps((prev) => ({...prev,paragraphStructureShow: true}))}>აბზაცთა განლაგება</button>
               
               <button onClick={() => handleAddNewParagraph(i)} className='h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer'>ახალი აბზაცის დამატება</button>
         </div>
