@@ -1,6 +1,10 @@
 import React, { Fragment, useCallback } from 'react'
 import { templateItemObjectProps } from './GenerateAddReviewUseTemplate';
 import PopUpsAddNewParagraph, { ParagraphStructure } from './PopUps';
+import Bold from '../../../../../../../assets/images/main/text.png';
+import Italic from '../../../../../../../assets/images/main/italic-button.png';
+import Underline from '../../../../../../../assets/images/main/underline.png';
+import { current } from '@reduxjs/toolkit';
 
 interface Props {
     templateState: any;
@@ -25,7 +29,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
     paragraphAddNew: false,
   });
   const handleClickAddNewParagraph = useCallback((i: number) => {
-    setTemplatePopUpProps((prev) => ({ ...prev, paragraphAddNew: true }));
+    setTemplatePopUpProps((prev) => ({ ...prev, paragraphAddNew: !prev.paragraphAddNew }));
 
     
   }, [templatePopUpProps])
@@ -97,7 +101,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
               handleChangeType(e.target.value, templateIndex, childIndex, optionIndex)
               
             }
-            className='h-[50px] min-w-full text-sm px-4 bg-white border rounded'
+            className='h-[50px]   text-sm px-4 bg-white border rounded'
           >
             <option disabled>აირჩიე</option>
             {option.option?.map((o, idx) => (
@@ -106,17 +110,22 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
           </select>
         );
       case "input":
-        return <input type="text" placeholder={option.placeholder} className='h-[50px] min-w-full text-sm px-4 bg-white border rounded' />;
+        return <input type="text" placeholder={option.placeholder} className='h-[50px] w-full text-sm px-4 bg-white border rounded' />;
       case "textarea":
         return <textarea placeholder={option.placeholder} className='h-[250px] min-w-full text-sm p-2 resize-none bg-white border rounded' />;
       case "multiselect":
         return (
-          <div className='flex  w-full h-auto gap-4 flex-col '>
+          <div className='flex  w-full h-auto gap-4  '>
             {option.option?.map((style, idx) => (
-              <label key={idx} className='flex gap-2 w-full  '>
-                <input type="checkbox" className='w-[50px]' />
-                <span>{style}</span>
-              </label>
+              <Fragment>
+                {style === "bold" ? <div className='w-1/3 flex justify-center items-center'>
+                <img src={Bold} className='w-[20px] ' />
+                </div> : style === "italic" ? <div className='w-1/3 flex justify-center items-center'>
+                    <img src={Italic} className='w-[20px] ' />
+                </div> : style === "underline" && <div className='w-1/3 flex justify-center items-center'>
+                      <img src={Underline} className='w-[20px] ' />
+                      </div>}
+              </Fragment>
             ))}
           </div>
         );
@@ -125,17 +134,43 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
       default:
         return <span className='text-red-500 text-sm'>Unknown type: {option.type}</span>;
     }
-    };
+  };
+  
+const handleChangeParagraphAlignment = ( currentIndex: number, newIndex: number) => {
+  if (currentIndex === newIndex) return; // No need to do anything
+
+  setTemplateState(prev => {
+    // Clone the current state
+    const newState = structuredClone(prev); // Deep clone to avoid mutation issues
+    const children = newState[i]?.children;
+
+    if (!children || !Array.isArray(children)) return prev;
+
+    // Validate indices
+    if (
+      currentIndex < 0 || currentIndex >= children.length ||
+      newIndex < 0 || newIndex >= children.length
+    ) return prev;
+
+    // Perform the swap
+    const [item] = children.splice(currentIndex, 1);
+    children.splice(newIndex, 0, item);
+
+    return newState;
+  });
+};
+    
     
   return (
     <div className='h-full   w-full overflow-y-auto px-4 custom-scrollbar bg-white rounded-xl gap-4  shadow-bottom-right flex flex-col  relative z-20'>
-      {templatePopUpProps.paragraphStructureShow === true ?
+      {templatePopUpProps.paragraphStructureShow === true &&
         <Fragment>
-          {<ParagraphStructure stateOfParagraph={templateState[i].children} popUpsState={templatePopUpProps} setPopUpsState={setTemplatePopUpProps} />}
-        </Fragment> : templatePopUpProps.paragraphAddNew === true && 
-        <Fragment>
-            <PopUpsAddNewParagraph setPopUpsState={setTemplatePopUpProps} handleClick={ handleAddNewParagraphWithName} />
-        </Fragment>
+          {<ParagraphStructure
+                  handleChangeParagraphAligment={handleChangeParagraphAlignment}
+          
+            stateOfParagraph={templateState[i].children} popUpsState={templatePopUpProps} setPopUpsState={setTemplatePopUpProps} />}
+        </Fragment>  
+        
       }
                         <div className=' bg-sidebarChoose  min-h-[80px] flex flex-col justify-center  items-center gap-2  w-full '>
                           <div
@@ -153,7 +188,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
                               </h1>
     
                               {/* Container for left label column + scrollable data */}
-                              <div className="w-full min-h-[300px] flex bg-loginBackground rounded-lg text-sidebarChoose relative">
+                              <div className="w-full min-h-[500px] flex bg-loginBackground rounded-lg text-sidebarChoose relative">
     
                                 {/* Sticky left label column */}
                                 <div className="sticky left-0 z-10 bg-white flex flex-col justify-start min-w-[180px] border-r">
@@ -166,10 +201,10 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
                                         setParagraphInnerState((prev) => {
                                           const updated = [...prev];
                                           updated[childIndex] = optionIndex + 1;
-                                          return updated;
+                                          return updated
                                         })}
                                       }
-                                      className={`h-[50px] flex items-center pl-2 border-b text-sm font-semibold ${optionIndex+1 === paragraphInnerState[childIndex] && "bg-sidebarChoose text-white" } `}
+                                      className={`h-[50px]  flex items-center pl-2 border-b text-sm font-semibold ${optionIndex+1 === paragraphInnerState[childIndex] && "bg-sidebarChoose text-white" } `}
                                     >
                                       აბზაცის {optionIndex + 1} ნაწილი
                                     </div>
@@ -177,25 +212,42 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
                                 </div>
     
                                 {/* Horizontally scrollable content */}
-                                <div className="overflow-x-auto h-full w-full px-2">
+                                <div className=" h-full w-full px-2">
                                   <div className="flex flex-col gap-4 h-full">
                                     {childGroup.children.map((option:any, optionIndex:any) => (
                                       <Fragment>
     
                                         {optionIndex+1 === paragraphInnerState[childIndex] && (
-                                      <div key={optionIndex} className="flex gap-[4%] h-full overflow-y-hidden">
-                                          <Fragment>
-    
-                                            {option.map((grandChild:any, grandChildIndex:any) => (
-                                              <div
+                                      <div key={optionIndex} className="flex   gap-[4%] h-full overflow-y-hidden">
+                                          <div className='w-full h-full flex flex-col'>
+                                              
+                                              <div className='w-full  h-auto flex flex-col items-center gap-4  '>
+                                                <div className='flex max-w-[1400px] w-auto min-w-[500px] gap-10 h-[100px] items-center overflow-x-auto  '>
+
+                                                {option.map((grandChild: any, grandChildIndex: any) => (
+                                                  <Fragment>
+                                                    {grandChild.type === "textarea" ? (<Fragment>
+
+                                                    </Fragment>) : (
+                                                      
+                                                    <div
                                                 key={grandChildIndex}
-                                                className="min-w-[200px] flex flex-col gap-2 justify-start items-center"
+                                                className="min-w-[100px] flex flex-col gap-2 justify-start items-center "
                                                 >
-                                                <label>{grandChild.name}</label>
+                                                
                                                 {renderField(grandChild, i, childIndex, optionIndex)}
+
                                               </div>
-                                            ))}
-                                          </Fragment>
+                                                    )}
+                                                    
+                                                </Fragment>
+                                                ))}
+                                                </div>
+                                                  {renderField(option[1], i, childIndex, optionIndex)}
+                                                
+                                              </div>
+                                            
+                                          </div>
                                       </div>
                                         )}
                                         </Fragment>
@@ -216,11 +268,23 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
               
       <div className=' min-h-[80px] px-2 w-full flex justify-between items-center bg-white  '>
         <div className="h-full flex items-center gap-4">
-          
-        <button  className='h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer' onClick={() => setTemplatePopUpProps((prev) => ({...prev,paragraphStructureShow: true}))}>აბზაცთა განლაგება</button>
+          <div className='h-full flex items-center relative'>
+
+              <button  className='h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer' onClick={() => setTemplatePopUpProps((prev) => ({...prev,paragraphStructureShow: true}))}>აბზაცთა განლაგება</button>
+          </div>
+          <div className='h-full flex items-center relative'>
               
-              <button onClick={() => handleClickAddNewParagraph(i)} className='h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer'>ახალი აბზაცის დამატება</button>
-        </div>
+            <button onClick={() => handleClickAddNewParagraph(i)} className='h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer'>ახალი აბზაცის დამატება</button>
+              {templatePopUpProps.paragraphAddNew && (
+            <div className='absolute z-50 h-[200px] bg-sidebarChoose  w-[400px] bottom-full'>
+                <PopUpsAddNewParagraph
+                  setPopUpsState={setTemplatePopUpProps}
+                  handleClick={handleAddNewParagraphWithName}
+                />
+            </div>
+              )}
+          </div>
+          </div>
               
               <div className='w-auto px-2 flex gap-2 h-full items-center'>
                  
