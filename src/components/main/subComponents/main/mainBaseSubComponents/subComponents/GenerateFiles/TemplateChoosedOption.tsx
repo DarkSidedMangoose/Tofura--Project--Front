@@ -4,7 +4,6 @@ import PopUpsAddNewParagraph, { ParagraphStructure } from './PopUps';
 import Bold from '../../../../../../../assets/images/main/text.png';
 import Italic from '../../../../../../../assets/images/main/italic-button.png';
 import Underline from '../../../../../../../assets/images/main/underline.png';
-import { current } from '@reduxjs/toolkit';
 
 interface Props {
     templateState: any;
@@ -45,38 +44,38 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
       switch (selected) {
         case "text":
           childrenCopy[optionIndex] = [
-            { name: "type", type: "select", value: "text", option: ["text", "table", "image"] },
-            { name: "content", type: "textarea" },
-            { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-            { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-            { name: "font size", type: "input" },
-            { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-            { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-            { name: "color", type: "color" },
-            { name: "background color", type: "color" }
-          ];
+            { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
+            { name: "content", type: "textarea", value:"" },
+            { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"], value: "h1" },
+            { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"], value:"Arial" },
+            { name: "font size", type: "input", value: 16 },
+            { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"], value: {bold:false,italic:false,underline:false} },
+            { name: "alignment", type: "select", option: ["left", "center", "right", "justify"], value: "left" },
+            { name: "color", type: "color", value: "#000000" },
+            { name: "background color", type: "color", value: "#ffffff" }
+            ];
           break;
         case "table":
           childrenCopy[optionIndex] = [
-            { name: "type", type: "select", value: "table", option: ["text", "table", "image"] },
-            { name: "rows", type: "input", value: "2" },
-            { name: "columns", type: "input", value: "2" },
-            { name: "border", type: "select", option: ["none", "solid", "dashed", "dotted"] },
-            { name: "cell padding", type: "input" },
-            { name: "alignment", type: "select", option: ["left", "center", "right"] },
-            { name: "width", type: "input" },
-            { name: "background color", type: "color" }
+            { name: "type", type: "select", value: "table", option: ["text", "table", "image"],  },
+            { name: "rows", type: "input", value: 2 },
+            { name: "columns", type: "input", value: 2 },
+            { name: "border", type: "select", option: ["none", "solid", "dashed", "dotted"], value: "none" },
+            { name: "cell padding", type: "input", value: 5 },
+            { name: "alignment", type: "select", option: ["left", "center", "right"], value: "left" },
+            { name: "width", type: "input", value: "100%" },
+            { name: "background color", type: "color", value: "#ffffff" }
           ];
           break;
         case "image":
           childrenCopy[optionIndex] = [
             { name: "type", type: "select", value: "image", option: ["text", "table", "image"] },
-            { name: "source", type: "input", placeholder: "Image URL or path" },
-            { name: "alt text", type: "input" },
-            { name: "width", type: "input" },
-            { name: "height", type: "input" },
-            { name: "alignment", type: "select", option: ["left", "center", "right"] },
-            { name: "border radius", type: "input" }
+            { name: "source", type: "input", placeholder: "Image URL or path", value: "" },
+            { name: "alt text", type: "input", value: "" },
+            { name: "width", type: "input", value: "100%" },
+            { name: "height", type: "input", value: "auto" },
+            { name: "alignment", type: "select", option: ["left", "center", "right"], value: "left" },
+            { name: "border radius", type: "input", value: "0" }
           ];
           break;
       }
@@ -90,12 +89,13 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
     templateIndex: number,
     childIndex: number,
     optionIndex: number
-  ) => {
+    ) => {
+      
     switch (option.type) {
       case "select":
         return (
           <select
-            value={option.value}
+            value={typeof option.value === "string" || typeof option.value === "number" ? option.value : ""}
             onChange={(e) =>
               option.name === "type" &&
               handleChangeType(e.target.value, templateIndex, childIndex, optionIndex)
@@ -112,17 +112,22 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
       case "input":
         return <input type="text" placeholder={option.placeholder} className='h-[50px] w-full text-sm px-4 bg-white border rounded' />;
       case "textarea":
-        return <textarea placeholder={option.placeholder} className='h-[250px] min-w-full text-sm p-2 resize-none bg-white border rounded' />;
+        const state = templateState[templateIndex].children[childIndex].children[optionIndex]
+        console.log(state[5].value.bold)
+
+        return <textarea placeholder={option.placeholder} className={`h-[250px] min-w-full text-sm p-2 resize-none bg-white border rounded ${state[5].value.bold && "font-bold"}`} />;
       case "multiselect":
+        const value = option.value as { bold?: boolean; italic?: boolean; underline?: boolean };
+        
         return (
           <div className='flex  w-full h-auto gap-4  '>
             {option.option?.map((style, idx) => (
               <Fragment>
                 {style === "bold" ? <div className='w-1/3 flex justify-center items-center'>
-                <img src={Bold} className='w-[20px] ' />
-                </div> : style === "italic" ? <div className='w-1/3 flex justify-center items-center'>
+                <img src={Bold} className={`w-[20px] cursor-pointer ${!value.bold ? 'opacity-20' : 'opacity-100'}  `} />
+                </div> : style === "italic" ? <div className={`w-[20px] cursor-pointer ${!value.italic ? 'opacity-20' : 'opacity-100'}  `}>
                     <img src={Italic} className='w-[20px] ' />
-                </div> : style === "underline" && <div className='w-1/3 flex justify-center items-center'>
+                </div> : style === "underline" && <div className={`w-[20px] cursor-pointer ${!value.underline ? 'opacity-20' : 'opacity-100'}  `}>
                       <img src={Underline} className='w-[20px] ' />
                       </div>}
               </Fragment>

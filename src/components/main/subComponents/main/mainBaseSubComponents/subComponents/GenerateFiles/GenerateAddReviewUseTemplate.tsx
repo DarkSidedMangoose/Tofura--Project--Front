@@ -6,11 +6,18 @@ import "../../../../../Scrollbar.css";
 import "../Sliders.css"
 import TemplateChoosedOption from './TemplateChoosedOption';
 
+
+
+export type templateItemObjectPropsValue = {
+  bold: boolean;
+  italic: boolean;
+  underline: boolean;
+}
 export type templateItemObjectProps = {
   name: string;
   type?: string;
   element?: string;
-  value?: string;
+  value?: string | number | templateItemObjectPropsValue;
   option?: string[];
   placeholder?: string;
 };
@@ -58,32 +65,26 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
           name: "paragraphName",
           children: [
             [
-            
-              
-              
-              { name: "type", type: "select", option: ["text", "table", "image"] },
-            { name: "content", type: "textarea" },
-            { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-            { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-            { name: "font size", type: "input" },
-            { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-            { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-            { name: "color", type: "color" },
-            { name: "background color", type: "color" }
+            { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
+            { name: "content", type: "textarea", value:"" },
+            { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"], value: "h1" },
+            { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"], value:"Arial" },
+            { name: "font size", type: "input", value: 16 },
+            { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"], value: {bold:true,italic:false,underline:false} },
+            { name: "alignment", type: "select", option: ["left", "center", "right", "justify"], value: "left" },
+            { name: "color", type: "color", value: "#000000" },
+            { name: "background color", type: "color", value: "#ffffff" }
             ],
-            [
-            
-              
-              
-              { name: "type", type: "select", option: ["text", "table", "image"] },
-            { name: "content", type: "textarea" },
-            { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-            { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-            { name: "font size", type: "input" },
-            { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-            { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-            { name: "color", type: "color" },
-            { name: "background color", type: "color" }
+             [
+            { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
+            { name: "content", type: "textarea", value:"" },
+            { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"], value: "h1" },
+            { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"], value:"Arial" },
+            { name: "font size", type: "input", value: 16 },
+            { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"], value: {bold:false,italic:false,underline:false} },
+            { name: "alignment", type: "select", option: ["left", "center", "right", "justify"], value: "left" },
+            { name: "color", type: "color", value: "#000000" },
+            { name: "background color", type: "color", value: "#ffffff" }
             ]
           ]
         },
@@ -145,18 +146,18 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
       children: [
         {
           name: "paragraphName",
-          children: [[
-
-            { name: "type", type: "select", option: ["text", "table", "image"] },
-            { name: "content", type: "textarea" },
-            { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-          { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-          { name: "font size", type: "input" },
-          { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-          { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-          { name: "color", type: "color" },
-          { name: "background color", type: "color" }
-        ]
+          children: [
+            [
+            { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
+            { name: "content", type: "textarea", value:"" },
+            { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"], value: "h1" },
+            { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"], value:"Arial" },
+            { name: "font size", type: "input", value: 16 },
+            { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"], value: {bold:false,italic:false,underline:false} },
+            { name: "alignment", type: "select", option: ["left", "center", "right", "justify"], value: "left" },
+            { name: "color", type: "color", value: "#000000" },
+            { name: "background color", type: "color", value: "#ffffff" }
+            ]
       ]
         }]
       
@@ -181,17 +182,16 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
               name: name,
               children: [
                 [
-
-                  { name: "type", type: "select", value: "text", option: ["text", "table", "image"] },
-                  { name: "content", type: "textarea" },
-                { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-                { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-              { name: "font size", type: "input" },
-              { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-              { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-              { name: "color", type: "color" },
-              { name: "background color", type: "color" }
-              ]
+            { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
+            { name: "content", type: "textarea", value:"" },
+            { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"], value: "h1" },
+            { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"], value:"Arial" },
+            { name: "font size", type: "input", value: 16 },
+            { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"], value: {bold:true,italic:false,underline:false} },
+            { name: "alignment", type: "select", option: ["left", "center", "right", "justify"], value: "left" },
+            { name: "color", type: "color", value: "#000000" },
+            { name: "background color", type: "color", value: "#ffffff" }
+            ]
             ]
             }
             ]
@@ -212,16 +212,16 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
     if (!Array.isArray(targetChildren)) return prev;
 
     const newBlock = [
-      { name: "type", type: "select", value: "text", option: ["text", "table", "image"] },
-      { name: "content", type: "textarea" },
-      { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"] },
-      { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"] },
-      { name: "font size", type: "input" },
-      { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"] },
-      { name: "alignment", type: "select", option: ["left", "center", "right", "justify"] },
-      { name: "color", type: "color" },
-      { name: "background color", type: "color" }
-    ];
+            { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
+            { name: "content", type: "textarea", value:"" },
+            { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"], value: "h1" },
+            { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"], value:"Arial" },
+            { name: "font size", type: "input", value: 16 },
+            { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"], value: {bold:false,italic:false,underline:false} },
+            { name: "alignment", type: "select", option: ["left", "center", "right", "justify"], value: "left" },
+            { name: "color", type: "color", value: "#000000" },
+            { name: "background color", type: "color", value: "#ffffff" }
+            ];
 
     targetChildren.push(newBlock);
     return newState;
@@ -404,7 +404,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                   
                  
                   <div className='fixed w-full h-full flex justify-center items-center left-0 top-0 z-20'>
-            <TemplateChoosedOption templateState={templateState} i={templateOptionDropdown} paragraphInnerState={paragraphInnerState} setParagraphInnerState={setParagraphInnerState} AddNewValueInParagraph={AddNewValueInParagraph} setTemplateState={setTemplateState} handleAddNewParagraph={handleAddNewParagraph} setTemplateOptionDropdown={setTemplateOptionDropdown} />
+            <TemplateChoosedOption templateState={templateState} i={templateOptionDropdown} paragraphInnerState={paragraphInnerState} setParagraphInnerState={setParagraphInnerState} AddNewValueInParagraph={AddNewValueInParagraph} setTemplateState={setTemplateState}  handleAddNewParagraph={handleAddNewParagraph} setTemplateOptionDropdown={setTemplateOptionDropdown} />
                   </div>
                 )}
         <div className='w-full h-[15%] min-h-[90px] flex justify-end items-center'>
