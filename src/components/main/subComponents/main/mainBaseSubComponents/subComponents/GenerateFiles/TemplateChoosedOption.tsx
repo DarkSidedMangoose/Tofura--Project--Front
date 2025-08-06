@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback } from 'react'
+import React, { Fragment, useCallback, useEffect } from 'react'
 import { templateItemObjectProps } from './GenerateAddReviewUseTemplate';
 import PopUpsAddNewParagraph, { ParagraphStructure } from './PopUps';
 import Bold from '../../../../../../../assets/images/main/text.png';
@@ -48,7 +48,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
             { name: "content", type: "textarea", value:"" },
             { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"], value: "h1" },
             { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"], value:"Arial" },
-            { name: "font size", type: "input", value: 16 },
+            { name: "font size", type: "input", value: "" },
             { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"], value: {bold:false,italic:false,underline:false} },
             { name: "alignment", type: "select", option: ["left", "center", "right", "justify"], value: "left" },
             { name: "color", type: "color", value: "#000000" },
@@ -58,7 +58,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
         case "table":
           childrenCopy[optionIndex] = [
             { name: "type", type: "select", value: "table", option: ["text", "table", "image"],  },
-            { name: "rows", type: "input", value: 2 },
+            { name: "rows", type: "input", value: "" },
             { name: "columns", type: "input", value: 2 },
             { name: "border", type: "select", option: ["none", "solid", "dashed", "dotted"], value: "none" },
             { name: "cell padding", type: "input", value: 5 },
@@ -84,8 +84,10 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
       return newState;
     });
   };
+  
     const renderField = (
-    option: templateItemObjectProps,
+      option: templateItemObjectProps,
+      optionSelection : number,
     templateIndex: number,
     childIndex: number,
     optionIndex: number
@@ -110,25 +112,56 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
           </select>
         );
       case "input":
-        return <input type="text" placeholder={option.placeholder} className='h-[50px] w-full text-sm px-4 bg-white border rounded' />;
+        return <input onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setTemplateState((prev) => {
+    const newState = JSON.parse(JSON.stringify(prev));
+
+            newState[templateIndex].children[childIndex].children[optionIndex][optionSelection].value = event.target.value;
+            return newState;
+            
+          });
+        }} type="number" placeholder={option.placeholder} value={typeof option.value === "string" || typeof option.value === "number" ? option.value : ""} className='h-[50px] w-full text-sm px-4 bg-white border rounded' />;
       case "textarea":
         const state = templateState[templateIndex].children[childIndex].children[optionIndex]
-        console.log(state[5].value.bold)
+        
+        const handleChangeTextArea = (e: any) => {
+          setTemplateState((prev) => {
+            const newState = JSON.parse(JSON.stringify(prev));
+            newState[templateIndex].children[childIndex].children[optionIndex][optionSelection].value = e.target.value;
+            return newState;
+          });
+        }
+        console.log(state[4].value)
 
-        return <textarea placeholder={option.placeholder} className={`h-[250px] min-w-full text-sm p-2 resize-none bg-white border rounded ${state[5].value.bold && "font-bold"}`} />;
+        return <textarea
+         style={{ fontSize: `${state[4].value}px`, fontWeight: state[5].value.bold ? 'bold' : 'normal', fontStyle: state[5].value.italic ? 'italic' : 'normal', textDecoration: state[5].value.underline ? 'underline' : 'none' }}
+          placeholder={option.placeholder} onChange={(e) => handleChangeTextArea(e)} value={typeof option.value === "string" || typeof option.value === "number" ? option.value : ""} className={`h-[250px] min-w-full text-sm p-2 resize-none bg-white border rounded text-[${state[4].value}px] ${state[5].value.bold && "font-bold"}`} />;
       case "multiselect":
         const value = option.value as { bold?: boolean; italic?: boolean; underline?: boolean };
-        
+        const handleClick = (arg: string, ) => {
+          setTemplateState((prev) => {
+            const newState = JSON.parse(JSON.stringify(prev));
+            const currentOption = newState[templateIndex].children[childIndex].children[optionIndex][optionSelection];
+            if (currentOption.value.bold !== undefined && arg === "bold") {
+              currentOption.value.bold = !currentOption.value.bold;
+            } else if (currentOption.value.italic !== undefined && arg === "italic") {
+              currentOption.value.italic = !currentOption.value.italic;
+            } else if (currentOption.value.underline !== undefined && arg === "underline") {
+              currentOption.value.underline = !currentOption.value.underline;
+            }
+            return newState;
+          });
+        };  
         return (
           <div className='flex  w-full h-auto gap-4  '>
             {option.option?.map((style, idx) => (
               <Fragment>
                 {style === "bold" ? <div className='w-1/3 flex justify-center items-center'>
-                <img src={Bold} className={`w-[20px] cursor-pointer ${!value.bold ? 'opacity-20' : 'opacity-100'}  `} />
-                </div> : style === "italic" ? <div className={`w-[20px] cursor-pointer ${!value.italic ? 'opacity-20' : 'opacity-100'}  `}>
-                    <img src={Italic} className='w-[20px] ' />
-                </div> : style === "underline" && <div className={`w-[20px] cursor-pointer ${!value.underline ? 'opacity-20' : 'opacity-100'}  `}>
-                      <img src={Underline} className='w-[20px] ' />
+                <img src={Bold} onClick={() => handleClick("bold")} className={`w-[20px] cursor-pointer ${!value.bold ? 'opacity-20' : 'opacity-100'}  `} />
+                </div> : style === "italic" ? <div className={`w-[20px] cursor-pointer   `}>
+                    <img src={Italic} onClick={() => handleClick("italic")} className={`w-[20px] cursor-pointer ${!value.italic ? 'opacity-20' : 'opacity-100'} `} />
+                </div> : style === "underline" && <div className={`w-[20px] cursor-pointer   `}>
+                      <img src={Underline} onClick={() => handleClick("underline")} className={`w-[20px] ${!value.underline ? 'opacity-20' : 'opacity-100'} `} />
                       </div>}
               </Fragment>
             ))}
@@ -240,7 +273,7 @@ const handleChangeParagraphAlignment = ( currentIndex: number, newIndex: number)
                                                 className="min-w-[100px] flex flex-col gap-2 justify-start items-center "
                                                 >
                                                 
-                                                {renderField(grandChild, i, childIndex, optionIndex)}
+                                                {renderField(grandChild, grandChildIndex, i, childIndex, optionIndex)}
 
                                               </div>
                                                     )}
@@ -248,8 +281,17 @@ const handleChangeParagraphAlignment = ( currentIndex: number, newIndex: number)
                                                 </Fragment>
                                                 ))}
                                                 </div>
-                                                  {renderField(option[1], i, childIndex, optionIndex)}
-                                                
+                                               {option.map((grandChild: any, grandChildIndex: any) => (
+                                                  <Fragment>
+                                                    {grandChild.type === "textarea" && (<Fragment>
+                                                {renderField(grandChild, grandChildIndex, i, childIndex, optionIndex)}
+
+                     
+                                                   </Fragment>) 
+                                                    }
+                                                 </Fragment>
+                                                ))}
+                                                      
                                               </div>
                                             
                                           </div>

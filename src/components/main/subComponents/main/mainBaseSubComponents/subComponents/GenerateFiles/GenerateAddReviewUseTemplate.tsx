@@ -187,7 +187,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
             { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"], value: "h1" },
             { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"], value:"Arial" },
             { name: "font size", type: "input", value: 16 },
-            { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"], value: {bold:true,italic:false,underline:false} },
+            { name: "text style", type: "multiselect", option: ["bold", "italic", "underline"], value: {bold:true,italic:true,underline:false} },
             { name: "alignment", type: "select", option: ["left", "center", "right", "justify"], value: "left" },
             { name: "color", type: "color", value: "#000000" },
             { name: "background color", type: "color", value: "#ffffff" }
