@@ -35,7 +35,16 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
   const handleAddNewParagraphWithName = useCallback((text: string) => {
     handleAddNewParagraph(i, text)
     setTemplatePopUpProps((prev) => ({...prev, paragraphAddNew: false}))
-  },[templatePopUpProps,i])
+  }, [templatePopUpProps, i])
+  const handleChangeSelectOption = useCallback((templateIndex: number, childIndex: number, optionIndex: number, optionSelection: number, e:any) => {
+setTemplateState((prev) => {
+            const newState = JSON.parse(JSON.stringify(prev));
+            newState[templateIndex].children[childIndex].children[optionIndex][optionSelection].value = e.target.value;
+            return newState;
+          });
+  },[])
+
+  
   const handleChangeType = (selected: string, templateIndex: number, childIndex: number, optionIndex: number) => {
       
     setTemplateState((prev) => {
@@ -99,8 +108,8 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
           <select
             value={typeof option.value === "string" || typeof option.value === "number" ? option.value : ""}
             onChange={(e) =>
-              option.name === "type" &&
-              handleChangeType(e.target.value, templateIndex, childIndex, optionIndex)
+              option.name === "type" ?
+              handleChangeType(e.target.value, templateIndex, childIndex, optionIndex) : handleChangeSelectOption(templateIndex, childIndex, optionIndex, optionSelection, e)
               
             }
             className='h-[50px]   text-sm px-4 bg-white border rounded'
@@ -135,7 +144,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
 
         return <textarea
          style={{ fontSize: `${state[4].value}px`, fontWeight: state[5].value.bold ? 'bold' : 'normal', fontStyle: state[5].value.italic ? 'italic' : 'normal', textDecoration: state[5].value.underline ? 'underline' : 'none' }}
-          placeholder={option.placeholder} onChange={(e) => handleChangeTextArea(e)} value={typeof option.value === "string" || typeof option.value === "number" ? option.value : ""} className={`h-[250px] min-w-full text-sm p-2 resize-none bg-white border rounded text-[${state[4].value}px] ${state[5].value.bold && "font-bold"}`} />;
+          placeholder={option.placeholder} onChange={(e) => handleChangeTextArea(e)} value={typeof option.value === "string" || typeof option.value === "number" ? option.value : ""} className={`h-[250px] min-w-full text-sm p-2 resize-none bg-white border `} />;
       case "multiselect":
         const value = option.value as { bold?: boolean; italic?: boolean; underline?: boolean };
         const handleClick = (arg: string, ) => {
