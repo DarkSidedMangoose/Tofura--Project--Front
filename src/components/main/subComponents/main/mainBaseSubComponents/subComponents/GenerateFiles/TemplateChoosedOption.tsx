@@ -99,7 +99,8 @@ setTemplateState((prev) => {
       optionSelection : number,
     templateIndex: number,
     childIndex: number,
-    optionIndex: number
+      optionIndex: number,
+    childGroup?:any
     ) => {
       
     switch (option.type) {
@@ -142,9 +143,44 @@ setTemplateState((prev) => {
         }
         console.log(state[4].value)
 
-        return <textarea
-         style={{ fontSize: `${state[4].value}px`, fontWeight: state[5].value.bold ? 'bold' : 'normal', fontStyle: state[5].value.italic ? 'italic' : 'normal', textDecoration: state[5].value.underline ? 'underline' : 'none' }}
-          placeholder={option.placeholder} onChange={(e) => handleChangeTextArea(e)} value={typeof option.value === "string" || typeof option.value === "number" ? option.value : ""} className={`h-[250px] min-w-full text-sm p-2 resize-none bg-white border `} />;
+        return (
+         <div
+  contentEditable
+  style={{
+    fontSize: `${state[4].value}px`,
+    fontWeight: state[5].value.bold ? 'bold' : 'normal',
+    fontStyle: state[5].value.italic ? 'italic' : 'normal',
+    textDecoration: state[5].value.underline ? 'underline' : 'none',
+  }}
+  className="h-[250px] flex min-w-full text-sm p-2 resize-none bg-white border"
+          >
+            {/* <span
+            
+              className='bg-slate-300'>
+
+  ssaasda
+            </span> */}
+            {childGroup.children.map((option:any, optionIndex:any) => (
+              <span
+  onInput={(e) => handleChangeTextArea(e)}
+                
+                                      key={optionIndex}
+                                      onClick={() => 
+                                      {
+    
+                                        setParagraphInnerState((prev) => {
+                                          const updated = [...prev];
+                                          updated[childIndex] = optionIndex + 1;
+                                          return updated
+                                        })}
+                                      }
+                                      className={`h-[50px] w-auto min-w-[50px]   flex items-center pl-2 border-b `}
+                                    >
+                                      
+                                    </span>
+                                  ))}
+          </div>
+        )
       case "multiselect":
         const value = option.value as { bold?: boolean; italic?: boolean; underline?: boolean };
         const handleClick = (arg: string, ) => {
@@ -238,7 +274,7 @@ const handleChangeParagraphAlignment = ( currentIndex: number, newIndex: number)
                               <div className="w-full min-h-[500px] flex bg-loginBackground rounded-lg text-sidebarChoose relative">
     
                                 {/* Sticky left label column */}
-                                <div className="sticky left-0 z-10 bg-white flex flex-col justify-start min-w-[180px] border-r">
+                                {/* <div className="sticky left-0 z-10 bg-white flex flex-col justify-start min-w-[180px] border-r">
                                   {childGroup.children.map((option:any, optionIndex:any) => (
                                     <div
                                       key={optionIndex}
@@ -256,7 +292,7 @@ const handleChangeParagraphAlignment = ( currentIndex: number, newIndex: number)
                                       აბზაცის {optionIndex + 1} ნაწილი
                                     </div>
                                   ))}
-                                </div>
+                                </div> */}
     
                                 {/* Horizontally scrollable content */}
                                 <div className=" h-full w-full px-2">
@@ -293,7 +329,7 @@ const handleChangeParagraphAlignment = ( currentIndex: number, newIndex: number)
                                                {option.map((grandChild: any, grandChildIndex: any) => (
                                                   <Fragment>
                                                     {grandChild.type === "textarea" && (<Fragment>
-                                                {renderField(grandChild, grandChildIndex, i, childIndex, optionIndex)}
+                                                {renderField(grandChild, grandChildIndex, i, childIndex, optionIndex, childGroup, )}
 
                      
                                                    </Fragment>) 
