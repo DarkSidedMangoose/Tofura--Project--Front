@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect } from 'react'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import { templateItemObjectProps } from './GenerateAddReviewUseTemplate';
 import PopUpsAddNewParagraph, { ParagraphStructure } from './PopUps';
 import Bold from '../../../../../../../assets/images/main/text.png';
@@ -27,11 +27,27 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
     paragraphStructureShow: false,
     paragraphAddNew: false,
   });
+    const [textArea, setTextArea] = useState<any[][] | undefined>(undefined)
+  
+  useEffect(() => {
+    if (!textArea) {
+      setTextArea((prev) => {
+        const newState: any[][] = []
+        templateState[i].children.map(() => {
+        newState.push([{value:"sada", fontSize: 16, fontWeight: "bold", fontStyle: "italic", textDecoration: "underLine"}])
+        })
+        return newState;
+      })
+
+    } 
+  }, [templateState[i].children])
+  
   const handleClickAddNewParagraph = useCallback((i: number) => {
     setTemplatePopUpProps((prev) => ({ ...prev, paragraphAddNew: !prev.paragraphAddNew }));
 
     
   }, [templatePopUpProps])
+
   const handleAddNewParagraphWithName = useCallback((text: string) => {
     handleAddNewParagraph(i, text)
     setTemplatePopUpProps((prev) => ({...prev, paragraphAddNew: false}))
@@ -141,17 +157,16 @@ setTemplateState((prev) => {
             return newState;
           });
         }
-        console.log(state[4].value)
 
         return (
          <div
   contentEditable
-  style={{
-    fontSize: `${state[4].value}px`,
-    fontWeight: state[5].value.bold ? 'bold' : 'normal',
-    fontStyle: state[5].value.italic ? 'italic' : 'normal',
-    textDecoration: state[5].value.underline ? 'underline' : 'none',
-  }}
+  // style={{
+  //   fontSize: `${state[4].value}px`,
+  //   fontWeight: state[5].value.bold ? 'bold' : 'normal',
+  //   fontStyle: state[5].value.italic ? 'italic' : 'normal',
+  //   textDecoration: state[5].value.underline ? 'underline' : 'none',
+  // }}
   className="h-[250px] flex min-w-full text-sm p-2 resize-none bg-white border"
           >
             {/* <span
@@ -160,25 +175,25 @@ setTemplateState((prev) => {
 
   ssaasda
             </span> */}
-            {childGroup.children.map((option:any, optionIndex:any) => (
+            {textArea && textArea[i].map((option: any, optionIndex: any) => (
               <span
-  onInput={(e) => handleChangeTextArea(e)}
-                
-                                      key={optionIndex}
-                                      onClick={() => 
-                                      {
+              
+                onInput={(e) => handleChangeTextArea(e)}
+                key={optionIndex}
+                onClick={() => {
     
-                                        setParagraphInnerState((prev) => {
-                                          const updated = [...prev];
-                                          updated[childIndex] = optionIndex + 1;
-                                          return updated
-                                        })}
-                                      }
-                                      className={`h-[50px] w-auto min-w-[50px]   flex items-center pl-2 border-b `}
-                                    >
-                                      
-                                    </span>
-                                  ))}
+                  setParagraphInnerState((prev) => {
+                    const updated = [...prev];
+                    updated[childIndex] = optionIndex + 1;
+                    return updated
+                  })
+                }
+                }
+                className={`h-[50px] w-auto min-w-[50px]   flex items-center pl-2 border-b `}
+              >
+                    {option.value}                  
+              </span>
+            ))}
           </div>
         )
       case "multiselect":
@@ -348,7 +363,15 @@ const handleChangeParagraphAlignment = ( currentIndex: number, newIndex: number)
                                 </div>
     
                                 {/* Button in corner */}
-                                <div onClick={() => AddNewValueInParagraph(i, childIndex)} className="absolute bottom-[10%] right-2 h-[50px] w-auto px-2 border-2 flex justify-center items-center rounded-lg cursor-pointer bg-sidebarChoose text-white">
+                                {/* <div onClick={() => AddNewValueInParagraph(i, childIndex)} className="absolute bottom-[10%] right-2 h-[50px] w-auto px-2 border-2 flex justify-center items-center rounded-lg cursor-pointer bg-sidebarChoose text-white"> */}
+                              <div onClick={() => {
+                                setTextArea((prev: any) => {
+                                  const newState = JSON.parse(JSON.stringify(prev))
+                                  newState[childIndex].push({ value: "sdd", fontSize: 16 })
+                                  
+                                  return newState
+                                })
+                                }} className="absolute bottom-[10%] right-2 h-[50px] w-auto px-2 border-2 flex justify-center items-center rounded-lg cursor-pointer bg-sidebarChoose text-white">
                                   აბზაცის გაგრძელების დამატება
                                 </div>
                                 </div>
@@ -366,6 +389,7 @@ const handleChangeParagraphAlignment = ( currentIndex: number, newIndex: number)
           </div>
           <div className='h-full flex items-center relative'>
               
+            {/* <button onClick={() => handleClickAddNewParagraph(i)} className='h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer'>ახალი აბზაცის დამატება</button> */}
             <button onClick={() => handleClickAddNewParagraph(i)} className='h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer'>ახალი აბზაცის დამატება</button>
               {templatePopUpProps.paragraphAddNew && (
             <div className='absolute z-50 h-[200px] bg-sidebarChoose  w-[400px] bottom-full'>
