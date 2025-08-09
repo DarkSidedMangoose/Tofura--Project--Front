@@ -25,6 +25,7 @@ export type templateItemObjectProps = {
 type templateItemProps = {
   name: string;
   children: templateItemObjectProps[][]
+  textArea: any[]
 }
 type TemplateItem = {
   name: string;
@@ -56,6 +57,8 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
   const [addedSectionName, setAddedSectionName] = useState<string>("");
   const [templateOptionDropdown, setTemplateOptionDropdown] = useState<number>(-1);
   const [paragraphInnerState, setParagraphInnerState] = useState<number[]>([]);
+
+  
   const [templateState, setTemplateState] = useState<TemplateItem[]>([
     {
       name: "თავსართი",
@@ -63,10 +66,11 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
       children: [
         {
           name: "paragraphName",
+          textArea: [{ value: "sada", className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }, { value: "sada", className: { fontSize: 16, fontStyle: { bold: false, italic: false, underline: false } } }],
+
           children: [
             [
             { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
-            { name: "content", type: "textarea", value:"" },
             { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"], value: "h1" },
             { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"], value:"Arial" },
             { name: "font size", type: "input", value: 16 },
@@ -143,13 +147,14 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
     insertAtIndex(index, {
       name: `${addedSectionName}`,
       remove: null,
+
       children: [
         {
           name: "paragraphName",
+          textArea:[{ value: "sada", fontSize: 16, fontStyle: { bold:true,italic:false,underline: false } }],
           children: [
             [
             { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
-            { name: "content", type: "textarea", value:"" },
             { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"], value: "h1" },
             { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"], value:"Arial" },
             { name: "font size", type: "input", value: 16 },
@@ -180,10 +185,10 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
             ...template.children,
             {
               name: name,
+              textArea: [{ value: "sada", className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }],
               children: [
                 [
             { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
-            { name: "content", type: "textarea", value:"" },
             { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"], value: "h1" },
             { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"], value:"Arial" },
             { name: "font size", type: "input", value: 16 },
@@ -213,7 +218,6 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
 
     const newBlock = [
             { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
-            { name: "content", type: "textarea", value:"" },
             { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"], value: "h1" },
             { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"], value:"Arial" },
             { name: "font size", type: "input", value: 16 },

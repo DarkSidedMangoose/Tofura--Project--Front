@@ -1,9 +1,10 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { templateItemObjectProps } from './GenerateAddReviewUseTemplate';
 import PopUpsAddNewParagraph, { ParagraphStructure } from './PopUps';
 import Bold from '../../../../../../../assets/images/main/text.png';
 import Italic from '../../../../../../../assets/images/main/italic-button.png';
 import Underline from '../../../../../../../assets/images/main/underline.png';
+import { EditableSpan } from './EditableSpan';
 
 interface Props {
     templateState: any;
@@ -34,7 +35,7 @@ const TemplateChoosedOption: React.FC<Props> = ({ templateState, i, paragraphInn
       setTextArea((prev) => {
         const newState: any[][] = []
         templateState[i].children.map(() => {
-        newState.push([{value:"sada", fontSize: 16, fontWeight: "bold", fontStyle: "italic", textDecoration: "underLine"}])
+          newState.push([{ value: "sada", className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }])
         })
         return newState;
       })
@@ -70,7 +71,6 @@ setTemplateState((prev) => {
         case "text":
           childrenCopy[optionIndex] = [
             { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
-            { name: "content", type: "textarea", value:"" },
             { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"], value: "h1" },
             { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"], value:"Arial" },
             { name: "font size", type: "input", value: "" },
@@ -109,7 +109,20 @@ setTemplateState((prev) => {
       return newState;
     });
   };
-  
+ 
+  // const handleChangeTextArea = (e:any,
+  //     optionSelection : number,
+  //   templateIndex: number,
+  //   childIndex: number,
+  //     optionIndex: number,
+  //   childGroup?:any) => {
+  //         setTemplateState((prev) => {
+  //           const newState = JSON.parse(JSON.stringify(prev));
+  //           newState[templateIndex].children[childIndex].children[optionIndex][optionSelection].value = e.target.value;
+  //           return newState;
+  //         });
+  //       }
+
     const renderField = (
       option: templateItemObjectProps,
       optionSelection : number,
@@ -147,55 +160,7 @@ setTemplateState((prev) => {
             
           });
         }} type="number" placeholder={option.placeholder} value={typeof option.value === "string" || typeof option.value === "number" ? option.value : ""} className='h-[50px] w-full text-sm px-4 bg-white border rounded' />;
-      case "textarea":
-        const state = templateState[templateIndex].children[childIndex].children[optionIndex]
-        
-        const handleChangeTextArea = (e: any) => {
-          setTemplateState((prev) => {
-            const newState = JSON.parse(JSON.stringify(prev));
-            newState[templateIndex].children[childIndex].children[optionIndex][optionSelection].value = e.target.value;
-            return newState;
-          });
-        }
-
-        return (
-         <div
-  contentEditable
-  // style={{
-  //   fontSize: `${state[4].value}px`,
-  //   fontWeight: state[5].value.bold ? 'bold' : 'normal',
-  //   fontStyle: state[5].value.italic ? 'italic' : 'normal',
-  //   textDecoration: state[5].value.underline ? 'underline' : 'none',
-  // }}
-  className="h-[250px] flex min-w-full text-sm p-2 resize-none bg-white border"
-          >
-            {/* <span
-            
-              className='bg-slate-300'>
-
-  ssaasda
-            </span> */}
-            {textArea && textArea[i].map((option: any, optionIndex: any) => (
-              <span
-              
-                onInput={(e) => handleChangeTextArea(e)}
-                key={optionIndex}
-                onClick={() => {
-    
-                  setParagraphInnerState((prev) => {
-                    const updated = [...prev];
-                    updated[childIndex] = optionIndex + 1;
-                    return updated
-                  })
-                }
-                }
-                className={`h-[50px] w-auto min-w-[50px]   flex items-center pl-2 border-b `}
-              >
-                    {option.value}                  
-              </span>
-            ))}
-          </div>
-        )
+      
       case "multiselect":
         const value = option.value as { bold?: boolean; italic?: boolean; underline?: boolean };
         const handleClick = (arg: string, ) => {
@@ -258,7 +223,25 @@ const handleChangeParagraphAlignment = ( currentIndex: number, newIndex: number)
   });
 };
     
-    
+  const handleAddNewParagraphs = useCallback((arg: boolean) => {
+    if (arg) {
+      setTextArea((prev) => (prev && [...prev, [{ value: "sada", className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }]]))
+      }
+  }, [])
+  
+  
+  const textAreaRefs = useRef(new Map());
+  useEffect(() => {
+    console.log(textAreaRefs)
+  },[textAreaRefs.current])
+  function getSpanKey(sectionIndex: number, paragraphIndex: number, spanIndex: number): string {
+  return `${sectionIndex}-${paragraphIndex}-${spanIndex}`;
+  }
+  
+
+  useEffect(() => {
+console.log(templateState)
+  },[templateState])
   return (
     <div className='h-full   w-full overflow-y-auto px-4 custom-scrollbar bg-white rounded-xl gap-4  shadow-bottom-right flex flex-col  relative z-20'>
       {templatePopUpProps.paragraphStructureShow === true &&
@@ -341,17 +324,29 @@ const handleChangeParagraphAlignment = ( currentIndex: number, newIndex: number)
                                                 </Fragment>
                                                 ))}
                                                 </div>
-                                               {option.map((grandChild: any, grandChildIndex: any) => (
-                                                  <Fragment>
-                                                    {grandChild.type === "textarea" && (<Fragment>
-                                                {renderField(grandChild, grandChildIndex, i, childIndex, optionIndex, childGroup, )}
+                                                <div
+  className="h-[250px] flex min-w-full text-sm p-2 resize-none bg-white border"
+>
+  {childGroup.textArea &&
+    childGroup.textArea.map((optionTextArea: any, optionTextAreaIndex: number) => {
+      const key = getSpanKey(childIndex, optionIndex, optionTextAreaIndex);
 
-                     
-                                                   </Fragment>) 
-                                                    }
-                                                 </Fragment>
-                                                ))}
-                                                      
+      return (
+        <EditableSpan
+        key={key}
+          spanKey={key}
+          classNameValues={optionTextArea.className}
+      value={optionTextArea.value}
+          onChange={(newText) => {
+            const updatedState = [...templateState];
+            console.log(updatedState[i].children[childIndex].textArea[optionTextAreaIndex].value)
+        updatedState[i].children[childIndex].textArea[optionTextAreaIndex].value = newText;
+        setTemplateState(updatedState);
+      }}
+        />
+      );
+    })}
+</div>
                                               </div>
                                             
                                           </div>
@@ -367,7 +362,7 @@ const handleChangeParagraphAlignment = ( currentIndex: number, newIndex: number)
                               <div onClick={() => {
                                 setTextArea((prev: any) => {
                                   const newState = JSON.parse(JSON.stringify(prev))
-                                  newState[childIndex].push({ value: "sdd", fontSize: 16 })
+                                  newState[childIndex].push({ value: "sdd", fontSize: 16, textStyle: {bold:true, italic: false, underline: false} })
                                   
                                   return newState
                                 })
@@ -394,6 +389,7 @@ const handleChangeParagraphAlignment = ( currentIndex: number, newIndex: number)
               {templatePopUpProps.paragraphAddNew && (
             <div className='absolute z-50 h-[200px] bg-sidebarChoose  w-[400px] bottom-full'>
                 <PopUpsAddNewParagraph
+                  handleAddNewParagraphs={handleAddNewParagraphs}
                   setPopUpsState={setTemplatePopUpProps}
                   handleClick={handleAddNewParagraphWithName}
                 />

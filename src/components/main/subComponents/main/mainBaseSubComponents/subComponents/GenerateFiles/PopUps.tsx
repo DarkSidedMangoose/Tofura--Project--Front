@@ -5,6 +5,7 @@ import Arrow from '../../../../../../../assets/images/main/down-arrow.png'
 export type PopUpsAddNewParagraphProps = {
   setPopUpsState: React.Dispatch<React.SetStateAction<TemplatePopUpProps>>;
   handleClick: (text: string) => void
+  handleAddNewParagraphs: (arg:boolean) => void
 }
 
 
@@ -24,7 +25,10 @@ const PopUpsAddNewParagraph: React.FC<PopUpsAddNewParagraphProps> = (props) => {
         </div>
               <div className='w-80% h-40%  flex items-center gap-2 justify-end'>
                   <button onClick={() => handleClosePopUp()} className='w-auto px-4 bg-white text-sidebarChoose h-2/3 font-semibold rounded-lg'>გაუქმება</button>
-                  <button onClick={() => props.handleClick(inputState)} className='w-auto px-4 bg-white text-sidebarChoose font-semibold h-2/3 rounded-lg'>დამატება</button>
+        <button onClick={() => {
+          props.handleClick(inputState)
+          props.handleAddNewParagraphs(true)
+         }} className='w-auto px-4 bg-white text-sidebarChoose font-semibold h-2/3 rounded-lg'>დამატება</button>
         </div>
     </div>
   )
