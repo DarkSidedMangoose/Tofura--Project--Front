@@ -3,15 +3,14 @@ import { useEffect, useRef } from "react";
 type Props = {
     value: any,
     onChange: (value: any) => void,
-    spanKey: string
-    classNameValues: any
+    spanKey: string,
+  classNameValues: any,
+    onClick: () => void
 }
 export const EditableSpan:React.FC<Props> = (props) => {
   const spanRef = useRef<HTMLSpanElement | null>(null);
 
-    useEffect(() => {
-        console.log(props.classNameValues.fontSize)
-    },[props.classNameValues])
+    
   // Hydrate DOM when value changes
   useEffect(() => {
     const el = spanRef.current;
@@ -32,6 +31,7 @@ export const EditableSpan:React.FC<Props> = (props) => {
   return (
     <span
       key={props.spanKey}
+      onClick = {props.onClick}
       ref={spanRef}
       contentEditable
       suppressContentEditableWarning

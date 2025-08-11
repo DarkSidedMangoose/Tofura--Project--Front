@@ -25,6 +25,7 @@ export type templateItemObjectProps = {
 type templateItemProps = {
   name: string;
   children: templateItemObjectProps[][]
+  index: number;
   textArea: any[]
 }
 type TemplateItem = {
@@ -56,7 +57,6 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
   const [addNewSection, setAddNewSection] = useState<boolean[]>([false]);
   const [addedSectionName, setAddedSectionName] = useState<string>("");
   const [templateOptionDropdown, setTemplateOptionDropdown] = useState<number>(-1);
-  const [paragraphInnerState, setParagraphInnerState] = useState<number[]>([]);
 
   
   const [templateState, setTemplateState] = useState<TemplateItem[]>([
@@ -66,8 +66,8 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
       children: [
         {
           name: "paragraphName",
-          textArea: [{ value: "sada", className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }, { value: "sada", className: { fontSize: 16, fontStyle: { bold: false, italic: false, underline: false } } }],
-
+          textArea: [{ value: "sada",className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }, { value: "o", className: { fontSize: 16, fontStyle: { bold: false, italic: false, underline: false } } }],
+          index: 0,
           children: [
             [
             { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
@@ -81,7 +81,6 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
             ],
              [
             { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
-            { name: "content", type: "textarea", value:"" },
             { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"], value: "h1" },
             { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"], value:"Arial" },
             { name: "font size", type: "input", value: 16 },
@@ -118,12 +117,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
   const [templateRow, setTemplateRow] = useState<TemplateItem | null>(null);
 
   
-  useEffect(() => {
-    if (templateOptionDropdown !== -1) {
-      const sectionCount = templateState[templateOptionDropdown]?.children.length || 0;
-      setParagraphInnerState(new Array(sectionCount).fill(1));
-    }
-  }, [templateOptionDropdown]);
+  
   
    const insertAtIndex = (index: number, item: TemplateItem) => {
     setTemplateState((prevTemplates) => {
@@ -151,7 +145,8 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
       children: [
         {
           name: "paragraphName",
-          textArea:[{ value: "sada", fontSize: 16, fontStyle: { bold:true,italic:false,underline: false } }],
+          index: 0,
+          textArea: [{ value: "sada", className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }],
           children: [
             [
             { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
@@ -175,7 +170,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
 
  
   const handleAddNewParagraph = (templateIndex: number, name: string) => {
-    setParagraphInnerState((prev) => ([...prev,1]))
+    // setParagraphInnerState((prev) => ([...prev,1]))
     setTemplateState((prevTemplates) =>
       prevTemplates.map((template, i) => {
         if (i !== templateIndex) return template;
@@ -185,7 +180,8 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
             ...template.children,
             {
               name: name,
-              textArea: [{ value: "sada", className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }],
+              index: 0,
+              textArea: [{ value: "sada", index:0, className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }],
               children: [
                 [
             { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
@@ -408,7 +404,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                   
                  
                   <div className='fixed w-full h-full flex justify-center items-center left-0 top-0 z-20'>
-            <TemplateChoosedOption templateState={templateState} i={templateOptionDropdown} paragraphInnerState={paragraphInnerState} setParagraphInnerState={setParagraphInnerState} AddNewValueInParagraph={AddNewValueInParagraph} setTemplateState={setTemplateState}  handleAddNewParagraph={handleAddNewParagraph} setTemplateOptionDropdown={setTemplateOptionDropdown} />
+            <TemplateChoosedOption templateState={templateState} i={templateOptionDropdown}  AddNewValueInParagraph={AddNewValueInParagraph} setTemplateState={setTemplateState}  handleAddNewParagraph={handleAddNewParagraph} setTemplateOptionDropdown={setTemplateOptionDropdown} />
                   </div>
                 )}
         <div className='w-full h-[15%] min-h-[90px] flex justify-end items-center'>
