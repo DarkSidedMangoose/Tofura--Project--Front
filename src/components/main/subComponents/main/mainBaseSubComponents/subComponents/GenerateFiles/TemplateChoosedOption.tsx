@@ -336,7 +336,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
               </div>
 
               <div
-                onClick={() => {}}
+                onClick={() => AddNewValueInParagraph(i, childIndex)}
                 className="absolute bottom-[10%] right-2 h-[50px] w-auto px-2 border-2 flex justify-center items-center rounded-lg cursor-pointer bg-sidebarChoose text-white"
               >
                 აბზაცის გაგრძელების დამატება

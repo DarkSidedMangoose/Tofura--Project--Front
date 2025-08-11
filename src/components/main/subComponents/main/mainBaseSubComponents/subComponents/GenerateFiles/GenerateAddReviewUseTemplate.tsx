@@ -108,12 +108,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
 
   }, [])
   
-  useEffect(() => {
-    console.log("Template State Updated:", templateState);
-  }, []);
-  useEffect(() => { 
-    console.log("Template State Updated:", addNewSection);
-  },[addNewSection])
+ 
   const [templateRow, setTemplateRow] = useState<TemplateItem | null>(null);
 
   
@@ -207,8 +202,12 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
   setTemplateState((prev: TemplateItem[]) => {
     // Deep clone of previous state to avoid mutation confusion
     const newState = JSON.parse(JSON.stringify(prev));
-
+    console.log(newState[templateIndex]?.children?.[childIndex]);
     // Defensive access
+    const targetArea = newState?.[templateIndex]?.children?.[childIndex]?.textArea;
+    if (!Array.isArray(targetArea)) return prev;
+    const newTextArea = { value: "sadac", className: { fontSize: 16, fontStyle: { bold: false, italic: false, underline: false } } };
+    targetArea.push(newTextArea);
     const targetChildren = newState?.[templateIndex]?.children?.[childIndex]?.children;
     if (!Array.isArray(targetChildren)) return prev;
 
