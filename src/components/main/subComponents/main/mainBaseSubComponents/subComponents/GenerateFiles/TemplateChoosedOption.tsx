@@ -54,6 +54,9 @@ const TemplateChoosedOption: React.FC<Props> = ({
     [templatePopUpProps, i]
   );
 
+
+
+
   const handleChangeSelectOption = useCallback(
     (
       templateIndex: number,
@@ -88,7 +91,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
             { name: 'element tag', type: 'select', option: ['h1', 'h2', 'p', 'span'], value: 'h1' },
             { name: 'font family', type: 'select', option: ['Arial', 'Roboto', 'Times New Roman'], value: 'Arial' },
             { name: 'font size', type: 'input', value: '' },
-            { name: 'text style', type: 'multiselect', option: ['bold', 'italic', 'underline'], value: { bold: false, italic: false, underline: false } },
+            { name: 'text style', type: 'multiselect', option: ['bold', 'italic', 'underline'], },
             { name: 'alignment', type: 'select', option: ['left', 'center', 'right', 'justify'], value: 'left' },
             { name: 'color', type: 'color', value: '#000000' },
             { name: 'background color', type: 'color', value: '#ffffff' },
@@ -168,18 +171,19 @@ const TemplateChoosedOption: React.FC<Props> = ({
           />
         );
       case 'multiselect':
-        const value = option.value as { bold?: boolean; italic?: boolean; underline?: boolean };
         const handleClick = (arg: string) => {
           setTemplateState((prev) => {
             const newState = JSON.parse(JSON.stringify(prev));
-            const currentOption = newState[templateIndex].children[childIndex].children[optionIndex][optionSelection];
-            if (currentOption.value.bold !== undefined && arg === 'bold') {
-              currentOption.value.bold = !currentOption.value.bold;
-            } else if (currentOption.value.italic !== undefined && arg === 'italic') {
-              currentOption.value.italic = !currentOption.value.italic;
-            } else if (currentOption.value.underline !== undefined && arg === 'underline') {
-              currentOption.value.underline = !currentOption.value.underline;
+            const currentOption = newState[templateIndex].children[childIndex].textArea[optionIndex].className.fontStyle;
+            if (currentOption.bold !== undefined && arg === 'bold') {
+              
+              currentOption.bold = !currentOption.bold;
+            } else if (currentOption.bold !== undefined && arg === 'italic') {
+              currentOption.italic = !currentOption.italic;
+            } else if (currentOption.bold !== undefined && arg === 'underline') {
+              currentOption.underline = !currentOption.underline;
             }
+           
             return newState;
           });
         };
@@ -192,7 +196,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
                     <img
                       src={Bold}
                       onClick={() => handleClick('bold')}
-                      className={`w-[20px] cursor-pointer ${!value.bold ? 'opacity-20' : 'opacity-100'}`}
+                      className={`w-[20px] cursor-pointer ${!templateState[templateIndex].children[childIndex].textArea[optionIndex].className.fontStyle.bold ? 'opacity-20' : 'opacity-100'}`}
                     />
                   </div>
                 ) : style === 'italic' ? (
@@ -200,7 +204,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
                     <img
                       src={Italic}
                       onClick={() => handleClick('italic')}
-                      className={`w-[20px] cursor-pointer ${!value.italic ? 'opacity-20' : 'opacity-100'}`}
+                      className={`w-[20px] cursor-pointer ${!templateState[templateIndex].children[childIndex].textArea[optionIndex].className.fontStyle.italic ? 'opacity-20' : 'opacity-100'}`}
                     />
                   </div>
                 ) : style === 'underline' ? (
@@ -208,7 +212,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
                     <img
                       src={Underline}
                       onClick={() => handleClick('underline')}
-                      className={`w-[20px] ${!value.underline ? 'opacity-20' : 'opacity-100'}`}
+                      className={`w-[20px] ${!templateState[templateIndex].children[childIndex].textArea[optionIndex].className.fontStyle.underline ? 'opacity-20' : 'opacity-100'}`}
                     />
                   </div>
                 ) : null}
@@ -251,6 +255,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
     return `${sectionIndex}-${paragraphIndex}-${spanIndex}`;
   }
 
+  const [fixBug, setFixBug] = useState(false)
   return (
     <div className="h-full w-full overflow-y-auto px-4 custom-scrollbar bg-white rounded-xl gap-4 shadow-bottom-right flex flex-col relative z-20">
       {templatePopUpProps.paragraphStructureShow === true && (
@@ -307,6 +312,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                           spanKey={key}
                                           classNameValues={optionTextArea.className}
                                           value={optionTextArea.value}
+                                          templateState={templateState}
                                           onClick={() => {
                                             setTemplateState((prev) => {
                                               const newState = JSON.parse(JSON.stringify(prev));
@@ -317,8 +323,21 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                           })}}
                                           onChange={(newText) => {
                                             const updatedState = [...templateState];
-                                            updatedState[i].children[childIndex].textArea[optionTextAreaIndex].value =
+                                            if (newText.trim() === "") {
+                                              if (updatedState[i].children[childIndex].index === 0) {
+
+                                              } else {
+                                                updatedState[i].children[childIndex].index = updatedState[i].children[childIndex].index - 1
+                                              }
+                                              
+                                              updatedState[i].children[childIndex].children = updatedState[i].children[childIndex].children.filter((_: any, index: number) => index !== optionIndex)
+                                              updatedState[i].children[childIndex].textArea = updatedState[i].children[childIndex].textArea.filter((_:any, index:number) => index !== optionTextAreaIndex);
+                                            } else {
+                                              
+                                              updatedState[i].children[childIndex].textArea[optionTextAreaIndex].value =
                                               newText;
+                                            }
+                                            
                                             setTemplateState(updatedState);
                                           }}
                                         />

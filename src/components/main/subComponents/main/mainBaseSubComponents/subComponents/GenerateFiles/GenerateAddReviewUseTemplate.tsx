@@ -56,7 +56,7 @@ const apiUrl = process.env.REACT_APP_API_BASE_URL;
 const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
   const [addNewSection, setAddNewSection] = useState<boolean[]>([false]);
   const [addedSectionName, setAddedSectionName] = useState<string>("");
-  const [templateOptionDropdown, setTemplateOptionDropdown] = useState<number>(-1);
+  const [templateOptionDropdown, setTemplateOptionDropdown] = useState<number>(0);
 
   
   const [templateState, setTemplateState] = useState<TemplateItem[]>([
@@ -202,7 +202,6 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
   setTemplateState((prev: TemplateItem[]) => {
     // Deep clone of previous state to avoid mutation confusion
     const newState = JSON.parse(JSON.stringify(prev));
-    console.log(newState[templateIndex]?.children?.[childIndex]);
     // Defensive access
     const targetArea = newState?.[templateIndex]?.children?.[childIndex]?.textArea;
     if (!Array.isArray(targetArea)) return prev;
