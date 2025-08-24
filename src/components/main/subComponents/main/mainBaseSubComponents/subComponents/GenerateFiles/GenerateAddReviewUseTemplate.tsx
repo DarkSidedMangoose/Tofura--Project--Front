@@ -66,7 +66,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
       children: [
         {
           name: "paragraphName",
-          textArea: [{ value: "sada",className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }, { value: "o", className: { fontSize: 16, fontStyle: { bold: false, italic: false, underline: false } } }],
+          textArea: [{type:"text", value: "sada",className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }, { type:"text", value: "o", className: { fontSize: 16, fontStyle: { bold: false, italic: false, underline: false } } }],
           index: 0,
           children: [
             [
@@ -176,7 +176,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
             {
               name: name,
               index: 0,
-              textArea: [{ value: "sada", index:0, className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }],
+              textArea: [{ type:"text", value: "sada", index:0, className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }],
               children: [
                 [
             { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
@@ -205,7 +205,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
     // Defensive access
     const targetArea = newState?.[templateIndex]?.children?.[childIndex]?.textArea;
     if (!Array.isArray(targetArea)) return prev;
-    const newTextArea = { value: "sadac", className: { fontSize: 16, fontStyle: { bold: false, italic: false, underline: false } } };
+    const newTextArea = { type:"text", value: "sadac", className: { fontSize: 16, fontStyle: { bold: false, italic: false, underline: false } } };
     targetArea.push(newTextArea);
     const targetChildren = newState?.[templateIndex]?.children?.[childIndex]?.children;
     if (!Array.isArray(targetChildren)) return prev;

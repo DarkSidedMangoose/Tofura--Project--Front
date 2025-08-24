@@ -49,7 +49,7 @@ export const EditableSpan: React.FC<Props> = (props) => {
         fontStyle: props.classNameValues?.fontStyle?.italic ? "italic" : "normal",
         textDecoration: props.classNameValues?.fontStyle?.underline ? "underline" : "",
       }}
-      className="h-[50px] w-auto min-w-[50px] flex items-center border-b"
+      className="h-[50px]  flex items-center border-b"
     />
   );
 };

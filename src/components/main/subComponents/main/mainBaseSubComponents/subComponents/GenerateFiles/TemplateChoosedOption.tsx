@@ -84,20 +84,30 @@ const TemplateChoosedOption: React.FC<Props> = ({
     setTemplateState((prev) => {
       const newState = [...prev];
       const childrenCopy = [...newState[templateIndex].children[childIndex].children];
+      
       switch (selected) {
         case 'text':
-          childrenCopy[optionIndex] = [
-            { name: 'type', type: 'select', option: ['text', 'table', 'image'], value: 'text' },
-            { name: 'element tag', type: 'select', option: ['h1', 'h2', 'p', 'span'], value: 'h1' },
-            { name: 'font family', type: 'select', option: ['Arial', 'Roboto', 'Times New Roman'], value: 'Arial' },
-            { name: 'font size', type: 'input', value: '' },
-            { name: 'text style', type: 'multiselect', option: ['bold', 'italic', 'underline'], },
-            { name: 'alignment', type: 'select', option: ['left', 'center', 'right', 'justify'], value: 'left' },
-            { name: 'color', type: 'color', value: '#000000' },
-            { name: 'background color', type: 'color', value: '#ffffff' },
-          ];
+          if (newState[templateIndex].children[childIndex].textArea[0].type === "text") {
+
+          
+            
+          
+            childrenCopy[optionIndex] = [
+              { name: 'type', type: 'select', option: ['text', 'table', 'image'], value: 'text' },
+              { name: 'element tag', type: 'select', option: ['h1', 'h2', 'p', 'span'], value: 'h1' },
+              { name: 'font family', type: 'select', option: ['Arial', 'Roboto', 'Times New Roman'], value: 'Arial' },
+              { name: 'font size', type: 'input', value: '' },
+              { name: 'text style', type: 'multiselect', option: ['bold', 'italic', 'underline'], },
+              { name: 'alignment', type: 'select', option: ['left', 'center', 'right', 'justify'], value: 'left' },
+              { name: 'color', type: 'color', value: '#000000' },
+              { name: 'background color', type: 'color', value: '#ffffff' },
+            ];
+          } else {
+            newState[templateIndex].children[childIndex].textArea = [{type:"text", value: "sada",className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }, { type:"text", value: "o", className: { fontSize: 16, fontStyle: { bold: false, italic: false, underline: false } } }]
+          }
           break;
         case 'table':
+          newState[templateIndex].children[childIndex].textArea = [{type:"table"}]
           childrenCopy[optionIndex] = [
             { name: 'type', type: 'select', value: 'table', option: ['text', 'table', 'image'] },
             { name: 'rows', type: 'input', value: '' },
@@ -280,7 +290,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
               {childGroup.name}
             </h1>
 
-            <div className="w-full min-h-[500px] flex bg-loginBackground rounded-lg text-sidebarChoose relative">
+            <div className={`w-full ${childGroup.textArea[0].type === "text" ? "min-h-[300px]" : childGroup.textArea[0].type === "table" ? "min-h-[600px]": ""}  flex bg-loginBackground rounded-lg text-sidebarChoose relative`}>
               <div className="h-full w-full px-2">
                 <div className="flex flex-col gap-4 h-full">
                   {childGroup.children.map((option: any, optionIndex: any) => (
@@ -301,46 +311,49 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                   </Fragment>
                                 ))}
                               </div>
-                              <div className="h-[250px] flex min-w-full text-sm p-2 resize-none bg-white border">
+                              <div className={`${childGroup.textArea[0].type === "text" ? "h-[100px]" : childGroup.textArea[0].type === "table" ? "h-[400px]": ""}  flex justify-start item-center  max-w-full overflow-x-scroll min-w-full text-sm p-2 resize-none  bg-white border`}>
                                 {childGroup.textArea &&
                                   childGroup.textArea.map(
                                     (optionTextArea: any, optionTextAreaIndex: number) => {
                                       const key = getSpanKey(childIndex, optionIndex, optionTextAreaIndex);
                                       return (
-                                        <EditableSpan
-                                          key={key}
-                                          spanKey={key}
-                                          classNameValues={optionTextArea.className}
-                                          value={optionTextArea.value}
-                                          templateState={templateState}
-                                          onClick={() => {
-                                            setTemplateState((prev) => {
-                                              const newState = JSON.parse(JSON.stringify(prev));
-                                              newState[i].children[childIndex].index = optionTextAreaIndex
-                                              // newState[i].children[childIndex].textArea[optionTextAreaIndex].index =
-                                              //   optionTextAreaIndex;
-                                              return newState;
-                                          })}}
-                                          onChange={(newText) => {
-                                            const updatedState = [...templateState];
-                                            if (newText.trim() === "") {
-                                              if (updatedState[i].children[childIndex].index === 0) {
+                                        optionTextArea.type === "text" ? (
+                                          <EditableSpan
+                                            key={key}
+                                            spanKey={key}
+                                            classNameValues={optionTextArea.className}
+                                            value={optionTextArea.value}
+                                            templateState={templateState}
+                                            onClick={() => {
+                                              setTemplateState((prev) => {
+                                                const newState = JSON.parse(JSON.stringify(prev));
+                                                newState[i].children[childIndex].index = optionTextAreaIndex
+                                                // newState[i].children[childIndex].textArea[optionTextAreaIndex].index =
+                                                //   optionTextAreaIndex;
+                                                return newState;
+                                              });
+                                            }}
+                                            onChange={(newText) => {
+                                              const updatedState = [...templateState];
+                                              if (newText.trim() === "") {
+                                                if (updatedState[i].children[childIndex].index === 0) {
 
+                                                } else {
+                                                  updatedState[i].children[childIndex].index = updatedState[i].children[childIndex].index - 1
+                                                }
+
+                                                updatedState[i].children[childIndex].children = updatedState[i].children[childIndex].children.filter((_: any, index: number) => index !== optionIndex)
+                                                updatedState[i].children[childIndex].textArea = updatedState[i].children[childIndex].textArea.filter((_: any, index: number) => index !== optionTextAreaIndex);
                                               } else {
-                                                updatedState[i].children[childIndex].index = updatedState[i].children[childIndex].index - 1
+
+                                                updatedState[i].children[childIndex].textArea[optionTextAreaIndex].value =
+                                                  newText;
                                               }
-                                              
-                                              updatedState[i].children[childIndex].children = updatedState[i].children[childIndex].children.filter((_: any, index: number) => index !== optionIndex)
-                                              updatedState[i].children[childIndex].textArea = updatedState[i].children[childIndex].textArea.filter((_:any, index:number) => index !== optionTextAreaIndex);
-                                            } else {
-                                              
-                                              updatedState[i].children[childIndex].textArea[optionTextAreaIndex].value =
-                                              newText;
-                                            }
-                                            
-                                            setTemplateState(updatedState);
-                                          }}
-                                        />
+
+                                              setTemplateState(updatedState);
+                                            }}
+                                          />
+                                        ) : <div></div>
                                       );
                                     }
                                   )}
@@ -353,13 +366,19 @@ const TemplateChoosedOption: React.FC<Props> = ({
                   ))}
                 </div>
               </div>
-
+              {
+                childGroup.textArea[0].type === "text" && (
               <div
-                onClick={() => AddNewValueInParagraph(i, childIndex)}
+                onClick={() => {
+                  AddNewValueInParagraph(i, childIndex)
+                  
+                 }}
                 className="absolute bottom-[10%] right-2 h-[50px] w-auto px-2 border-2 flex justify-center items-center rounded-lg cursor-pointer bg-sidebarChoose text-white"
               >
                 აბზაცის გაგრძელების დამატება
               </div>
+                )
+              }
             </div>
           </Fragment>
         ))}
