@@ -1,12 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Props = {
   value: any;
   onChange: (value: any) => void;
   spanKey: string;
   classNameValues: any;
-  onClick: () => void;
+  onClick: (arg: any) => void;
   onFocus?: () => void;
+  isChoosed: boolean;
+  childIndex: number;
   templateState?: any; // Optional prop for template state
 };
 
@@ -22,6 +24,9 @@ export const EditableSpan: React.FC<Props> = (props) => {
     }
   }, [props.value, props.templateState]);
   
+  useEffect(() => {
+    console.log(props.childIndex)
+  }, [props.childIndex]);
 
   // Handle user input and blur after change
   const handleInput = () => {
@@ -29,27 +34,34 @@ export const EditableSpan: React.FC<Props> = (props) => {
     if (el) {
       props.onChange(el.innerText);
       // el.blur(); // remove focus after change
-      }
+    }
   };
 
   return (
-    <span
-      key={props.spanKey}
-      ref={spanRef}
-      contentEditable
-      suppressContentEditableWarning
-      onClick={props.onClick}
-      onInput={handleInput}
-      onFocus={props.onFocus}
-      style={{
-        fontSize: props.classNameValues?.fontSize
-          ? `${props.classNameValues.fontSize}px`
-          : "16px",
-        fontWeight: props.classNameValues?.fontStyle?.bold ? "bold" : "normal",
-        fontStyle: props.classNameValues?.fontStyle?.italic ? "italic" : "normal",
-        textDecoration: props.classNameValues?.fontStyle?.underline ? "underline" : "",
-      }}
-      className="h-[50px]  flex items-center border-b"
-    />
+    <div className={`h-[50px] ${!props.isChoosed && "cursor-pointer"} relative `} >
+      {!props.isChoosed && (
+
+      <div className="absolute w-full h-full" onClick={props.onClick}></div>
+      )}
+      <span
+        key={props.spanKey}
+        ref={spanRef}
+        contentEditable
+        suppressContentEditableWarning
+        onInput={handleInput}
+        onClick={(e: React.MouseEvent<HTMLSpanElement>) => { e.stopPropagation() }}
+        onFocus={props.onFocus}
+        style={{
+          fontSize: props.classNameValues?.fontSize
+            ? `${props.classNameValues.fontSize}px`
+            : "16px",
+          fontWeight: props.classNameValues?.fontStyle?.bold ? "bold" : "normal",
+          fontStyle: props.classNameValues?.fontStyle?.italic ? "italic" : "normal",
+          textDecoration: props.classNameValues?.fontStyle?.underline ? "underline" : "",
+        }}
+        className={`h-full  flex items-center border-2 ${props.isChoosed && "border-sidebarChoose" } px-2  py-1 min-w-[20px] max-w-full  whitespace-pre-wrap break-words`}
+        />
+    </div>
+      
   );
 };

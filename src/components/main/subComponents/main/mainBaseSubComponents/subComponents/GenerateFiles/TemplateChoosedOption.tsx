@@ -137,6 +137,14 @@ const TemplateChoosedOption: React.FC<Props> = ({
     });
   };
 
+  const handleClickMainDiv = (childIndex: number) => {
+    setTemplateState((prev) => {
+      const newState = JSON.parse(JSON.stringify(prev));
+      console.log(newState[i].children[childIndex])
+      newState[i].children[childIndex].index = -1;
+      return newState;
+    });
+  }
   const renderField = (
     option: templateItemObjectProps,
     optionSelection: number,
@@ -265,168 +273,232 @@ const TemplateChoosedOption: React.FC<Props> = ({
     return `${sectionIndex}-${paragraphIndex}-${spanIndex}`;
   }
 
-  const [fixBug, setFixBug] = useState(false)
   return (
-    <div className="h-full w-full overflow-y-auto px-4 custom-scrollbar bg-white rounded-xl gap-4 shadow-bottom-right flex flex-col relative z-20">
-      {templatePopUpProps.paragraphStructureShow === true && (
-        <Fragment>
-          <ParagraphStructure
-            handleChangeParagraphAligment={handleChangeParagraphAlignment}
-            stateOfParagraph={templateState[i].children}
-            popUpsState={templatePopUpProps}
-            setPopUpsState={setTemplatePopUpProps}
-          />
-        </Fragment>
-      )}
+  <div className="h-full w-full overflow-y-auto px-4 custom-scrollbar bg-white rounded-xl gap-4 shadow-bottom-right flex flex-col relative z-20">
+    {templatePopUpProps.paragraphStructureShow && (
+      <Fragment>
+        <ParagraphStructure
+          handleChangeParagraphAligment={handleChangeParagraphAlignment}
+          stateOfParagraph={templateState[i].children}
+          popUpsState={templatePopUpProps}
+          setPopUpsState={setTemplatePopUpProps}
+        />
+      </Fragment>
+    )}
 
-      <div className="bg-sidebarChoose min-h-[80px] flex flex-col justify-center items-center gap-2 w-full">
-        <div className="h-auto text-white text-lg font-semibold px-2">{templateState[i].name}</div>
+    <div className="bg-sidebarChoose min-h-[80px] flex flex-col justify-center items-center gap-2 w-full">
+      <div className="h-auto text-white text-lg font-semibold px-2">
+        {templateState[i].name}
       </div>
+    </div>
 
-      <div className="overflow-y-scroll h-full w-full flex flex-col gap-10">
-        {templateState[i].children.map((childGroup: any, childIndex: any) => (
-          <Fragment key={childIndex}>
-            <h1 className="w-full flex justify-center items-center text-sidebarChoose font-bold">
-              {childGroup.name}
-            </h1>
+    <div className="overflow-y-scroll h-full w-full flex flex-col gap-10">
+      {templateState[i].children.map((childGroup: any, childIndex: any) => (
+        <Fragment key={childIndex}>
+          <h1 className="w-full flex justify-center items-center text-sidebarChoose font-bold">
+            {childGroup.name}
+          </h1>
 
-            <div className={`w-full ${childGroup.textArea[0].type === "text" ? "min-h-[300px]" : childGroup.textArea[0].type === "table" ? "min-h-[600px]": ""}  flex bg-loginBackground rounded-lg text-sidebarChoose relative`}>
-              <div className="h-full w-full px-2">
-                <div className="flex flex-col gap-4 h-full">
-                  {childGroup.children.map((option: any, optionIndex: any) => (
-                    <Fragment key={optionIndex}>
-                      {optionIndex === childGroup.index && (
-                        <div  className="flex gap-[4%] h-full overflow-y-hidden">
-                          <div className="w-full h-full flex flex-col">
-                            <div className="w-full h-auto flex flex-col items-center gap-4">
-                              <div className="flex max-w-[1400px] w-auto min-w-[500px] gap-10 h-[100px] items-center overflow-x-auto">
-                                {option.map((grandChild: any, grandChildIndex: any) => (
-                                  <Fragment key={grandChildIndex}>
-                                    <div
-                                      onClick={() => console.log()}
-                                      className="min-w-[100px] flex flex-col gap-2 justify-start items-center "
-                                    >
-                                      {renderField(grandChild, grandChildIndex, i, childIndex, optionIndex)}
-                                    </div>
-                                  </Fragment>
-                                ))}
-                              </div>
-                              <div className={`${childGroup.textArea[0].type === "text" ? "h-[100px]" : childGroup.textArea[0].type === "table" ? "h-[400px]": ""}  flex justify-start item-center  max-w-full overflow-x-scroll min-w-full text-sm p-2 resize-none  bg-white border`}>
-                                {childGroup.textArea &&
-                                  childGroup.textArea.map(
-                                    (optionTextArea: any, optionTextAreaIndex: number) => {
-                                      const key = getSpanKey(childIndex, optionIndex, optionTextAreaIndex);
-                                      return (
-                                        optionTextArea.type === "text" ? (
-                                          <EditableSpan
-                                            key={key}
-                                            spanKey={key}
-                                            classNameValues={optionTextArea.className}
-                                            value={optionTextArea.value}
-                                            templateState={templateState}
-                                            onClick={() => {
-                                              setTemplateState((prev) => {
-                                                const newState = JSON.parse(JSON.stringify(prev));
-                                                newState[i].children[childIndex].index = optionTextAreaIndex
-                                                // newState[i].children[childIndex].textArea[optionTextAreaIndex].index =
-                                                //   optionTextAreaIndex;
-                                                return newState;
-                                              });
-                                            }}
-                                            onChange={(newText) => {
-                                              const updatedState = [...templateState];
-                                              if (newText.trim() === "") {
-                                                if (updatedState[i].children[childIndex].index === 0) {
-
-                                                } else {
-                                                  updatedState[i].children[childIndex].index = updatedState[i].children[childIndex].index - 1
-                                                }
-
-                                                updatedState[i].children[childIndex].children = updatedState[i].children[childIndex].children.filter((_: any, index: number) => index !== optionIndex)
-                                                updatedState[i].children[childIndex].textArea = updatedState[i].children[childIndex].textArea.filter((_: any, index: number) => index !== optionTextAreaIndex);
-                                              } else {
-
-                                                updatedState[i].children[childIndex].textArea[optionTextAreaIndex].value =
-                                                  newText;
-                                              }
-
-                                              setTemplateState(updatedState);
-                                            }}
-                                          />
-                                        ) : <div></div>
-                                      );
-                                    }
+          <div
+            className={`w-full ${
+              childGroup.textArea[0].type === "text"
+                ? "min-h-[300px]"
+                : childGroup.textArea[0].type === "table"
+                ? "min-h-[600px]"
+                : ""
+            } flex bg-loginBackground rounded-lg text-sidebarChoose relative`}
+          >
+            <div className="h-full w-full px-2">
+              <div className="flex flex-col gap-4 h-full">
+                {childGroup.children.map((option: any, optionIndex: any) => (
+                  <Fragment key={optionIndex}>
+                    {(optionIndex === childGroup.index ||
+                      (childGroup.index === -1 && optionIndex === 0)) && (
+                      <div className="flex gap-[4%] h-full overflow-y-hidden">
+                        <div className="w-full h-full flex flex-col">
+                          <div className="w-full h-auto flex flex-col items-center gap-4">
+                            <div className="flex max-w-[1400px] w-auto min-w-[500px] gap-10 h-[100px] items-center overflow-x-auto">
+                              {childGroup.index !== -1 && (
+                                <Fragment>
+                                  {option.map(
+                                    (grandChild: any, grandChildIndex: any) => (
+                                      <Fragment key={grandChildIndex}>
+                                        <div
+                                          onClick={() => console.log()}
+                                          className="min-w-[100px] flex flex-col gap-2 justify-start items-center"
+                                        >
+                                          {renderField(
+                                            grandChild,
+                                            grandChildIndex,
+                                            i,
+                                            childIndex,
+                                            optionIndex
+                                          )}
+                                        </div>
+                                      </Fragment>
+                                    )
                                   )}
-                              </div>
+                                </Fragment>
+                              )}
+                            </div>
+
+                            <div
+                              onClick={() => handleClickMainDiv(childIndex)}
+                              className={`${
+                                childGroup.textArea[0].type === "text"
+                                  ? "h-[100px] gap-[1px]"
+                                  : childGroup.textArea[0].type === "table"
+                                  ? "h-[400px]"
+                                  : ""
+                              } flex justify-start items-center max-w-full overflow-x-scroll min-w-full text-sm p-2 resize-none bg-white border`}
+                            >
+                              {childGroup.textArea.map(
+                                (
+                                  optionTextArea: any,
+                                  optionTextAreaIndex: number
+                                ) => {
+                                  const key = getSpanKey(
+                                    childIndex,
+                                    optionIndex,
+                                    optionTextAreaIndex
+                                  );
+                                  return optionTextArea.type === "text" ? (
+                                    <div>
+                                      <EditableSpan
+                                        key={key}
+                                        spanKey={key}
+                                        childIndex={optionTextAreaIndex}
+                                        isChoosed={
+                                          childGroup.index === optionTextAreaIndex
+                                        }
+                                        classNameValues={optionTextArea.className}
+                                        value={optionTextArea.value}
+                                        templateState={templateState}
+                                        onClick={(event: React.MouseEvent) => {
+                                          event.stopPropagation();
+                                          setTemplateState((prev) => {
+                                            const newState = JSON.parse(
+                                              JSON.stringify(prev)
+                                            );
+                                            newState[i].children[childIndex].index =
+                                              optionTextAreaIndex;
+                                            return newState;
+                                          });
+                                        }}
+                                        onChange={(newText) => {
+                                          const updatedState = [...templateState];
+                                          if (newText.trim() === "") {
+                                            if (
+                                              updatedState[i].children[childIndex]
+                                                .index !== 0
+                                            ) {
+                                              updatedState[i].children[
+                                                childIndex
+                                              ].index -= 1;
+                                            }
+                                            updatedState[i].children[
+                                              childIndex
+                                            ].children = updatedState[i].children[
+                                              childIndex
+                                            ].children.filter(
+                                              (_: any, idx: number) =>
+                                                idx !== optionIndex
+                                            );
+                                            updatedState[i].children[
+                                              childIndex
+                                            ].textArea = updatedState[i].children[
+                                              childIndex
+                                            ].textArea.filter(
+                                              (_: any, idx: number) =>
+                                                idx !== optionTextAreaIndex
+                                            );
+                                          } else {
+                                            updatedState[i].children[
+                                              childIndex
+                                            ].textArea[optionTextAreaIndex].value =
+                                              newText;
+                                          }
+                                          setTemplateState(updatedState);
+                                        }}
+                                        />
+                                      </div>
+                                  ) : (
+                                    <div></div>
+                                  );
+                                }
+                              )}
                             </div>
                           </div>
                         </div>
-                      )}
-                    </Fragment>
-                  ))}
-                </div>
+                      </div>
+                    )}
+                  </Fragment>
+                ))}
               </div>
-              {
-                childGroup.textArea[0].type === "text" && (
+            </div>
+
+            {childGroup.textArea[0].type === "text" && (
               <div
-                onClick={() => {
-                  AddNewValueInParagraph(i, childIndex)
-                  
-                 }}
+                onClick={() => AddNewValueInParagraph(i, childIndex)}
                 className="absolute bottom-[10%] right-2 h-[50px] w-auto px-2 border-2 flex justify-center items-center rounded-lg cursor-pointer bg-sidebarChoose text-white"
               >
                 აბზაცის გაგრძელების დამატება
               </div>
-                )
-              }
-            </div>
-          </Fragment>
-        ))}
-      </div>
-
-      <div className="min-h-[80px] px-2 w-full flex justify-between items-center bg-white">
-        <div className="h-full flex items-center gap-4">
-          <div className="h-full flex items-center relative">
-            <button
-              className="h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer"
-              onClick={() => setTemplatePopUpProps((prev) => ({ ...prev, paragraphStructureShow: true }))}
-            >
-              აბზაცთა განლაგება
-            </button>
-          </div>
-          <div className="h-full flex items-center relative">
-            <button
-              onClick={() => handleClickAddNewParagraph(i)}
-              className="h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer"
-            >
-              ახალი აბზაცის დამატება
-            </button>
-            {templatePopUpProps.paragraphAddNew && (
-              <div className="absolute z-50 h-[200px] bg-sidebarChoose w-[400px] bottom-full">
-                <PopUpsAddNewParagraph
-                  handleAddNewParagraphs={() => console.log('s')}
-                  setPopUpsState={setTemplatePopUpProps}
-                  handleClick={handleAddNewParagraphWithName}
-                />
-              </div>
             )}
           </div>
-        </div>
+        </Fragment>
+      ))}
+    </div>
 
-        <div className="w-auto px-2 flex gap-2 h-full items-center">
-          <button className="w-200px h-2/3 mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white">
-            შენახვა
-          </button>
+    <div className="min-h-[80px] px-2 w-full flex justify-between items-center bg-white">
+      <div className="h-full flex items-center gap-4">
+        <div className="h-full flex items-center relative">
           <button
-            className="w-200px h-2/3 mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white"
-            onClick={() => setTemplateOptionDropdown(-1)}
+            className="h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer"
+            onClick={() =>
+              setTemplatePopUpProps((prev) => ({
+                ...prev,
+                paragraphStructureShow: true,
+              }))
+            }
           >
-            გაუქმება
+            აბზაცთა განლაგება
           </button>
+        </div>
+        <div className="h-full flex items-center relative">
+          <button
+            onClick={() => handleClickAddNewParagraph(i)}
+            className="h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer"
+          >
+            ახალი აბზაცის დამატება
+          </button>
+          {templatePopUpProps.paragraphAddNew && (
+            <div className="absolute z-50 h-[200px] bg-sidebarChoose w-[400px] bottom-full">
+              <PopUpsAddNewParagraph
+                handleAddNewParagraphs={() => console.log("s")}
+                setPopUpsState={setTemplatePopUpProps}
+                handleClick={handleAddNewParagraphWithName}
+              />
+            </div>
+          )}
         </div>
       </div>
+
+      <div className="w-auto px-2 flex gap-2 h-full items-center">
+        <button className="w-200px h-2/3 mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white">
+          შენახვა
+        </button>
+        <button
+          className="w-200px h-2/3 mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white"
+          onClick={() => setTemplateOptionDropdown(-1)}
+        >
+          გაუქმება
+        </button>
+      </div>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default TemplateChoosedOption;

@@ -67,7 +67,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
         {
           name: "paragraphName",
           textArea: [{type:"text", value: "sada",className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }, { type:"text", value: "o", className: { fontSize: 16, fontStyle: { bold: false, italic: false, underline: false } } }],
-          index: 0,
+          index: -1,
           children: [
             [
             { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
@@ -176,7 +176,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
             {
               name: name,
               index: 0,
-              textArea: [{ type:"text", value: "sada", index:0, className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }],
+              textArea: [{ type:"text", value: "sada", className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }],
               children: [
                 [
             { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
