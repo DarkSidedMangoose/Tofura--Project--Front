@@ -27,6 +27,7 @@ type templateItemProps = {
   children: templateItemObjectProps[][]
   index: number;
   textArea: any[]
+  justify?: string;
 }
 type TemplateItem = {
   name: string;
@@ -66,8 +67,9 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
       children: [
         {
           name: "paragraphName",
-          textArea: [{type:"text", value: "sada",className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }, { type:"text", value: "o", className: { fontSize: 16, fontStyle: { bold: false, italic: false, underline: false } } }],
-          index: -1,
+          justify: "center",
+          textArea: [{type:"text", value: "შეიყვანეთ ტექსტი",className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false }, fontFamily: "Arial", fontElement:"h1", justify:"center", fontColor:"rgb(20,20,20)", bgColor: "rgb(202,114,114)" } }, ],
+          index: 0,
           children: [
             [
             { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
@@ -141,7 +143,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
         {
           name: "paragraphName",
           index: 0,
-          textArea: [{ value: "sada", className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }],
+          textArea: [{type:"text", value: "შეიყვანეთ ტექსტი", className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }],
           children: [
             [
             { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
@@ -176,7 +178,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
             {
               name: name,
               index: 0,
-              textArea: [{ type:"text", value: "sada", className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }],
+              textArea: [{ type:"text", value: "ტექსტი", className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }],
               children: [
                 [
             { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
@@ -204,14 +206,15 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
     const newState = JSON.parse(JSON.stringify(prev));
     // Defensive access
     const targetArea = newState?.[templateIndex]?.children?.[childIndex]?.textArea;
+    const targetIndex = newState?.[templateIndex]?.children?.[childIndex]?.index;
     if (!Array.isArray(targetArea)) return prev;
-    const newTextArea = { type:"text", value: "sadac", className: { fontSize: 16, fontStyle: { bold: false, italic: false, underline: false } } };
-    targetArea.push(newTextArea);
+    const newTextArea = { type:"text", value: "შეიყვანეთ ტექსტი", className: { fontSize: 16, fontStyle: { bold: false, italic: false, underline: false } } };
+    targetArea.splice(targetIndex + 1,0,newTextArea);
     const targetChildren = newState?.[templateIndex]?.children?.[childIndex]?.children;
     if (!Array.isArray(targetChildren)) return prev;
 
     const newBlock = [
-            { name: "type", type: "select", option: ["text", "table", "image"], value: "text" },
+            { name: "type", type: "select", option: ["text", "image"], value: "text" },
             { name: "element tag", type: "select", option: ["h1", "h2", "p", "span"], value: "h1" },
             { name: "font family", type: "select", option: ["Arial", "Roboto", "Times New Roman"], value:"Arial" },
             { name: "font size", type: "input", value: 16 },

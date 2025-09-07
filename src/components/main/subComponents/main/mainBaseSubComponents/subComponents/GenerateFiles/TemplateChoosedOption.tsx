@@ -88,10 +88,6 @@ const TemplateChoosedOption: React.FC<Props> = ({
       switch (selected) {
         case 'text':
           if (newState[templateIndex].children[childIndex].textArea[0].type === "text") {
-
-          
-            
-          
             childrenCopy[optionIndex] = [
               { name: 'type', type: 'select', option: ['text', 'table', 'image'], value: 'text' },
               { name: 'element tag', type: 'select', option: ['h1', 'h2', 'p', 'span'], value: 'h1' },
@@ -103,7 +99,8 @@ const TemplateChoosedOption: React.FC<Props> = ({
               { name: 'background color', type: 'color', value: '#ffffff' },
             ];
           } else {
-            newState[templateIndex].children[childIndex].textArea = [{type:"text", value: "sada",className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }, { type:"text", value: "o", className: { fontSize: 16, fontStyle: { bold: false, italic: false, underline: false } } }]
+            newState[templateIndex].children[childIndex].textArea = [{ type: "text", value: "sada", className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }]
+            newState[templateIndex].children[childIndex].index = 0;
           }
           break;
         case 'table':
@@ -137,14 +134,14 @@ const TemplateChoosedOption: React.FC<Props> = ({
     });
   };
 
-  const handleClickMainDiv = (childIndex: number) => {
-    setTemplateState((prev) => {
-      const newState = JSON.parse(JSON.stringify(prev));
-      console.log(newState[i].children[childIndex])
-      newState[i].children[childIndex].index = -1;
-      return newState;
-    });
-  }
+  // const handleClickMainDiv = (childIndex: number) => {
+  //   setTemplateState((prev) => {
+  //     const newState = JSON.parse(JSON.stringify(prev));
+  //     console.log(newState[i].children[childIndex])
+  //     newState[i].children[childIndex].index = 0;
+  //     return newState;
+  //   });
+  // }
   const renderField = (
     option: templateItemObjectProps,
     optionSelection: number,
@@ -343,14 +340,14 @@ const TemplateChoosedOption: React.FC<Props> = ({
                             </div>
 
                             <div
-                              onClick={() => handleClickMainDiv(childIndex)}
+                              // onClick={() => handleClickMainDiv(childIndex)}
                               className={`${
                                 childGroup.textArea[0].type === "text"
-                                  ? "h-[100px] gap-[1px]"
+                                  ? "h-[100px] gap-2"
                                   : childGroup.textArea[0].type === "table"
                                   ? "h-[400px]"
                                   : ""
-                              } flex justify-start items-center max-w-full overflow-x-scroll min-w-full text-sm p-2 resize-none bg-white border`}
+                              } flex ${childGroup.justify === "left" ? "justify-start": childGroup.justify === "center" ? "justify-center": ""}  items-center max-w-full overflow-x-scroll min-w-full text-sm p-2 resize-none bg-white border`}
                             >
                               {childGroup.textArea.map(
                                 (
@@ -363,7 +360,6 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                     optionTextAreaIndex
                                   );
                                   return optionTextArea.type === "text" ? (
-                                    <div>
                                       <EditableSpan
                                         key={key}
                                         spanKey={key}
@@ -421,7 +417,6 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                           setTemplateState(updatedState);
                                         }}
                                         />
-                                      </div>
                                   ) : (
                                     <div></div>
                                   );

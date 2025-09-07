@@ -58,8 +58,13 @@ export const EditableSpan: React.FC<Props> = (props) => {
           fontWeight: props.classNameValues?.fontStyle?.bold ? "bold" : "normal",
           fontStyle: props.classNameValues?.fontStyle?.italic ? "italic" : "normal",
           textDecoration: props.classNameValues?.fontStyle?.underline ? "underline" : "",
+          fontFamily: props.classNameValues?.fontFamily || "Arial",
+          textAlign: props.classNameValues?.justify || "left",
+          color: props.classNameValues?.fontColor || "#000000",
+          backgroundColor: props.classNameValues?.bgColor || "transparent",
+
         }}
-        className={`h-full  flex items-center border-2 ${props.isChoosed && "border-sidebarChoose" } px-2  py-1 min-w-[20px] max-w-full  whitespace-pre-wrap break-words`}
+        className={`h-full  flex items-center  border-b-2 ${props.isChoosed && "border-sidebarChoose" } px-2  py-1 min-w-[20px] max-w-full  whitespace-pre-wrap break-words`}
         />
     </div>
       
