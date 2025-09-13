@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { templateItemObjectProps } from './GenerateAddReviewUseTemplate';
 import PopUpsAddNewParagraph, { ParagraphStructure } from './PopUps';
 import Bold from '../../../../../../../assets/images/main/text.png';
@@ -63,14 +63,21 @@ const TemplateChoosedOption: React.FC<Props> = ({
       childIndex: number,
       optionIndex: number,
       optionSelection: number,
-      e: any
+      e: any,
+      name: string
     ) => {
       setTemplateState((prev) => {
         const newState = JSON.parse(JSON.stringify(prev));
-        newState[templateIndex].children[childIndex].children[optionIndex][optionSelection].value =
-          e.target.value;
-        return newState;
-      });
+        console.log(newState[templateIndex].children[childIndex].children[optionIndex].justify);
+        
+          newState[templateIndex].children[childIndex].children[optionIndex][optionSelection].value =
+            e.target.value;
+          if (name === "alignment") {
+            newState[templateIndex].children[childIndex].justify = e.target.value;
+          }
+            return newState;
+          }
+        );
     },
     []
   );
@@ -148,17 +155,16 @@ const TemplateChoosedOption: React.FC<Props> = ({
     templateIndex: number,
     childIndex: number,
     optionIndex: number,
-    childGroup?: any
   ) => {
     switch (option.type) {
       case 'select':
         return (
           <select
-            value={typeof option.value === 'string' || typeof option.value === 'number' ? option.value : ''}
+            value={option.name === "alignment" ? templateState[templateIndex].children[childIndex].justify : typeof option.value === 'string' || typeof option.value === 'number'  ? option.value : ''}
             onChange={(e) =>
               option.name === 'type'
                 ? handleChangeType(e.target.value, templateIndex, childIndex, optionIndex)
-                : handleChangeSelectOption(templateIndex, childIndex, optionIndex, optionSelection, e)
+                :  handleChangeSelectOption(templateIndex, childIndex, optionIndex, optionSelection, e, option.name)
             }
             className="h-[50px] text-sm px-4 bg-white border rounded"
           >
@@ -176,6 +182,10 @@ const TemplateChoosedOption: React.FC<Props> = ({
                 const newState = JSON.parse(JSON.stringify(prev));
                 newState[templateIndex].children[childIndex].children[optionIndex][optionSelection].value =
                   event.target.value;
+                if (option.name === "font size") {
+                  const index = newState[templateIndex].children[childIndex].index;
+                  newState[templateIndex].children[childIndex].textArea[index].className.fontSize = Number(event.target.value);
+                }
                 return newState;
               });
             }}
@@ -236,7 +246,19 @@ const TemplateChoosedOption: React.FC<Props> = ({
           </div>
         );
       case 'color':
-        return <input type="color" className="h-[40px] w-[60px] border rounded" />;
+        return <input onChange={(e) => {
+          setTemplateState((prev) => {
+            const newState = JSON.parse(JSON.stringify(prev));
+            newState[templateIndex].children[childIndex].children[optionIndex][optionSelection].value = e.target.value;
+            const index = newState[templateIndex].children[childIndex].index;
+            if (option.name === "background color") {
+              newState[templateIndex].children[childIndex].textArea[index].className.bgColor = e.target.value;
+            } else if (option.name === "color") {
+              newState[templateIndex].children[childIndex].textArea[index].className.fontColor = e.target.value;
+            }
+            return newState;
+          });
+        }} type="color" value={option.name === "color" ? templateState[templateIndex].children[childIndex].textArea[templateState[templateIndex].children[childIndex].index].className.fontColor : templateState[templateIndex].children[childIndex].textArea[templateState[templateIndex].children[childIndex].index].className.bgColor} className="h-[40px] w-[60px] border rounded" />;
       default:
         return <span className="text-red-500 text-sm">Unknown type: {option.type}</span>;
     }
@@ -321,7 +343,6 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                     (grandChild: any, grandChildIndex: any) => (
                                       <Fragment key={grandChildIndex}>
                                         <div
-                                          onClick={() => console.log()}
                                           className="min-w-[100px] flex flex-col gap-2 justify-start items-center"
                                         >
                                           {renderField(
@@ -329,7 +350,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                             grandChildIndex,
                                             i,
                                             childIndex,
-                                            optionIndex
+                                            optionIndex,
                                           )}
                                         </div>
                                       </Fragment>
@@ -347,7 +368,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                   : childGroup.textArea[0].type === "table"
                                   ? "h-[400px]"
                                   : ""
-                              } flex ${childGroup.justify === "left" ? "justify-start": childGroup.justify === "center" ? "justify-center": ""}  items-center max-w-full overflow-x-scroll min-w-full text-sm p-2 resize-none bg-white border`}
+                              } flex ${childGroup.justify === "left" ? "justify-start": childGroup.justify === "center" ? "justify-center": childGroup.justify === "right" ? "justify-end": "justify-normal" }  items-center max-w-full overflow-x-scroll min-w-full text-sm p-2 resize-none bg-white border`}
                             >
                               {childGroup.textArea.map(
                                 (

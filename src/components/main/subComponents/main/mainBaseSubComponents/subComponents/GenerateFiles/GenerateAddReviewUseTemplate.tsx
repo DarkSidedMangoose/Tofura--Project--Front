@@ -67,8 +67,8 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
       children: [
         {
           name: "paragraphName",
-          justify: "center",
-          textArea: [{type:"text", value: "შეიყვანეთ ტექსტი",className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false }, fontFamily: "Arial", fontElement:"h1", justify:"center", fontColor:"rgb(20,20,20)", bgColor: "rgb(202,114,114)" } }, ],
+          justify: "right",
+          textArea: [{type:"text", value: "შეიყვანეთ ტექსტი",className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false }, fontFamily: "Roboto", fontElement:"h1", justify:"center", fontColor:"rgb(20,20,20)", bgColor: "rgb(202,114,114)" } }, ],
           index: 0,
           children: [
             [

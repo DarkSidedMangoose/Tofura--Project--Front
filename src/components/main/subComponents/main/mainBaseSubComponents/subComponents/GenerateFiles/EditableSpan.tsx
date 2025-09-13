@@ -58,8 +58,7 @@ export const EditableSpan: React.FC<Props> = (props) => {
           fontWeight: props.classNameValues?.fontStyle?.bold ? "bold" : "normal",
           fontStyle: props.classNameValues?.fontStyle?.italic ? "italic" : "normal",
           textDecoration: props.classNameValues?.fontStyle?.underline ? "underline" : "",
-          fontFamily: props.classNameValues?.fontFamily || "Arial",
-          textAlign: props.classNameValues?.justify || "left",
+         fontFamily: props.classNameValues?.fontFamily || "Arial, Helvetica, sans-serif",
           color: props.classNameValues?.fontColor || "#000000",
           backgroundColor: props.classNameValues?.bgColor || "transparent",
 
