@@ -15,8 +15,8 @@ const App: React.FC = () => {
           future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
         >
           <Routes>
-            <Route path="/" element={<Generate />} />
-            <Route path="/main" element={<Main />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/main" element={<Generate />} />
           </Routes>
         </BrowserRouter>
       </Provider>

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import React, {  Fragment, useCallback,  } from 'react';
 import { templateItemObjectProps } from './GenerateAddReviewUseTemplate';
 import PopUpsAddNewParagraph, { ParagraphStructure } from './PopUps';
 import Bold from '../../../../../../../assets/images/main/text.png';
@@ -68,9 +68,8 @@ const TemplateChoosedOption: React.FC<Props> = ({
     ) => {
       setTemplateState((prev) => {
         const newState = JSON.parse(JSON.stringify(prev));
-        console.log(newState[templateIndex].children[childIndex].children[optionIndex].justify);
-        
-          newState[templateIndex].children[childIndex].children[optionIndex][optionSelection].value =
+
+          newState[templateIndex].children[childIndex].children[optionIndex][optionSelection].value.stringValue =
             e.target.value;
           if (name === "alignment") {
             newState[templateIndex].children[childIndex].justify = e.target.value;
@@ -91,19 +90,63 @@ const TemplateChoosedOption: React.FC<Props> = ({
     setTemplateState((prev) => {
       const newState = [...prev];
       const childrenCopy = [...newState[templateIndex].children[childIndex].children];
-      
       switch (selected) {
         case 'text':
           if (newState[templateIndex].children[childIndex].textArea[0].type === "text") {
-            childrenCopy[optionIndex] = [
-              { name: 'type', type: 'select', option: ['text', 'table', 'image'], value: 'text' },
-              { name: 'element tag', type: 'select', option: ['h1', 'h2', 'p', 'span'], value: 'h1' },
-              { name: 'font family', type: 'select', option: ['Arial', 'Roboto', 'Times New Roman'], value: 'Arial' },
-              { name: 'font size', type: 'input', value: '' },
-              { name: 'text style', type: 'multiselect', option: ['bold', 'italic', 'underline'], },
-              { name: 'alignment', type: 'select', option: ['left', 'center', 'right', 'justify'], value: 'left' },
-              { name: 'color', type: 'color', value: '#000000' },
-              { name: 'background color', type: 'color', value: '#ffffff' },
+            childrenCopy[optionIndex] = 
+              [
+                {
+                  name: "type",
+                  type: "select",
+                  option: ["text", "table", "image"],
+                  value: { stringValue: "text" },
+                },
+                {
+                  name: "element tag",
+                  type: "select",
+                  option: ["h1", "h2", "p", "span"],
+                  value: { stringValue: "h1" },
+                },
+                {
+                  name: "font family",
+                  type: "select",
+                  option: ["Arial", "Roboto", "Times New Roman"],
+                  value: { stringValue: "Arial" },
+                },
+                {
+                  name: "font size",
+                  type: "input",
+                  value: { numberValue: 16 },
+                },
+                {
+                  name: "text style",
+                  type: "multiselect",
+                  option: ["bold", "italic", "underline"],
+                  value: {
+                    objectValue: {
+                      bold: true,
+                      italic: false,
+                      underline: false,
+                    },
+                  },
+                },
+                {
+                  name: "alignment",
+                  type: "select",
+                  option: ["left", "center", "right", "justify"],
+                  value: { stringValue: "left" },
+                },
+                {
+                  name: "color",
+                  type: "color",
+                  value: { stringValue: "#000000" },
+                },
+                {
+                  name: "background color",
+                  type: "color",
+                  value: { stringValue: "#ffffff" },
+                },
+              
             ];
           } else {
             newState[templateIndex].children[childIndex].textArea = [{ type: "text", value: "sada", className: { fontSize: 16, fontStyle: { bold: true, italic: false, underline: false } } }]
@@ -111,6 +154,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
           }
           break;
         case 'table':
+          console.log("table");
           newState[templateIndex].children[childIndex].textArea = [{type:"table"}]
           childrenCopy[optionIndex] = [
             { name: 'type', type: 'select', value: 'table', option: ['text', 'table', 'image'] },
@@ -125,13 +169,37 @@ const TemplateChoosedOption: React.FC<Props> = ({
           break;
         case 'image':
           childrenCopy[optionIndex] = [
-            { name: 'type', type: 'select', value: 'image', option: ['text', 'table', 'image'] },
-            { name: 'source', type: 'input', placeholder: 'Image URL or path', value: '' },
-            { name: 'alt text', type: 'input', value: '' },
-            { name: 'width', type: 'input', value: '100%' },
-            { name: 'height', type: 'input', value: 'auto' },
-            { name: 'alignment', type: 'select', option: ['left', 'center', 'right'], value: 'left' },
-            { name: 'border radius', type: 'input', value: '0' },
+            {
+              name: "type",
+              type: "select",
+              value: { stringValue: "image" },
+              option: ["text", "table", "image"],
+            },
+            {
+              name: "source",
+              type: "input",
+              placeholder: "Image URL or path",
+              value: { stringValue: "" },
+            },
+            {
+              name: "alt text",
+              type: "input",
+              value: { stringValue: "image" },
+            },
+            { name: "width", type: "input", value: { stringValue: "100%" } },
+            { name: "height", type: "input", value: { stringValue: "auto" } },
+
+            {
+              name: "alignment",
+              type: "select",
+              option: ["left", "center", "right"],
+              value: { stringValue: "left" },
+            },
+            {
+              name: "border radius",
+              type: "input",
+              value: { stringValue: "16" },
+            },
           ];
           break;
       }
@@ -141,14 +209,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
     });
   };
 
-  // const handleClickMainDiv = (childIndex: number) => {
-  //   setTemplateState((prev) => {
-  //     const newState = JSON.parse(JSON.stringify(prev));
-  //     console.log(newState[i].children[childIndex])
-  //     newState[i].children[childIndex].index = 0;
-  //     return newState;
-  //   });
-  // }
+  
   const renderField = (
     option: templateItemObjectProps,
     optionSelection: number,
@@ -160,11 +221,13 @@ const TemplateChoosedOption: React.FC<Props> = ({
       case 'select':
         return (
           <select
-            value={option.name === "alignment" ? templateState[templateIndex].children[childIndex].justify : typeof option.value === 'string' || typeof option.value === 'number'  ? option.value : ''}
+            value={option.name === "alignment" ? templateState[templateIndex].children[childIndex].justify : typeof option.value?.stringValue === 'string' || typeof option.value?.numberValue === 'number'  ? option.value.objectValue : ''}
             onChange={(e) =>
+            {
               option.name === 'type'
-                ? handleChangeType(e.target.value, templateIndex, childIndex, optionIndex)
-                :  handleChangeSelectOption(templateIndex, childIndex, optionIndex, optionSelection, e, option.name)
+              ? handleChangeType(e.target.value, templateIndex, childIndex, optionIndex)
+              :  handleChangeSelectOption(templateIndex, childIndex, optionIndex, optionSelection, e, option.name)
+            }
             }
             className="h-[50px] text-sm px-4 bg-white border rounded"
           >
@@ -180,19 +243,34 @@ const TemplateChoosedOption: React.FC<Props> = ({
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setTemplateState((prev) => {
                 const newState = JSON.parse(JSON.stringify(prev));
-                newState[templateIndex].children[childIndex].children[optionIndex][optionSelection].value =
-                  event.target.value;
+                newState[templateIndex].children[childIndex].children[
+                  optionIndex
+                ][optionSelection].value.numberValue = Number(
+                  event.target.value
+                );
                 if (option.name === "font size") {
-                  const index = newState[templateIndex].children[childIndex].index;
-                  newState[templateIndex].children[childIndex].textArea[index].className.fontSize = Number(event.target.value);
+                  const index =
+                    newState[templateIndex].children[childIndex].index;
+                  newState[templateIndex].children[childIndex].textArea[
+                    index
+                  ].className.fontSize = Number(event.target.value);
                 }
                 return newState;
               });
             }}
             type="number"
+            style={{
+              appearance: "auto",
+            }}
             placeholder={option.placeholder}
-            value={typeof option.value === 'string' || typeof option.value === 'number' ? option.value : ''}
-            className="h-[50px] w-full text-sm px-4 bg-white border rounded"
+            value={
+              typeof option.value?.stringValue === "string"
+                ? option.value.stringValue
+                : typeof option.value?.numberValue === "number"
+                ? option.value.numberValue
+                : ""
+            }
+            className="h-[50px] w-1/2 text-sm px-4 bg-white border rounded"
           />
         );
       case 'multiselect':
@@ -249,7 +327,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
         return <input onChange={(e) => {
           setTemplateState((prev) => {
             const newState = JSON.parse(JSON.stringify(prev));
-            newState[templateIndex].children[childIndex].children[optionIndex][optionSelection].value = e.target.value;
+            newState[templateIndex].children[childIndex].children[optionIndex][optionSelection].value.stringValue = e.target.value;
             const index = newState[templateIndex].children[childIndex].index;
             if (option.name === "background color") {
               newState[templateIndex].children[childIndex].textArea[index].className.bgColor = e.target.value;
