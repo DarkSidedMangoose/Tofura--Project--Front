@@ -12,7 +12,7 @@ type Props = {}
 const Api = process.env.REACT_APP_API_BASE_URL
 const Generate = (props: Props) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [state, setState] = useState<{
     navState: string;
     templates: string[];
@@ -20,7 +20,7 @@ const Generate = (props: Props) => {
     addReviewNewTemplate: boolean;
     addNewTemplateNavState: string;
     templateIds: string[];
-    choosedTemplateName:string;
+    choosedTemplateName: string;
     choosed: boolean;
   }>({
     navState: "Word-შაბლონები",
@@ -32,38 +32,37 @@ const Generate = (props: Props) => {
     choosedTemplateName: "",
     choosed: false,
   });
-
   useEffect(() => {
-    const fetchTemplates = async () => {
-      try {
-        const response = await axios.get(`${Api}/generateFiles/getTemplatesName`,{
-          withCredentials: true,
-        });
-        setState((prev) => ({
-          ...prev,
-          templates: [response.data.templateList].flat(),
-          templateIds: [response.data.templateIds].flat()
-        }));
-        
+    if (state.addReviewNewTemplate === false) {
+      const fetchTemplates = async () => {
+        try {
+          const response = await axios.get(
+            `${Api}/generateFiles/getTemplatesName`,
+            {
+              withCredentials: true,
+            }
+          );
+          console.log(response)
+          setState((prev) => ({
+            ...prev,
+            templates: [response.data.templateList].flat(),
+            templateIds: [response.data.templateIds].flat(),
+            choosed: false,
+            choosedTemplate: "",
+            choosedTemplateName: "",
+          }));
+        } catch (error) {
+          if (axios.isAxiosError(error) && error.response?.status === 401) {
+            navigate("/");
+          }
+        }
+      };
 
-      }catch (error) {
-        if (axios.isAxiosError(error) && error.response?.status === 401) {
-          navigate("/");
-        } 
-      }
+      fetchTemplates();
     }
-    fetchTemplates();
-  },[])
-  useEffect(() => {
-if(state.addReviewNewTemplate === false){
-  setState((prev) => ({
-    ...prev,
-    choosed: false,
-    choosedTemplate: "",
-    choosedTemplateName:""
-  }))
-}
-  },[state.addReviewNewTemplate])
+  }, [state.addReviewNewTemplate]);
+
+  
 
   return (
     <div className="fixed left-0 top-0 z-40 w-full h-full flex justify-center items-center bg-loginBackground">
@@ -83,19 +82,16 @@ if(state.addReviewNewTemplate === false){
 
                   {state.templates.map((e, i) => (
                     <div
-                      onClick={() =>{
-
+                      onClick={() => {
                         setState((prev) => ({
                           ...prev,
                           choosed: true,
                           choosedTemplate: state.templateIds[i],
                           choosedTemplateName: state.templates[i],
-                          addReviewNewTemplate: true
-                        }))
-                        }
-                      }
+                          addReviewNewTemplate: true,
+                        }));
+                      }}
                       key={e}
-                      
                       className={`h-[100px] ${
                         state.choosedTemplate === e
                           ? "bg-sidebarChoose text-white opacity-90"
@@ -111,9 +107,12 @@ if(state.addReviewNewTemplate === false){
                 <div className="h-[100px] flex items-center justify-start ">
                   <img
                     src={Add}
-                    alt='add'
+                    alt="add"
                     onClick={() =>
-                      setState((prev) => ({ ...prev, addReviewNewTemplate: true }))
+                      setState((prev) => ({
+                        ...prev,
+                        addReviewNewTemplate: true,
+                      }))
                     }
                     className="h-1/2 bg-sidebarChoose rounded-sm cursor-pointer"
                   />

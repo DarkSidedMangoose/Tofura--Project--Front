@@ -344,6 +344,22 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
 
   const addNewTemplate = async () => {
     try {
+      if(state.choosed) {
+        await axios.put(
+          `${apiUrl}/generateFiles/updateTemplate`,
+          {
+            id: state.choosedTemplate,
+            templateState: templateState,
+            templateName: state.choosedTemplateName,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+              setState((prev) => ({ ...prev, addReviewNewTemplate: false }));
+
+      }else {
+
      await axios.post(
        `${apiUrl}/generateFiles/addNewTemplate`,
        {
@@ -354,6 +370,10 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
          withCredentials: true,
        }
      );
+              setState((prev) => ({ ...prev, addReviewNewTemplate: false }));
+
+      }
+
     }catch (error) {
       console.log(templateState)
      if (axios.isAxiosError(error) && error.response?.status === 401) {
@@ -786,7 +806,6 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
             onClick={() =>
             {
               addNewTemplate();
-              setState((prev) => ({ ...prev, addReviewNewTemplate: false }))
             }
             }
             className="w-200px mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white"
