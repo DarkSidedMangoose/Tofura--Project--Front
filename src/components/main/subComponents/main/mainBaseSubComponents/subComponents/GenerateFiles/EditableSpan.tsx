@@ -38,10 +38,10 @@ export const EditableSpan: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className={`h-[50px] ${!props.isChoosed && "cursor-pointer"} relative `} >
+    <div className={`h-[50px] w-auto min-w-fit ${!props.isChoosed && "cursor-pointer"} relative `} >
       {!props.isChoosed && (
 
-      <div className="absolute w-full h-full" onClick={props.onClick}></div>
+      <div className="absolute w-full h-full  hover:bg-[#21113a7c]" onClick={props.onClick}></div>
       )}
       <span
         key={props.spanKey}

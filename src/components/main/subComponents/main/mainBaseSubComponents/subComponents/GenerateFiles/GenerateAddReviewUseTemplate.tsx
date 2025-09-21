@@ -220,6 +220,11 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
           }
         );
         setTemplateState((prev) => ([response.data.templateState].flat()))
+        const template = [false];
+        templateState.forEach((e) => {
+          template.push(false);
+        });
+        setAddNewSection(template);
         console.log(response.data.templateState);
       }catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 401) {
@@ -229,17 +234,23 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
       }
     }
     fetchData();
+    
+
   }
   },[])
+  // useEffect(() => {
+  //   const template = [false]
+  //   templateState.forEach((e) => {
+  //     template.push(false)
+  //   })
+  //   setAddNewSection(template);
+
+
+  // }, [templateState])
+
   useEffect(() => {
-    const template = [false]
-    templateState.forEach((e) => {
-      template.push(false)
-    })
-    setAddNewSection(template);
-
-
-  }, [])
+    console.log(addNewSection)
+  },[addNewSection])
   
  
   const [templateRow, setTemplateRow] = useState<TemplateItem | null>(null);
@@ -342,6 +353,32 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
     setTemplateOptionDropdown(-1); // Close the dropdown if open
 }
 
+  const addNewTemplateNd = async () => {
+  try {
+    const response = await axios.post(
+      `${apiUrl}/generateFiles/generateWordFile`,
+      {
+        templateName: state.choosedTemplateName,
+        templateState: templateState,
+      },
+      {
+        responseType: "blob", // Important for binary files
+        withCredentials: true,
+      }
+    );
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `${state.choosedTemplateName}.docx`); // Optional: customize filename
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } catch (error) {
+    console.error("Error generating Word file:", error);
+  }
+  }
+      
   const addNewTemplate = async () => {
     try {
       if(state.choosed) {
@@ -558,27 +595,37 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
         </ul>
       </div>
 
-      <div onClick={() => setTemplateNameButtonActivator(false)} className="w-80% min-h-[640px] max-h-[80vh] bg-white  shadow-boxShadow ">
-        <div className="w-full h-[15%] min-h-[50px] flex justify-center items-end ">
-          <div className='w-auto  h-2/3 flex justify-center items-center relative'>
-          {
-            !templateNameButtonActivator &&
-            <div onClick={(e) => {
-              e.stopPropagation();
-              setTemplateNameButtonActivator(true)}} className='w-full h-full z-20 absolute bg-transparent cursor-pointer'>
-          </div>
-          }
+      <div
+        onClick={() => setTemplateNameButtonActivator(false)}
+        className="w-80% min-h-[640px] max-h-[80vh]  "
+      >
+        <div className="w-full h-[15%] min-h-[50px] flex justify-center items-center shadow-bottom bg-sidebarChoose  ">
+          <div className="w-auto  h-2/3 flex justify-center items-center relative">
+            {!templateNameButtonActivator && (
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setTemplateNameButtonActivator(true);
+                }}
+                className="w-full h-full z-20 absolute bg-transparent cursor-pointer"
+              ></div>
+            )}
 
-          <input value={state.choosedTemplateName} onChange={(e) => {setState((prev) => {
-            return {...prev, choosedTemplateName: e.target.value
-          }})}}
-           onClick={(e) => { 
-            e.stopPropagation();
-            
-          } } className='w-auto z-10 h-full bg-loginBackground text-sidebarChoose place-items-center'/>
+            <input
+              value={state.choosedTemplateName}
+              onChange={(e) => {
+                setState((prev) => {
+                  return { ...prev, choosedTemplateName: e.target.value };
+                });
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              className=" z-10 h-full bg-loginBackground text-[#020b37] font-semibold "
+            />
           </div>
         </div>
-        <div className="w-full  h-[85%] flex flex-col gap-2 overflow-y-auto overflow-x-hidden items-end ">
+        <div className="w-full  h-[85%] min-h-[500px] max-h-[500px]  flex flex-col gap-2 custom-scrollbar overflow-y-auto overflow-x-hidden items-end ">
           {addNewSection[0] && (
             <div className="absolute z-10 h-[70px] flex gap-8 justify-center  items-center bg-sidebarChoose font-bold text-white w-[300px] ">
               <input
@@ -591,13 +638,13 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
               <div className="w-auto h-2/3 flex flex-col gap-2">
                 <img
                   className="w-auto h-[47%] cursor-pointer hover:opacity-80 hover:scale-125 transition-all duration-200 "
-                  alt='addNew'
+                  alt="addNew"
                   onClick={() => handleAddNewSection(0)}
                   src={ConfirmIcon}
                 />
                 <img
                   className="w-auto h-[47%] cursor-pointer hover:opacity-80 hover:scale-125 transition-all duration-200"
-                  alt='decline'
+                  alt="decline"
                   onClick={() =>
                     setAddNewSection((prev) => {
                       const newSections = [...prev];
@@ -652,7 +699,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                   );
                 }}
                 key={i}
-                className={`w-full bg-loginBackground transition-all  cursor-pointer  duration-200 min-h-[100px] flex gap-2 justify-between`}
+                className={`w-full bg-loginBackground  transition-all  cursor-pointer  duration-200 min-h-[100px] flex gap-2 justify-between`}
               >
                 <div className="w-full h-full flex justify-between relative ">
                   <div className="h-full flex items-center font-bold px-4">
@@ -782,7 +829,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
           ))}
         </div>
         {templateOptionDropdown !== -1 && (
-          <div className="fixed w-full h-full flex justify-center items-center left-0 top-0 z-20">
+          <div className=" w-full h-full absolute flex justify-center items-center left-0 top-0 z-20">
             <TemplateChoosedOption
               templateState={templateState}
               i={templateOptionDropdown}
@@ -803,11 +850,9 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
             დახურვა
           </button>
           <button
-            onClick={() =>
-            {
+            onClick={() => {
               addNewTemplate();
-            }
-            }
+            }}
             className="w-200px mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white"
           >
             შენახვა
