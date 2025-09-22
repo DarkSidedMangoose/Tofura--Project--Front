@@ -96,7 +96,6 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                 fontElement: "h1",
                 justify: "center",
                 fontColor: "rgb(20,20,20)",
-                bgColor: "rgb(0,0,0)",
               },
             },
           ],
@@ -145,11 +144,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                 type: "color",
                 value: { stringValue: "#000000" },
               },
-              {
-                name: "background color",
-                type: "color",
-                value: { stringValue: "#ffffff" },
-              },
+             
             ],
             [
               {
@@ -194,11 +189,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                 type: "color",
                 value: { stringValue: "#000000" },
               },
-              {
-                name: "background color",
-                type: "color",
-                value: { stringValue: "#ffffff" },
-              },
+             
             ]
           ],
         },
@@ -206,6 +197,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
     },
   ]);
   useEffect(() => {
+    
     if(state.choosed) {
 
       const fetchData = async () => {
@@ -236,6 +228,12 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
     fetchData();
     
 
+  }else {
+    const template = [false]
+    templateState.forEach((e) => {
+      template.push(false)
+    })
+    setAddNewSection(template);
   }
   },[])
   // useEffect(() => {
@@ -339,11 +337,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                 type: "color",
                 value: { stringValue: "#000000" },
               },
-              {
-                name: "background color",
-                type: "color",
-                value: { stringValue: "#ffffff" },
-              },
+             
             ],
           ],
         },
@@ -488,11 +482,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                     type: "color",
                     value: { stringValue: "#000000" },
                   },
-                  {
-                    name: "background color",
-                    type: "color",
-                    value: { stringValue: "#ffffff" },
-                  },
+                  
                 ],
               ],
             },
@@ -558,11 +548,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                 type: "color",
                 value: { stringValue: "#000000" },
               },
-              {
-                name: "background color",
-                type: "color",
-                value: { stringValue: "#ffffff" },
-              },
+            
             ];
 
     targetChildren.push(newBlock);
@@ -572,7 +558,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
 
 
   return (
-    <div className="fixed inset-0 bg-loginBackground z-10 flex flex-col justify-center items-center">
+    <div className="fixed inset-0 bg-[#d5d8df4f] z-10 flex flex-col justify-center items-center">
       <div className="w-[700px] h-[5%] min-h-[50px] flex justify-center items-end">
         <ul className="w-full h-full flex gap-2 ">
           {["შაბლონი", "შაბლონის კონფიგურაცია", "შაბლონის ვიზუალი"].map(
@@ -600,7 +586,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
         className="w-80% min-h-[640px] max-h-[80vh]  "
       >
         <div className="w-full h-[15%] min-h-[50px] flex justify-center items-center shadow-bottom bg-sidebarChoose  ">
-          <div className="w-auto  h-2/3 flex justify-center items-center relative">
+          <div className="w-auto  h-2/3 flex justify-center items-center relative bg-white ">
             {!templateNameButtonActivator && (
               <div
                 onClick={(e) => {
@@ -621,11 +607,11 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
               onClick={(e) => {
                 e.stopPropagation();
               }}
-              className=" z-10 h-full bg-loginBackground text-[#020b37] font-semibold "
+              className=" z-10 h-full bg-[#d5d8df4f] px-2 text-[#020b37] font-semibold "
             />
           </div>
         </div>
-        <div className="w-full  h-[85%] min-h-[500px] max-h-[500px]  flex flex-col gap-2 custom-scrollbar overflow-y-auto overflow-x-hidden items-end ">
+        <div className="w-full py-4 shadow-bottom-right  bg-[#ffffff] min-h-[500px] max-h-[500px]  flex flex-col gap-2 custom-scrollbar overflow-y-auto overflow-x-hidden items-end ">
           {addNewSection[0] && (
             <div className="absolute z-10 h-[70px] flex gap-8 justify-center  items-center bg-sidebarChoose font-bold text-white w-[300px] ">
               <input
@@ -672,7 +658,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
               setAddNewSection((prev) => {
                 const newSections = [...prev];
                 prev.forEach((e, index) => {
-                  if (index != 0) {
+                  if (index !== 0) {
                     newSections[index] = false; // Reset all other sections
                   } else {
                     newSections[index] = true; // Toggle the clicked section
@@ -699,9 +685,9 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                   );
                 }}
                 key={i}
-                className={`w-full bg-loginBackground  transition-all  cursor-pointer  duration-200 min-h-[100px] flex gap-2 justify-between`}
+                className={`w-full border-b-2 bg-[#d5d8df4f] h-[100px]   transition-all  cursor-pointer  duration-200 min-h-[100px] flex gap-2 items-center`}
               >
-                <div className="w-full h-full flex justify-between relative ">
+                <div className="w-full h-full  flex justify-between relative items-center  ">
                   <div className="h-full flex items-center font-bold px-4">
                     {templateOptionDropdown !== i && (
                       <h1>
@@ -709,10 +695,10 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                       </h1>
                     )}
                   </div>
-                  <div className="w-auto flex gap-4  items-center justify-center">
+                  <div className="w-auto flex gap-4 h-full items-center ">
                     <img
                       src={RemIcon}
-                      className={`h-1/2  hover:scale-105 hover:opacity-90 transition-all duration-200 mr-2`}
+                      className={`  hover:scale-105 hover:opacity-90 transition-all duration-200 mr-2`}
                       onClick={(e) => {
                         e.stopPropagation();
                         setAddNewSection((prev) => {
@@ -738,12 +724,12 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                       }}
                     />
                     <button
-                      className={`${
+                      className={` h-full   ${
                         templateRow.remove === null
-                          ? "hidden"
+                          ? "hidden "
                           : templateRow.remove === false
                           ? "SlideEffectRemoveSectionFalse "
-                          : "SlideEffectRemoveSectionTrue"
+                          : "SlideEffectRemoveSectionTrue "
                       }`}
                       onClick={(e) => {
                         e.stopPropagation();
@@ -753,12 +739,12 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                       }}
                     >
                       <span
-                        className={`${
+                        className={` ${
                           templateRow.remove === null
-                            ? "hidden"
+                            ? "hidden  "
                             : templateRow.remove === true
-                            ? "flex"
-                            : "hidden"
+                            ? "flex "
+                            : "hidden h-full"
                         }`}
                       >
                         წაშლა
@@ -851,6 +837,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
           </button>
           <button
             onClick={() => {
+              addNewTemplateNd();
               addNewTemplate();
             }}
             className="w-200px mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white"

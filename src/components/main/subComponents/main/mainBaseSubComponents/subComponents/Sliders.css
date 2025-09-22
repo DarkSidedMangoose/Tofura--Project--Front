@@ -1,6 +1,5 @@
 .SlideEffectRemoveSectionTrue{
    
-    height: 100%;
     background-color: #e3342f; /* Tailwind's red-700 */
     color: white;
     font-weight: bold;
@@ -28,6 +27,7 @@
     to {
         width: 20%;
         display: flex;
+
         min-width: 180px;
         transform: translateX(0);
     }
@@ -36,6 +36,8 @@
 @keyframes slideEffectRemove {
     from {
         width: 20%;
+         height: 100%;
+
         min-width: 180px;
         display: flex;;
         transform: translateX(0);

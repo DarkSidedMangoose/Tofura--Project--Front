@@ -95,8 +95,8 @@ const Generate = (props: Props) => {
                       className={`h-[100px] ${
                         state.choosedTemplate === e
                           ? "bg-sidebarChoose text-white opacity-90"
-                          : "bg-loginBackground text-sidebarChoose hover:opacity-60"
-                      }  flex items-center cursor-pointer  transition-all duration-15`}
+                          : "bg-[#d5d8df87] text-sidebarChoose hover:opacity-60"
+                      }  flex items-center cursor-pointer font-bold border-b-2  transition-all duration-15`}
                     >
                       <p className="px-2 0">
                         {i + 1}){` ${e}`}
@@ -121,7 +121,7 @@ const Generate = (props: Props) => {
             )}
           </div>
 
-          <div className="w-[20%] h-full z-0  bg-[#f3f1f1]  relative  shadow-left ">
+          <div className="w-[20%] h-full z-0  bg-white  relative  shadow-left ">
             <ul className="w-full h-auto flex flex-col">
               {["Word-შაბლონები", "Excell-შაბლონები"].map((item, idx) => (
                 <li
@@ -132,7 +132,7 @@ const Generate = (props: Props) => {
                   className={` w-full h-[100px] flex justify-center items-center border-b-[1px] border-2  cursor-pointer ${
                     item === state.navState
                       ? "bg-sidebarChoose  text-white opacity-90"
-                      : "hover:opacity-50"
+                      : "hover:opacity-50 bg-[#d5d8df4f]"
                   }`}
                 >
                   {item}
