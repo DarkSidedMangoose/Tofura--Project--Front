@@ -9,6 +9,7 @@ type Props = {
   onFocus?: () => void;
   isChoosed: boolean;
   childIndex: number;
+  optionTextAreaType?: string; // New prop to differentiate between text and placeholder
   templateState?: any; // Optional prop for template state
 };
 
@@ -19,14 +20,11 @@ export const EditableSpan: React.FC<Props> = (props) => {
   useEffect(() => {
     const el = spanRef.current;
     if (el && el.innerText !== props.value) {
-      console.log(props.value)
       el.innerText = props.value;
     }
   }, [props.value, props.templateState]);
   
-  useEffect(() => {
-    console.log(props.childIndex)
-  }, [props.childIndex]);
+  
 
   // Handle user input and blur after change
   const handleInput = () => {

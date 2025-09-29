@@ -6,6 +6,7 @@ import Italic from '../../../../../../../assets/images/main/italic-button.png';
 import Underline from '../../../../../../../assets/images/main/underline.png';
 import { EditableSpan } from './EditableSpan';
 import axios from 'axios'
+import Placeholder from './Placeholder';
 
 
 const Api = process.env.REACT_APP_API_BASE_URL
@@ -123,15 +124,29 @@ const TemplateChoosedOption: React.FC<Props> = ({
       ];
       switch (selected) {
         case "text":
-          if (
-            newState[templateIndex].children[childIndex].textArea[0].type ===
-            "text"
-          ) {
+          // if (
+          //   newState[templateIndex].children[childIndex].textArea[0].type ===
+          //   "text"
+          // ) {
+          newState[templateIndex].children[childIndex].textArea[optionIndex] = {
+            
+              type: "text",
+              value: "asket",
+              className: {
+                fontSize: 16,
+                fontStyle: { bold: true, italic: false, underline: false },
+              },
+            
+            
+          };
+
+
+
             childrenCopy[optionIndex] = [
               {
                 name: "type",
                 type: "select",
-                option: ["text", "table", "image"],
+                option: ["text","placeholder", "table", "image"],
                 value: { stringValue: "text" },
               },
               {
@@ -143,8 +158,8 @@ const TemplateChoosedOption: React.FC<Props> = ({
               {
                 name: "font family",
                 type: "select",
-                option: ["Arial", "Roboto", "Times New Roman"],
-                value: { stringValue: "Arial" },
+                option: ["Calibri", "Roboto", "Times New Roman"],
+                value: { stringValue: "Calibri" },
               },
               {
                 name: "font size",
@@ -174,28 +189,23 @@ const TemplateChoosedOption: React.FC<Props> = ({
                 type: "color",
                 value: { stringValue: "#000000" },
               },
-              {
-                name: "background color",
-                type: "color",
-                value: { stringValue: "#ffffff" },
-              },
+              
             ];
-          } else {
-            newState[templateIndex].children[childIndex].textArea = [
-              {
-                type: "text",
-                value: "sada",
-                className: {
-                  fontSize: 16,
-                  fontStyle: { bold: true, italic: false, underline: false },
-                },
-              },
-            ];
-            newState[templateIndex].children[childIndex].index = 0;
-          }
+          // } else {
+          //   newState[templateIndex].children[childIndex].textArea = [
+          //     {
+          //       type: "text",
+          //       value: "sada",
+          //       className: {
+          //         fontSize: 16,
+          //         fontStyle: { bold: true, italic: false, underline: false },
+          //       },
+          //     },
+          //   ];
+          //   newState[templateIndex].children[childIndex].index = 0;
+          // }
           break;
         case "table":
-          console.log("table");
           newState[templateIndex].children[childIndex].textArea = [
             { type: "table" },
           ];
@@ -231,7 +241,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
               name: "type",
               type: "select",
               value: { stringValue: "image" },
-              option: ["text", "table", "image"],
+              option: ["text","placeholder", "table", "image"],
             },
             {
               name: "source",
@@ -260,6 +270,69 @@ const TemplateChoosedOption: React.FC<Props> = ({
             },
           ];
           break;
+          case "placeholder":
+            newState[templateIndex].children[childIndex].textArea[optionIndex] = {
+            type: "placeholder",
+            value: "Placeholder",
+            className: {
+              fontSize: 16,
+              fontStyle: { bold: true, italic: false, underline: false },
+            },
+            
+            }
+            childrenCopy[optionIndex] = [
+              {
+                name: "type",
+                type: "select",
+                option: ["text", "placeholder", "table", "image"],
+                value: { stringValue: "placeholder" },
+              },
+              {
+                name: "element tag",
+                type: "select",
+                option: ["h1", "h2", "p", "span"],
+                value: { stringValue: "h1" },
+              },
+              {
+                name: "font family",
+                type: "select",
+                option: ["Calibri", "Roboto", "Times New Roman"],
+                value: { stringValue: "Calibri" },
+              },
+              {
+                name: "font size",
+                type: "input",
+                value: { numberValue: 16 },
+              },
+              {
+                name: "text style",
+                type: "multiselect",
+                option: ["bold", "italic", "underline"],
+                value: {
+                  objectValue: {
+                    bold: true,
+                    italic: false,
+                    underline: false,
+                  },
+                },
+              },
+              {
+                name: "alignment",
+                type: "select",
+                option: ["left", "center", "right", "justify"],
+                value: { stringValue: "left" },
+              },
+              {
+                name: "color",
+                type: "color",
+                value: { stringValue: "#000000" },
+              },
+              {
+                name: "background color",
+                type: "color",
+                value: { stringValue: "#ffffff" },
+              },
+            ];
       }
 
       newState[templateIndex].children[childIndex].children = childrenCopy;
@@ -451,11 +524,8 @@ const TemplateChoosedOption: React.FC<Props> = ({
                 ][optionSelection].value.stringValue = e.target.value;
                 const index =
                   newState[templateIndex].children[childIndex].index;
-                if (option.name === "background color") {
-                  newState[templateIndex].children[childIndex].textArea[
-                    index
-                  ].className.bgColor = e.target.value;
-                } else if (option.name === "color") {
+               
+                 if (option.name === "color") {
                   newState[templateIndex].children[childIndex].textArea[
                     index
                   ].className.fontColor = e.target.value;
@@ -547,7 +617,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
                 <h1 className="w-full flex justify-center items-center text-sidebarChoose font-bold">
                   {childGroup.name}
                 </h1>
-                1
+                
                 <div
                   className={`w-full ${
                     childGroup.textArea[0]?.type === "text"
@@ -627,6 +697,9 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                             return optionTextArea.type ===
                                               "text" ? (
                                               <EditableSpan
+                                                optionTextAreaType={
+                                                  optionTextArea.type
+                                                }
                                                 key={key}
                                                 spanKey={key}
                                                 childIndex={optionTextAreaIndex}
@@ -650,7 +723,11 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                                   const updatedState = [
                                                     ...templateState,
                                                   ];
+                                                  console.log(
+                                                    updatedState[i].children
+                                                  );
                                                   if (newText.trim() === "") {
+                                                    // to avoid -1 index and it's for when happened delete of span we make focus on previous span or if focused index will be 0 it will be stay 0 to avoid conflict
                                                     if (
                                                       updatedState[i].children[
                                                         childIndex
@@ -681,6 +758,22 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                                         idx !==
                                                         optionTextAreaIndex
                                                     );
+                                                    if (
+                                                      updatedState[i].children[
+                                                        childIndex
+                                                      ].textArea.length === 0
+                                                    ) {
+                                                      updatedState[i].children =
+                                                        updatedState[
+                                                          i
+                                                        ].children.filter(
+                                                          (
+                                                            _: any,
+                                                            idx: number
+                                                          ) =>
+                                                            idx !== childIndex
+                                                        );
+                                                    }
                                                   } else {
                                                     updatedState[i].children[
                                                       childIndex
@@ -693,6 +786,32 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                                   );
                                                 }}
                                               />
+                                            ) : optionTextArea.type ===
+                                              "placeholder" ? (
+                                              <Placeholder
+                                                optionTextAreaType={
+                                                  optionTextArea.type
+                                                }
+                                                key={key}
+                                                spanKey={key}
+                                                childIndex={optionTextAreaIndex}
+                                                isChoosed={
+                                                  childGroup.index ===
+                                                  optionTextAreaIndex
+                                                }
+                                                classNameValues={
+                                                  optionTextArea.className
+                                                }
+                                                value={optionTextArea.value}
+                                                templateState={templateState}
+                                                onClick={(event) => {
+                                                  event.stopPropagation();
+                                                  handleClickMainDiv(
+                                                    childIndex,
+                                                    optionTextAreaIndex
+                                                  );
+                                                }}
+                                                                     />
                                             ) : (
                                               <div></div>
                                             );

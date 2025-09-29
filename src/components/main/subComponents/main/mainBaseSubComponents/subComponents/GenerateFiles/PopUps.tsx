@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { TemplatePopUpProps } from './TemplateChoosedOption'
 import Arrow from '../../../../../../../assets/images/main/down-arrow.png'
 
@@ -54,10 +54,8 @@ export const ParagraphStructure = (props: ParagraphStructureProps) => {
         props.setPopUpsState((prev) => ({...prev, paragraphStructureShow: false}))
     },[props.setPopUpsState])
 
-  
-  const handleArrowClick = useCallback(() => {
 
-  }, []);
+  
   return (
     <div className='fixed z-50 bg-loginBackground left-0 flex justify-center items-center w-full h-full'>
       <div className='w-[1000px] h-[700px] bg-white  flex flex-col  justify-between items-center gap-4 shadow-bottom-right'>

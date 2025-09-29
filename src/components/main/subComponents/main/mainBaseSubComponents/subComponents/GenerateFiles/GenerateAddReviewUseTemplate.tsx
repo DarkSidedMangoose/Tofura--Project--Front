@@ -3,7 +3,7 @@ import RemIcon from '../../../../../../../assets/images/main/delete.webp';
 import ConfirmIcon from '../../../../../../../assets/images/main/right.webp';
 import DeclineIcon from '../../../../../../../assets/images/main/cancel.webp';
 import "../../../../../Scrollbar.css";
-import "../Sliders.css"
+import "../Sliders.css";
 import TemplateChoosedOption from './TemplateChoosedOption';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -105,7 +105,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
               {
                 name: "type",
                 type: "select",
-                option: ["text", "table", "image"],
+                option: ["text","placeholder", "table", "image"],
                 value: { stringValue: "text" },
               },
               {
@@ -117,8 +117,8 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
               {
                 name: "font family",
                 type: "select",
-                option: ["Arial", "Roboto", "Times New Roman"],
-                value: { stringValue: "Arial" },
+                option: ["Calibri", "Roboto", "Times New Roman"],
+                value: { stringValue: "Calibri" },
               },
               {
                 name: "font size",
@@ -144,13 +144,12 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                 type: "color",
                 value: { stringValue: "#000000" },
               },
-             
             ],
             [
               {
                 name: "type",
                 type: "select",
-                option: ["text", "table", "image"],
+                option: ["text","placeholder", "table", "image"],
                 value: { stringValue: "text" },
               },
               {
@@ -162,8 +161,8 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
               {
                 name: "font family",
                 type: "select",
-                option: ["Arial", "Roboto", "Times New Roman"],
-                value: { stringValue: "Arial" },
+                option: ["Calibri", "Roboto", "Times New Roman"],
+                value: { stringValue: "Calibri" },
               },
               {
                 name: "font size",
@@ -189,8 +188,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                 type: "color",
                 value: { stringValue: "#000000" },
               },
-             
-            ]
+            ],
           ],
         },
       ],
@@ -298,7 +296,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
               {
                 name: "type",
                 type: "select",
-                option: ["text", "table", "image"],
+                option: ["text","placeholder", "table", "image"],
                 value: { stringValue: "text" },
               },
               {
@@ -310,8 +308,8 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
               {
                 name: "font family",
                 type: "select",
-                option: ["Arial", "Roboto", "Times New Roman"],
-                value: { stringValue: "Arial" },
+                option: ["Calibri", "Roboto", "Times New Roman"],
+                value: { stringValue: "Calibri" },
               },
               {
                 name: "font size",
@@ -337,7 +335,6 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                 type: "color",
                 value: { stringValue: "#000000" },
               },
-             
             ],
           ],
         },
@@ -439,7 +436,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                   {
                     name: "type",
                     type: "select",
-                    option: ["text", "table", "image"],
+                    option: ["text","placeholder", "table", "image"],
                     value: { stringValue: "text" },
                   },
                   {
@@ -451,8 +448,8 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                   {
                     name: "font family",
                     type: "select",
-                    option: ["Arial", "Roboto", "Times New Roman"],
-                    value: { stringValue: "Arial" },
+                    option: ["Calibri", "Roboto", "Times New Roman"],
+                    value: { stringValue: "Calibri" },
                   },
                   {
                     name: "font size",
@@ -482,7 +479,6 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                     type: "color",
                     value: { stringValue: "#000000" },
                   },
-                  
                 ],
               ],
             },
@@ -506,50 +502,49 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
     if (!Array.isArray(targetChildren)) return prev;
 
     const newBlock = [
-              {
-                name: "type",
-                type: "select",
-                option: ["text", "table", "image"],
-                value: { stringValue: "text" },
-              },
-              {
-                name: "element tag",
-                type: "select",
-                option: ["h1", "h2", "p", "span"],
-                value: { stringValue: "h1" },
-              },
-              {
-                name: "font family",
-                type: "select",
-                option: ["Arial", "Roboto", "Times New Roman"],
-                value: { stringValue: "Arial" },
-              },
-              {
-                name: "font size",
-                type: "input",
-                value: { numberValue: 16 },
-              },
-              {
-                name: "text style",
-                type: "multiselect",
-                option: ["bold", "italic", "underline"],
-                value: {
-                  objectValue: { bold: true, italic: false, underline: false },
-                },
-              },
-              {
-                name: "alignment",
-                type: "select",
-                option: ["left", "center", "right", "justify"],
-                value: { stringValue: "left" },
-              },
-              {
-                name: "color",
-                type: "color",
-                value: { stringValue: "#000000" },
-              },
-            
-            ];
+      {
+        name: "type",
+        type: "select",
+        option: ["text","placeholder", "table", "image"],
+        value: { stringValue: "text" },
+      },
+      {
+        name: "element tag",
+        type: "select",
+        option: ["h1", "h2", "p", "span"],
+        value: { stringValue: "h1" },
+      },
+      {
+        name: "font family",
+        type: "select",
+        option: ["Calibri", "Roboto", "Times New Roman"],
+        value: { stringValue: "Calibri" },
+      },
+      {
+        name: "font size",
+        type: "input",
+        value: { numberValue: 16 },
+      },
+      {
+        name: "text style",
+        type: "multiselect",
+        option: ["bold", "italic", "underline"],
+        value: {
+          objectValue: { bold: true, italic: false, underline: false },
+        },
+      },
+      {
+        name: "alignment",
+        type: "select",
+        option: ["left", "center", "right", "justify"],
+        value: { stringValue: "left" },
+      },
+      {
+        name: "color",
+        type: "color",
+        value: { stringValue: "#000000" },
+      },
+    ];
 
     targetChildren.push(newBlock);
     return newState;
