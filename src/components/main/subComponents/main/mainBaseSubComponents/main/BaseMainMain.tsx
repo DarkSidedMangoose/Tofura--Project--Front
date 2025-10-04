@@ -153,12 +153,8 @@ const MainMainMainSectionMain: React.FC = () => {
     [setSentBtnClicked]
   );
 
-  useEffect(() => {
-console.log("State changed:", state);
-  },[state])
   //when we click on the end task button we send the request to the backend to end the task and remove it from the state
   const handleEndTask = useCallback(() => {
-    console.log(state[isSelected].id);
     const checkFuntion = async () => {
       try {
         await axios.put(

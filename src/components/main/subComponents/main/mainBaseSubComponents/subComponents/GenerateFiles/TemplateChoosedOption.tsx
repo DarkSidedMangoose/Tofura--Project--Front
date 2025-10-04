@@ -1,10 +1,11 @@
-import React, {  Fragment, useCallback, useRef,  } from 'react';
+import React, {  Fragment, useCallback, useEffect, useRef,  } from 'react';
 import { templateItemObjectProps } from './GenerateAddReviewUseTemplate';
 import PopUpsAddNewParagraph, { ParagraphStructure } from './PopUps';
 import Bold from '../../../../../../../assets/images/main/text.png';
 import Italic from '../../../../../../../assets/images/main/italic-button.png';
 import Underline from '../../../../../../../assets/images/main/underline.png';
 import { EditableSpan } from './EditableSpan';
+import { useDispatch } from 'react-redux';
 import axios from 'axios'
 import Placeholder from './Placeholder';
 
@@ -19,7 +20,6 @@ interface Props {
   handleAddNewParagraph: (i: number, text: string) => void;
   setTemplateOptionDropdown: React.Dispatch<React.SetStateAction<number>>;
 }
-
 export type TemplatePopUpProps = {
   paragraphStructureShow: boolean;
   paragraphAddNew: boolean;
@@ -33,7 +33,44 @@ const TemplateChoosedOption: React.FC<Props> = ({
   handleAddNewParagraph,
   setTemplateOptionDropdown,
 }) => {
-
+  
+  useEffect(() => {
+    console.log(templateState)
+  }, [templateState]);
+ 
+  const dispatch = useDispatch();
+    // useEffect(() => {
+    //   CheckAllPlaceholders()
+    // },[templateState])
+    // const  CheckAllPlaceholders = () => {
+    //   const allPlaceHolder = [] as any[];
+    //   templateState.forEach((section: any, sectionIndex: number) => {
+    //     section.children.forEach((paragraph: any, paragraphIndex: number) => {
+    //       if(paragraph.children[0].type === "placeholder") {
+    //         allPlaceHolder.push({
+    //           uuid: paragraph.children[0].uuid,
+    //           name: `Placeholder ${allPlaceHolder.length + 1}`,
+    //           value: "",
+    //           indexOfSection: i,
+    //           indexOfParagraph: sectionIndex,
+    //           indexOfTextArea: paragraphIndex,
+    //         });
+    //       }
+    //     })
+    //   })
+    //   Placeholders.forEach((item, index) => {
+    //    const found = allPlaceHolder.find(ph => ph.uuid === item.uuid);
+    //    if(found) {
+    //     if(item.indexOfSection !== found.indexOfSection || item.indexOfParagraph !== found.indexOfParagraph || item.indexOfTextArea !== found.indexOfTextArea) {
+    //       dispatch(updatePlaceholders({uuid: found.uuid, indexOfSection: found.indexOfSection, indexOfParagraph: found.indexOfParagraph, indexOfTextArea: found.indexOfTextArea}) )
+    //     }
+    //    }
+       
+    //   })
+    // };
+        // dispatch(setTemplatePlaceholders({name: "placeholder", value: '',indexOfSection:0, indexOfParagraph: 2, indexOfTextArea: 3}));
+      
+  
 
 
   const [templatePopUpProps, setTemplatePopUpProps] =
@@ -118,7 +155,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
     optionIndex: number
   ) => {
     setTemplateState((prev) => {
-      const newState = [...prev];
+      const newState = JSON.parse(JSON.stringify(prev));
       const childrenCopy = [
         ...newState[templateIndex].children[childIndex].children,
       ];
@@ -128,6 +165,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
           //   newState[templateIndex].children[childIndex].textArea[0].type ===
           //   "text"
           // ) {
+          console.log(childrenCopy)
           newState[templateIndex].children[childIndex].textArea[optionIndex] = {
             
               type: "text",
@@ -271,9 +309,12 @@ const TemplateChoosedOption: React.FC<Props> = ({
           ];
           break;
           case "placeholder":
+            console.log(childrenCopy)
+            const uuid = crypto.randomUUID();
             newState[templateIndex].children[childIndex].textArea[optionIndex] = {
-            type: "placeholder",
-            value: "Placeholder",
+              uuid: uuid,
+              type: "placeholder",
+            value: "",
             className: {
               fontSize: 16,
               fontStyle: { bold: true, italic: false, underline: false },
@@ -327,11 +368,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
                 type: "color",
                 value: { stringValue: "#000000" },
               },
-              {
-                name: "background color",
-                type: "color",
-                value: { stringValue: "#ffffff" },
-              },
+              
             ];
       }
 
@@ -361,6 +398,9 @@ const TemplateChoosedOption: React.FC<Props> = ({
        }
      });
    };
+   
+  
+
   const renderField = (
     option: templateItemObjectProps,
     optionSelection: number,
@@ -370,6 +410,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
   ) => {
     switch (option.type) {
       case "select":
+        
         return (
           <select
             value={
@@ -377,7 +418,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
                 ? templateState[templateIndex].children[childIndex].justify
                 : typeof option.value?.stringValue === "string" ||
                   typeof option.value?.numberValue === "number"
-                ? option.value.objectValue
+                ? option.value.stringValue || option.value.numberValue || option.value.objectValue
                 : ""
             }
             onChange={(e) => {
@@ -397,8 +438,9 @@ const TemplateChoosedOption: React.FC<Props> = ({
                     option.name
                   );
             }}
-            className="h-[50px] text-sm px-4 bg-white border rounded"
+            className="h-[50px] text-sm px-4  border rounded"
           >
+
             <option disabled>აირჩიე</option>
             {option.option?.map((o, idx) => (
               <option key={idx}>{o}</option>
@@ -438,7 +480,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
                 ? option.value.numberValue
                 : ""
             }
-            className="h-[50px] w-1/2 text-sm px-4 bg-white border rounded"
+            className="h-[50px] w-[70px] text-sm px-4  bg-white border rounded"
           />
         );
       case "multiselect":
@@ -463,50 +505,62 @@ const TemplateChoosedOption: React.FC<Props> = ({
           });
         };
         return (
-          <div className="flex w-full h-auto gap-4">
+          <div className="flex w-full h-full gap-4">
             {option.option?.map((style, idx) => (
               <Fragment key={idx}>
                 {style === "bold" ? (
-                  <div className="w-1/3 flex justify-center items-center">
-                    <img
-                      src={Bold}
-                      alt='bold'
+                  <div className="w-1/4 h-full flex justify-center items-center">
+                    <div
                       onClick={() => handleClick("bold")}
-                      className={`w-[20px] cursor-pointer ${
-                        !templateState[templateIndex].children[childIndex]
-                          .textArea[optionIndex].className.fontStyle.bold
-                          ? "opacity-20"
-                          : "opacity-100"
-                      }`}
-                    />
+                      className="w-[90%] cursor-pointer bg-white h-2/3 p-3 border-2 rounded-lg flex justify-center items-center"
+                    >
+                      <img
+                        src={Bold}
+                        alt="bold"
+                        className={`w-full cursor-pointer ${
+                          !templateState[templateIndex].children[childIndex]
+                            .textArea[optionIndex].className.fontStyle.bold
+                            ? "opacity-20"
+                            : "opacity-100"
+                        }`}
+                      />
+                    </div>
                   </div>
                 ) : style === "italic" ? (
-                  <div className="w-[20px] cursor-pointer">
-                    <img
-                      src={Italic}
-                      alt='italic'
+                  <div className="w-1/4 h-full flex justify-center items-center cursor-pointer">
+                    <div
                       onClick={() => handleClick("italic")}
-                      className={`w-[20px] cursor-pointer ${
-                        !templateState[templateIndex].children[childIndex]
-                          .textArea[optionIndex].className.fontStyle.italic
-                          ? "opacity-20"
-                          : "opacity-100"
-                      }`}
-                    />
+                      className="w-[90%] cursor-pointer h-2/3 bg-white  p-3 border-2 rounded-lg flex justify-center items-center"
+                    >
+                      <img
+                        src={Italic}
+                        alt="italic"
+                        className={`w-full cursor-pointer ${
+                          !templateState[templateIndex].children[childIndex]
+                            .textArea[optionIndex].className.fontStyle.italic
+                            ? "opacity-20"
+                            : "opacity-100"
+                        }`}
+                      />
+                    </div>
                   </div>
                 ) : style === "underline" ? (
-                  <div className="w-[20px] cursor-pointer">
-                    <img
-                    alt='underline'
-                      src={Underline}
+                  <div className="w-1/4 h-full flex justify-center items-center cursor-pointer">
+                    <div
                       onClick={() => handleClick("underline")}
-                      className={`w-[20px] ${
-                        !templateState[templateIndex].children[childIndex]
-                          .textArea[optionIndex].className.fontStyle.underline
-                          ? "opacity-20"
-                          : "opacity-100"
-                      }`}
-                    />
+                      className="w-[90%] bg-white h-2/3 p-3 border-2 rounded-lg flex justify-center items-center"
+                    >
+                      <img
+                        alt="underline"
+                        src={Underline}
+                        className={`w-full ${
+                          !templateState[templateIndex].children[childIndex]
+                            .textArea[optionIndex].className.fontStyle.underline
+                            ? "opacity-20"
+                            : "opacity-100"
+                        }`}
+                      />
+                    </div>
                   </div>
                 ) : null}
               </Fragment>
@@ -617,7 +671,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
                 <h1 className="w-full flex justify-center items-center text-sidebarChoose font-bold">
                   {childGroup.name}
                 </h1>
-                
+
                 <div
                   className={`w-full ${
                     childGroup.textArea[0]?.type === "text"
@@ -635,10 +689,10 @@ const TemplateChoosedOption: React.FC<Props> = ({
                             {(optionIndex === childGroup.index ||
                               (childGroup.index === -1 &&
                                 optionIndex === 0)) && (
-                              <div className="flex gap-[4%] h-full overflow-y-hidden">
-                                <div className="w-full h-full flex flex-col">
-                                  <div className="w-full h-auto flex flex-col items-center gap-4">
-                                    <div className="flex max-w-[1400px] w-auto  min-w-[500px] gap-10 h-[100px] items-center overflow-x-auto">
+                              <div className="flex gap-[4%] h-[300px] overflow-y-hidden ">
+                                <div className="w-full  h-full flex flex-col">
+                                  <div className="w-full bg-[#d5d8df4f]  h-auto flex flex-col items-center gap-4">
+                                    <div className="flex max-w-[1400px]   w-auto  min-w-[500px] gap-10 h-[100px] items-center overflow-x-auto">
                                       {childGroup.index !== -1 && (
                                         <Fragment>
                                           {option.map(
@@ -647,7 +701,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                               grandChildIndex: any
                                             ) => (
                                               <Fragment key={grandChildIndex}>
-                                                <div className="min-w-[100px] flex flex-col gap-2 justify-start items-center">
+                                                <div className="min-w-[100px] h-[70px] border-2 shadow-bottom justify-center flex flex-col gap-2 px-2 items-center ">
                                                   {renderField(
                                                     grandChild,
                                                     grandChildIndex,
@@ -667,7 +721,10 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                       ref={scrollRef}
                                       // onClick={() => handleClickMainDiv(childIndex)}
                                       className={`${
-                                        childGroup.textArea[0].type === "text"
+                                        childGroup.textArea[0].type ===
+                                          "text" ||
+                                        childGroup.textArea[0].type ===
+                                          "placeholder"
                                           ? "h-[100px] gap-2"
                                           : childGroup.textArea[0].type ===
                                             "table"
@@ -811,7 +868,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                                     optionTextAreaIndex
                                                   );
                                                 }}
-                                                                     />
+                                              />
                                             ) : (
                                               <div></div>
                                             );
@@ -829,43 +886,75 @@ const TemplateChoosedOption: React.FC<Props> = ({
                     </div>
                   </div>
 
-                  {childGroup.textArea[0]?.type === "text" && (
+                  {childGroup.textArea[0]?.type !== "table" && (
                     <div
                       onClick={() => AddNewValueInParagraph(i, childIndex)}
-                      className="absolute bottom-[10%] right-2 h-[50px] w-auto px-2 border-2 flex justify-center items-center rounded-lg cursor-pointer bg-sidebarChoose text-white"
+                      className="absolute bottom-0 right-2 h-[80px] w-auto px-2 border-2 flex justify-center items-center rounded-lg cursor-pointer shadow-bottom bg-[#d5d8df4f]  text-white"
                     >
-                      აბზაცის გაგრძელების დამატება
+                      <div className="bg-sidebarChoose h-2/3 flex justify-center items-center px-4 rounded-lg">
+                        აბზაცის გაგრძელების დამატება
+                      </div>
                     </div>
                   )}
                 </div>
               </Fragment>
             )}
           </Fragment>
+          // onClick={() =>
+          //   setTemplatePopUpProps((prev) => ({
+          //     ...prev,
+          //     paragraphStructureShow: true,
+          //   }))
+          // }
         ))}
       </div>
 
       <div className="min-h-[80px] px-2 w-full flex justify-between items-center bg-white">
         <div className="h-full flex items-center gap-4">
           <div className="h-full flex items-center relative">
-            <button
-              className="h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer"
-              onClick={() =>
-                setTemplatePopUpProps((prev) => ({
-                  ...prev,
-                  paragraphStructureShow: true,
-                }))
-              }
-            >
-              აბზაცთა განლაგება
-            </button>
+            <div className="h-full flex items-center relative">
+              <div
+                // onClick={() => GenerateWordFile()}
+                className="min-w-200px px-2 h-[100px] mr-2 p-4 font-semibold border-2 shadow-top bg-[#d5d8df4f] rounded-lg text-white"
+              >
+                <button
+                  onClick={() =>
+                    setTemplatePopUpProps((prev) => ({
+                      ...prev,
+                      paragraphStructureShow: true,
+                    }))
+                  }
+                  className="h-full w-full bg-sidebarChoose rounded-lg px-2 "
+                >
+                  აბზაცთა განლაგების მართვა
+                </button>
+              </div>
+              {/* {templatePopUpProps.paragraphAddNew && (
+                <div className="absolute z-50 h-[200px] bg-sidebarChoose w-[400px] bottom-full">
+                  <PopUpsAddNewParagraph
+                    handleAddNewParagraphs={() => console.log("s")}
+                    setPopUpsState={setTemplatePopUpProps}
+                    handleClick={handleAddNewParagraphWithName}
+                  />
+                </div>
+              )} */}
+            </div>
           </div>
           <div className="h-full flex items-center relative">
-            <button
-              onClick={() => handleClickAddNewParagraph(i)}
-              className="h-2/3 bg-sidebarChoose text-white px-4 rounded-lg cursor-pointer"
+            <div
+              // onClick={() => GenerateWordFile()}
+              className="min-w-200px px-2 h-[100px] mr-2 p-4 font-semibold border-2 shadow-top bg-[#d5d8df4f] rounded-lg text-white"
             >
-              ახალი აბზაცის დამატება
-            </button>
+              <button
+                onClick={() => 
+                  {
+                    handleClickAddNewParagraph(i)
+                  }}
+                className="h-full w-full bg-sidebarChoose rounded-lg px-2"
+              >
+                ახალი აბზაცის დამატება
+              </button>
+            </div>
             {templatePopUpProps.paragraphAddNew && (
               <div className="absolute z-50 h-[200px] bg-sidebarChoose w-[400px] bottom-full">
                 <PopUpsAddNewParagraph
@@ -878,23 +967,31 @@ const TemplateChoosedOption: React.FC<Props> = ({
           </div>
         </div>
 
-        <div className="w-auto px-2 flex gap-2 h-full items-center">
-          <button
+        <div className="w-auto px-2  flex gap-2 h-[100px] items-center justify-center ">
+          <div
             onClick={() => GenerateWordFile()}
-            className="w-200px h-2/3 mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white"
+            className="w-200px h-full mr-2 p-4 font-semibold border-2 shadow-top bg-[#d5d8df4f] rounded-lg text-white"
           >
-            შენახვა
-          </button>
-          <button
-            className="w-200px h-2/3 mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white"
-            onClick={() => setTemplateOptionDropdown(-1)}
+            <button className="h-full w-full bg-sidebarChoose rounded-lg ">
+              შენახვა
+            </button>
+          </div>
+
+          <div
+            onClick={() => GenerateWordFile()}
+            className="w-200px h-full mr-2 p-4 font-semibold border-2 shadow-top bg-[#d5d8df4f] rounded-lg text-white"
           >
-            გაუქმება
-          </button>
+            <button
+              onClick={() => setTemplateOptionDropdown(-1)}
+              className="h-full w-full bg-sidebarChoose rounded-lg"
+            >
+              გაუქმება
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default TemplateChoosedOption;
+export default TemplateChoosedOption
