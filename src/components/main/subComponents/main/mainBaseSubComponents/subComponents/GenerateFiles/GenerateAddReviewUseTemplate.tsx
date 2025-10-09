@@ -67,9 +67,20 @@ interface Props {
 
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
+
+
+
+
 const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
   const navigate = useNavigate();
 
+  const close = () => {
+    setState((prev: any) => {
+      const a = JSON.parse(JSON.stringify(prev));
+      a.addNewTemplateNavState = "შაბლონი"
+      return a;
+    });
+  };
   //* template name button activator
   const [templateNameButtonActivator, setTemplateNameButtonActivator] =
     useState<boolean>(false);
@@ -112,7 +123,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
               {
                 name: "type",
                 type: "select",
-                option: ["text", "placeholder", "table", "image"],
+                option: ["text","questionary", "placeholder", "table", "image"],
                 value: { stringValue: "text" },
               },
               {
@@ -236,7 +247,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
               {
                 name: "type",
                 type: "select",
-                option: ["text", "placeholder", "table", "image"],
+                option: ["text","questionary", "placeholder", "table", "image"],
                 value: { stringValue: "text" },
               },
               {
@@ -285,6 +296,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
   };
 
   const addNewTemplateNd = async () => {
+    console.log(templateState)
     try {
       const response = await axios.post(
         `${apiUrl}/generateFiles/generateWordFile`,
@@ -372,7 +384,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                   {
                     name: "type",
                     type: "select",
-                    option: ["text", "placeholder", "table", "image"],
+                    option: ["text","questionary", "placeholder", "table", "image"],
                     value: { stringValue: "text" },
                   },
                   {
@@ -454,7 +466,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
         {
           name: "type",
           type: "select",
-          option: ["text", "placeholder", "table", "image"],
+          option: ["text","questionary", "placeholder", "table", "image"],
           value: { stringValue: "text" },
         },
         {
@@ -559,31 +571,31 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
           </Fragment>
         ) : (
           state.addNewTemplateNavState === "შაბლონის კითხვარი" && (
-            <Questionary state={templateState} />
+            <Questionary state={templateState} setState={setTemplateState} close={() => close()} generate={() => addNewTemplateNd()} />
           )
         )}
-        <div className="w-full h-[15%] min-h-[90px] flex justify-end items-center">
-          <button
-            onClick={() =>
-              setState((prev) => ({ ...prev, addReviewNewTemplate: false }))
-            }
-            className="w-200px mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white"
-          >
-            დახურვა
-          </button>
-          <button
-            onClick={() => {
-              state.addNewTemplateNavState === "შაბლონი"
-                ? addNewTemplate()
-                : addNewTemplateNd();
-            }}
-            className="w-200px mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white"
-          >
-            {state.addNewTemplateNavState === "შაბლონი"
-              ? "შენახვა"
-              : "გენერირება "}
-          </button>
-        </div>
+        
+        {state.addNewTemplateNavState === "შაბლონი" && (
+          <div className="w-full h-[15%] min-h-[90px] flex justify-end items-center">
+            <button
+              onClick={() =>
+                setState((prev) => ({ ...prev, addReviewNewTemplate: false }))
+              }
+              className="w-200px mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white"
+            >
+              დახურვა
+            </button>
+            <button
+              onClick={() => {
+                  addNewTemplate()
+                  // : addNewTemplateNd();
+              }}
+              className="w-200px mr-2 p-4 font-semibold bg-sidebarChoose rounded-lg text-white"
+            >
+              შენახვა
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import Settings from '../../../../../../../assets/images/main/settings.webp'
 import Leave from "../../../../../../../assets/images/main/delete.webp";
 
@@ -12,10 +12,15 @@ type Props = {
   childIndex: number;
   optionTextAreaType?: string; // New prop to differentiate between text and placeholder
   templateState?: any; // Optional prop for template state
+  onClickPlaceholder: () => void;
 };
 
 
 const Placeholder = (props: Props) => {
+
+useEffect(() => {
+  console.log(props.templateState);
+}, [props.templateState]);
   return (
     <Fragment>
       <div
@@ -30,9 +35,11 @@ const Placeholder = (props: Props) => {
           ></div>
         )}
         <div
+          
           key={props.spanKey}
           onClick={(e: React.MouseEvent<HTMLSpanElement>) => {
-            e.stopPropagation();
+            e.stopPropagation()
+            props.onClickPlaceholder();
           }}
           style={{
             fontSize: props.classNameValues?.fontSize

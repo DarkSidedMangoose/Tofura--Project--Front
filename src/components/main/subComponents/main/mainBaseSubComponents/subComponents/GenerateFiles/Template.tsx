@@ -251,7 +251,7 @@ const Template = (props: Props) => {
                   });
                 }}
               >
-                ახალი სექციის დამატება
+                ახალი სექციის დამატებ
               </button>
             </div>
           </div>

@@ -18,20 +18,41 @@ const PopUpsAddNewParagraph: React.FC<PopUpsAddNewParagraphProps> = (props) => {
         props.setPopUpsState((prev) => ({...prev, paragraphAddNew: false}))
     },[props.setPopUpsState])
   return (
-   <div className='  flex flex-col justify-center items-center w-full h-full'>
-              <div className='w-full h-60% flex justify-center items-center flex-col gap-4 '>
-                  <h1 className='w-auto h-auto text-md text-white font-bold'> შეიყვანეთ აბზაცის სახელი</h1>
-                  <input placeholder='...აბზაცის სახელი' type='text' className='border-2 w-80% h-50%' onChange={(e) => setInputState(e.target.value)}/>
+    <div className="  flex flex-col justify-center items-center w-full h-full bg-[#fff] shadow-boxShadow">
+      <div className="w-full h-60% flex justify-center items-center flex-col gap-4 ">
+        <h1 className="w-full flex justify-center items-center  h-full text-md text-white bg-sidebarChoose    font-bold">
+          {" "}
+          შეიყვანეთ აბზაცის სახელი
+        </h1>
+        <div className='w-full h-full flex justify-center items-center bg-white'>
+
+        <input
+          placeholder="...აბზაცის სახელი"
+          type="text"
+          className="border-4 w-80% h-full bg-[#f4f1f1] shadow-bottom-right "
+          onChange={(e) => setInputState(e.target.value)}
+        />
         </div>
-              <div className='w-80% h-40%  flex items-center gap-2 justify-end'>
-                  <button onClick={() => handleClosePopUp()} className='w-auto px-4 bg-white text-sidebarChoose h-2/3 font-semibold rounded-lg'>გაუქმება</button>
-        <button onClick={() => {
-          props.handleClick(inputState)
-          props.handleAddNewParagraphs(true)
-         }} className='w-auto px-4 bg-white text-sidebarChoose font-semibold h-2/3 rounded-lg'>დამატება</button>
-        </div>
+      </div>
+      <div className="w-full h-40% px-2  flex  items-center gap-2 justify-end">
+        <button
+          onClick={() => handleClosePopUp()}
+          className="w-auto px-4 bg-sidebarChoose text-white h-2/3 font-semibold rounded-lg shadow-bottom"
+        >
+          გაუქმება
+        </button>
+        <button
+          onClick={() => {
+            props.handleClick(inputState);
+            props.handleAddNewParagraphs(true);
+          }}
+          className="w-auto px-4 bg-sidebarChoose text-white font-semibold h-2/3 rounded-lg shadow-bottom"
+        >
+          დამატება
+        </button>
+      </div>
     </div>
-  )
+  );
 }
 
 

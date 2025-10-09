@@ -1,13 +1,13 @@
-import React, {  Fragment, useCallback, useEffect, useRef,  } from 'react';
+import React, {  Fragment, useCallback, useEffect, useRef, useState,  } from 'react';
 import { templateItemObjectProps } from './GenerateAddReviewUseTemplate';
 import PopUpsAddNewParagraph, { ParagraphStructure } from './PopUps';
 import Bold from '../../../../../../../assets/images/main/text.png';
 import Italic from '../../../../../../../assets/images/main/italic-button.png';
 import Underline from '../../../../../../../assets/images/main/underline.png';
 import { EditableSpan } from './EditableSpan';
-import { useDispatch } from 'react-redux';
 import axios from 'axios'
 import Placeholder from './Placeholder';
+import QuestionaryQuestion from './QuestionaryQuestion';
 
 
 const Api = process.env.REACT_APP_API_BASE_URL
@@ -34,44 +34,173 @@ const TemplateChoosedOption: React.FC<Props> = ({
   setTemplateOptionDropdown,
 }) => {
   
-  useEffect(() => {
-    console.log(templateState)
-  }, [templateState]);
- 
-  const dispatch = useDispatch();
-    // useEffect(() => {
-    //   CheckAllPlaceholders()
-    // },[templateState])
-    // const  CheckAllPlaceholders = () => {
-    //   const allPlaceHolder = [] as any[];
-    //   templateState.forEach((section: any, sectionIndex: number) => {
-    //     section.children.forEach((paragraph: any, paragraphIndex: number) => {
-    //       if(paragraph.children[0].type === "placeholder") {
-    //         allPlaceHolder.push({
-    //           uuid: paragraph.children[0].uuid,
-    //           name: `Placeholder ${allPlaceHolder.length + 1}`,
-    //           value: "",
-    //           indexOfSection: i,
-    //           indexOfParagraph: sectionIndex,
-    //           indexOfTextArea: paragraphIndex,
-    //         });
-    //       }
-    //     })
-    //   })
-    //   Placeholders.forEach((item, index) => {
-    //    const found = allPlaceHolder.find(ph => ph.uuid === item.uuid);
-    //    if(found) {
-    //     if(item.indexOfSection !== found.indexOfSection || item.indexOfParagraph !== found.indexOfParagraph || item.indexOfTextArea !== found.indexOfTextArea) {
-    //       dispatch(updatePlaceholders({uuid: found.uuid, indexOfSection: found.indexOfSection, indexOfParagraph: found.indexOfParagraph, indexOfTextArea: found.indexOfTextArea}) )
-    //     }
-    //    }
-       
-    //   })
-    // };
-        // dispatch(setTemplatePlaceholders({name: "placeholder", value: '',indexOfSection:0, indexOfParagraph: 2, indexOfTextArea: 3}));
-      
   
+  const [shodPlaceholderQuestion,setShodPlaceholderQuestion] = useState<any>({bool:false, first:-1, second:-1,third:-1, questionName: ""})
+  const [questionaryQuestion, setQuestionaryQuestion] = useState<any>({bool:false, first:-1, second:-1, third:-1})
 
+
+  const HandleAddNewQuestionary = (o:number, childIndexs: number) => {
+
+    
+
+   
+    if(o !== -1) {
+     setTemplateState((prev:any) => {
+        const newState = JSON.parse(JSON.stringify(prev));
+        
+      return newState 
+     })
+
+    }else {
+      const templateIndex = questionaryQuestion.first;
+      const childIndex = questionaryQuestion.second;
+      const optionIndex = questionaryQuestion.third;
+      setTemplateState((prev) => {
+        const newState = JSON.parse(JSON.stringify(prev));
+        const childrenCopy = [
+          ...newState[templateIndex].children[childIndex].children,
+        ];
+        const uuid = crypto.randomUUID();
+        newState[templateIndex].children[childIndex].textArea[optionIndex] = {
+          uuid: uuid,
+          type: "questionary",
+          questionName: questionaryQuestion.questionName,
+          value: "",
+          className: {
+            fontSize: 16,
+            fontStyle: { bold: true, italic: false, underline: false },
+          },
+        };
+        childrenCopy[optionIndex] = [
+          {
+            name: "type",
+            type: "select",
+            option: ["text", "placeholder", "questionary", "table", "image"],
+            value: { stringValue: "questionary" },
+          },
+          {
+            name: "element tag",
+            type: "select",
+            option: ["h1", "h2", "p", "span"],
+            value: { stringValue: "h1" },
+          },
+          {
+            name: "font family",
+            type: "select",
+            option: ["Calibri", "Roboto", "Times New Roman"],
+            value: { stringValue: "Calibri" },
+          },
+          {
+            name: "font size",
+            type: "input",
+            value: { numberValue: 16 },
+          },
+          {
+            name: "text style",
+            type: "multiselect",
+            option: ["bold", "italic", "underline"],
+            value: {
+              objectValue: {
+                bold: true,
+                italic: false,
+                underline: false,
+              },
+            },
+          },
+          {
+            name: "alignment",
+            type: "select",
+            option: ["left", "center", "right", "justify"],
+            value: { stringValue: "left" },
+          },
+          {
+            name: "color",
+            type: "color",
+            value: { stringValue: "#000000" },
+          },
+        ];
+        newState[templateIndex].children[childIndex].children = childrenCopy;
+        return newState;
+      });
+      setQuestionaryQuestion((prev: any) => [{ ...prev, bool: false }]);
+
+    }
+    
+    
+  };
+  const HandleAddNewPlaceholder = () => {
+    setTemplateState((prev) => {
+      const templateIndex = shodPlaceholderQuestion.first;
+      const childIndex = shodPlaceholderQuestion.second;
+      const optionIndex = shodPlaceholderQuestion.third;
+      const newState = JSON.parse(JSON.stringify(prev));
+      const childrenCopy = [
+        ...newState[templateIndex].children[childIndex].children,
+      ];
+      const uuid = crypto.randomUUID();
+      newState[templateIndex].children[childIndex].textArea[optionIndex] = {
+        uuid: uuid,
+        type: "placeholder",
+        questionName: shodPlaceholderQuestion.questionName,
+        value: "",
+        className: {
+          fontSize: 16,
+          fontStyle: { bold: true, italic: false, underline: false },
+        },
+      };
+      childrenCopy[optionIndex] = [
+        {
+          name: "type",
+          type: "select",
+          option: ["text", "placeholder","questionary", "table", "image"],
+          value: { stringValue: "placeholder" },
+        },
+        {
+          name: "element tag",
+          type: "select",
+          option: ["h1", "h2", "p", "span"],
+          value: { stringValue: "h1" },
+        },
+        {
+          name: "font family",
+          type: "select",
+          option: ["Calibri", "Roboto", "Times New Roman"],
+          value: { stringValue: "Calibri" },
+        },
+        {
+          name: "font size",
+          type: "input",
+          value: { numberValue: 16 },
+        },
+        {
+          name: "text style",
+          type: "multiselect",
+          option: ["bold", "italic", "underline"],
+          value: {
+            objectValue: {
+              bold: true,
+              italic: false,
+              underline: false,
+            },
+          },
+        },
+        {
+          name: "alignment",
+          type: "select",
+          option: ["left", "center", "right", "justify"],
+          value: { stringValue: "left" },
+        },
+        {
+          name: "color",
+          type: "color",
+          value: { stringValue: "#000000" },
+        },
+      ];
+      newState[templateIndex].children[childIndex].children = childrenCopy;
+      return newState;
+    });
+    setShodPlaceholderQuestion((prev:any) => [{...prev, bool: false}])
+  };
 
   const [templatePopUpProps, setTemplatePopUpProps] =
     React.useState<TemplatePopUpProps>({
@@ -89,6 +218,14 @@ const TemplateChoosedOption: React.FC<Props> = ({
     [templatePopUpProps]
   );
 
+  const onClickPlaceholder = () => {
+    setShodPlaceholderQuestion((prev: any) => {
+      const a = {...prev}
+      a.bool = true
+      return a;
+    })
+  }
+  
   const handleAddNewParagraphWithName = useCallback(
     (text: string) => {
       handleAddNewParagraph(i, text);
@@ -184,7 +321,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
               {
                 name: "type",
                 type: "select",
-                option: ["text","placeholder", "table", "image"],
+                option: ["text","placeholder","questionary", "table", "image"],
                 value: { stringValue: "text" },
               },
               {
@@ -252,7 +389,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
               name: "type",
               type: "select",
               value: "table",
-              option: ["text", "table", "image"],
+              option: ["text","questionary", "table", "image"],
             },
             { name: "rows", type: "input", value: "" },
             { name: "columns", type: "input", value: 2 },
@@ -279,7 +416,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
               name: "type",
               type: "select",
               value: { stringValue: "image" },
-              option: ["text","placeholder", "table", "image"],
+              option: ["text","placeholder","questionary", "table", "image"],
             },
             {
               name: "source",
@@ -309,67 +446,10 @@ const TemplateChoosedOption: React.FC<Props> = ({
           ];
           break;
           case "placeholder":
-            console.log(childrenCopy)
-            const uuid = crypto.randomUUID();
-            newState[templateIndex].children[childIndex].textArea[optionIndex] = {
-              uuid: uuid,
-              type: "placeholder",
-            value: "",
-            className: {
-              fontSize: 16,
-              fontStyle: { bold: true, italic: false, underline: false },
-            },
-            
-            }
-            childrenCopy[optionIndex] = [
-              {
-                name: "type",
-                type: "select",
-                option: ["text", "placeholder", "table", "image"],
-                value: { stringValue: "placeholder" },
-              },
-              {
-                name: "element tag",
-                type: "select",
-                option: ["h1", "h2", "p", "span"],
-                value: { stringValue: "h1" },
-              },
-              {
-                name: "font family",
-                type: "select",
-                option: ["Calibri", "Roboto", "Times New Roman"],
-                value: { stringValue: "Calibri" },
-              },
-              {
-                name: "font size",
-                type: "input",
-                value: { numberValue: 16 },
-              },
-              {
-                name: "text style",
-                type: "multiselect",
-                option: ["bold", "italic", "underline"],
-                value: {
-                  objectValue: {
-                    bold: true,
-                    italic: false,
-                    underline: false,
-                  },
-                },
-              },
-              {
-                name: "alignment",
-                type: "select",
-                option: ["left", "center", "right", "justify"],
-                value: { stringValue: "left" },
-              },
-              {
-                name: "color",
-                type: "color",
-                value: { stringValue: "#000000" },
-              },
-              
-            ];
+            setShodPlaceholderQuestion({bool: true, first:templateIndex, second:childIndex,third:optionIndex})
+            break;
+          case "questionary": 
+            setQuestionaryQuestion({bool: true, first: templateIndex, second:childIndex, third:optionIndex})
       }
 
       newState[templateIndex].children[childIndex].children = childrenCopy;
@@ -505,11 +585,11 @@ const TemplateChoosedOption: React.FC<Props> = ({
           });
         };
         return (
-          <div className="flex w-full h-full gap-4">
+          <div className="flex w-full h-full gap-4 bg-">
             {option.option?.map((style, idx) => (
               <Fragment key={idx}>
                 {style === "bold" ? (
-                  <div className="w-1/4 h-full flex justify-center items-center">
+                  <div className="w-1/4 h-full flex justify-center items-center ">
                     <div
                       onClick={() => handleClick("bold")}
                       className="w-[90%] cursor-pointer bg-white h-2/3 p-3 border-2 rounded-lg flex justify-center items-center"
@@ -645,7 +725,91 @@ const TemplateChoosedOption: React.FC<Props> = ({
   }
 
   return (
-    <div className="h-full w-full overflow-y-auto px-4 custom-scrollbar bg-white rounded-xl gap-4 shadow-bottom-right flex flex-col relative z-20">
+    <div className="h-full  w-full overflow-y-auto  custom-scrollbar bg-[#e3e3e3] rounded-xl gap-4 shadow-bottom-right flex flex-col relative z-20">
+      {questionaryQuestion.bool && (
+        <div className="w-full flex flex-col justify-center items-center h-full bg-loginBackground absolute z-[50]">
+          <div className="w-[700px] h-[200px] bg-white flex flex-col  items-center">
+            <div className="w-full h-[70px] bg-[#d5d8df34] flex text-sidebarChoose font-bold  justify-center items-center shadow-bottom">
+              ქვე-კითხვარის კითხვა
+            </div>
+            <div className="h-[130px] w-full flex justify-center items-center">
+              <input
+                className="w-3/4 h-1/2 shadow-lg border-2"
+                value={questionaryQuestion.questionName}
+                onChange={(e) => {
+                  setQuestionaryQuestion((prev: any) => ({
+                    ...prev,
+                    questionName: e.target.value,
+                  }));
+                }}
+                placeholder="...მაგ: რა არის კომპანიის საიდენტიფიკაციო კოდი?"
+              />
+            </div>
+          </div>
+          <div className="w-[700px] h-[100px] flex  justify-end items-center gap-2">
+            <button
+              className="w-auto p-4 h-1/2 bg-sidebarChoose text-bold text-white"
+              onClick={() => {
+                setQuestionaryQuestion((prev: any) => [
+                  { ...prev, bool: false },
+                ]);
+              }}
+            >
+              {" "}
+              გაუქმება{" "}
+            </button>
+            <button
+              className="w-auto p-4 h-1/2 bg-sidebarChoose text-bold text-white"
+              onClick={() => HandleAddNewQuestionary(-1,-1)}
+            >
+              {" "}
+              დამატება{" "}
+            </button>
+          </div>
+        </div>
+      )}
+      {shodPlaceholderQuestion.bool && (
+        <div className="w-full flex flex-col justify-center items-center h-full bg-loginBackground absolute z-[50]">
+          <div className="w-[700px] h-[200px] bg-white flex flex-col  items-center">
+            <div className="w-full h-[70px] bg-[#d5d8df34] flex text-sidebarChoose font-bold  justify-center items-center shadow-bottom">
+              კითხვა
+            </div>
+            <div className="h-[130px] w-full flex justify-center items-center">
+              <input
+                className="w-3/4 h-1/2 shadow-lg border-2"
+                value={shodPlaceholderQuestion.questionName}
+                onChange={(e) => {
+                  setShodPlaceholderQuestion((prev: any) => ({
+                    ...prev,
+                    questionName: e.target.value,
+                  }));
+                }}
+                placeholder="...მაგ: რა არის კომპანიის საიდენტიფიკაციო კოდი?"
+              />
+            </div>
+          </div>
+          <div className="w-[700px] h-[100px] flex  justify-end items-center gap-2">
+            <button
+              className="w-auto p-4 h-1/2 bg-sidebarChoose text-bold text-white"
+              onClick={() => {
+                setShodPlaceholderQuestion((prev: any) => [
+                  { ...prev, bool: false },
+                ]);
+              }}
+            >
+              {" "}
+              გაუქმება{" "}
+            </button>
+            <button
+              className="w-auto p-4 h-1/2 bg-sidebarChoose text-bold text-white"
+              onClick={() => HandleAddNewPlaceholder()}
+            >
+              {" "}
+              დამატება{" "}
+            </button>
+          </div>
+        </div>
+      )}
       {templatePopUpProps.paragraphStructureShow && (
         <Fragment>
           <ParagraphStructure
@@ -657,7 +821,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
         </Fragment>
       )}
 
-      <div className="bg-sidebarChoose min-h-[80px] flex flex-col justify-center items-center gap-2 w-full">
+      <div className="bg-sidebarChoose rounded-lg shadow-bottom min-h-[80px] flex flex-col justify-center items-center gap-2 w-full">
         <div className="h-auto text-white text-lg font-semibold px-2">
           {templateState[i].name}
         </div>
@@ -678,18 +842,18 @@ const TemplateChoosedOption: React.FC<Props> = ({
                       ? "min-h-[300px]"
                       : childGroup.textArea[0]?.type === "table"
                       ? "min-h-[600px]"
-                      : ""
+                      : childGroup.textArea[0]?.type === "questionary" && "min-h-[600px]"
                   } flex  rounded-lg text-sidebarChoose relative`}
                 >
                   <div className="h-full w-full px-2">
-                    <div className="flex flex-col gap-4 h-full">
+                    <div className="flex w-full flex-col gap-4 h-full">
                       {childGroup.children.map(
                         (option: any, optionIndex: any) => (
                           <Fragment key={optionIndex}>
                             {(optionIndex === childGroup.index ||
                               (childGroup.index === -1 &&
                                 optionIndex === 0)) && (
-                              <div className="flex gap-[4%] h-[300px] overflow-y-hidden ">
+                              <div className="flex gap-[4%] h-full overflow-y-hidden ">
                                 <div className="w-full  h-full flex flex-col">
                                   <div className="w-full bg-[#d5d8df4f]  h-auto flex flex-col items-center gap-4">
                                     <div className="flex max-w-[1400px]   w-auto  min-w-[500px] gap-10 h-[100px] items-center overflow-x-auto">
@@ -729,7 +893,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                           : childGroup.textArea[0].type ===
                                             "table"
                                           ? "h-[400px]"
-                                          : ""
+                                          : childGroup.textArea[0].type === "questionary" ? " min-h-[400px]" : ""
                                       } flex ${
                                         childGroup.justify === "left"
                                           ? "justify-start "
@@ -740,7 +904,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                           : "justify-normal"
                                       }  items-center w-full max-w-full  overflow-x-scroll text-sm p-2 resize-none bg-white border`}
                                     >
-                                      <div className="w-auto items-center  max-w-full flex gap-2 ">
+                                      <div className={`w-auto h-full  max-w-full  gap-2 ${childGroup.textArea[0].type === "questionary" ? "": "items-center flex"} `}>
                                         {childGroup.textArea.map(
                                           (
                                             optionTextArea: any,
@@ -859,6 +1023,9 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                                 classNameValues={
                                                   optionTextArea.className
                                                 }
+                                                onClickPlaceholder={() =>
+                                                  onClickPlaceholder()
+                                                }
                                                 value={optionTextArea.value}
                                                 templateState={templateState}
                                                 onClick={(event) => {
@@ -870,7 +1037,38 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                                 }}
                                               />
                                             ) : (
-                                              <div></div>
+                                              optionTextArea.type ===
+                                                "questionary" && (
+                                                <QuestionaryQuestion
+                                                  optionTextAreaType={
+                                                    optionTextArea.type
+                                                  }
+                                                  key={key}
+                                                  spanKey={key}
+                                                  childIndex={
+                                                    optionTextAreaIndex
+                                                  }
+                                                  isChoosed={
+                                                    childGroup.index ===
+                                                    optionTextAreaIndex
+                                                  }
+                                                  classNameValues={
+                                                    optionTextArea.className
+                                                  }
+                                                  onClickPlaceholder={() =>
+                                                    onClickPlaceholder()
+                                                  }
+                                                  value={optionTextArea.value}
+                                                  templateState={templateState}
+                                                  onClick={(event:any) => {
+                                                    event.stopPropagation();
+                                                    handleClickMainDiv(
+                                                      childIndex,
+                                                      optionTextAreaIndex
+                                                    );
+                                                  }}
+                                                />
+                                              )
                                             );
                                           }
                                         )}
@@ -888,11 +1086,25 @@ const TemplateChoosedOption: React.FC<Props> = ({
 
                   {childGroup.textArea[0]?.type !== "table" && (
                     <div
-                      onClick={() => AddNewValueInParagraph(i, childIndex)}
+                      onClick={() => 
+                      {
+                        if(childGroup.textArea[0].type !== "questionary") {
+
+                          AddNewValueInParagraph(i, childIndex)
+                        }else {
+                          HandleAddNewQuestionary(i,childIndex)
+                        }
+                      }}
                       className="absolute bottom-0 right-2 h-[80px] w-auto px-2 border-2 flex justify-center items-center rounded-lg cursor-pointer shadow-bottom bg-[#d5d8df4f]  text-white"
                     >
-                      <div className="bg-sidebarChoose h-2/3 flex justify-center items-center px-4 rounded-lg">
-                        აბზაცის გაგრძელების დამატება
+                      <div
+                   
+                    
+                      className="bg-sidebarChoose h-2/3 flex justify-center items-center px-4 rounded-lg">
+                      {
+                        childGroup.textArea[0].type === "questionary" ? "ახალი კითხვის დამატება ": "აბზაცის გაგრძელების დამატება"
+                      }
+                        
                       </div>
                     </div>
                   )}
@@ -909,26 +1121,21 @@ const TemplateChoosedOption: React.FC<Props> = ({
         ))}
       </div>
 
-      <div className="min-h-[80px] px-2 w-full flex justify-between items-center bg-white">
+      <div className="min-h-[80px] shadow-top px-2 w-full flex justify-between items-center rounded-lg bg-white">
         <div className="h-full flex items-center gap-4">
           <div className="h-full flex items-center relative">
             <div className="h-full flex items-center relative">
-              <div
-                // onClick={() => GenerateWordFile()}
-                className="min-w-200px px-2 h-[100px] mr-2 p-4 font-semibold border-2 shadow-top bg-[#d5d8df4f] rounded-lg text-white"
+              <button
+                onClick={() =>
+                  setTemplatePopUpProps((prev) => ({
+                    ...prev,
+                    paragraphStructureShow: true,
+                  }))
+                }
+                className="h-[60px] w-full bg-sidebarChoose rounded-lg text-white px-6 font-bold shadow-bottom-right "
               >
-                <button
-                  onClick={() =>
-                    setTemplatePopUpProps((prev) => ({
-                      ...prev,
-                      paragraphStructureShow: true,
-                    }))
-                  }
-                  className="h-full w-full bg-sidebarChoose rounded-lg px-2 "
-                >
-                  აბზაცთა განლაგების მართვა
-                </button>
-              </div>
+                აბზაცთა განლაგების მართვა
+              </button>
               {/* {templatePopUpProps.paragraphAddNew && (
                 <div className="absolute z-50 h-[200px] bg-sidebarChoose w-[400px] bottom-full">
                   <PopUpsAddNewParagraph
@@ -941,22 +1148,16 @@ const TemplateChoosedOption: React.FC<Props> = ({
             </div>
           </div>
           <div className="h-full flex items-center relative">
-            <div
-              // onClick={() => GenerateWordFile()}
-              className="min-w-200px px-2 h-[100px] mr-2 p-4 font-semibold border-2 shadow-top bg-[#d5d8df4f] rounded-lg text-white"
+            <button
+              onClick={() => {
+                handleClickAddNewParagraph(i);
+              }}
+              className="h-[60px] w-full bg-sidebarChoose rounded-lg text-white px-6 font-bold shadow-bottom-right"
             >
-              <button
-                onClick={() => 
-                  {
-                    handleClickAddNewParagraph(i)
-                  }}
-                className="h-full w-full bg-sidebarChoose rounded-lg px-2"
-              >
-                ახალი აბზაცის დამატება
-              </button>
-            </div>
+              ახალი აბზაცის დამატება
+            </button>
             {templatePopUpProps.paragraphAddNew && (
-              <div className="absolute z-50 h-[200px] bg-sidebarChoose w-[400px] bottom-full">
+              <div className="absolute z-50 h-[200px]  border-2 w-[400px] bottom-full">
                 <PopUpsAddNewParagraph
                   handleAddNewParagraphs={() => console.log("s")}
                   setPopUpsState={setTemplatePopUpProps}
@@ -967,27 +1168,17 @@ const TemplateChoosedOption: React.FC<Props> = ({
           </div>
         </div>
 
-        <div className="w-auto px-2  flex gap-2 h-[100px] items-center justify-center ">
-          <div
-            onClick={() => GenerateWordFile()}
-            className="w-200px h-full mr-2 p-4 font-semibold border-2 shadow-top bg-[#d5d8df4f] rounded-lg text-white"
-          >
-            <button className="h-full w-full bg-sidebarChoose rounded-lg ">
-              შენახვა
-            </button>
-          </div>
+        <div className="w-auto px-2  flex gap-2 h-[60px] items-center justify-center ">
+          <button className="h-full w-full bg-sidebarChoose rounded-lg text-white px-6 font-bold shadow-bottom-right">
+            შენახვა
+          </button>
 
-          <div
-            onClick={() => GenerateWordFile()}
-            className="w-200px h-full mr-2 p-4 font-semibold border-2 shadow-top bg-[#d5d8df4f] rounded-lg text-white"
+          <button
+            onClick={() => setTemplateOptionDropdown(-1)}
+            className="h-[60px] w-full bg-sidebarChoose rounded-lg text-white px-6 font-bold shadow-bottom-right "
           >
-            <button
-              onClick={() => setTemplateOptionDropdown(-1)}
-              className="h-full w-full bg-sidebarChoose rounded-lg"
-            >
-              გაუქმება
-            </button>
-          </div>
+            გაუქმება
+          </button>
         </div>
       </div>
     </div>
