@@ -3,26 +3,35 @@ import { useDispatch } from 'react-redux'
 import "../../../../../Scrollbar.css"
 import { setBaseSubcomponentsShown } from '../../../../../../../redux/reducers/BaseSubcomponentsShown'
 import Add from '../../../../../../../assets/images/main/plus.webp'
-import GenerateAddReviewUseTemplate from './GenerateAddReviewUseTemplate'
+import GenerateAddReviewUseTemplate from './SubComponents/GenerateAddRewievUseTemplate/GenerateAddReviewUseTemplate'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+
+
+//types and interfaces
+
 type Props = {}
 
+interface stateProps {
+  navState: string;
+  templates: string[];
+  choosedTemplate: string;
+  addReviewNewTemplate: boolean; // it defines whether to show the add/review template component
+  addNewTemplateNavState: string;
+  templateIds: string[];
+  choosedTemplateName: string;
+  choosed: boolean;
+}
 
+//env api endpoint
 const Api = process.env.REACT_APP_API_BASE_URL
+
+
+
+//********************************************************************** Main Component */
 const Generate = (props: Props) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [state, setState] = useState<{
-    navState: string;
-    templates: string[];
-    choosedTemplate: string;
-    addReviewNewTemplate: boolean;
-    addNewTemplateNavState: string;
-    templateIds: string[];
-    choosedTemplateName: string;
-    choosed: boolean;
-  }>({
+  //states
+  const [state, setState] = useState<stateProps>({
     navState: "Word-შაბლონები",
     templates: [],
     choosedTemplate: "",
@@ -32,6 +41,13 @@ const Generate = (props: Props) => {
     choosedTemplateName: "",
     choosed: false,
   });
+
+  //additional hooks
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+
+  //effects
   useEffect(() => {
     if (state.addReviewNewTemplate === false) {
       const fetchTemplates = async () => {
@@ -60,25 +76,31 @@ const Generate = (props: Props) => {
 
       fetchTemplates();
     }
-  }, [state.addReviewNewTemplate]);
+  }, [state.addReviewNewTemplate]); // it ensure that templates by their name are fetched when closed the add/review template component and when loaded the first time
 
   
 
   return (
     <div className="fixed left-0 top-0 z-40 w-full h-full flex justify-center items-center bg-loginBackground">
       <div className="w-full h-full min-w-[800px] min-h-[700px]  relative shadow-bottom-right flex-col">
+        
+        {/*defines when on new template or review Template button has clicked to run component attach to it */}
         {state.addReviewNewTemplate && (
           <GenerateAddReviewUseTemplate setState={setState} state={state} />
         )}
+
+
         <p className="w-full h-10% bg-sidebarChoose text-white flex justify-center items-center text-xl shadow-bottom-right">
           {state.navState}
         </p>
+
+
         <div className="flex h-90% ">
           <div className="h-full w-[85%] bg-white overflow-y-auto custom-scrollbar  ">
+            {/* if word templates shown it will mapping all my templates and make add new template button in it */}
             {state.navState === "Word-შაბლონები" && (
               <Fragment>
                 <div className="gap-2 flex flex-col">
-                  {/* <img src={Logo} className='left-[-90px] top-[-70px] absolute w-[40%] min-w-[500px] h-90% opacity-100 -z-10 '/> */}
 
                   {state.templates.map((e, i) => (
                     <div
@@ -121,7 +143,11 @@ const Generate = (props: Props) => {
             )}
           </div>
 
+
           <div className="w-[20%] h-full z-0  bg-white  relative  shadow-left ">
+
+            {/* in there we choosed which templates we need to open */}
+
             <ul className="w-full h-auto flex flex-col">
               {["Word-შაბლონები", "Excell-შაბლონები"].map((item, idx) => (
                 <li
@@ -140,6 +166,7 @@ const Generate = (props: Props) => {
               ))}
             </ul>
 
+              {/* save and cancel buttons */}
             <div className="absolute bottom-4 right-2 w-full flex justify-end gap-2">
               <button
                 className=" opacity-20     text-lg bg-sidebarChoose w-auto-h-auto p-4  font-semibold  text-white rounded-lg shadow-bottom-right "

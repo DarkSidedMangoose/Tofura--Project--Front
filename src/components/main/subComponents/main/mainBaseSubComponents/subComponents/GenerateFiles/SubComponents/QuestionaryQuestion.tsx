@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect } from 'react'
-import Settings from "../../../../../../../assets/images/main/settings.webp";
-import Leave from "../../../../../../../assets/images/main/delete.webp";
+import React, { useEffect } from 'react'
+import Settings from "../../../../../../../../assets/images/main/settings.webp";
+import Leave from "../../../../../../../../assets/images/main/delete.webp";
 
 type Props = {
   value: any;
@@ -65,12 +65,14 @@ const QuestionaryQuestion = (props: Props) => {
        </div>
        <div className="w-auto h-full flex justify-between gap-2 items-center">
          <img
+         alt='Settings'
            className="h-3/5 bg-sidebarChoose rounded-2xl cursor-pointer hover:opacity-80"
            src={Settings}
          />
        </div>
      </div>
      <img
+     alt='Leave'
        className="h-[40px] bg-sidebarChoose rounded-2xl cursor-pointer hover:opacity-80"
        src={Leave}
      />

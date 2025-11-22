@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    // Modern baseline: ESNext target gives async/await, classes, etc.
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+
+    // Allow JS interop
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -9,12 +12,17 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+
+    // Module system
+    "module": "Node16",
+    "moduleResolution": "Node16", // ✅ modern, avoids deprecation warnings
+    // Extras
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+
+    // React JSX transform
     "jsx": "react-jsx"
   },
-  "include": ["src", "src/images.d.ts"]
+  "include": ["src"]
 }

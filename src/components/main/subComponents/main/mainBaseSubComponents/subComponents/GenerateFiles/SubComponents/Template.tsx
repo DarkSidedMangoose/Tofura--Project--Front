@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
-import ConfirmIcon from "../../../../../../../assets/images/main/right.webp";
-import DeclineIcon from "../../../../../../../assets/images/main/cancel.webp";
-import RemIcon from "../../../../../../../assets/images/main/delete.webp";
+import ConfirmIcon from "../../../../../../../../assets/images/main/right.webp";
+import DeclineIcon from "../../../../../../../../assets/images/main/cancel.webp";
+import RemIcon from "../../../../../../../../assets/images/main/delete.webp";
 
 
 

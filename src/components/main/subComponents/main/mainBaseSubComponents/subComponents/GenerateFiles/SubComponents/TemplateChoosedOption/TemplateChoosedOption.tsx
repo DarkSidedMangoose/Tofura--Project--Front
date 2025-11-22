@@ -1,16 +1,12 @@
-import React, {  Fragment, useCallback, useEffect, useRef, useState,  } from 'react';
-import { templateItemObjectProps } from './GenerateAddReviewUseTemplate';
-import PopUpsAddNewParagraph, { ParagraphStructure } from './PopUps';
-import Bold from '../../../../../../../assets/images/main/text.png';
-import Italic from '../../../../../../../assets/images/main/italic-button.png';
-import Underline from '../../../../../../../assets/images/main/underline.png';
-import { EditableSpan } from './EditableSpan';
-import axios from 'axios'
-import Placeholder from './Placeholder';
-import QuestionaryQuestion from './QuestionaryQuestion';
+import React, {  Fragment, useCallback, useRef, useState,  } from 'react';
+import PopUpsAddNewParagraph, { ParagraphStructure } from '../PopUps';
+import { EditableSpan } from '../EditableSpan';
+import Placeholder from '../Placeholder';
+import QuestionaryQuestion from '../QuestionaryQuestion';
+import { HandleAddNewPlaceholder, HandleAddNewQuestionary, HandleChangeType } from './TemplateChoosedOptionFunctions';
+import { RenderField } from './TemplateChoosedOptionSubComponents';
 
 
-const Api = process.env.REACT_APP_API_BASE_URL
 
 interface Props {
   templateState: any;
@@ -33,180 +29,27 @@ const TemplateChoosedOption: React.FC<Props> = ({
   handleAddNewParagraph,
   setTemplateOptionDropdown,
 }) => {
-  
-  
-  const [shodPlaceholderQuestion,setShodPlaceholderQuestion] = useState<any>({bool:false, first:-1, second:-1,third:-1, questionName: ""})
-  const [questionaryQuestion, setQuestionaryQuestion] = useState<any>({bool:false, first:-1, second:-1, third:-1})
-
-
-  const HandleAddNewQuestionary = (o:number, childIndexs: number) => {
-
-    
-
-   
-    if(o !== -1) {
-     setTemplateState((prev:any) => {
-        const newState = JSON.parse(JSON.stringify(prev));
-        
-      return newState 
-     })
-
-    }else {
-      const templateIndex = questionaryQuestion.first;
-      const childIndex = questionaryQuestion.second;
-      const optionIndex = questionaryQuestion.third;
-      setTemplateState((prev) => {
-        const newState = JSON.parse(JSON.stringify(prev));
-        const childrenCopy = [
-          ...newState[templateIndex].children[childIndex].children,
-        ];
-        const uuid = crypto.randomUUID();
-        newState[templateIndex].children[childIndex].textArea[optionIndex] = {
-          uuid: uuid,
-          type: "questionary",
-          questionName: questionaryQuestion.questionName,
-          value: "",
-          className: {
-            fontSize: 16,
-            fontStyle: { bold: true, italic: false, underline: false },
-          },
-        };
-        childrenCopy[optionIndex] = [
-          {
-            name: "type",
-            type: "select",
-            option: ["text", "placeholder", "questionary", "table", "image"],
-            value: { stringValue: "questionary" },
-          },
-          {
-            name: "element tag",
-            type: "select",
-            option: ["h1", "h2", "p", "span"],
-            value: { stringValue: "h1" },
-          },
-          {
-            name: "font family",
-            type: "select",
-            option: ["Calibri", "Roboto", "Times New Roman"],
-            value: { stringValue: "Calibri" },
-          },
-          {
-            name: "font size",
-            type: "input",
-            value: { numberValue: 16 },
-          },
-          {
-            name: "text style",
-            type: "multiselect",
-            option: ["bold", "italic", "underline"],
-            value: {
-              objectValue: {
-                bold: true,
-                italic: false,
-                underline: false,
-              },
-            },
-          },
-          {
-            name: "alignment",
-            type: "select",
-            option: ["left", "center", "right", "justify"],
-            value: { stringValue: "left" },
-          },
-          {
-            name: "color",
-            type: "color",
-            value: { stringValue: "#000000" },
-          },
-        ];
-        newState[templateIndex].children[childIndex].children = childrenCopy;
-        return newState;
-      });
-      setQuestionaryQuestion((prev: any) => [{ ...prev, bool: false }]);
-
-    }
-    
-    
-  };
-  const HandleAddNewPlaceholder = () => {
-    setTemplateState((prev) => {
-      const templateIndex = shodPlaceholderQuestion.first;
-      const childIndex = shodPlaceholderQuestion.second;
-      const optionIndex = shodPlaceholderQuestion.third;
-      const newState = JSON.parse(JSON.stringify(prev));
-      const childrenCopy = [
-        ...newState[templateIndex].children[childIndex].children,
-      ];
-      const uuid = crypto.randomUUID();
-      newState[templateIndex].children[childIndex].textArea[optionIndex] = {
-        uuid: uuid,
-        type: "placeholder",
-        questionName: shodPlaceholderQuestion.questionName,
-        value: "",
-        className: {
-          fontSize: 16,
-          fontStyle: { bold: true, italic: false, underline: false },
-        },
-      };
-      childrenCopy[optionIndex] = [
-        {
-          name: "type",
-          type: "select",
-          option: ["text", "placeholder","questionary", "table", "image"],
-          value: { stringValue: "placeholder" },
-        },
-        {
-          name: "element tag",
-          type: "select",
-          option: ["h1", "h2", "p", "span"],
-          value: { stringValue: "h1" },
-        },
-        {
-          name: "font family",
-          type: "select",
-          option: ["Calibri", "Roboto", "Times New Roman"],
-          value: { stringValue: "Calibri" },
-        },
-        {
-          name: "font size",
-          type: "input",
-          value: { numberValue: 16 },
-        },
-        {
-          name: "text style",
-          type: "multiselect",
-          option: ["bold", "italic", "underline"],
-          value: {
-            objectValue: {
-              bold: true,
-              italic: false,
-              underline: false,
-            },
-          },
-        },
-        {
-          name: "alignment",
-          type: "select",
-          option: ["left", "center", "right", "justify"],
-          value: { stringValue: "left" },
-        },
-        {
-          name: "color",
-          type: "color",
-          value: { stringValue: "#000000" },
-        },
-      ];
-      newState[templateIndex].children[childIndex].children = childrenCopy;
-      return newState;
-    });
-    setShodPlaceholderQuestion((prev:any) => [{...prev, bool: false}])
-  };
-
+  // States
+  const [shodPlaceholderQuestion, setShodPlaceholderQuestion] = useState<any>({
+    bool: false,
+    first: -1,
+    second: -1,
+    third: -1,
+    questionName: "",
+  });
+  const [questionaryQuestion, setQuestionaryQuestion] = useState<any>({
+    bool: false,
+    first: -1,
+    second: -1,
+    third: -1,
+  });
   const [templatePopUpProps, setTemplatePopUpProps] =
-    React.useState<TemplatePopUpProps>({
+    useState<TemplatePopUpProps>({
       paragraphStructureShow: false,
       paragraphAddNew: false,
     });
+  //fix scrollbar issue when click on editablespan which was overflow-x and when we move to the right side of scrollbar and click on editableSpan without it happend back to the left scrollbar
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleClickAddNewParagraph = useCallback(
     (i: number) => {
@@ -220,12 +63,12 @@ const TemplateChoosedOption: React.FC<Props> = ({
 
   const onClickPlaceholder = () => {
     setShodPlaceholderQuestion((prev: any) => {
-      const a = {...prev}
-      a.bool = true
+      const a = { ...prev };
+      a.bool = true;
       return a;
-    })
-  }
-  
+    });
+  };
+
   const handleAddNewParagraphWithName = useCallback(
     (text: string) => {
       handleAddNewParagraph(i, text);
@@ -237,30 +80,6 @@ const TemplateChoosedOption: React.FC<Props> = ({
     [templatePopUpProps, i]
   );
 
-  //Generate Word File
-  const GenerateWordFile = async () => {
-    try {
-      const response = await axios.post(
-        `${Api}/generateFiles/generateWordFile`,
-        { templateName: templateState[i].name, templateState: templateState[i] },
-        {
-          responseType: "blob", // Important for binary files
-          withCredentials: true,
-        }
-      );
-
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "output.docx"); // Optional: customize filename
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    } catch (error) {
-      console.error("Error generating Word file:", error);
-    }
-  };
-  //
   const handleChangeSelectOption = useCallback(
     (
       templateIndex: number,
@@ -285,409 +104,26 @@ const TemplateChoosedOption: React.FC<Props> = ({
     []
   );
 
-  const handleChangeType = (
-    selected: string,
-    templateIndex: number,
+  const handleClickMainDiv = (
     childIndex: number,
-    optionIndex: number
+    optionTextAreaIndex: number
   ) => {
+    const scrollX = scrollRef.current?.scrollLeft ?? 0;
+
     setTemplateState((prev) => {
       const newState = JSON.parse(JSON.stringify(prev));
-      const childrenCopy = [
-        ...newState[templateIndex].children[childIndex].children,
-      ];
-      switch (selected) {
-        case "text":
-          // if (
-          //   newState[templateIndex].children[childIndex].textArea[0].type ===
-          //   "text"
-          // ) {
-          console.log(childrenCopy)
-          newState[templateIndex].children[childIndex].textArea[optionIndex] = {
-            
-              type: "text",
-              value: "asket",
-              className: {
-                fontSize: 16,
-                fontStyle: { bold: true, italic: false, underline: false },
-              },
-            
-            
-          };
-
-
-
-            childrenCopy[optionIndex] = [
-              {
-                name: "type",
-                type: "select",
-                option: ["text","placeholder","questionary", "table", "image"],
-                value: { stringValue: "text" },
-              },
-              {
-                name: "element tag",
-                type: "select",
-                option: ["h1", "h2", "p", "span"],
-                value: { stringValue: "h1" },
-              },
-              {
-                name: "font family",
-                type: "select",
-                option: ["Calibri", "Roboto", "Times New Roman"],
-                value: { stringValue: "Calibri" },
-              },
-              {
-                name: "font size",
-                type: "input",
-                value: { numberValue: 16 },
-              },
-              {
-                name: "text style",
-                type: "multiselect",
-                option: ["bold", "italic", "underline"],
-                value: {
-                  objectValue: {
-                    bold: true,
-                    italic: false,
-                    underline: false,
-                  },
-                },
-              },
-              {
-                name: "alignment",
-                type: "select",
-                option: ["left", "center", "right", "justify"],
-                value: { stringValue: "left" },
-              },
-              {
-                name: "color",
-                type: "color",
-                value: { stringValue: "#000000" },
-              },
-              
-            ];
-          // } else {
-          //   newState[templateIndex].children[childIndex].textArea = [
-          //     {
-          //       type: "text",
-          //       value: "sada",
-          //       className: {
-          //         fontSize: 16,
-          //         fontStyle: { bold: true, italic: false, underline: false },
-          //       },
-          //     },
-          //   ];
-          //   newState[templateIndex].children[childIndex].index = 0;
-          // }
-          break;
-        case "table":
-          newState[templateIndex].children[childIndex].textArea = [
-            { type: "table" },
-          ];
-          childrenCopy[optionIndex] = [
-            {
-              name: "type",
-              type: "select",
-              value: "table",
-              option: ["text","questionary", "table", "image"],
-            },
-            { name: "rows", type: "input", value: "" },
-            { name: "columns", type: "input", value: 2 },
-            {
-              name: "border",
-              type: "select",
-              option: ["none", "solid", "dashed", "dotted"],
-              value: "none",
-            },
-            { name: "cell padding", type: "input", value: 5 },
-            {
-              name: "alignment",
-              type: "select",
-              option: ["left", "center", "right"],
-              value: "left",
-            },
-            { name: "width", type: "input", value: "100%" },
-            { name: "background color", type: "color", value: "#ffffff" },
-          ];
-          break;
-        case "image":
-          childrenCopy[optionIndex] = [
-            {
-              name: "type",
-              type: "select",
-              value: { stringValue: "image" },
-              option: ["text","placeholder","questionary", "table", "image"],
-            },
-            {
-              name: "source",
-              type: "input",
-              placeholder: "Image URL or path",
-              value: { stringValue: "" },
-            },
-            {
-              name: "alt text",
-              type: "input",
-              value: { stringValue: "image" },
-            },
-            { name: "width", type: "input", value: { stringValue: "100%" } },
-            { name: "height", type: "input", value: { stringValue: "auto" } },
-
-            {
-              name: "alignment",
-              type: "select",
-              option: ["left", "center", "right"],
-              value: { stringValue: "left" },
-            },
-            {
-              name: "border radius",
-              type: "input",
-              value: { stringValue: "16" },
-            },
-          ];
-          break;
-          case "placeholder":
-            setShodPlaceholderQuestion({bool: true, first:templateIndex, second:childIndex,third:optionIndex})
-            break;
-          case "questionary": 
-            setQuestionaryQuestion({bool: true, first: templateIndex, second:childIndex, third:optionIndex})
-      }
-
-      newState[templateIndex].children[childIndex].children = childrenCopy;
+      newState[i].children[childIndex].index = optionTextAreaIndex;
       return newState;
+    });
+
+    requestAnimationFrame(() => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollLeft = scrollX;
+      }
     });
   };
 
-  //fix scrollbar issue when click on editablespan which was overflow-x and when we move to the right side of scrollbar and click on editableSpan without it happend back to the left scrollbar
-   const scrollRef = useRef<HTMLDivElement>(null);
-
-   const handleClickMainDiv = (
-     childIndex: number,
-     optionTextAreaIndex: number
-   ) => {
-     const scrollX = scrollRef.current?.scrollLeft ?? 0;
-
-     setTemplateState((prev) => {
-       const newState = JSON.parse(JSON.stringify(prev));
-       newState[i].children[childIndex].index = optionTextAreaIndex;
-       return newState;
-     });
-
-     requestAnimationFrame(() => {
-       if (scrollRef.current) {
-         scrollRef.current.scrollLeft = scrollX;
-       }
-     });
-   };
-   
   
-
-  const renderField = (
-    option: templateItemObjectProps,
-    optionSelection: number,
-    templateIndex: number,
-    childIndex: number,
-    optionIndex: number
-  ) => {
-    switch (option.type) {
-      case "select":
-        
-        return (
-          <select
-            value={
-              option.name === "alignment"
-                ? templateState[templateIndex].children[childIndex].justify
-                : typeof option.value?.stringValue === "string" ||
-                  typeof option.value?.numberValue === "number"
-                ? option.value.stringValue || option.value.numberValue || option.value.objectValue
-                : ""
-            }
-            onChange={(e) => {
-              option.name === "type"
-                ? handleChangeType(
-                    e.target.value,
-                    templateIndex,
-                    childIndex,
-                    optionIndex
-                  )
-                : handleChangeSelectOption(
-                    templateIndex,
-                    childIndex,
-                    optionIndex,
-                    optionSelection,
-                    e,
-                    option.name
-                  );
-            }}
-            className="h-[50px] text-sm px-4  border rounded"
-          >
-
-            <option disabled>აირჩიე</option>
-            {option.option?.map((o, idx) => (
-              <option key={idx}>{o}</option>
-            ))}
-          </select>
-        );
-      case "input":
-        return (
-          <input
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setTemplateState((prev) => {
-                const newState = JSON.parse(JSON.stringify(prev));
-                newState[templateIndex].children[childIndex].children[
-                  optionIndex
-                ][optionSelection].value.numberValue = Number(
-                  event.target.value
-                );
-                if (option.name === "font size") {
-                  const index =
-                    newState[templateIndex].children[childIndex].index;
-                  newState[templateIndex].children[childIndex].textArea[
-                    index
-                  ].className.fontSize = Number(event.target.value);
-                }
-                return newState;
-              });
-            }}
-            type="number"
-            style={{
-              appearance: "auto",
-            }}
-            placeholder={option.placeholder}
-            value={
-              typeof option.value?.stringValue === "string"
-                ? option.value.stringValue
-                : typeof option.value?.numberValue === "number"
-                ? option.value.numberValue
-                : ""
-            }
-            className="h-[50px] w-[70px] text-sm px-4  bg-white border rounded"
-          />
-        );
-      case "multiselect":
-        const handleClick = (arg: string) => {
-          setTemplateState((prev) => {
-            const newState = JSON.parse(JSON.stringify(prev));
-            const currentOption =
-              newState[templateIndex].children[childIndex].textArea[optionIndex]
-                .className.fontStyle;
-            if (currentOption.bold !== undefined && arg === "bold") {
-              currentOption.bold = !currentOption.bold;
-            } else if (currentOption.bold !== undefined && arg === "italic") {
-              currentOption.italic = !currentOption.italic;
-            } else if (
-              currentOption.bold !== undefined &&
-              arg === "underline"
-            ) {
-              currentOption.underline = !currentOption.underline;
-            }
-
-            return newState;
-          });
-        };
-        return (
-          <div className="flex w-full h-full gap-4 bg-">
-            {option.option?.map((style, idx) => (
-              <Fragment key={idx}>
-                {style === "bold" ? (
-                  <div className="w-1/4 h-full flex justify-center items-center ">
-                    <div
-                      onClick={() => handleClick("bold")}
-                      className="w-[90%] cursor-pointer bg-white h-2/3 p-3 border-2 rounded-lg flex justify-center items-center"
-                    >
-                      <img
-                        src={Bold}
-                        alt="bold"
-                        className={`w-full cursor-pointer ${
-                          !templateState[templateIndex].children[childIndex]
-                            .textArea[optionIndex].className.fontStyle.bold
-                            ? "opacity-20"
-                            : "opacity-100"
-                        }`}
-                      />
-                    </div>
-                  </div>
-                ) : style === "italic" ? (
-                  <div className="w-1/4 h-full flex justify-center items-center cursor-pointer">
-                    <div
-                      onClick={() => handleClick("italic")}
-                      className="w-[90%] cursor-pointer h-2/3 bg-white  p-3 border-2 rounded-lg flex justify-center items-center"
-                    >
-                      <img
-                        src={Italic}
-                        alt="italic"
-                        className={`w-full cursor-pointer ${
-                          !templateState[templateIndex].children[childIndex]
-                            .textArea[optionIndex].className.fontStyle.italic
-                            ? "opacity-20"
-                            : "opacity-100"
-                        }`}
-                      />
-                    </div>
-                  </div>
-                ) : style === "underline" ? (
-                  <div className="w-1/4 h-full flex justify-center items-center cursor-pointer">
-                    <div
-                      onClick={() => handleClick("underline")}
-                      className="w-[90%] bg-white h-2/3 p-3 border-2 rounded-lg flex justify-center items-center"
-                    >
-                      <img
-                        alt="underline"
-                        src={Underline}
-                        className={`w-full ${
-                          !templateState[templateIndex].children[childIndex]
-                            .textArea[optionIndex].className.fontStyle.underline
-                            ? "opacity-20"
-                            : "opacity-100"
-                        }`}
-                      />
-                    </div>
-                  </div>
-                ) : null}
-              </Fragment>
-            ))}
-          </div>
-        );
-      case "color":
-        return (
-          <input
-            onChange={(e) => {
-              setTemplateState((prev) => {
-                const newState = JSON.parse(JSON.stringify(prev));
-                newState[templateIndex].children[childIndex].children[
-                  optionIndex
-                ][optionSelection].value.stringValue = e.target.value;
-                const index =
-                  newState[templateIndex].children[childIndex].index;
-               
-                 if (option.name === "color") {
-                  newState[templateIndex].children[childIndex].textArea[
-                    index
-                  ].className.fontColor = e.target.value;
-                }
-                return newState;
-              });
-            }}
-            type="color"
-            value={
-              option.name === "color"
-                ? templateState[templateIndex].children[childIndex].textArea[
-                    templateState[templateIndex].children[childIndex].index
-                  ].className.fontColor
-                : templateState[templateIndex].children[childIndex].textArea[
-                    templateState[templateIndex].children[childIndex].index
-                  ].className.bgColor
-            }
-            className="h-[40px] w-[60px] border rounded"
-          />
-        );
-      default:
-        return (
-          <span className="text-red-500 text-sm">
-            Unknown type: {option.type}
-          </span>
-        );
-    }
-  };
 
   const handleChangeParagraphAlignment = (
     currentIndex: number,
@@ -760,7 +196,15 @@ const TemplateChoosedOption: React.FC<Props> = ({
             </button>
             <button
               className="w-auto p-4 h-1/2 bg-sidebarChoose text-bold text-white"
-              onClick={() => HandleAddNewQuestionary(-1,-1)}
+              onClick={() =>
+                HandleAddNewQuestionary(
+                  -1,
+                  -1,
+                  setTemplateState,
+                  questionaryQuestion,
+                  setQuestionaryQuestion
+                )
+              }
             >
               {" "}
               დამატება{" "}
@@ -802,7 +246,13 @@ const TemplateChoosedOption: React.FC<Props> = ({
             </button>
             <button
               className="w-auto p-4 h-1/2 bg-sidebarChoose text-bold text-white"
-              onClick={() => HandleAddNewPlaceholder()}
+              onClick={() =>
+                HandleAddNewPlaceholder(
+                  setTemplateState,
+                  shodPlaceholderQuestion,
+                  setShodPlaceholderQuestion
+                )
+              }
             >
               {" "}
               დამატება{" "}
@@ -842,7 +292,8 @@ const TemplateChoosedOption: React.FC<Props> = ({
                       ? "min-h-[300px]"
                       : childGroup.textArea[0]?.type === "table"
                       ? "min-h-[600px]"
-                      : childGroup.textArea[0]?.type === "questionary" && "min-h-[600px]"
+                      : childGroup.textArea[0]?.type === "questionary" &&
+                        "min-h-[600px]"
                   } flex  rounded-lg text-sidebarChoose relative`}
                 >
                   <div className="h-full w-full px-2">
@@ -866,12 +317,18 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                             ) => (
                                               <Fragment key={grandChildIndex}>
                                                 <div className="min-w-[100px] h-[70px] border-2 shadow-bottom justify-center flex flex-col gap-2 px-2 items-center ">
-                                                  {renderField(
+                                                  {RenderField(
                                                     grandChild,
                                                     grandChildIndex,
                                                     i,
                                                     childIndex,
-                                                    optionIndex
+                                                    optionIndex,
+                                                    templateState,
+                                                    setTemplateState,
+                                                    setShodPlaceholderQuestion,
+                                                    setQuestionaryQuestion,
+                                                    HandleChangeType,
+                                                    handleChangeSelectOption
                                                   )}
                                                 </div>
                                               </Fragment>
@@ -893,7 +350,10 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                           : childGroup.textArea[0].type ===
                                             "table"
                                           ? "h-[400px]"
-                                          : childGroup.textArea[0].type === "questionary" ? " min-h-[400px]" : ""
+                                          : childGroup.textArea[0].type ===
+                                            "questionary"
+                                          ? " min-h-[400px]"
+                                          : ""
                                       } flex ${
                                         childGroup.justify === "left"
                                           ? "justify-start "
@@ -904,7 +364,14 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                           : "justify-normal"
                                       }  items-center w-full max-w-full  overflow-x-scroll text-sm p-2 resize-none bg-white border`}
                                     >
-                                      <div className={`w-auto h-full  max-w-full  gap-2 ${childGroup.textArea[0].type === "questionary" ? "": "items-center flex"} `}>
+                                      <div
+                                        className={`w-auto h-full  max-w-full  gap-2 ${
+                                          childGroup.textArea[0].type ===
+                                          "questionary"
+                                            ? ""
+                                            : "items-center flex"
+                                        } `}
+                                      >
                                         {childGroup.textArea.map(
                                           (
                                             optionTextArea: any,
@@ -1060,7 +527,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
                                                   }
                                                   value={optionTextArea.value}
                                                   templateState={templateState}
-                                                  onClick={(event:any) => {
+                                                  onClick={(event: any) => {
                                                     event.stopPropagation();
                                                     handleClickMainDiv(
                                                       childIndex,
@@ -1086,25 +553,25 @@ const TemplateChoosedOption: React.FC<Props> = ({
 
                   {childGroup.textArea[0]?.type !== "table" && (
                     <div
-                      onClick={() => 
-                      {
-                        if(childGroup.textArea[0].type !== "questionary") {
-
-                          AddNewValueInParagraph(i, childIndex)
-                        }else {
-                          HandleAddNewQuestionary(i,childIndex)
+                      onClick={() => {
+                        if (childGroup.textArea[0].type !== "questionary") {
+                          AddNewValueInParagraph(i, childIndex);
+                        } else {
+                          HandleAddNewQuestionary(
+                            i,
+                            childIndex,
+                            setTemplateState,
+                            questionaryQuestion,
+                            setQuestionaryQuestion
+                          );
                         }
                       }}
                       className="absolute bottom-0 right-2 h-[80px] w-auto px-2 border-2 flex justify-center items-center rounded-lg cursor-pointer shadow-bottom bg-[#d5d8df4f]  text-white"
                     >
-                      <div
-                   
-                    
-                      className="bg-sidebarChoose h-2/3 flex justify-center items-center px-4 rounded-lg">
-                      {
-                        childGroup.textArea[0].type === "questionary" ? "ახალი კითხვის დამატება ": "აბზაცის გაგრძელების დამატება"
-                      }
-                        
+                      <div className="bg-sidebarChoose h-2/3 flex justify-center items-center px-4 rounded-lg">
+                        {childGroup.textArea[0].type === "questionary"
+                          ? "ახალი კითხვის დამატება "
+                          : "აბზაცის გაგრძელების დამატება"}
                       </div>
                     </div>
                   )}
@@ -1112,12 +579,6 @@ const TemplateChoosedOption: React.FC<Props> = ({
               </Fragment>
             )}
           </Fragment>
-          // onClick={() =>
-          //   setTemplatePopUpProps((prev) => ({
-          //     ...prev,
-          //     paragraphStructureShow: true,
-          //   }))
-          // }
         ))}
       </div>
 
@@ -1136,15 +597,6 @@ const TemplateChoosedOption: React.FC<Props> = ({
               >
                 აბზაცთა განლაგების მართვა
               </button>
-              {/* {templatePopUpProps.paragraphAddNew && (
-                <div className="absolute z-50 h-[200px] bg-sidebarChoose w-[400px] bottom-full">
-                  <PopUpsAddNewParagraph
-                    handleAddNewParagraphs={() => console.log("s")}
-                    setPopUpsState={setTemplatePopUpProps}
-                    handleClick={handleAddNewParagraphWithName}
-                  />
-                </div>
-              )} */}
             </div>
           </div>
           <div className="h-full flex items-center relative">

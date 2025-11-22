@@ -29,23 +29,28 @@ const Questionary = (props: Props) => {
   },[generateFiles, generate])
 
   useEffect(() => {
-    setPlaceholders([])
-    props.state.forEach((section: any, sectionIndex:number) => {
-      section.children.forEach((child: any, childIndex:number) => {
-       child.textArea.forEach((textArea: any, textAreaIndex:number) => {
-        if(textArea.type === 'placeholder'){
-          setPlaceholders((prev) => [...prev, {uuid: textArea.uuid, questionName: textArea.questionName, sectionIndex, childIndex, textAreaIndex}] )
-        }
-      })
-    })
-
-  })
-
-     
-      
-      
-    
+    setPlaceholders([]);
+    props.state.forEach((section: any, sectionIndex: number) => {
+      section.children.forEach((child: any, childIndex: number) => {
+        child.textArea.forEach((textArea: any, textAreaIndex: number) => {
+          if (textArea.type === "placeholder") {
+            setPlaceholders((prev) => [
+              ...prev,
+              {
+                uuid: textArea.uuid,
+                questionName: textArea.questionName,
+                sectionIndex,
+                childIndex,
+                textAreaIndex,
+              },
+            ]);
+          }
+        });
+      });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
+  
   useEffect(() => {
       const s: React.SetStateAction<string[]> = []      
     placeholders.forEach(() => {

@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { TemplatePopUpProps } from './TemplateChoosedOption'
-import Arrow from '../../../../../../../assets/images/main/down-arrow.png'
+import React, { useCallback,  useState } from 'react'
+import { TemplatePopUpProps } from './TemplateChoosedOption/TemplateChoosedOption'
+import Arrow from "../../../../../../../../assets/images/main/down-arrow.png";
 
 export type PopUpsAddNewParagraphProps = {
   setPopUpsState: React.Dispatch<React.SetStateAction<TemplatePopUpProps>>;
@@ -10,18 +10,19 @@ export type PopUpsAddNewParagraphProps = {
 
 
 // This component is a placeholder for the AddNewParagraph functionality
+
+//It Gave us a New PopUp where we can add new paragraph name
 const PopUpsAddNewParagraph: React.FC<PopUpsAddNewParagraphProps> = (props) => {
   const [inputState, setInputState] = useState<string>("")
   
     const handleClosePopUp = useCallback(() => {
         
         props.setPopUpsState((prev) => ({...prev, paragraphAddNew: false}))
-    },[props.setPopUpsState])
+    },[props])
   return (
     <div className="  flex flex-col justify-center items-center w-full h-full bg-[#fff] shadow-boxShadow">
       <div className="w-full h-60% flex justify-center items-center flex-col gap-4 ">
         <h1 className="w-full flex justify-center items-center  h-full text-md text-white bg-sidebarChoose    font-bold">
-          {" "}
           შეიყვანეთ აბზაცის სახელი
         </h1>
         <div className='w-full h-full flex justify-center items-center bg-white'>
@@ -68,12 +69,12 @@ export type ParagraphStructureProps = {
 }
 
 // This component displays the structure of paragraphs
-
+//and we can swich places of paragraphs in section
 export const ParagraphStructure = (props: ParagraphStructureProps) => {
  
     const handleClosePopUp = useCallback(() => {
         props.setPopUpsState((prev) => ({...prev, paragraphStructureShow: false}))
-    },[props.setPopUpsState])
+    },[props])
 
 
   
@@ -90,8 +91,8 @@ export const ParagraphStructure = (props: ParagraphStructureProps) => {
             </p> 
               <div className='w-[40px] absolute right-0 h-full '>
               <div className='w-full h-full  flex-col  flex justify-center items-center'>
-                <img src={Arrow} className={`h-1/2 w-full rotate-180 cursor-pointer hover:opacity-50 transition-all duration-200 ${index === 0 && "hover:cursor-not-allowed opacity-10 hover:opacity-10"}`} onClick={() => props.handleChangeParagraphAligment(index,index-1 )} />
-                <img src={Arrow} className={`h-1/2 w-full cursor-pointer hover:opacity-50 transition-all duration-200 ${props.stateOfParagraph.length === index +1 && "hover:cursor-not-allowed opacity-10 hover:opacity-10"}  `} onClick={() => props.handleChangeParagraphAligment(index,index+1 )}/>
+                <img src={Arrow} alt='arrow' className={`h-1/2 w-full rotate-180 cursor-pointer hover:opacity-50 transition-all duration-200 ${index === 0 && "hover:cursor-not-allowed opacity-10 hover:opacity-10"}`} onClick={() => props.handleChangeParagraphAligment(index,index-1 )} />
+                <img src={Arrow} alt='arrow' className={`h-1/2 w-full cursor-pointer hover:opacity-50 transition-all duration-200 ${props.stateOfParagraph.length === index +1 && "hover:cursor-not-allowed opacity-10 hover:opacity-10"}  `} onClick={() => props.handleChangeParagraphAligment(index,index+1 )}/>
                 </div> 
               </div>
           </div>
