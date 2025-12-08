@@ -15,7 +15,7 @@ type Placeholder = {
   textAreaIndex: number;
 };
 
-const Questionary = (props: Props) => {
+const QuestionaryComponent = (props: Props) => {
   const [placeholders, setPlaceholders] = useState<Placeholder[]>([])
   const [placeholderAnswer, setPlaceHolderAnswer] = useState<string[]>([])
   const [generateFiles, setGenerateFiles] = useState(false)
@@ -115,4 +115,4 @@ const Questionary = (props: Props) => {
   );
 }
 
-export default Questionary
+export default QuestionaryComponent

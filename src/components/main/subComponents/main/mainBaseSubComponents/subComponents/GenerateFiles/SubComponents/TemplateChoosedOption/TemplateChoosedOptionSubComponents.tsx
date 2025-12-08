@@ -5,7 +5,8 @@ import Italic from "../../../../../../../../../assets/images/main/italic-button.
 import Underline from "../../../../../../../../../assets/images/main/underline.png";
 
 
- export const RenderField = (
+export const RenderField = (
+   identifier: string,
    option: templateItemObjectProps,
    optionSelection: number,
    templateIndex: number,
@@ -18,12 +19,13 @@ import Underline from "../../../../../../../../../assets/images/main/underline.p
    HandleChangeType: any,
    handleChangeSelectOption: any
  ) => {
+   
    switch (option.type) {
      case "select":
        return (
          <select
            value={
-             option.name === "alignment"
+             option.name === "alignment" 
                ? templateState[templateIndex].children[childIndex].justify
                : typeof option.value?.stringValue === "string" ||
                  typeof option.value?.numberValue === "number"

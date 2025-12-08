@@ -5,46 +5,8 @@ export const ChildrenQustionaryValue = [
     option: ["text", "placeholder", "questionary", "table", "image"],
     value: { stringValue: "questionary" },
   },
-  {
-    name: "element tag",
-    type: "select",
-    option: ["h1", "h2", "p", "span"],
-    value: { stringValue: "h1" },
-  },
-  {
-    name: "font family",
-    type: "select",
-    option: ["Calibri", "Roboto", "Times New Roman"],
-    value: { stringValue: "Calibri" },
-  },
-  {
-    name: "font size",
-    type: "input",
-    value: { numberValue: 16 },
-  },
-  {
-    name: "text style",
-    type: "multiselect",
-    option: ["bold", "italic", "underline"],
-    value: {
-      objectValue: {
-        bold: true,
-        italic: false,
-        underline: false,
-      },
-    },
-  },
-  {
-    name: "alignment",
-    type: "select",
-    option: ["left", "center", "right", "justify"],
-    value: { stringValue: "left" },
-  },
-  {
-    name: "color",
-    type: "color",
-    value: { stringValue: "#000000" },
-  },
+  
+  
 ];
 
 
