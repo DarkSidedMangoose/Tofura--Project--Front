@@ -109,7 +109,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
     },
     []
   );
-
+  
   const handleClickMainDiv = (
     childIndex: number,
     optionTextAreaIndex: number
@@ -199,6 +199,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
 
       <div className="overflow-y-scroll h-full items-center w-full flex flex-col gap-10">
         {templateState[i].children.map((childGroup: any, childIndex: any) => (
+          
           <Fragment key={childIndex}>
             {childGroup.textArea.length !== 0 && (
               <Fragment>
@@ -208,7 +209,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
 
                <div
   className={`${
-    childGroup.textArea[0]?.type === "text"
+    childGroup.textArea[0]?.type === "text" || childGroup.textArea[0]?.type === "placeholder"
       ? "min-h-[300px] w-full"
       : childGroup.textArea[0]?.type === "table"
       ? "min-h-[600px] w-full"
@@ -216,399 +217,235 @@ const TemplateChoosedOption: React.FC<Props> = ({
         "h-auto w-[400px] flex flex-col   "
   } rounded-lg text-sidebarChoose relative`}
 >
-                  <div className="h-full w-full px-2">
-                    {childGroup.textArea[0]?.type === "questionary" ? (
-                      <div className="flex w-full flex-col justify-center items-center gap-4 h-auto">
-                        {childGroup.children.map((option: any, optionIndex: any) => (
-                          <Fragment key={optionIndex}>
-                            {(optionIndex === childGroup.index ||
-                              (childGroup.index === -1 && optionIndex === 0)) && (
-                              <div className="flex gap-[4%] h-auto items-start">
-                                {/* FIXED HERE */}
-                                <div className="w-full h-auto flex flex-col gap-2">
-                                  <div className="w-full bg-[#d5d8df4f] h-auto flex flex-col items-center gap-4">
-                                    <div className="flex max-w-[1400px] w-auto gap-10 h-[100px] items-center overflow-x-auto">
-                                      {childGroup.index !== -1 && (
-                                        <Fragment>
-                                          {option.map((grandChild: any, grandChildIndex: any) => (
-                                            <Fragment key={grandChildIndex}>
-                                              <div className="min-w-[100px] h-[70px] border-2 shadow-bottom justify-center flex flex-col gap-2 px-2 items-center">
-                                                {RenderField(
-                                                  "question",
-                                                  grandChild,
-                                                  grandChildIndex,
-                                                  i,
-                                                  childIndex,
-                                                  optionIndex,
-                                                  templateState,
-                                                  setTemplateState,
-                                                  setShodPlaceholderQuestion,
-                                                  setQuestionaryQuestion,
-                                                  HandleChangeType,
-                                                  handleChangeSelectOption
-                                                )}
-                                              </div>
-                                            </Fragment>
-                                          ))}
-                                        </Fragment>
-                                      )}
-                                    </div>
+                  <div
+  className={`
+    flex w-full flex-col gap-4
+    ${childGroup.textArea[0]?.type === "questionary" ? "justify-center items-center h-auto" : "h-full"}
+  `}
+>
+  {childGroup.children.map((option: any, optionIndex: any) => (
+    <Fragment key={optionIndex}>
+      {(optionIndex === childGroup.index ||
+        (childGroup.index === -1 && optionIndex === 0)) && (
+        <div
+          className={`
+            flex gap-[4%]
+            ${childGroup.textArea[0]?.type === "questionary" ? "h-auto items-start" : "h-full"}
+          `}
+        >
+          <div
+            className={`
+              w-full flex flex-col
+              ${childGroup.textArea[0]?.type === "questionary" ? "h-auto gap-2" : "h-full"}
+            `}
+          >
+            <div className="w-full bg-[#d5d8df4f] h-auto flex flex-col items-center gap-4">
+              
+              {/* TOP FIELDS */}
+              <div
+                className={`
+                  flex max-w-[1400px] w-auto gap-10 h-[100px] items-center overflow-x-auto
+                  ${childGroup.textArea[0]?.type !== "questionary" ? "min-w-[500px]" : ""}
+                `}
+              >
+                {childGroup.index !== -1 &&
+                  option.map((grandChild: any, grandChildIndex: any) => (
+                    <div
+                      key={grandChildIndex}
+                      className="min-w-[100px] h-[70px] border-2 shadow-bottom flex flex-col justify-center items-center gap-2 px-2"
+                    >
+                      {RenderField(
+                        childGroup.textArea[0]?.type === "questionary" ? "question" : "normal",
+                        grandChild,
+                        grandChildIndex,
+                        i,
+                        childIndex,
+                        optionIndex,
+                        templateState,
+                        setTemplateState,
+                        setShodPlaceholderQuestion,
+                        setQuestionaryQuestion,
+                        HandleChangeType,
+                        handleChangeSelectOption
+                      )}
+                    </div>
+                  ))}
+              </div>
 
-                                    <div
-                                      ref={scrollRef}
-                                      className={`${
-                                        childGroup.textArea[0].type === "text" ||
-                                        childGroup.textArea[0].type === "placeholder"
-                                          ? "h-[100px] gap-2"
-                                          : childGroup.textArea[0].type === "table"
-                                          ? "h-[400px]"
-                                          : childGroup.textArea[0].type === "questionary"
-                                          ? "h-auto w-auto items-center"
-                                          : ""
-                                      } flex ${
-                                        childGroup.justify === "left"
-                                          ? "justify-start"
-                                          : childGroup.justify === "center"
-                                          ? "justify-center"
-                                          : childGroup.justify === "right"
-                                          ? "justify-end"
-                                          : "justify-normal"
-                                      } items-center w-full max-w-full ${
-                                        childGroup.textArea[0].type === "questionary"
-                                          ? "overflow-visible" /* FIXED HERE */
-                                          : "overflow-x-scroll"
-                                      } h-auto text-sm p-2 resize-none bg-white border`}
-                                    >
-                                      <div
-                                        className={`w-auto h-full max-w-full gap-2 ${
-                                          childGroup.textArea[0].type === "questionary" ? "" : "items-center flex"
-                                        }`}
-                                      >
-                                       
-                                        <div>s</div>
-                                        <div>s</div>
-                                        <div>s</div>
-                                        <div>s</div>
-                                         <div>s</div>
-                                        <div>s</div>
-                                        <div>s</div>
-                                        <div>s</div>
-                                         <div>s</div>
-                                        <div>s</div>
-                                        <div>s</div>
-                                        <div>s</div>
-                                         <div>s</div>
-                                        <div>s</div>
-                                        <div>s</div>
-                                        <div>s</div>
-                                        {childGroup.textArea.map(
-                                          (optionTextArea: any, optionTextAreaIndex: number) => {
-                                            const key = getSpanKey(
-                                              childIndex,
-                                              optionIndex,
-                                              optionTextAreaIndex
-                                            );
+              {/* TEXTAREA AREA */}
+              <div
+                ref={scrollRef}
+                className={`
+                  flex items-center w-full max-w-full text-sm p-2 bg-white border resize-none
+                  ${childGroup.justify === "left"
+                    ? "justify-start"
+                    : childGroup.justify === "center"
+                    ? "justify-center"
+                    : childGroup.justify === "right"
+                    ? "justify-end"
+                    : "justify-normal"}
+                  ${
+                    childGroup.textArea[0]?.type === "questionary"
+                      ? "h-auto w-auto overflow-visible"
+                      : "overflow-x-scroll"
+                  }
+                  ${
+                    childGroup.textArea[0].type === "text" ||
+                    childGroup.textArea[0].type === "placeholder"
+                      ? "h-[100px] gap-2"
+                      : childGroup.textArea[0].type === "table"
+                      ? "h-[400px]"
+                      : childGroup.textArea[0].type === "questionary"
+                      ? childGroup.textArea[0]?.type === "questionary"
+                        ? "h-auto"
+                        : "h-[100px]"
+                      : ""
+                  }
+                `}
+              >
+                <div
+                  className={`
+                    w-auto h-full max-w-full gap-2
+                    ${childGroup.textArea[0]?.type === "questionary" ? "flex flex-col" : "items-center flex"}
+                  `}
+                >
+                  {childGroup.textArea.map(
+                    (optionTextArea: any, optionTextAreaIndex: number) => {
+                      const key = getSpanKey(
+                        childIndex,
+                        optionIndex,
+                        optionTextAreaIndex
+                      );
 
-                                            return optionTextArea.type === "text" ? (
-                                              <EditableSpan
-                                                optionTextAreaType={optionTextArea.type}
-                                                key={key}
-                                                spanKey={key}
-                                                childIndex={optionTextAreaIndex}
-                                                isChoosed={childGroup.index === optionTextAreaIndex}
-                                                classNameValues={optionTextArea.className}
-                                                value={optionTextArea.value}
-                                                templateState={templateState}
-                                                onClick={(event) => {
-                                                  event.stopPropagation();
-                                                  handleClickMainDiv(childIndex, optionTextAreaIndex);
-                                                }}
-                                                onChange={(newText) => {
-                                                  const updatedState = [...templateState];
+                      if (optionTextArea.type === "text")
+                        return (
+                          <EditableSpan
+                            key={key}
+                            optionTextAreaType="text"
+                            spanKey={key}
+                            childIndex={optionTextAreaIndex}
+                            isChoosed={childGroup.index === optionTextAreaIndex}
+                            classNameValues={optionTextArea.className}
+                            value={optionTextArea.value}
+                            templateState={templateState}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleClickMainDiv(childIndex, optionTextAreaIndex);
+                            }}
+                            onChange={(newText) => {
+                              const updatedState = [...templateState];
 
-                                                  if (newText.trim() === "") {
-                                                    if (updatedState[i].children[childIndex].index !== 0) {
-                                                      updatedState[i].children[childIndex].index -= 1;
-                                                    }
-                                                    updatedState[i].children[childIndex].children =
-                                                      updatedState[i].children[childIndex].children.filter(
-                                                        (_: any, idx: number) => idx !== optionIndex
-                                                      );
-                                                    updatedState[i].children[childIndex].textArea =
-                                                      updatedState[i].children[childIndex].textArea.filter(
-                                                        (_: any, idx: number) => idx !== optionTextAreaIndex
-                                                      );
-                                                    if (updatedState[i].children[childIndex].textArea.length === 0) {
-                                                      updatedState[i].children = updatedState[i].children.filter(
-                                                        (_: any, idx: number) => idx !== childIndex
-                                                      );
-                                                    }
-                                                  } else {
-                                                    updatedState[i].children[childIndex].textArea[
-                                                      optionTextAreaIndex
-                                                    ].value = newText;
-                                                  }
-                                                  setTemplateState(updatedState);
-                                                }}
-                                              />
-                                            ) : optionTextArea.type === "placeholder" ? (
-                                              <Placeholder
-                                                optionTextAreaType={optionTextArea.type}
-                                                key={key}
-                                                spanKey={key}
-                                                childIndex={optionTextAreaIndex}
-                                                isChoosed={childGroup.index === optionTextAreaIndex}
-                                                classNameValues={optionTextArea.className}
-                                                onClickPlaceholder={() => onClickPlaceholder()}
-                                                value={optionTextArea.value}
-                                                templateState={templateState}
-                                                onClick={(event) => {
-                                                  event.stopPropagation();
-                                                  handleClickMainDiv(childIndex, optionTextAreaIndex);
-                                                }}
-                                              />
-                                            ) : (
-                                              optionTextArea.type === "questionary" && (
-                                                <QuestionaryQuestion
-                                                  optionTextAreaType={optionTextArea.type}
-                                                  key={key}
-                                                  spanKey={key}
-                                                  childIndex={optionTextAreaIndex}
-                                                  isChoosed={childGroup.index === optionTextAreaIndex}
-                                                  classNameValues={optionTextArea.className}
-                                                  onClickPlaceholder={() => onClickQuestionary()}
-                                                  value={optionTextArea.value}
-                                                  templateState={templateState}
-                                                  onClick={(event: any) => {
-                                                    event.stopPropagation();
-                                                    handleClickMainDiv(childIndex, optionTextAreaIndex);
-                                                  }}
-                                                />
-                                              )
-                                            );
-                                          }
-                                        )}
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className='w-full h-[60px] flex justify-end '>          
-                                        {childGroup.textArea[0]?.type !== "table" && (
-                                          <div
-                                            onClick={() => {
-                                              if (childGroup.textArea[0].type !== "questionary") {
-                                                AddNewValueInParagraph(i, childIndex);
-                                              } else {
-                                                HandleAddNewQuestionary(
-                                                  i,
-                                                  childIndex,
-                                                  setTemplateState,
-                                                  questionaryQuestion,
-                                                  setQuestionaryQuestion
-                                                );
-                                              }
-                                            }}
-                                            className="w-[auto] min-h-full border-2 flex justify-end items-center rounded-lg cursor-pointer  text-white"
-                                          >
-                                            <div className="bg-sidebarChoose h-full flex justify-center items-center px-2 rounded-lg">
-                                              {childGroup.textArea[0].type === "questionary"
-                                                ? "ახალი კითხვის დამატება "
-                                                : "აბზაცის გაგრძელების დამატება"}
-                                            </div>
-                                          </div>
-                                        )}
-                                    </div>
-                                </div>
-                              </div>
-                            )}
-                          </Fragment>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="flex w-full flex-col gap-4 h-full">
-                        {childGroup.children.map((option: any, optionIndex: any) => (
-                          <Fragment key={optionIndex}>
-                            {(optionIndex === childGroup.index ||
-                              (childGroup.index === -1 && optionIndex === 0)) && (
-                              <div className="flex gap-[4%] h-full">
-                                <div className="w-full h-full flex flex-col">
-                                  <div className="w-full bg-[#d5d8df4f] h-auto flex flex-col items-center gap-4">
-                                    <div className="flex max-w-[1400px] w-auto min-w-[500px] gap-10 h-[100px] items-center overflow-x-auto">
-                                      {childGroup.index !== -1 && (
-                                        <Fragment>
-                                          {option.map((grandChild: any, grandChildIndex: any) => (
-                                            <Fragment key={grandChildIndex}>
-                                              <div className="min-w-[100px] h-[70px] border-2 shadow-bottom justify-center flex flex-col gap-2 px-2 items-center">
-                                                {RenderField(
-                                                  "normal",
-                                                  grandChild,
-                                                  grandChildIndex,
-                                                  i,
-                                                  childIndex,
-                                                  optionIndex,
-                                                  templateState,
-                                                  setTemplateState,
-                                                  setShodPlaceholderQuestion,
-                                                  setQuestionaryQuestion,
-                                                  HandleChangeType,
-                                                  handleChangeSelectOption
-                                                )}
-                                              </div>
-                                            </Fragment>
-                                          ))}
-                                        </Fragment>
-                                      )}
-                                    </div>
+                              if (newText.trim() === "") {
+                                if (updatedState[i].children[childIndex].index !== 0) {
+                                  updatedState[i].children[childIndex].index -= 1;
+                                }
 
-                                    <div
-                                      ref={scrollRef}
-                                      className={`${
-                                        childGroup.textArea[0].type === "text" ||
-                                        childGroup.textArea[0].type === "placeholder"
-                                          ? "h-[100px] gap-2"
-                                          : childGroup.textArea[0].type === "table"
-                                          ? "h-[400px]"
-                                          : childGroup.textArea[0].type === "questionary"
-                                          ? "h-[100px] w-auto items-center"
-                                          : ""
-                                      } flex ${
-                                        childGroup.justify === "left"
-                                          ? "justify-start"
-                                          : childGroup.justify === "center"
-                                          ? "justify-center"
-                                          : childGroup.justify === "right"
-                                          ? "justify-end"
-                                          : "justify-normal"
-                                      } items-center w-full max-w-full overflow-x-scroll text-sm p-2 resize-none bg-white border`}
-                                    >
-                                      <div
-                                        className={`w-auto h-full max-w-full gap-2 ${
-                                          childGroup.textArea[0].type === "questionary" ? "" : "items-center flex"
-                                        }`}
-                                      >
-                                        {childGroup.textArea.map(
-                                          (optionTextArea: any, optionTextAreaIndex: number) => {
-                                            const key = getSpanKey(
-                                              childIndex,
-                                              optionIndex,
-                                              optionTextAreaIndex
-                                            );
+                                updatedState[i].children[childIndex].children =
+                                  updatedState[i].children[childIndex].children.filter(
+                                    (_: any, idx: number) => idx !== optionIndex
+                                  );
 
-                                            return optionTextArea.type === "text" ? (
-                                              <EditableSpan
-                                                optionTextAreaType={optionTextArea.type}
-                                                key={key}
-                                                spanKey={key}
-                                                childIndex={optionTextAreaIndex}
-                                                isChoosed={childGroup.index === optionTextAreaIndex}
-                                                classNameValues={optionTextArea.className}
-                                                value={optionTextArea.value}
-                                                templateState={templateState}
-                                                onClick={(event) => {
-                                                  event.stopPropagation();
-                                                  handleClickMainDiv(childIndex, optionTextAreaIndex);
-                                                }}
-                                                onChange={(newText) => {
-                                                  const updatedState = [...templateState];
+                                updatedState[i].children[childIndex].textArea =
+                                  updatedState[i].children[childIndex].textArea.filter(
+                                    (_: any, idx: number) =>
+                                      idx !== optionTextAreaIndex
+                                  );
+                              } else {
+                                updatedState[i].children[childIndex].textArea[
+                                  optionTextAreaIndex
+                                ].value = newText;
+                              }
 
-                                                  if (newText.trim() === "") {
-                                                    if (updatedState[i].children[childIndex].index !== 0) {
-                                                      updatedState[i].children[childIndex].index -= 1;
-                                                    }
-                                                    updatedState[i].children[childIndex].children =
-                                                      updatedState[i].children[childIndex].children.filter(
-                                                        (_: any, idx: number) => idx !== optionIndex
-                                                      );
-                                                    updatedState[i].children[childIndex].textArea =
-                                                      updatedState[i].children[childIndex].textArea.filter(
-                                                        (_: any, idx: number) => idx !== optionTextAreaIndex
-                                                      );
-                                                    if (updatedState[i].children[childIndex].textArea.length === 0) {
-                                                      updatedState[i].children = updatedState[i].children.filter(
-                                                        (_: any, idx: number) => idx !== childIndex
-                                                      );
-                                                    }
-                                                  } else {
-                                                    updatedState[i].children[childIndex].textArea[
-                                                      optionTextAreaIndex
-                                                    ].value = newText;
-                                                  }
-                                                  setTemplateState(updatedState);
-                                                }}
-                                              />
-                                            ) : optionTextArea.type === "placeholder" ? (
-                                              <Placeholder
-                                                optionTextAreaType={optionTextArea.type}
-                                                key={key}
-                                                spanKey={key}
-                                                childIndex={optionTextAreaIndex}
-                                                isChoosed={childGroup.index === optionTextAreaIndex}
-                                                classNameValues={optionTextArea.className}
-                                                onClickPlaceholder={() => onClickPlaceholder()}
-                                                value={optionTextArea.value}
-                                                templateState={templateState}
-                                                onClick={(event) => {
-                                                  event.stopPropagation();
-                                                  handleClickMainDiv(childIndex, optionTextAreaIndex);
-                                                }}
-                                              />
-                                            ) : (
-                                              optionTextArea.type === "questionary" && (
-                                                <QuestionaryQuestion
-                                                  optionTextAreaType={optionTextArea.type}
-                                                  key={key}
-                                                  spanKey={key}
-                                                  childIndex={optionTextAreaIndex}
-                                                  isChoosed={childGroup.index === optionTextAreaIndex}
-                                                  classNameValues={optionTextArea.className}
-                                                  onClickPlaceholder={() => onClickPlaceholder()}
-                                                  value={optionTextArea.value}
-                                                  templateState={templateState}
-                                                  onClick={(event: any) => {
-                                                    event.stopPropagation();
-                                                    handleClickMainDiv(childIndex, optionTextAreaIndex);
-                                                  }}
-                                                />
-                                              )
-                                            );
-                                          }
-                                        )}
-                                      </div>
-                                    </div>
-                                  </div>
-                                    <div className='w-full h-[60px] flex justify-end '>          
-                                        {childGroup.textArea[0]?.type !== "table" && (
-                                          <div
-                                            onClick={() => {
-                                              if (childGroup.textArea[0].type !== "questionary") {
-                                                AddNewValueInParagraph(i, childIndex);
-                                              } else {
-                                                HandleAddNewQuestionary(
-                                                  i,
-                                                  childIndex,
-                                                  setTemplateState,
-                                                  questionaryQuestion,
-                                                  setQuestionaryQuestion
-                                                );
-                                              }
-                                            }}
-                                            className="w-[auto] min-h-full px-2 border-2 flex justify-end items-center rounded-lg cursor-pointer shadow-bottom bg-[#d5d8df4f] text-white"
-                                          >
-                                            <div className="bg-sidebarChoose h-full flex justify-center items-center px-2 rounded-lg">
-                                              {childGroup.textArea[0].type === "questionary"
-                                                ? "ახალი კითხვის დამატება "
-                                                : "აბზაცის გაგრძელების დამატება"}
-                                            </div>
-                                          </div>
-                                        )}
-                                    </div>
-                                </div>
-                              </div>
-                            )}
-                          </Fragment>
-                        ))}
-                      </div>
-                    )}
+                              setTemplateState(updatedState);
+                            }}
+                          />
+                        );
+
+                      if (optionTextArea.type === "placeholder")
+                        return (
+                          <Placeholder
+                            key={key}
+                            optionTextAreaType="placeholder"
+                            spanKey={key}
+                            childIndex={optionTextAreaIndex}
+                            isChoosed={childGroup.index === optionTextAreaIndex}
+                            classNameValues={optionTextArea.className}
+                            value={optionTextArea.value}
+                            templateState={templateState}
+                            onClickPlaceholder={onClickPlaceholder}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleClickMainDiv(childIndex, optionTextAreaIndex);
+                            }}
+                          />
+                        );
+
+                      return (
+                        optionTextArea.type === "questionary" && (
+                          <QuestionaryQuestion
+                            key={key}
+                            optionTextAreaType="questionary"
+                            spanKey={key}
+                            childIndex={optionTextAreaIndex}
+                            isChoosed={childGroup.index === optionTextAreaIndex}
+                            classNameValues={optionTextArea.className}
+                            onClickPlaceholder={onClickQuestionary}
+                            value={optionTextArea.value}
+                            templateState={templateState}
+                            onClick={(e: any) => {
+                              e.stopPropagation();
+                              handleClickMainDiv(childIndex, optionTextAreaIndex);
+                            }}
+                          />
+                        )
+                      );
+                    }
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* BUTTON */}
+            <div className="w-full h-[60px] flex justify-end">
+              {childGroup.textArea[0].type !== "table" && (
+                <div
+                  className={`
+                    w-auto min-h-full border-2 flex justify-end items-center rounded-lg cursor-pointer text-white
+                    ${
+                      childGroup.textArea[0]?.type === "questionary"
+                        ? ""
+                        : "px-2 shadow-bottom bg-[#d5d8df4f]"
+                    }
+                  `}
+                  onClick={() => {
+                    console.log("clicked");
+                    if (childGroup.textArea[0]?.type !== "questionary") {
+                      AddNewValueInParagraph(i, childIndex);
+                    } else {
+                      HandleAddNewQuestionary(
+                        i,
+                        childIndex,
+                        setTemplateState,
+                        questionaryQuestion,
+                        setQuestionaryQuestion
+                      );
+                    }
+                  }}
+                >
+                  <div className="bg-sidebarChoose h-full flex justify-center items-center px-2 rounded-lg">
+                    {childGroup.textArea[0]?.type === "questionary"
+                      ? "ახალი კითხვის დამატება "
+                      : "აბზაცის გაგრძელების დამატება"}
                   </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </Fragment>
+  ))}
+</div>
 
                 </div>
               </Fragment>

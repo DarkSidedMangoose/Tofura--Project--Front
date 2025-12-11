@@ -19,7 +19,7 @@ export const RenderField = (
    HandleChangeType: any,
    handleChangeSelectOption: any
  ) => {
-   
+   console.log(identifier)
    switch (option.type) {
      case "select":
        return (
@@ -37,6 +37,7 @@ export const RenderField = (
            onChange={(e) => {
              option.name === "type"
                ? HandleChangeType(
+                  identifier,
                    e.target.value,
                    templateIndex,
                    childIndex,

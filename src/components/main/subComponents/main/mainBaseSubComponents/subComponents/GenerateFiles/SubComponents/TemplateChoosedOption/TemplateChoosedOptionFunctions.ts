@@ -23,18 +23,28 @@ export const HandleAddNewQuestionary = (
         ...newState[templateIndex].children[childIndex].children,
       ];
       const uuid = crypto.randomUUID();
-      newState[templateIndex].children[childIndex].textArea[optionIndex] = {
-        uuid: uuid,
-        type: "questionary",
-        questionName: questionaryQuestion.questionName,
-        value: "",
-        className: {
-          fontSize: 16,
-          fontStyle: { bold: true, italic: false, underline: false },
-        },
-      };
-      childrenCopy[optionIndex] = ChildrenQustionaryValue; // from TemplateChoosedOptionValues.ts
-      newState[templateIndex].children[childIndex].children = childrenCopy;
+      if (newState[templateIndex].children[childIndex].textArea[0].type !== "questionary") { 
+        newState[templateIndex].children[childIndex].textArea = [{
+          uuid: uuid,
+          type: "questionary",
+          questionName: questionaryQuestion.questionName,
+          value: "",
+          className: null
+        }]
+        newState[templateIndex].children[childIndex].index = 0;
+        newState[templateIndex].children[childIndex].children = [ChildrenQustionaryValue]; // from TemplateChoosedOptionValues.ts
+      } else {
+        newState[templateIndex].children[childIndex].textArea[optionIndex] = {
+          uuid: uuid,
+          type: "questionary",
+          questionName: questionaryQuestion.questionName,
+          value: "",
+           className: null,
+        };
+        childrenCopy[optionIndex] = ChildrenQustionaryValue; // from TemplateChoosedOptionValues.ts
+        newState[templateIndex].children[childIndex].children = childrenCopy;
+        
+      }
       return newState;
     });
     setQuestionaryQuestion((prev: any) => [{ ...prev, bool: false }]);
@@ -81,6 +91,7 @@ export const HandleAddNewPlaceholder = (
 
 //3rd
 export const HandleChangeType = (
+    identifier: string,
     selected: string,
     templateIndex: number,
     childIndex: number,
@@ -90,6 +101,8 @@ export const HandleChangeType = (
     setQuestionaryQuestion: React.Dispatch<SetStateAction<any>>
 
   ) => {
+  
+ 
     setTemplateState((prev) => {
       const newState = JSON.parse(JSON.stringify(prev));
       const childrenCopy = [
@@ -99,7 +112,7 @@ export const HandleChangeType = (
         case "text":
           newState[templateIndex].children[childIndex].textArea[optionIndex] = {
               type: "text",
-              value: "asket",
+              value: "შეიყვანეთ ტექსტი...",
               className: {
                 fontSize: 16,
                 fontStyle: { bold: true, italic: false, underline: false },
