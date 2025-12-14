@@ -3,12 +3,12 @@ import { useEffect, useRef } from "react";
 type Props = {
   value: any;
   onChange: (value: any) => void;
-  spanKey: string;
-  classNameValues: any;
-  onClick: (arg: any) => void;
+  spanKey?: string;
+  classNameValues?: any;
+  onClick?: (arg: any) => void;
   onFocus?: () => void;
-  isChoosed: boolean;
-  childIndex: number;
+  isChoosed?: boolean;
+  childIndex?: number;
   optionTextAreaType?: string; // New prop to differentiate between text and placeholder
   templateState?: any; // Optional prop for template state
 };
@@ -31,12 +31,14 @@ export const EditableSpan: React.FC<Props> = (props) => {
     const el = spanRef.current;
     if (el) {
       props.onChange(el.innerText);
+      console.log(props.value);
+      
       // el.blur(); // remove focus after change
     }
   };
 
   return (
-    <div className={`h-[50px] w-auto min-w-fit ${!props.isChoosed && "cursor-pointer"} relative `} >
+    <div className={`h-[50px]   w-auto min-w-fit ${!props.isChoosed && "cursor-pointer"} relative `} >
       {!props.isChoosed && (
 
       <div className="absolute w-full h-full  hover:bg-[#21113a7c]" onClick={props.onClick}></div>
