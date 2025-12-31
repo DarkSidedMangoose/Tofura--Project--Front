@@ -156,7 +156,7 @@ const TemplateChoosedOption: React.FC<Props> = ({
     });
   };
 
-  function getSpanKey(
+   function getSpanKey(
     sectionIndex: number,
     paragraphIndex: number,
     spanIndex: number

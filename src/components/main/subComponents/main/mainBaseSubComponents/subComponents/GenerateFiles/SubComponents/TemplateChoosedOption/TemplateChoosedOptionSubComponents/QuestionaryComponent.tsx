@@ -1,6 +1,9 @@
 import React, { Fragment, useState } from 'react';
+
 import AddNew from '../../../../../../../../../../assets/images/generateWordFiles/add.png';
 import Remove from '../../../../../../../../../../assets/images/generateWordFiles/minus-button.png';
+
+import Left from '../../../../../../../../../../assets/images/generateWordFiles/left-arrow.png';
 import RenderFieldQuestionary from './RenderFieldQuestionary';
 import { EditableSpan } from '../../EditableSpan';
 
@@ -26,195 +29,583 @@ type Props = {
 };
 
 const Questionary = (props: Props) => {
-  const [wholeState, setWholeState] = useState<any>(
-    {
-      questionIndex: 0,
-      context: [
-         {
-      questionAnswer: '',
-      answeredQuestionInner: [
-        {
-          name: 'dd',
-          justify: 'left',
-          textArea: [{
-              uuid: null,
-              questionName: null,
-              questionInnerValueChildren: null,
-              type: "text",
-              value: "შეიყვანეთ ტექსტი...",
-              className: {
-                fontSize: 16,
-                fontStyle: {
-                  bold: true,
-                  italic: false,
-                  underLine: false
+  const [wholeState, setWholeState] = useState<any>({
+    questionIndex: 0,
+    context: [
+      {
+        questionAnswer: '',
+        questionIdentifier: 0,
+        answeredQuestionInner: [
+          {
+            name: 'შესავალი',
+            justify: 'right',
+            index: 0,
+            textArea: [
+              {
+                uuid: null,
+                questionName: null,
+                questionInnerValueChildren: null,
+                type: 'text',
+                value: 'შეიყვანეთ ტექსტი...',
+                className: {
+                  fontSize: 32,
+                  fontStyle: {
+                    bold: false,
+                    italic: false,
+                    underline: false,
+                  },
+                  fontFamily: "Calibri",
+                  fontElement: null,
+                  fontColor: "#808080CC",
+
+
                 },
-                fontFamily: null,
-                fontElement: null,
-                justify: null,
-                fontColor: null
-              }
-            }],
-          index: 0,
-          children: [
-            [
-          {
-            name: "type",
-            type: "select",
-            option: ["text", "questionary", "placeholder", "table", "image"],
-            value: { stringValue: "text" },
+              },
+             
+            ],
+            children: [
+              [
+                {
+                  name: 'type',
+                  type: 'select',
+                  option: [
+                    'text',
+                    'questionary',
+                    'placeholder',
+                    'table',
+                    'image',
+                  ],
+                  value: { stringValue: 'text' },
+                },
+                {
+                  name: 'element tag',
+                  type: 'select',
+                  option: ['h1', 'h2', 'p', 'span'],
+                  value: { stringValue: 'h2' },
+                },
+                {
+                  name: 'font family',
+                  type: 'select',
+                  option: ['Calibri', 'Roboto', 'Times New Roman'],
+                  value: { stringValue: 'Calibri' },
+                },
+                {
+                  name: 'font size',
+                  type: 'input',
+                  value: { numberValue: 16 },
+                },
+                {
+                  name: 'text style',
+                  type: 'multiselect',
+                  option: ['bold', 'italic', 'underline'],
+                  value: {
+                    objectValue: {
+                      bold: false,
+                      italic: false,
+                      underline: false,
+                    },
+                  },
+                },
+                {
+                  name: 'alignment',
+                  type: 'select',
+                  option: ['left', 'center', 'right', 'justify'],
+                  value: { stringValue: 'left' },
+                },
+                {
+                  name: 'color',
+                  type: 'color',
+                  value: { stringValue: '#000000' },
+                },
+              ],
+            ],
           },
           {
-            name: "element tag",
-            type: "select",
-            option: ["h1", "h2", "p", "span"],
-            value: { stringValue: "h1" },
-          },
+            name: 'შესავალი',
+            justify: 'left',
+            index: 0,
+            textArea: [
+              {
+                uuid: null,
+                questionName: null,
+                questionInnerValueChildren: null,
+                type: 'text',
+                value: 'შეიყვანეთ ტექსტი...',
+                className: {
+                  fontSize: 16,
+                  fontStyle: {
+                    bold: false,
+                    italic: false,
+                    underline: false,
+                  },
+                  fontFamily: "Calibri",
+                  fontElement: null,
+                  fontColor: "#002300",
+
+                },
+              },
+              {
+                uuid: null,
+                questionName: null,
+                questionInnerValueChildren: null,
+                type: 'text',
+                value: 'შეიყვანეთ ტექსტი...',
+                className: {
+                  fontSize: 16,
+                  fontStyle: {
+                    bold: false,
+                    italic: false,
+                    underline: false,
+                  },
+                  fontFamily: "Calibri",
+                  fontElement: null,
+                  fontColor: "#808080CC",
+                },
+              },
+            ],
+            children: [
+              [
+                {
+                  name: 'type',
+                  type: 'select',
+                  option: [
+                    'text',
+                    'questionary',
+                    'placeholder',
+                    'table',
+                    'image',
+                  ],
+                  value: { stringValue: 'text' },
+                },
+                {
+                  name: 'element tag',
+                  type: 'select',
+                  option: ['h1', 'h2', 'p', 'span'],
+                  value: { stringValue: 'h1' },
+                },
+                {
+                  name: 'font family',
+                  type: 'select',
+                  option: ['Calibri', 'Roboto', 'Times New Roman'],
+                  value: { stringValue: 'Calibri' },
+                },
+                {
+                  name: 'font size',
+                  type: 'input',
+                  value: { numberValue: 16 },
+                },
+                {
+                  name: 'text style',
+                  type: 'multiselect',
+                  option: ['bold', 'italic', 'underline'],
+                  value: {
+                    objectValue: {
+                      bold: false,
+                      italic: false,
+                      underline: false,
+                    },
+                  },
+                },
+                {
+                  name: 'alignment',
+                  type: 'select',
+                  option: ['left', 'center', 'right', 'justify'],
+                  value: { stringValue: 'left' },
+                },
+                {
+                  name: 'color',
+                  type: 'color',
+                  value: { stringValue: '#000000' },
+                },
+              ],
+              [
+                {
+                  name: 'type',
+                  type: 'select',
+                  option: [
+                    'text',
+                    'questionary',
+                    'placeholder',
+                    'table',
+                    'image',
+                  ],
+                  value: { stringValue: 'text' },
+                },
+                {
+                  name: 'element tag',
+                  type: 'select',
+                  option: ['h1', 'h2', 'p', 'span'],
+                  value: { stringValue: 'h1' },
+                },
+                {
+                  name: 'font family',
+                  type: 'select',
+                  option: ['Calibri', 'Roboto', 'Times New Roman'],
+                  value: { stringValue: 'Calibri' },
+                },
+                {
+                  name: 'font size',
+                  type: 'input',
+                  value: { numberValue: 16 },
+                },
+                {
+                  name: 'text style',
+                  type: 'multiselect',
+                  option: ['bold', 'italic', 'underline'],
+                  value: {
+                    objectValue: {
+                      bold: false,
+                      italic: false,
+                      underline: false,
+                    },
+                  },
+                },
+                {
+                  name: 'alignment',
+                  type: 'select',
+                  option: ['left', 'center', 'right', 'justify'],
+                  value: { stringValue: 'left' },
+                },
+                {
+                  name: 'color',
+                  type: 'color',
+                  value: { stringValue: '#000000' },
+                },
+              ],
+            ],
+          }
+        ],
+      },
+      {
+        questionAnswer: 'add',
+        questionIdentifier: 0,
+        answeredQuestionInner: [
           {
-            name: "font family",
-            type: "select",
-            option: ["Calibri", "Roboto", "Times New Roman"],
-            value: { stringValue: "Calibri" },
-          },
-          {
-            name: "font size",
-            type: "input",
-            value: { numberValue: 16 },
-          },
-          {
-            name: "text style",
-            type: "multiselect",
-            option: ["bold", "italic", "underline"],
-            value: {
-              objectValue: { bold: true, italic: false, underline: false },
-            },
-          },
-          {
-            name: "alignment",
-            type: "select",
-            option: ["left", "center", "right", "justify"],
-            value: { stringValue: "left" },
-          },
-          {
-            name: "color",
-            type: "color",
-            value: { stringValue: "#000000" },
+            name: 'adda',
+            justify: 'left',
+            index: 0,
+            textArea: [
+              {
+                uuid: null,
+                questionName: null,
+                questionInnerValueChildren: null,
+                type: 'text',
+                value: 'შეიყვანეთ ტექსტი...',
+                className: {
+                  fontSize: 16,
+                  fontStyle: {
+                    bold: false,
+                    italic: false,
+                    underLine: false,
+                  },
+                  fontFamily: "Calibri",
+                  fontElement: null,
+                  fontColor: "#002300",
+                },
+              },
+            ],
+            children: [
+              [
+                {
+                  name: 'type',
+                  type: 'select',
+                  option: [
+                    'text',
+                    'questionary',
+                    'placeholder',
+                    'table',
+                    'image',
+                  ],
+                  value: { stringValue: 'text' },
+                },
+                {
+                  name: 'element tag',
+                  type: 'select',
+                  option: ['h1', 'h2', 'p', 'span'],
+                  value: { stringValue: 'h1' },
+                },
+                {
+                  name: 'font family',
+                  type: 'select',
+                  option: ['Calibri', 'Roboto', 'Times New Roman'],
+                  value: { stringValue: 'Calibri' },
+                },
+                {
+                  name: 'font size',
+                  type: 'input',
+                  value: { numberValue: 16 },
+                },
+                {
+                  name: 'text style',
+                  type: 'multiselect',
+                  option: ['bold', 'italic', 'underline'],
+                  value: {
+                    objectValue: {
+                      bold: false,
+                      italic: false,
+                      underline: false,
+                    },
+                  },
+                },
+                {
+                  name: 'alignment',
+                  type: 'select',
+                  option: ['left', 'center', 'right', 'justify'],
+                  value: { stringValue: 'left' },
+                },
+                {
+                  name: 'color',
+                  type: 'color',
+                  value: { stringValue: '#000000' },
+                },
+              ],
+               [
+                {
+                  name: 'type',
+                  type: 'select',
+                  option: [
+                    'text',
+                    'questionary',
+                    'placeholder',
+                    'table',
+                    'image',
+                  ],
+                  value: { stringValue: 'text' },
+                },
+                {
+                  name: 'element tag',
+                  type: 'select',
+                  option: ['h1', 'h2', 'p', 'span'],
+                  value: { stringValue: 'h1' },
+                },
+                {
+                  name: 'font family',
+                  type: 'select',
+                  option: ['Calibri', 'Roboto', 'Times New Roman'],
+                  value: { stringValue: 'Calibri' },
+                },
+                {
+                  name: 'font size',
+                  type: 'input',
+                  value: { numberValue: 16 },
+                },
+                {
+                  name: 'text style',
+                  type: 'multiselect',
+                  option: ['bold', 'italic', 'underline'],
+                  value: {
+                    objectValue: {
+                      bold: false,
+                      italic: false,
+                      underline: false,
+                    },
+                  },
+                },
+                {
+                  name: 'alignment',
+                  type: 'select',
+                  option: ['left', 'center', 'right', 'justify'],
+                  value: { stringValue: 'left' },
+                },
+                {
+                  name: 'color',
+                  type: 'color',
+                  value: { stringValue: '#000000' },
+                },
+              ],
+            ],
           },
         ],
-          ]
+      },
+    ],
+  });
 
-        }
-      ]
-    },
-    {
-      questionAnswer: 'add',
-      answeredQuestionInner: [
+  const handleChangeSpanIndex = (identifier: boolean, answeredQuestioninnerIndex: number) => {
+    setWholeState((prevState: any) => {
+      const newState = JSON.parse(JSON.stringify(prevState));
+      const index = newState.context[newState.questionIndex].answeredQuestionInner[answeredQuestioninnerIndex].index;
+      if (!identifier) {
+        newState.context[newState.questionIndex].answeredQuestionInner[answeredQuestioninnerIndex].index -= 1;
+        const textArea = newState.context[newState.questionIndex].answeredQuestionInner[answeredQuestioninnerIndex].textArea;
+        const children = newState.context[newState.questionIndex].answeredQuestionInner[answeredQuestioninnerIndex].children;
+        [textArea[index - 1], textArea[index]] = [textArea[index], textArea[index - 1]];
+        [children[index - 1], children[index]] = [children[index], children[index - 1]];
+      } else {
+        newState.context[newState.questionIndex].answeredQuestionInner[answeredQuestioninnerIndex].index += 1;
+        const textArea = newState.context[newState.questionIndex].answeredQuestionInner[answeredQuestioninnerIndex].textArea;
+        const children = newState.context[newState.questionIndex].answeredQuestionInner[answeredQuestioninnerIndex].children;
+        [textArea[index], textArea[index +1]] = [textArea[index + 1], textArea[index]];
+        [children[index], children[index +1 ]] = [children[index +1], children[index ]];
+      }
+      return newState;
+    });
+
+  };
+
+  const handleAddNewSpanInTextArea = (idx: number) => {
+    
+    setWholeState((prevState: any) => {
+      const newState = JSON.parse(JSON.stringify(prevState));
+      const index = newState.context[newState.questionIndex].answeredQuestionInner[idx].index;
+      newState.context[newState.questionIndex].answeredQuestionInner[idx].textArea.splice(index +1, 0,
         {
-          name: 'adda',
-          justify: 'left',
-          textArea: {
-
-          },
-          index: 0,
-          children: [
-            [
+                uuid: null,
+                questionName: null,
+                questionInnerValueChildren: null,
+                type: 'text',
+                value: 'შეიყვანეთ ტექსტი...',
+                className: {
+                  fontSize: 16,
+                  fontStyle: {
+                    bold: false,
+                    italic: false,
+                    underline: false,
+                  },
+                  fontFamily: "Calibri",
+                  fontElement: null,
+                  fontColor: "#808080CC",
+                },
+        },
+      );
+      newState.context[newState.questionIndex].answeredQuestionInner[idx].children.splice( index +1, 0,
+        [
               {
-                name: "",
-                type: "text",
+                name: 'type',
+                type: 'select',
                 option: [
-
+                  'text',
+                  'questionary',
+                  'placeholder',
+                  'table',
+                  'image',
                 ],
+                value: { stringValue: 'text' },
+              },
+              {
+                name: 'element tag',
+                type: 'select',
+                option: ['h1', 'h2', 'p', 'span'],
+                value: { stringValue: 'h1' },
+              },
+              {
+                name: 'font family',
+                type: 'select',
+                option: ['Calibri', 'Roboto', 'Times New Roman'],
+                value: { stringValue: 'Calibri' },
+              },
+              {
+                name: 'font size',
+                type: 'input',
+                value: { numberValue: 16 },
+              },
+              {
+                name: 'text style',
+                type: 'multiselect',
+                option: ['bold', 'italic', 'underline'],
                 value: {
-                  stringValue: "",
-                  numberValue: null,
-                  objectValue: null
-                }
-              }
-            ]
-          ]
-
-        }
-      ]
-    }
-      ]
-      
-   
+                  objectValue: {
+                    bold: false,
+                    italic: false,
+                    underline: false,
+                  },
+                },
+              },
+              {
+                name: 'alignment',
+                type: 'select',
+                option: ['left', 'center', 'right', 'justify'],
+                value: { stringValue: 'left' },
+              },
+              {
+                name: 'color',
+                type: 'color',
+                value: { stringValue: '#000000' },
+              },
+        ],
+      )
+      return newState;
+    });
   }
-  );
 
-  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+  const changeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const { value } = e.target;
-    setWholeState((prevState:any) => {
+
+    setWholeState((prevState: any) => {
       const newState = JSON.parse(JSON.stringify(prevState));
       newState.context[index].questionAnswer = value;
       return newState;
     });
+  };
 
-  }
   const changeIndex = (index: number) => {
     setWholeState((prevState: any) => {
       const newState = JSON.parse(JSON.stringify(prevState));
       newState.questionIndex = index;
       return newState;
     });
-  }
+  };
 
+  const handleChangeEditableSpan = (newText: any,idx:number, textAreaIndex: number) => {
+    const updatedState = JSON.parse(JSON.stringify(wholeState));
+    if (newText.trim() === '') {
+      if (
+        updatedState.context[wholeState.questionIndex]
+          .answeredQuestionInner[idx].index !== 0
+      ) {
+        updatedState.context[wholeState.questionIndex]
+          .answeredQuestionInner[idx].index -= 1;
+      
+      } else {
+        updatedState.context[wholeState.questionIndex]
+          .answeredQuestionInner[idx].index = 0;
+      }
+      if (updatedState.context[wholeState.questionIndex].answeredQuestionInner[idx].children.length > 1)
+      {
 
-  const handleChangeEditableSpan = (newText:any, textAreaIndex:number ) => {
-    
-                              const updatedState = wholeState;
+        updatedState.context[wholeState.questionIndex]
+        .answeredQuestionInner[idx].children =
+          updatedState.context[wholeState.questionIndex]
+          .answeredQuestionInner[idx].children.filter(
+              (_: any, idxSub: number) => idxSub !== textAreaIndex
+            );
 
-                              if (newText.trim() === "") {
-                                if (updatedState.context[wholeState.questionIndex].answeredQuestionInner[textAreaIndex].index !== 0) {
-                                 updatedState.context[wholeState.questionIndex].answeredQuestionInner[textAreaIndex].index -= 1;
-                                }
-
-                               updatedState.context[wholeState.questionIndex].answeredQuestionInner[textAreaIndex].children =
-                                  updatedState.context[wholeState.questionIndex].answeredQuestionInner[textAreaIndex].children.filter(
-                                    (_: any, idx: number) => idx !== textAreaIndex
-                                  );
-
-                                updatedState.context[wholeState.questionIndex].answeredQuestionInner[textAreaIndex].textArea =
-                                  updatedState.context[wholeState.questionIndex].answeredQuestionInner[textAreaIndex].textArea.filter(
-                                    (_: any, idx: number) =>
-                                      idx !== textAreaIndex
-                                  );
-                              } else {
-                                 updatedState.context[wholeState.questionIndex].answeredQuestionInner[textAreaIndex].textArea[
-                                  textAreaIndex
-                                ].value = newText;
+        updatedState.context[wholeState.questionIndex]
+          .answeredQuestionInner[idx].textArea =
+          updatedState.context[wholeState.questionIndex]
+            .answeredQuestionInner[idx].textArea.filter(
+              (_: any, idxSub: number) => idxSub !== textAreaIndex
+            );
+      } else {
+        updatedState.context[wholeState.questionIndex].answeredQuestionInner.splice(idx,1)
+          }
+      
+} else {
+      updatedState.context[wholeState.questionIndex]
+        .answeredQuestionInner[idx].textArea[textAreaIndex].value =
+        newText;
+       
     }
-
-
-                              setWholeState((prev:any) => {
-                                const updatedState = JSON.parse(JSON.stringify(prev));
-                                if (newText.trim() === "") {
-                                if (updatedState.context[wholeState.questionIndex].answeredQuestionInner[textAreaIndex].index !== 0) {
-                                 updatedState.context[wholeState.questionIndex].answeredQuestionInner[textAreaIndex].index -= 1;
-                                }
-
-                               updatedState.context[wholeState.questionIndex].answeredQuestionInner[textAreaIndex].children =
-                                  updatedState.context[wholeState.questionIndex].answeredQuestionInner[textAreaIndex].children.filter(
-                                    (_: any, idx: number) => idx !== textAreaIndex
-                                  );
-
-                                updatedState.context[wholeState.questionIndex].answeredQuestionInner[textAreaIndex].textArea =
-                                  updatedState.context[wholeState.questionIndex].answeredQuestionInner[textAreaIndex].textArea.filter(
-                                    (_: any, idx: number) =>
-                                      idx !== textAreaIndex
-                                  );
-                              } else {
-                                 updatedState.context[wholeState.questionIndex].answeredQuestionInner[textAreaIndex].textArea[
-                                  textAreaIndex
-                                  ].value = newText;
-                                }
-                                return updatedState;
-                              });
-                            
+    console.log(updatedState);
+    setWholeState(updatedState);
+  };
+  const handleClickInnerChoosedText = (index: number) => {
+    setWholeState((prevState: any) => {
+      const newState = JSON.parse(JSON.stringify(prevState));
+      newState.context[newState.questionIndex].questionIdentifier = index;
+      return newState;
+    });
   }
-  const onClickEditableSpan = () => {
 
-  }
+  const onClickEditableSpan = (answeredQuestioninnerIndex:number, index: number) => {
+    const updatedState = JSON.parse(JSON.stringify(wholeState));
+    updatedState.context[wholeState.questionIndex].answeredQuestionInner[answeredQuestioninnerIndex].index = index
+    setWholeState(updatedState);
+    
+    
+  };
   return (
     <div className="w-full flex  justify-center items-center h-full bg-loginBackground absolute z-[50]">
       <div className="w-[1200px] h-[800px] bg-white flex flex-col items-center shadow-boxShadow">
@@ -269,32 +660,53 @@ const Questionary = (props: Props) => {
             </h1>
 
               <div className="w-full bg-loginBackground min-h-[600px] h-auto flex flex-col items-center gap-4 py-2">
-                  <div className='flex max-w-full w-full px-8 gap-10 min-h-[100px] h-auto items-center overflow-x-auto flex-col '>
+                  <div className='flex max-w-full w-full px-8  min-h-[100px] h-auto items-center overflow-x-auto flex-col '>
                         {
                           wholeState.context[wholeState.questionIndex].answeredQuestionInner.map((item: any, idx: any) => (
-                      <Fragment key={idx}>
-                            <div className='w-full flex justify-center items-center text-sidebarChoose font-bold'>
+                      <div className={`h-auto w-full ${wholeState.context[wholeState.questionIndex].questionIdentifier !== idx ? "cursor-pointer" : ""}`} onClick={() => handleClickInnerChoosedText(idx)} key={idx}>
+                              <div
+                                style={{
+                                  fontStyle: wholeState.context[wholeState.questionIndex].questionIdentifier !== idx ? "italic" : "normal",
+                                  textDecorationLine: wholeState.context[wholeState.questionIndex].questionIdentifier !== idx ? "underline" : "none"
+                                }}
+                                className={`w-full min-h-[70px] transition-all duration-300 flex ${wholeState.context[wholeState.questionIndex].questionIdentifier === idx ? "justify-center items-center text-sidebarChoose font-extrabold text-lg" : "justify-end text-gray-300 opacity-80 items-center  font-extrabold text-lg"}  `}>
                                 {item.name}
-                          </div>
-                      <div className="min-w-[100px] w-auto h-[70px] flex  justify-center items-center gap-6 px-2">
-                                {item.children[item.index].map((option: any, optionIdx: any) => (
-                                    <Fragment key={optionIdx}>
-                                    <RenderFieldQuestionary option={option}   />
-                                    </Fragment>
-                                ))}
-                      </div>
-                              <div className='w-full flex min-h-[100px] bg-white'>
-                                {item.textArea.map((textAreaItem:any, textAreaIndex:any) => (
-                                  <Fragment>
-
-                                  <EditableSpan onChange={(newText) => handleChangeEditableSpan(newText, textAreaIndex)} value={textAreaItem.value}
-                                  optionTextAreaType="text" templateState={wholeState} onClick={onClickEditableSpan} isChoosed={wholeState.context[wholeState.questionIndex].answeredQuestionInner[idx].index === textAreaIndex}  
-                                  />
-                                  </Fragment>
-                                  
-                                ))}
                               </div>
-                        </Fragment>
+                              {wholeState.context[wholeState.questionIndex].questionIdentifier === idx && (
+                                <div className="min-w-[100px] w-auto h-[70px] flex justify-center items-center gap-6 px-2">
+
+                                    {item.children[item.index].map((option: any, optionIdx: any) => (
+                                      <Fragment key={optionIdx}>
+                                        <RenderFieldQuestionary option={option} item={item} setWholeState={setWholeState} wholeState={wholeState} stInd={idx} ndInd={item.index}  />
+                                        </Fragment>
+                                    ))}
+                                </div>
+                              )}
+                          
+                                <div className={`w-full items-center  flex  ${item.justify=== "center" ? "justify-center" : item.justify === "left" ? "justify-start" : item.justify === "right" ? "justify-end" : "justify-stretch" } "min-h-[80px] " : "min-h-[500px]"  bg-white`}>
+                                  {item.textArea.map((textAreaItem:any, textAreaIndex:any) => (
+                                    <Fragment>
+                                      <EditableSpan onChange={(newText) => handleChangeEditableSpan(newText, idx, textAreaIndex)} value={textAreaItem.value} spanKey={textAreaIndex}
+                                      optionTextAreaType="text" templateState={wholeState} onClick={() => onClickEditableSpan(idx, textAreaIndex)} isChoosed={item.index === textAreaIndex} isIndex={wholeState.context[wholeState.questionIndex].questionIdentifier === idx} classNameValues={textAreaItem.className} 
+                                      />
+                                    </Fragment>
+                                    
+                                  ))}
+                              </div>
+                              {
+                                wholeState.context[wholeState.questionIndex].questionIdentifier === idx && (
+                                  <div className='w-full h-[80px] flex justify-between items-center'>
+                                    <button onClick={() => {handleAddNewSpanInTextArea(idx)}} className='h-[50px] w-auto bg-white rounded-lg text-sidebarChoose px-6 font-bold shadow-bottom-right'>აბზაცის გაგრძელების დამატება</button>
+                                    <div className='w-auto gap-4 flex justify-center items-center'>
+                                      <img src={Left} onClick={() => wholeState.context[wholeState.questionIndex].answeredQuestionInner[idx].index !== 0 && handleChangeSpanIndex(false, idx) } className={`${wholeState.context[wholeState.questionIndex].answeredQuestionInner[idx].index !== 0 ? "opacity-100 cursor-pointer" : "opacity-40 cursor-not-allowed"} `}></img>
+                                      <img className={`rotate-180  ${wholeState.context[wholeState.questionIndex].answeredQuestionInner[idx].index !== wholeState.context[wholeState.questionIndex].answeredQuestionInner[idx].textArea.length -1 ? "cursor-pointer opacity-100" : "opacity-40 cursor-not-allowed " }`} onClick={() => wholeState.context[wholeState.questionIndex].answeredQuestionInner[idx].index !== wholeState.context[wholeState.questionIndex].answeredQuestionInner[idx].textArea.length -1 && handleChangeSpanIndex(true, idx) } src={Left}></img>
+                                      </div>
+                                    <button className='h-[50px] w-auto bg-white rounded-lg text-sidebarChoose px-6 font-bold shadow-bottom-right'>ახალი აბზაცის დამატება</button>
+                                  </div>
+                                )
+                                }
+                                
+                        </div>
                       
                     ))
                         }

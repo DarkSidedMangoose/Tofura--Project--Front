@@ -11,6 +11,7 @@ type Props = {
   childIndex?: number;
   optionTextAreaType?: string; // New prop to differentiate between text and placeholder
   templateState?: any; // Optional prop for template state
+  isIndex?: boolean;
 };
 
 export const EditableSpan: React.FC<Props> = (props) => {
@@ -21,6 +22,7 @@ export const EditableSpan: React.FC<Props> = (props) => {
     const el = spanRef.current;
     if (el && el.innerText !== props.value) {
       el.innerText = props.value;
+      console.log(props.value)
     }
   }, [props.value, props.templateState]);
   
@@ -29,9 +31,9 @@ export const EditableSpan: React.FC<Props> = (props) => {
   // Handle user input and blur after change
   const handleInput = () => {
     const el = spanRef.current;
+    console.log(props.classNameValues.className)
     if (el) {
       props.onChange(el.innerText);
-      console.log(props.value);
       
       // el.blur(); // remove focus after change
     }
@@ -49,7 +51,10 @@ export const EditableSpan: React.FC<Props> = (props) => {
         contentEditable
         suppressContentEditableWarning
         onInput={handleInput}
-        onClick={(e: React.MouseEvent<HTMLSpanElement>) => { e.stopPropagation() }}
+        onClick={(e: React.MouseEvent<HTMLSpanElement>) => {
+          e.stopPropagation()
+          props.onClick && props.onClick(e)
+         }}
         onFocus={props.onFocus}
         style={{
           fontSize: props.classNameValues?.fontSize
@@ -63,7 +68,7 @@ export const EditableSpan: React.FC<Props> = (props) => {
           backgroundColor: props.classNameValues?.bgColor || "transparent",
 
         }}
-        className={`h-full  flex items-center  border-b-2 ${props.isChoosed && "border-sidebarChoose" } px-2  py-1 min-w-[20px] max-w-full  whitespace-pre-wrap break-words`}
+        className={`h-full  flex items-center  border-b-2 ${props.isChoosed && props.isIndex ? "border-sidebarChoose" : ""} px-2  py-1 min-w-[20px] max-w-full  whitespace-pre-wrap break-words`}
         />
     </div>
       
