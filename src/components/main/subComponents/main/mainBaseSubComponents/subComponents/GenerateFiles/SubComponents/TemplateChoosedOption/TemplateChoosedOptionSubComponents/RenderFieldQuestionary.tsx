@@ -10,17 +10,34 @@ type Props = {
   wholeState: any,
   stInd?: number,
   ndInd?: number,
+  setHandleAddNewPlaceholder: React.Dispatch<React.SetStateAction<any>>,
 }
 
 const RenderFieldQuestionary = (props: Props) => {
   const { option } = props;
   const { item } = props;
-  useEffect(() => {
-    console.log(props.wholeState.context[props.wholeState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][4].value.objectValue.bold)
-  },[props.wholeState.context[props.wholeState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][4].value.objectValue.bold])
+  
   const handleSelectHandler = (e: string, ) => {
     props.setWholeState((prev: any) => {
       const updatedState = JSON.parse(JSON.stringify(prev));
+      if (option.name === "type" && e === "placeholder") {
+        props.setHandleAddNewPlaceholder({
+          questionIndex: updatedState.questionIndex,
+          questionName: "",
+          stInd: props.stInd,
+          ndInd: props.ndInd,
+          bool: true
+        });
+      }
+      if (option.name === "element tag") {
+        updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].fontElement = e; 
+        updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0].forEach((elem: any, index: number) => {
+          if (elem.name === option.name) {
+            updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.stringValue = e;
+          }
+        });
+        return updatedState;
+      }
       if (option.name === "alignment") {
         
         updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].justify = e;
@@ -79,7 +96,7 @@ const RenderFieldQuestionary = (props: Props) => {
     case "select":
        return (
          <select
-           value={option.name === "alignment" ? item.justify : typeof option.value?.stringValue === "string" ||
+           value={option.name === "element tag" ? props.wholeState.context[props.wholeState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].fontElement : option.name === "alignment" ? item.justify : typeof option.value?.stringValue === "string" ||
                  typeof option.value?.numberValue === "number"
                ? option.value.stringValue ||
                  option.value.numberValue ||
@@ -113,7 +130,7 @@ const RenderFieldQuestionary = (props: Props) => {
              typeof option.value?.stringValue === "string"
                ? option.value.stringValue
                : typeof option.value?.numberValue === "number"
-               ? option.value.numberValue
+               ? props.wholeState.context[props.wholeState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontSize
                : ""
            }
            className="h-[40px] w-[70px] text-sm px-4  bg-white border rounded"
@@ -129,7 +146,7 @@ const RenderFieldQuestionary = (props: Props) => {
                  <div className="w-1/4 h-full flex justify-center items-center ">
                    <div
                      onClick={() => handleSelectHandler("bold")}
-                     className={`w-[40px] h-full ${props.wholeState.context[props.wholeState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][4].value.objectValue.bold ? "opacity-100" : "opacity-40"} cursor-pointer bg-white  p-3 border-2 rounded-lg flex justify-center items-center`}
+                     className={`w-[40px] h-full ${props.wholeState.context[props.wholeState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontStyle?.bold ? "opacity-100" : "opacity-40"} cursor-pointer bg-white  p-3 border-2 rounded-lg flex justify-center items-center`}
                    >
                      <img
                        src={Bold}
@@ -142,7 +159,7 @@ const RenderFieldQuestionary = (props: Props) => {
                    </div>
                  </div>
                ) : style === "italic" ? (
-                 <div className={`w-1/4 h-full ${props.wholeState.context[props.wholeState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][4].value.objectValue.italic ? "opacity-100" : "opacity-40"} flex justify-center items-center cursor-pointer`}>
+                 <div className={`w-1/4 h-full ${props.wholeState.context[props.wholeState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontStyle?.italic ? "opacity-100" : "opacity-40"} flex justify-center items-center cursor-pointer`}>
                      <div
                      onClick={() => handleSelectHandler("italic")}
                        
@@ -163,7 +180,7 @@ const RenderFieldQuestionary = (props: Props) => {
                  <div className="w-1/4 h-full flex justify-center items-center cursor-pointer">
                    <div
                          onClick={() => handleSelectHandler("underline")}
-                         className={`w-[40px] ${props.wholeState.context[props.wholeState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][4].value.objectValue.underline ? "opacity-100" : "opacity-40"} bg-white h-full p-3 border-2 rounded-lg flex justify-center items-center`}
+                         className={`w-[40px] ${props.wholeState.context[props.wholeState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontStyle?.underline ? "opacity-100" : "opacity-40"} bg-white h-full p-3 border-2 rounded-lg flex justify-center items-center`}
                    >
                      <img
                        alt="underline"

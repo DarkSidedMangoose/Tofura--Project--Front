@@ -3,16 +3,16 @@ import Settings from "../../../../../../../../assets/images/main/settings.webp";
 import Leave from "../../../../../../../../assets/images/main/delete.webp";
 
 type Props = {
-  value: any;
-  spanKey: string;
-  classNameValues: any;
-  onClick: (arg: any) => void;
+  value?: any;
+  spanKey?: string;
+  classNameValues?: any;
+  onClick?: (arg: any) => void;
   onFocus?: () => void;
-  isChoosed: boolean;
-  childIndex: number;
+  isChoosed?: boolean;
+  childIndex?: number;
   optionTextAreaType?: string; // New prop to differentiate between text and placeholder
   templateState?: any; // Optional prop for template state
-  onClickPlaceholder: () => void;
+  onClickPlaceholder?: () => void;
 };
 
 
@@ -22,7 +22,7 @@ const Placeholder = (props: Props) => {
   return (
     <Fragment>
       <div
-        className={`h-[50px] flex justify-between items-center bg-[#f3f4f6] px-2 w-[160px]  ${
+        className={`h-[50px] flex justify-between items-center bg-[#f3f4f6]  w-auto px-2  ${
           !props.isChoosed && "cursor-pointer"
         } relative `}
       >
@@ -37,7 +37,7 @@ const Placeholder = (props: Props) => {
           key={props.spanKey}
           onClick={(e: React.MouseEvent<HTMLSpanElement>) => {
             e.stopPropagation()
-            props.onClickPlaceholder();
+            props.onClickPlaceholder?.();
           }}
           style={{
             fontSize: props.classNameValues?.fontSize
@@ -72,11 +72,7 @@ const Placeholder = (props: Props) => {
           />
         </div>
       </div>
-      <img
-        alt='Leave'
-        className="h-[40px] bg-sidebarChoose rounded-2xl cursor-pointer hover:opacity-80"
-        src={Leave}
-      />
+      
     </Fragment>
   );
 }

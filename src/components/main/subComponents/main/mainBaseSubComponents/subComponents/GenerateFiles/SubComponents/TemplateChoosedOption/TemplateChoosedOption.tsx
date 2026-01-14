@@ -38,7 +38,8 @@ const TemplateChoosedOption: React.FC<Props> = ({
   });
   const [questionaryQuestion, setQuestionaryQuestion] = useState<any>({
     bool: false,
-    first: -1,
+    isChoosed: false,
+    first: i,
     second: -1,
     third: -1,
   });
@@ -67,9 +68,13 @@ const TemplateChoosedOption: React.FC<Props> = ({
       return a;
     });
   };
-  const onClickQuestionary = () => {
+  const onClickQuestionary = (firstArg:number, secondArg:number) => {
     setQuestionaryQuestion((prev: any) => {
       const a = { ...prev };
+      a.isChoosed = true;
+      a.first = i;
+      a.second = firstArg;
+      a.third = secondArg;
       a.bool = true;
       return a;
     });
@@ -110,9 +115,10 @@ const TemplateChoosedOption: React.FC<Props> = ({
     []
   );
   
-  const handleClickMainDiv = (
+  const
+    handleClickMainDiv = (
     childIndex: number,
-    optionTextAreaIndex: number
+      optionTextAreaIndex: number
   ) => {
     const scrollX = scrollRef.current?.scrollLeft ?? 0;
 
@@ -168,9 +174,11 @@ const TemplateChoosedOption: React.FC<Props> = ({
     <div className="h-full w-full overflow-y-auto custom-scrollbar bg-[#e3e3e3] rounded-xl shadow-bottom-right flex flex-col relative z-20">
       {questionaryQuestion.bool && (
         <QuestionaryComponent
+          isNewOrChoosed={questionaryQuestion.isChoosed}
           questionaryQuestion={questionaryQuestion}
           setQuestionaryQuestion={setQuestionaryQuestion}
           HandleAddNewQuestionary={HandleAddNewQuestionary}
+          templateState={templateState}
           setTemplateState={setTemplateState}
         />
       )}
@@ -386,9 +394,11 @@ const TemplateChoosedOption: React.FC<Props> = ({
                             key={key}
                             optionTextAreaType="questionary"
                             spanKey={key}
-                            childIndex={optionTextAreaIndex}
                             isChoosed={childGroup.index === optionTextAreaIndex}
                             classNameValues={optionTextArea.className}
+                            first={childIndex}
+                            second={optionIndex}
+                            third={optionTextAreaIndex}
                             onClickPlaceholder={onClickQuestionary}
                             value={optionTextArea.value}
                             templateState={templateState}
@@ -422,13 +432,14 @@ const TemplateChoosedOption: React.FC<Props> = ({
                     if (childGroup.textArea[0]?.type !== "questionary") {
                       AddNewValueInParagraph(i, childIndex);
                     } else {
-                      HandleAddNewQuestionary(
-                        i,
-                        childIndex,
-                        setTemplateState,
-                        questionaryQuestion,
-                        setQuestionaryQuestion
-                      );
+                      // HandleAddNewQuestionary(
+                      //   i,
+                      //   childIndex,
+                      //   setTemplateState,
+                      //   questionaryQuestion,
+                      //   setQuestionaryQuestion,
+
+                      // );
                     }
                   }}
                 >

@@ -68,7 +68,7 @@ export const EditableSpan: React.FC<Props> = (props) => {
           backgroundColor: props.classNameValues?.bgColor || "transparent",
 
         }}
-        className={`h-full  flex items-center  border-b-2 ${props.isChoosed && props.isIndex ? "border-sidebarChoose" : ""} px-2  py-1 min-w-[20px] max-w-full  whitespace-pre-wrap break-words`}
+        className={`h-full  flex items-center  border-b-2 ${props.isChoosed && props.isIndex ? "border-sidebarChoose" : ""} px-2  py-1 min-w-[20px] max-w-full whitespace-nowrap`}
         />
     </div>
       

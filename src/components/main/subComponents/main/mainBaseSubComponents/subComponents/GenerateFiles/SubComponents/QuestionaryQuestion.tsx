@@ -9,10 +9,12 @@ type Props = {
   onClick: (arg: any) => void;
   onFocus?: () => void;
   isChoosed: boolean;
-  childIndex: number;
+  first: number;
+  second: number;
+  third: number;
   optionTextAreaType?: string; // New prop to differentiate between text and placeholder
   templateState?: any; // Optional prop for template state
-  onClickPlaceholder: () => void;
+  onClickPlaceholder: (first:number, second:number, third:number) => void;
 };
 
 const QuestionaryQuestion = (props: Props) => {
@@ -36,7 +38,7 @@ const QuestionaryQuestion = (props: Props) => {
          key={props.spanKey}
          onClick={(e: React.MouseEvent<HTMLSpanElement>) => {
            e.stopPropagation();
-           props.onClickPlaceholder();
+           props.onClickPlaceholder(props.first, props.second, props.third);
          }}
          style={{
            fontSize: props.classNameValues?.fontSize

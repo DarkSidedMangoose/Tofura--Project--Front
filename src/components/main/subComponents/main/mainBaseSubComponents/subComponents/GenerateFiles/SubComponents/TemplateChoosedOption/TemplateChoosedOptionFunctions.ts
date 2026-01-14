@@ -6,7 +6,10 @@ export const HandleAddNewQuestionary = (
   childIndexs: number,
   setTemplateState: React.Dispatch<SetStateAction<any[]>>,
   questionaryQuestion: any,
-  setQuestionaryQuestion: React.Dispatch<SetStateAction<any>>
+  setQuestionaryQuestion: React.Dispatch<SetStateAction<any>>,
+  questionaryQuestionName: string,
+  stateWhole?: any
+
 ) => {
   if (o !== -1) {
     setTemplateState((prev: any) => {
@@ -27,19 +30,24 @@ export const HandleAddNewQuestionary = (
         newState[templateIndex].children[childIndex].textArea = [{
           uuid: uuid,
           type: "questionary",
-          questionName: questionaryQuestion.questionName,
-          value: "",
+          questionName: questionaryQuestionName,
+          questionInnerValueChildren: stateWhole,
+          value: null,
+          
           className: null
         }]
         newState[templateIndex].children[childIndex].index = 0;
         newState[templateIndex].children[childIndex].children = [ChildrenQustionaryValue]; // from TemplateChoosedOptionValues.ts
-      } else {
+      }
+      else {
         newState[templateIndex].children[childIndex].textArea[optionIndex] = {
-          uuid: uuid,
+         uuid: uuid,
           type: "questionary",
-          questionName: questionaryQuestion.questionName,
-          value: "",
-           className: null,
+          questionName: questionaryQuestionName,
+          questionInnerValueChildren: stateWhole,
+          value: null,
+          
+          className: null
         };
         childrenCopy[optionIndex] = ChildrenQustionaryValue; // from TemplateChoosedOptionValues.ts
         newState[templateIndex].children[childIndex].children = childrenCopy;
