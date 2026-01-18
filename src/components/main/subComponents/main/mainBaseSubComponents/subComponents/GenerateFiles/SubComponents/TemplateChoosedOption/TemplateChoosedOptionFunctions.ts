@@ -1,22 +1,16 @@
 import { SetStateAction } from "react";
 import { ChildrenImageValue, ChildrenPlaceholderValue, ChildrenQustionaryValue, ChildrenTableValue, ChildrenTextValue } from "./TemplateChoosedOptionValues";
+import { QuestionaryQuestionInterface } from "./TemplateChoosedOption";
 
 export const HandleAddNewQuestionary = (
-  o: number,
-  childIndexs: number,
   setTemplateState: React.Dispatch<SetStateAction<any[]>>,
-  questionaryQuestion: any,
+  questionaryQuestion: QuestionaryQuestionInterface,
   setQuestionaryQuestion: React.Dispatch<SetStateAction<any>>,
   questionaryQuestionName: string,
   stateWhole?: any
 
 ) => {
-  if (o !== -1) {
-    setTemplateState((prev: any) => {
-      const newState = JSON.parse(JSON.stringify(prev));
-      return newState;
-    });
-  } else {
+    
     const templateIndex = questionaryQuestion.first;
     const childIndex = questionaryQuestion.second;
     const optionIndex = questionaryQuestion.third;
@@ -26,8 +20,8 @@ export const HandleAddNewQuestionary = (
         ...newState[templateIndex].children[childIndex].children,
       ];
       const uuid = crypto.randomUUID();
-      if (newState[templateIndex].children[childIndex].textArea[0].type !== "questionary") { 
-        newState[templateIndex].children[childIndex].textArea = [{
+      if (questionaryQuestion.isNew) {
+        newState[templateIndex].children[childIndex].textArea.push({
           uuid: uuid,
           type: "questionary",
           questionName: questionaryQuestionName,
@@ -35,28 +29,43 @@ export const HandleAddNewQuestionary = (
           value: null,
           
           className: null
-        }]
+        })
         newState[templateIndex].children[childIndex].index = 0;
-        newState[templateIndex].children[childIndex].children = [ChildrenQustionaryValue]; // from TemplateChoosedOptionValues.ts
       }
       else {
-        newState[templateIndex].children[childIndex].textArea[optionIndex] = {
-         uuid: uuid,
-          type: "questionary",
-          questionName: questionaryQuestionName,
-          questionInnerValueChildren: stateWhole,
-          value: null,
+
+      
+        if (newState[templateIndex].children[childIndex].textArea[0].type !== "questionary") {
+          newState[templateIndex].children[childIndex].textArea = [{
+            uuid: uuid,
+            type: "questionary",
+            questionName: questionaryQuestionName,
+            questionInnerValueChildren: stateWhole,
+            value: null,
           
-          className: null
-        };
-        childrenCopy[optionIndex] = ChildrenQustionaryValue; // from TemplateChoosedOptionValues.ts
-        newState[templateIndex].children[childIndex].children = childrenCopy;
+            className: null
+          }]
+          newState[templateIndex].children[childIndex].index = 0;
+          newState[templateIndex].children[childIndex].children = [ChildrenQustionaryValue]; // from TemplateChoosedOptionValues.ts
+        }
+        else {
+          newState[templateIndex].children[childIndex].textArea[optionIndex] = {
+            uuid: uuid,
+            type: "questionary",
+            questionName: questionaryQuestionName,
+            questionInnerValueChildren: stateWhole,
+            value: null,
+          
+            className: null
+          };
+          childrenCopy[optionIndex] = ChildrenQustionaryValue; // from TemplateChoosedOptionValues.ts
+          newState[templateIndex].children[childIndex].children = childrenCopy;
         
+        }
       }
       return newState;
     });
     setQuestionaryQuestion((prev: any) => [{ ...prev, bool: false }]);
-  }
 };
 
 
@@ -118,15 +127,27 @@ export const HandleChangeType = (
       ];
       switch (selected) {
         case "text":
-          newState[templateIndex].children[childIndex].textArea[optionIndex] = {
-              type: "text",
+          if (newState[templateIndex].children[childIndex].textArea[optionIndex].type === "questionary") {
+            newState[templateIndex].children[childIndex].textArea = [
+            {type: "text",
               value: "შეიყვანეთ ტექსტი...",
               className: {
                 fontSize: 16,
                 fontStyle: { bold: true, italic: false, underline: false },
+              },}
+            ]
+          } else {
+            
+            newState[templateIndex].children[childIndex].textArea[optionIndex] = {
+              type: "text",
+              value: "შეიყვანეთ ტექსტი...",
+              className: {
+                fontSize: 16,
+                fontStyle: { bold: false, italic: false, underline: false },
               },
-          };
-
+            };
+            
+          }
             childrenCopy[optionIndex] = ChildrenTextValue; // from TemplateChoosedOptionValues.ts
           break;
         case "table":

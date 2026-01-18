@@ -9,18 +9,15 @@ type Props = {
   onClick: (arg: any) => void;
   onFocus?: () => void;
   isChoosed: boolean;
-  first: number;
   second: number;
   third: number;
   optionTextAreaType?: string; // New prop to differentiate between text and placeholder
   templateState?: any; // Optional prop for template state
-  onClickPlaceholder: (first:number, second:number, third:number) => void;
+  onClickQuestionary: (first:number, second:number, ) => void;
 };
 
 const QuestionaryQuestion = (props: Props) => {
- useEffect(() => {
-   console.log(props.templateState);
- }, [props.templateState]);
+
  return (
    <div className="w-full h-[50px] flex justify-center items-center " >
      <div
@@ -28,17 +25,12 @@ const QuestionaryQuestion = (props: Props) => {
          !props.isChoosed && "cursor-pointer"
        } relative `}
      >
-       {!props.isChoosed && (
-         <div
-           className="absolute w-full flex justify-center items-center h-full  hover:bg-[#21113a7c]"
-           onClick={props.onClick}
-         ></div>
-       )}
+       
        <div
          key={props.spanKey}
          onClick={(e: React.MouseEvent<HTMLSpanElement>) => {
            e.stopPropagation();
-           props.onClickPlaceholder(props.first, props.second, props.third);
+           props.onClickQuestionary(props.second, props.third);
          }}
          style={{
            fontSize: props.classNameValues?.fontSize

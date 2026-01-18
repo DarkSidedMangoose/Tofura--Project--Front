@@ -7,12 +7,14 @@ import { HandleAddNewPlaceholder, HandleAddNewQuestionary, HandleChangeType } fr
 import { RenderField } from './TemplateChoosedOptionSubComponents';
 import QuestionaryComponent from './TemplateChoosedOptionSubComponents/QuestionaryComponent';
 import PlaceholderComponent from './TemplateChoosedOptionSubComponents/PlaceholderComponent';
+import TableComponent from './TemplateChoosedOptionSubComponents/TableComponent';
 
 interface Props {
   templateState: any;
   i: number;
   AddNewValueInParagraph: (i: number, childIndex: number) => void;
   setTemplateState: React.Dispatch<React.SetStateAction<any[]>>;
+  HandleAddNewQuestionaryQuestion: (i: number, childIndex: number) => void;
   handleAddNewParagraph: (i: number, text: string) => void;
   setTemplateOptionDropdown: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -21,11 +23,25 @@ export type TemplatePopUpProps = {
   paragraphAddNew: boolean;
 };
 
+export interface QuestionaryQuestionInterface {
+  bool: boolean,
+  isNew: boolean,
+  isChoosed: boolean,
+  first: number,
+  second: number,
+  third: number
+
+}
+
+export interface TableInterface {
+  bool: boolean
+}
 const TemplateChoosedOption: React.FC<Props> = ({
   templateState,
   i,
   AddNewValueInParagraph,
   setTemplateState,
+  HandleAddNewQuestionaryQuestion,
   handleAddNewParagraph,
   setTemplateOptionDropdown,
 }) => {
@@ -36,13 +52,18 @@ const TemplateChoosedOption: React.FC<Props> = ({
     third: -1,
     questionName: "",
   });
-  const [questionaryQuestion, setQuestionaryQuestion] = useState<any>({
+  const [questionaryQuestion, setQuestionaryQuestion] = useState<QuestionaryQuestionInterface>({
     bool: false,
+    isNew: false,
     isChoosed: false,
     first: i,
     second: -1,
     third: -1,
   });
+
+  const [tableShow, setTableShow] = useState<TableInterface>({
+    bool: true,
+  })
   const [templatePopUpProps, setTemplatePopUpProps] =
     useState<TemplatePopUpProps>({
       paragraphStructureShow: false,
@@ -68,13 +89,14 @@ const TemplateChoosedOption: React.FC<Props> = ({
       return a;
     });
   };
-  const onClickQuestionary = (firstArg:number, secondArg:number) => {
+  const onClickQuestionary = (second:number, third:number) => {
     setQuestionaryQuestion((prev: any) => {
+      console.log(second)
       const a = { ...prev };
       a.isChoosed = true;
       a.first = i;
-      a.second = firstArg;
-      a.third = secondArg;
+      a.second = second;
+      a.third = third;
       a.bool = true;
       return a;
     });
@@ -199,6 +221,11 @@ const TemplateChoosedOption: React.FC<Props> = ({
         />
       )}
 
+      {
+        tableShow.bool && (
+          <TableComponent />
+        )
+      }
       <div className="bg-sidebarChoose rounded-lg shadow-bottom min-h-[80px] flex flex-col justify-center items-center gap-2 w-full">
         <div className="h-auto text-white text-lg font-semibold px-2">
           {templateState[i].name}
@@ -396,15 +423,14 @@ const TemplateChoosedOption: React.FC<Props> = ({
                             spanKey={key}
                             isChoosed={childGroup.index === optionTextAreaIndex}
                             classNameValues={optionTextArea.className}
-                            first={childIndex}
-                            second={optionIndex}
+                            second={childIndex}
                             third={optionTextAreaIndex}
-                            onClickPlaceholder={onClickQuestionary}
+                            onClickQuestionary={onClickQuestionary}
                             value={optionTextArea.value}
                             templateState={templateState}
                             onClick={(e: any) => {
                               e.stopPropagation();
-                              handleClickMainDiv(childIndex, optionTextAreaIndex);
+                              // handleClickMainDiv(childIndex, optionTextAreaIndex);
                             }}
                           />
                         )
@@ -428,18 +454,19 @@ const TemplateChoosedOption: React.FC<Props> = ({
                     }
                   `}
                   onClick={() => {
-                    console.log("clicked");
                     if (childGroup.textArea[0]?.type !== "questionary") {
                       AddNewValueInParagraph(i, childIndex);
                     } else {
-                      // HandleAddNewQuestionary(
-                      //   i,
-                      //   childIndex,
-                      //   setTemplateState,
-                      //   questionaryQuestion,
-                      //   setQuestionaryQuestion,
-
-                      // );
+                      // HandleAddNewQuestionaryQuestion(i, childIndex)
+                      setQuestionaryQuestion((prev:QuestionaryQuestionInterface) => {
+                        const newState = { ...prev }
+                        newState.isChoosed = false;
+                        newState.isNew = true;
+                        newState.bool = true;
+                        newState.second = childIndex;
+                        newState.third = optionIndex;
+                        return newState
+                      })
                     }
                   }}
                 >

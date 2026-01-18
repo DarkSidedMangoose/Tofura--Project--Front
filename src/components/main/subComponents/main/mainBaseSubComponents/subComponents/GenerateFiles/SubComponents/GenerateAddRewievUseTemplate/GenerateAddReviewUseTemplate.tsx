@@ -165,6 +165,10 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
       return newState;
     });
   };
+  // 4th
+  const HandleAddNewQuestionaryQuestion = (templateIndex:number,childIndex: number) => {
+    const targetArea = templateState?.[templateIndex]?.children?.[childIndex]?.textArea
+  }
 
   // useEffects
   useEffect(() => {
@@ -255,6 +259,7 @@ const GenerateAddReviewUseTemplate: React.FC<Props> = ({ setState, state }) => {
                   i={templateOptionDropdown}
                   AddNewValueInParagraph={AddNewValueInParagraph}
                   setTemplateState={setTemplateState}
+                  HandleAddNewQuestionaryQuestion= {HandleAddNewQuestionaryQuestion}
                   handleAddNewParagraph={handleAddNewParagraph}
                   setTemplateOptionDropdown={setTemplateOptionDropdown}
                 />

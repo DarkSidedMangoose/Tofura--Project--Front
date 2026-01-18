@@ -130,7 +130,9 @@ const QuestionaryComponent = (props: Props) => {
 
 
   return (
-    <div className="w-full bg-white min-h-[600px] max-h-[600px] overflow-y-auto relative ">
+    <div className='w-full h-full'>
+
+    <div className="w-full bg-white min-h-[600px] max-h-[600px] overflow-y-auto  relative ">
       {placeholders.map((placeholders, index) => (
         <Fragment key={placeholders.uuid}>
           <div className="w-full min-h-[80px] p-5 border-b border-gray-300 flex justify-between items-center relative">
@@ -165,9 +167,9 @@ const QuestionaryComponent = (props: Props) => {
           )}
         </div>
         {questionaries.map((questionary, index) => (
-          <div key={questionary.uuid} className="w-full min-h-[80px] p-5 border-b border-gray-300 flex flex-col items-between justify-center relative">
+          <div key={questionary.uuid} className="w-full min-h-[80px] p-5 border-b border-gray-300 flex flex-col items-between justify-center gap-4 ">
             <div className="flex gap-4 h-full justify-between items-center w-full ">
-              <div className="w-auto text-sidebarChoose font-bold">
+              <div className="w-auto text-sidebarChoose font-bold max-w-[50%] max-h-[250px] overflow-y-auto">
                 {index + 1}) {questionary.questionName}
               </div>
               <select className="w-[200px] border-2 py-2 h-auto text-black" value={questionary.choosedAnswer} onChange={(e) => {
@@ -205,11 +207,10 @@ const QuestionaryComponent = (props: Props) => {
                 </option>))}
               </select>
             </div>
-
-              <Fragment>
+           
               {questionary.placeholdersOfQuestionaries.map((item: any, itemIndex: number) => (
-                  <div className='w-full min-h-[300px] flex justify-between items-center '>
-                                        <p className='font-bold w-1/2 text-sidebarChoose'>{item.questionName}</p>
+                  <div className='w-full  flex justify-between items-center '>
+                                        <div className='font-bold  w-1/2 max-w-[50%] max-h-[250px] overflow-y-auto  text-sidebarChoose break-words whitespace-normal'>{item.questionName}</div>
                                         <textarea onChange={(e) => {
                     setQuestionaries((prev:any[]) => {
                       const newState = JSON.parse(JSON.stringify(prev));
@@ -221,9 +222,9 @@ const QuestionaryComponent = (props: Props) => {
                                         
                                       </div>
                 ))}
-                </Fragment>
             </div>
         ))}
+      </div>
       </div>
       <div className=" w-full h-[160px]   gap-4 flex justify-end  items-center">
         <button className="w-auto p-4 h-[80px] flex justify-center items-center rounded-lg bg-sidebarChoose text-white font-bold" onClick={() => props.close()}>
@@ -235,6 +236,7 @@ const QuestionaryComponent = (props: Props) => {
         </button>
       </div>
     </div>
+      
   );
 }
 

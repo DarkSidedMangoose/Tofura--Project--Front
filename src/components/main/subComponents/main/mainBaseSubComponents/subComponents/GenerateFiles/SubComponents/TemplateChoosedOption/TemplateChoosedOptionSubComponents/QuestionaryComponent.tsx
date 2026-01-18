@@ -8,24 +8,17 @@ import RenderFieldQuestionary from './RenderFieldQuestionary';
 import { EditableSpan } from '../../EditableSpan';
 import { ChildrenPlaceholderValue } from '../TemplateChoosedOptionValues';
 import Placeholder from '../../Placeholder';
+import { QuestionaryQuestionInterface } from '../TemplateChoosedOption';
 
-type Question = {
-  bool: boolean;
-  first: number;
-  second: number;
-  third: number;
-  questionName?: string;
-};
+
 
 type Props = {
   isNewOrChoosed: boolean;
-  questionaryQuestion: Question;
+  questionaryQuestion: QuestionaryQuestionInterface;
   templateState: any[];
   setQuestionaryQuestion: React.Dispatch<React.SetStateAction<any>>;
   setTemplateState: React.Dispatch<React.SetStateAction<any[]>>;
   HandleAddNewQuestionary: (
-    o: number,
-    childIndexs: number,
     setTemplateState: React.Dispatch<React.SetStateAction<any[]>>,
     questionaryQuestion: any,
     setQuestionaryQuestion: React.Dispatch<React.SetStateAction<any>>,
@@ -65,7 +58,10 @@ const Questionary = (props: Props) => {
     });
   }
   
-  const [questionaryQuestion, setQuestionaryQuestion] = useState<string>(props.templateState[props.questionaryQuestion.first].children[props.questionaryQuestion.second].textArea[props.questionaryQuestion.third].questionName || '');
+  const [questionaryQuestionName, setQuestionaryQuestionName] = useState<string>(
+    props.questionaryQuestion.isNew ? ""  : props.questionaryQuestion.isChoosed ?
+    props.templateState[props.questionaryQuestion.first].children[props.questionaryQuestion.second].textArea[props.questionaryQuestion.third].questionName
+    : '');
 
   const [wholeState, setWholeState] = useState<any>({
     questionIndex: 0,
@@ -73,10 +69,11 @@ const Questionary = (props: Props) => {
     context: [
       {
         questionIdentifier: 0,
+        questionAnswer:"კი",
         answeredQuestionInner: [
           {
             name: 'შესავალი',
-            justify: 'right',
+            justify: 'left',
             index: 0,
             textArea: [
               {
@@ -86,7 +83,7 @@ const Questionary = (props: Props) => {
                 type: 'text',
                 value: 'შეიყვანეთ ტექსტი...',
                 className: {
-                  fontSize: 32,
+                  fontSize: 16,
                   fontStyle: {
                     bold: false,
                     italic: false,
@@ -94,7 +91,7 @@ const Questionary = (props: Props) => {
                   },
                   fontFamily: "Calibri",
                   fontElement: null,
-                  fontColor: "#808080CC",
+                  fontColor: "#000000",
 
 
                 },
@@ -161,11 +158,11 @@ const Questionary = (props: Props) => {
         ],
       },
       {
-        questionAnswer: 'add',
+        questionAnswer: 'არა',
         questionIdentifier: 0,
         answeredQuestionInner: [
           {
-            name: 'adda',
+            name: 'პირველი აბზაცი',
             justify: 'left',
             index: 0,
             textArea: [
@@ -243,60 +240,7 @@ const Questionary = (props: Props) => {
                   value: { stringValue: '#000000' },
                 },
               ],
-               [
-                {
-                  name: 'type',
-                  type: 'select',
-                  option: [
-                    'text',
-                    'questionary',
-                    'placeholder',
-                    'table',
-                    'image',
-                  ],
-                  value: { stringValue: 'text' },
-                },
-                {
-                  name: 'element tag',
-                  type: 'select',
-                  option: ['h1', 'h2', 'p', 'span'],
-                  value: { stringValue: 'h1' },
-                },
-                {
-                  name: 'font family',
-                  type: 'select',
-                  option: ['Calibri', 'Roboto', 'Times New Roman'],
-                  value: { stringValue: 'Calibri' },
-                },
-                {
-                  name: 'font size',
-                  type: 'input',
-                  value: { numberValue: 16 },
-                },
-                {
-                  name: 'text style',
-                  type: 'multiselect',
-                  option: ['bold', 'italic', 'underline'],
-                  value: {
-                    objectValue: {
-                      bold: false,
-                      italic: false,
-                      underline: false,
-                    },
-                  },
-                },
-                {
-                  name: 'alignment',
-                  type: 'select',
-                  option: ['left', 'center', 'right', 'justify'],
-                  value: { stringValue: 'left' },
-                },
-                {
-                  name: 'color',
-                  type: 'color',
-                  value: { stringValue: '#000000' },
-                },
-              ],
+               
             ],
           },
         ],
@@ -306,10 +250,9 @@ const Questionary = (props: Props) => {
 
 
   useEffect(() => {
-    if (props.isNewOrChoosed && props.templateState[props.questionaryQuestion.first].children[props.questionaryQuestion.second].textArea[props.questionaryQuestion.third].questionInnerValueChildren) {
+    if (props.questionaryQuestion.isChoosed) {
       setWholeState(props.templateState[props.questionaryQuestion.first].children[props.questionaryQuestion.second].textArea[props.questionaryQuestion.third].questionInnerValueChildren);
       // }
-   
     }
   },[props.questionaryQuestion]);
 
@@ -333,11 +276,11 @@ const Questionary = (props: Props) => {
       const index = newState.questionIndex;
       newState.context.splice(index + 1, 0,
         {
-          questionAnswer: 's',
+          questionAnswer: 'შეიყვანეთ კითხვა',
           questionIdentifier: 0,
           answeredQuestionInner: [
             {
-              name: 'adda',
+              name: 'შესავალი',
               justify: 'left',
               index: 0,
               textArea: [
@@ -356,7 +299,7 @@ const Questionary = (props: Props) => {
                     },
                     fontFamily: "Calibri",
                     fontElement: null,
-                    fontColor: "#002300",
+                    fontColor: "#000000",
                   },
                 },
               ],
@@ -509,7 +452,7 @@ const Questionary = (props: Props) => {
       newState.context[newState.questionIndex].answeredQuestionInner.splice(index + 1, 0,
          {
             name: addNewParagraphName,
-            justify: 'right',
+            justify: 'left',
             index: 0,
             textArea: [
               {
@@ -519,7 +462,7 @@ const Questionary = (props: Props) => {
                 type: 'text',
                 value: 'შეიყვანეთ ტექსტი...',
                 className: {
-                  fontSize: 32,
+                  fontSize: 16,
                   fontStyle: {
                     bold: false,
                     italic: false,
@@ -527,7 +470,7 @@ const Questionary = (props: Props) => {
                   },
                   fontFamily: "Calibri",
                   fontElement: null,
-                  fontColor: "#808080CC",
+                  fontColor: "#000000",
 
 
                 },
@@ -624,7 +567,7 @@ const Questionary = (props: Props) => {
                   },
                   fontFamily: "Calibri",
                   fontElement: null,
-                  fontColor: "#808080CC",
+                  fontColor: "#000000",
                 },
         },
       );
@@ -820,9 +763,9 @@ const Questionary = (props: Props) => {
           <div className="min-h-[130px] w-full flex justify-center items-center">
             <input
               className="w-3/4 min-h-[70px] shadow-lg border-2"
-              value={questionaryQuestion}
+              value={questionaryQuestionName}
               onChange={(e) => {
-                setQuestionaryQuestion(e.target.value);
+                setQuestionaryQuestionName(e.target.value);
               
               }}
               placeholder="...მაგ: იყვნენ თუ არა აღჭურვილნი პერსონალი დამცავი ჩაფხუტებით?"
@@ -994,16 +937,16 @@ const Questionary = (props: Props) => {
 
         <button
           className="w-auto p-4 h-1/2 bg-sidebarChoose text-bold text-white"
-          onClick={() =>
-            props.HandleAddNewQuestionary(
-              -1,
-              -1,
-              props.setTemplateState,
+            onClick={() => {
+              // props.questionaryQuestion.isNew
+              props.HandleAddNewQuestionary(
+                props.setTemplateState ,
               props.questionaryQuestion,
               props.setQuestionaryQuestion,
-              questionaryQuestion,
+              questionaryQuestionName,
               wholeState,
             )
+          }
           }
         >
           დამატება

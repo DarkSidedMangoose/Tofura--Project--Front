@@ -4,94 +4,97 @@ import Italic from "../../../../../../../../../../assets/images/main/italic-butt
 import Underline from "../../../../../../../../../../assets/images/main/underline.png";
 
 type Props = {
-  option: any,
-  item: any,
-  setWholeState: React.Dispatch<React.SetStateAction<any>>,
-  wholeState: any,
+  option?: any,
+  item?: any,
+  setWholeState?: React.Dispatch<React.SetStateAction<any>>,
+  wholeState?: any,
   stInd?: number,
   ndInd?: number,
-  setHandleAddNewPlaceholder: React.Dispatch<React.SetStateAction<any>>,
+  setHandleAddNewPlaceholder?: React.Dispatch<React.SetStateAction<any>>,
 }
 
 const RenderFieldQuestionary = (props: Props) => {
   const { option } = props;
   const { item } = props;
   
-  const handleSelectHandler = (e: string, ) => {
-    props.setWholeState((prev: any) => {
-      const updatedState = JSON.parse(JSON.stringify(prev));
-      if (option.name === "type" && e === "placeholder") {
-        props.setHandleAddNewPlaceholder({
-          questionIndex: updatedState.questionIndex,
-          questionName: "",
-          stInd: props.stInd,
-          ndInd: props.ndInd,
-          bool: true
-        });
-      }
-      if (option.name === "element tag") {
-        updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].fontElement = e; 
-        updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0].forEach((elem: any, index: number) => {
-          if (elem.name === option.name) {
-            updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.stringValue = e;
-          }
-        });
-        return updatedState;
-      }
-      if (option.name === "alignment") {
-        
-        updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].justify = e;
-        return updatedState;
-      } else if (option.name === "font family") {
-        updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontFamily = e;
-        updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0].forEach((elem: any, index: number) => {
-          if (elem.name === option.name) {
-            updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.stringValue = e;
-          }
-          
-        });
-      } else if (option.name === "font size") {
-        updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontSize = Number(e);
-        updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0].forEach((elem: any, index: number) => {
-          if (elem.name === option.name) {
-            updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.numberValue = Number(e);
-          }
-
-        });
-      } else if (option.name === "color") {
-        updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontColor = e;
-        updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0].forEach((elem: any, index: number) => {
-          if (elem.name === option.name) {
-            updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.stringValue = e;
-          }
-          console.log(props.wholeState)
-        });
-      }
-      else if (option.name === "text style") {
-        if (e === "bold"  ) {
-          updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontStyle.bold = !updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontStyle.bold;
-        }else if( e === "italic" ){
-          updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontStyle.italic = !updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontStyle.italic;
-        } else if( e === "underline" ){
-          updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontStyle.underline = !updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontStyle.underline;
+  const handleSelectHandler = (e: string,) => {
+    if (props.setWholeState) {
+      
+      props.setWholeState((prev: any) => {
+        const updatedState = JSON.parse(JSON.stringify(prev));
+        if (option.name === "type" && e === "placeholder" && props.setHandleAddNewPlaceholder) {
+          props.setHandleAddNewPlaceholder({
+            questionIndex: updatedState.questionIndex,
+            questionName: "",
+            stInd: props.stInd,
+            ndInd: props.ndInd,
+            bool: true
+          });
         }
-        updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0].forEach((elem: any, index: number) => {
-          if (elem.name === option.name) {
-            if (e === "bold") {
-              updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.objectValue.bold = !updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.objectValue.bold;
+        if (option.name === "element tag") {
+          updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].fontElement = e; 
+          updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0].forEach((elem: any, index: number) => {
+            if (elem.name === option.name) {
+              updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.stringValue = e;
             }
-            if (e === "italic") {
-              updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.objectValue.italic = !updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.objectValue.italic;
+          });
+          return updatedState;
+        }
+        if (option.name === "alignment") {
+          
+          updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].justify = e;
+          return updatedState;
+        } else if (option.name === "font family") {
+          updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontFamily = e;
+          updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0].forEach((elem: any, index: number) => {
+            if (elem.name === option.name) {
+              updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.stringValue = e;
             }
-            if (e === "underline") {
-              updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.objectValue.underline = !updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.objectValue.underline;
+            
+          });
+        } else if (option.name === "font size") {
+          updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontSize = Number(e);
+          updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0].forEach((elem: any, index: number) => {
+            if (elem.name === option.name) {
+              updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.numberValue = Number(e);
             }
+  
+          });
+        } else if (option.name === "color") {
+          updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontColor = e;
+          updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0].forEach((elem: any, index: number) => {
+            if (elem.name === option.name) {
+              updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.stringValue = e;
+            }
+            console.log(props.wholeState)
+          });
+        }
+        else if (option.name === "text style") {
+          if (e === "bold"  ) {
+            updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontStyle.bold = !updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontStyle.bold;
+          }else if( e === "italic" ){
+            updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontStyle.italic = !updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontStyle.italic;
+          } else if( e === "underline" ){
+            updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontStyle.underline = !updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].textArea[props.ndInd || 0].className.fontStyle.underline;
           }
-        });
-      }
-      return updatedState
-    });
-  }
+          updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0].forEach((elem: any, index: number) => {
+            if (elem.name === option.name) {
+              if (e === "bold") {
+                updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.objectValue.bold = !updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.objectValue.bold;
+              }
+              if (e === "italic") {
+                updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.objectValue.italic = !updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.objectValue.italic;
+              }
+              if (e === "underline") {
+                updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.objectValue.underline = !updatedState.context[updatedState.questionIndex].answeredQuestionInner[props.stInd || 0].children[props.ndInd || 0][index].value.objectValue.underline;
+              }
+            }
+          });
+        }
+        return updatedState
+      });
+    }
+    }
   switch (option.type) {
     case "select":
        return (
